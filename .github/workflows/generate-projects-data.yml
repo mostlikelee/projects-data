@@ -7,7 +7,7 @@ on:
 
 env:
   PROJECT_ID: 70  # <== customize this per team/project
-  SNAPSHOT_DIR: snapshots  # <== customize where you want .json files to live
+  SNAPSHOT_PATH: ./snapshots  # <== customize where you want .json files to live
   SPRINT_NAME: Sprint-44  # <== customize this to your current sprint name
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # <== ensure this secret is set in your repo
 
@@ -21,9 +21,19 @@ jobs:
       issues: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Use GitHub CLI
         run: |
           gh auth status
           gh issue list --repo fleetdm/fleet --limit 5
+
+      - name: Download projects data
+        run: |
+          mkdir -p .tmp
+          echo "Fetch all items (unfiltered)..."
+          gh project item list --owner fleetdm --project ${{ env.PROJECT_ID }} --limit 1000 --json > .tmp/items.json
+          head -n 10 .tmp/items.json
