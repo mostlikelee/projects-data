@@ -36,4 +36,28 @@ jobs:
           mkdir -p .tmp
           echo "Fetch all items (unfiltered)..."
           gh project item-list ${{ env.PROJECT_ID }} --owner fleetdm --limit 1000 --format json > .tmp/items.json
-          head -n 10 .tmp/items.json
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: Generate projects data
+        run: |
+          go mod tidy
+          go run ./cmd/snapshots.go
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add ${{ env.SNAPSHOT_PATH }}
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          else
+            git commit -m "Update projects data for ${{ env.SPRINT_NAME }}"
+            git push origin main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
