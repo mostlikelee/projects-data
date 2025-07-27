@@ -35,5 +35,5 @@ jobs:
         run: |
           mkdir -p .tmp
           echo "Fetch all items (unfiltered)..."
-          gh project item list --owner fleetdm --project ${{ env.PROJECT_ID }} --limit 1000 --json > .tmp/items.json
+          gh project item-list ${{ env.PROJECT_ID }} --owner fleetdm --limit 1000 --format json > .tmp/items.json
           head -n 10 .tmp/items.json
