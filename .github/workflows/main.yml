@@ -1,3 +1,5 @@
+name: generate projects data
+
 on:
   # schedule:
   #   - cron: '0 */6 * * *'  # every 6 hours
@@ -8,23 +10,19 @@ env:
   SNAPSHOT_DIR: snapshots  # <== customize where you want .json files to live
 
 jobs:
-  export:
+  example:
     runs-on: ubuntu-latest
-
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
 
     steps:
-      - name: Set up Git
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+      - uses: actions/checkout@v4
 
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Authenticate GitHub CLI
+      - name: Use GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          gh auth status
+          gh issue list --repo fleetdm/fleet --limit 5
