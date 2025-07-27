@@ -407,10 +407,10 @@ func main() {
 	}
 
 	// normalize sprint name
-	sprintName = strings.TrimSpace(sprintName)
-	sprintName = strings.ReplaceAll(sprintName, " ", "-")
+	sprintFileName := strings.TrimSpace(sprintName)
+	sprintFileName = strings.ReplaceAll(sprintFileName, " ", "-")
 
-	snapshotPath = filepath.Join(snapshotPath, fmt.Sprintf("%s.json", sprintName))
+	snapshotPath = filepath.Join(snapshotPath, fmt.Sprintf("%s.json", sprintFileName))
 
 	tmpDir := ".tmp"
 	items, err := parseItemsFile(filepath.Join(tmpDir, "items.json"), tmpDir)
@@ -419,6 +419,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	filtered := filterItems(items, sprintName)
+
 	snapshots, err := loadSnapshot(snapshotPath)
 	if err != nil {
 		fmt.Println("Error loading snapshots:", err)
@@ -426,14 +428,14 @@ func main() {
 	}
 
 	if len(snapshots) == 0 {
-		for i, item := range items {
+		for i, item := range filtered {
 			item.IssueNumber = item.Content.Number
 			items[i] = item
 		}
 
 		snapshot := Snapshot{
 			Timestamp: time.Now().UTC(),
-			Items:     items,
+			Items:     filtered,
 		}
 		snapshots = append(snapshots, snapshot)
 		data, _ := json.MarshalIndent(snapshots, "", "  ")
@@ -450,7 +452,7 @@ func main() {
 	}
 
 	previousState := reconstructState(snapshots)
-	diffedItems := itemsDiff(previousState, items)
+	diffedItems := itemsDiff(previousState, filtered)
 	if len(diffedItems) == 0 {
 		fmt.Println("No changes since last snapshot, nothing to append.")
 		return
@@ -472,4 +474,30 @@ func main() {
 	}
 
 	fmt.Println("Appended new snapshot to", snapshotPath)
+}
+
+// Helper functions to filter items based on sprint and status
+
+func isInCurrentSprint(item Item, currentSprintTitle string) bool {
+	return item.Sprint != nil && item.Sprint.Title == currentSprintTitle
+}
+
+func hasNoSprint(item Item) bool {
+	return item.Sprint == nil || item.Sprint.Title == ""
+}
+
+func isNotDone(item Item) bool {
+	return item.Status == nil || *item.Status != "Done"
+}
+
+func filterItems(items []Item, currentSprintTitle string) []Item {
+	var filtered []Item
+	for _, item := range items {
+		if isInCurrentSprint(item, currentSprintTitle) ||
+			hasNoSprint(item) ||
+			isNotDone(item) {
+			filtered = append(filtered, item)
+		}
+	}
+	return filtered
 }
