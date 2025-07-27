@@ -5214,5 +5214,682 @@
         "issueNumber": 30746
       }
     ]
+  },
+  {
+    "timestamp": "2025-07-27T20:00:13.768769396Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb7YjQ",
+        "title": "Wrong software version field is used for explanatory comment on `fleetctl generate-gitops` software export",
+        "issueNumber": 29618,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1tIQ",
+        "title": "Self-service uninstall: BE",
+        "issueNumber": 28846,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcIlsU",
+        "title": "Due July 4: [Vanta] Remediate \"Medium vulnerabilities identified in packages are addressed (AWS Container)\"",
+        "issueNumber": 29482,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcp5UA",
+        "title": "Incorrect copy in modal shown when VPP app install is not verified",
+        "issueNumber": 30938,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcs61c",
+        "title": "App Store (VPP) apps are stuck in pending",
+        "issueNumber": 30902,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb-XuA",
+        "title": "Update osquery versions for fleetctl preview",
+        "issueNumber": 30369,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbinUw",
+        "title": "Successful install refetch: Docs",
+        "issueNumber": 30038,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX51M",
+        "title": "🪲Vulnerability detection false-positive for Safari 18.5",
+        "issueNumber": 29476,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVLvY",
+        "title": "Release QA: Fleet 4.71.0",
+        "issueNumber": 30600,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgblupM",
+        "title": "Include uninstall results in software details modal: Eng DRI",
+        "issueNumber": 30087,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcd1GA",
+        "title": "Automatic refetch fails on iOS host, clicking refetch succeeds",
+        "issueNumber": 30754,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgckdFo",
+        "title": "Release QA: 1.45.1",
+        "issueNumber": 30846,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1sXA",
+        "title": "Incorrect software title name (Microsoft AutoUpdate) when uploading Microsoft Company Portal App",
+        "issueNumber": 24083,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbVPwg",
+        "title": "My device \u003e Self-service: \"Reinstall\" is disabled",
+        "issueNumber": 29860,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5pQ",
+        "title": "🪲CPE for python urllib is not generated",
+        "issueNumber": 28490,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbYHG8",
+        "title": "Current Fleet-maintained app versions are out of date",
+        "issueNumber": 29934,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbSju4",
+        "title": "Viewing failed uninstall details from self-service fails when the uninstall wasn't initiated via self-service",
+        "issueNumber": 29840,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2q7g",
+        "title": "500 Error when attempting to navigate to Software details on non-macOS host",
+        "issueNumber": 29513,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVU_Q",
+        "title": "Release QA: 4.70.1",
+        "issueNumber": 30607,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcLd1w",
+        "title": "Dropdown reset to \"All available\" when sort order or search is applied on Host \u003e\u003e Software \u003e\u003e Library tab",
+        "issueNumber": 30514,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgambig",
+        "title": "Clean up the example repository shown to clients so that it reflects Fleet best practices",
+        "issueNumber": 29293,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgaxnpw",
+        "title": "SHA-256 in vitals: BE (detail query + API)",
+        "issueNumber": 29437,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2Rys",
+        "title": "Software cleanup fails when using GCP Cloud Storage",
+        "issueNumber": 28420,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiciI",
+        "title": "Wrong error message when changing teams and a software filter is set",
+        "issueNumber": 26258,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiq_Q",
+        "title": "Verify VPP: UI updates",
+        "issueNumber": 29893,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbD9t8",
+        "title": "Release QA: 4.68.1",
+        "issueNumber": 29706,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcf5_w",
+        "title": "Modifying cve feed for powershell version change",
+        "issueNumber": 30767,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcq9R8",
+        "title": "Linux OS Vulns: Design/Spec",
+        "issueNumber": 30979,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1syI",
+        "title": "Snowflake v4.66.0 -\u003e v4.67.3 migration failure",
+        "issueNumber": 10596,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbX3KU",
+        "title": "🪲Firefox FMA requiring additional steps to upgrade",
+        "issueNumber": 29402,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb9gHY",
+        "title": "Update Fleet-maintained apps",
+        "issueNumber": 30334,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgaxnq0",
+        "title": "SHA-256 in vitals: fleetd tables revisions",
+        "issueNumber": 29438,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbVPz8",
+        "title": "Add Fleet-maintained app \u003e Software details: tooltips above underlined text",
+        "issueNumber": 29857,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2PAg",
+        "title": "Spec/Design: Self-service update",
+        "issueNumber": 29494,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgctKwA",
+        "title": "Previously failed VPP Verifications due to turning MDM off prevent further verifications from being sent",
+        "issueNumber": 31020,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiqBw",
+        "title": "🪲fleetctl preview: Can't install software",
+        "issueNumber": 29216,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcR7rI",
+        "title": "High database load from DELETE queries in MySQL",
+        "issueNumber": 30574,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbavqY",
+        "title": "Remove stray Fleet Maintained App manifest location overrides",
+        "issueNumber": 29943,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiP00",
+        "title": "My device \u003e Self-service: inconsistent loading state",
+        "issueNumber": 29822,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbimd4",
+        "title": "Successful install refetch: VPP app installs",
+        "issueNumber": 29980,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcAB0Y",
+        "title": "Release QA: fleetd 1.44.0",
+        "issueNumber": 30387,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9ngs",
+        "title": "🪲 FMA MS Excel on macOS doesn't uninstall",
+        "issueNumber": 29221,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbrzQc",
+        "title": "Rebuild self-service article to reflect 4.69 changes, add self-service uninstall highlight to release notes",
+        "issueNumber": 30030,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbdarQ",
+        "title": "Activity feed missing actor name for actions performed during setup experience",
+        "issueNumber": 29897,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbicys",
+        "title": "Hosts page: software title filter breaks page if software isn't on any hosts in the team",
+        "issueNumber": 29823,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcImZk",
+        "title": "Fleet-maintained apps: Google Chrome has no hash",
+        "issueNumber": 30325,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb2LvQ",
+        "title": "Software page/Host's software tab: \"Available for install / Self-service\" dropdown is visible for \"All teams\" and Fleet Free",
+        "issueNumber": 30273,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5uA",
+        "title": "🪲Acrobat Reader CPEs don't match expectations",
+        "issueNumber": 29570,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9uJ8",
+        "title": "🪲FMA MSI uninstall scripts don't uninstall other versions of the software",
+        "issueNumber": 27757,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1iwc",
+        "title": "Fleet UI: Copy button input field inconsistency",
+        "issueNumber": 28652,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9m2Q",
+        "title": "🪲 FMA Word on macOS doesn't uninstall",
+        "issueNumber": 29220,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2A80",
+        "title": "Software hash causes squishing at low widths",
+        "issueNumber": 29397,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2aeU",
+        "title": "Release QA: fleetd 1.43.0",
+        "issueNumber": 29502,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbitHs",
+        "title": "🪲Incorrect software association for CVE-2024-54559",
+        "issueNumber": 28207,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2PZY",
+        "title": "Spec/Design: VPP Verify",
+        "issueNumber": 29495,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2j84",
+        "title": "Unable to delete software that was just added while in GitOps mode",
+        "issueNumber": 29509,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVNHM",
+        "title": "Release fleetd 1.45.1",
+        "issueNumber": 30602,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgba0AE",
+        "title": "🪲Host details \u003e Software: \"Installed version\" sort doesn't work",
+        "issueNumber": 29447,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcna-8",
+        "title": "Android copy for Software tab should be removed",
+        "issueNumber": 30905,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbSd0o",
+        "title": "Release fleetd v1.43.0",
+        "issueNumber": 29837,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcvhSQ",
+        "title": "Reinstalling VPP Apps that were installed previously to 4.71.0 is not making them managed",
+        "issueNumber": 31060,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbu3hU",
+        "title": "Hitting limit on max_prepared_stmt_count",
+        "issueNumber": 30199,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbX3R4",
+        "title": "🪲FMA Postman download URL no longer resolves",
+        "issueNumber": 29754,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbNuAU",
+        "title": "🪲Missing padding in VPP expiration banner",
+        "issueNumber": 29448,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcmzng",
+        "title": "New FMA: Beekeeper Studio",
+        "issueNumber": 30884,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb2dpg",
+        "title": "Host Software API bugs: Allow listhostsoftware to only show installed software and hide installers",
+        "issueNumber": 30188,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbpXk4",
+        "title": "CI failing test: `TestTranslateCPEToCVE/find_vulns_on_cpes` (not flaky, constantly failing)",
+        "issueNumber": 30118,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVMug",
+        "title": "Release QA: Fleetd 1.45.0",
+        "issueNumber": 30601,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbim7o",
+        "title": "Verify VPP: Mark VPP installs as failed when MDM gets turned off",
+        "issueNumber": 29902,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiiW4",
+        "title": "Release QA: 4.70.0",
+        "issueNumber": 30049,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1s-s",
+        "title": "Research for install / uninstall verification",
+        "issueNumber": 29300,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcLw-M",
+        "title": "Host counts don't update as part of vulnerabilities job if host_software table includes a row with software_id 0",
+        "issueNumber": 30522,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcagK8",
+        "title": "Setup Experience gets stuck when more than a few VPP app installs are included",
+        "issueNumber": 30678,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbuZ1w",
+        "title": "🪲If I add a VPP app for iOS and macOS, I can't add it to macOS Setup Experience",
+        "issueNumber": 29506,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbimuk",
+        "title": "Verify VPP: Implement interface for InstallApplicationCommand handler",
+        "issueNumber": 29851,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbimzo",
+        "title": "Verify VPP: Implement interface for InstalledApplicationListCommand hander",
+        "issueNumber": 29852,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbioRs",
+        "title": "FMA Test Automation Spec",
+        "issueNumber": 30037,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1ioI",
+        "title": "Fleet Desktop: Incorrect error states when token expires",
+        "issueNumber": 28929,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1sZg",
+        "title": "SentinelOne Automatic Policy For Install Is Not Pulling Correct Bundle Identifer",
+        "issueNumber": 26597,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbinQY",
+        "title": "Successful install refetch: Non-VPP software installs",
+        "issueNumber": 29916,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9nq4",
+        "title": "🪲Microsoft Edge FMA fails to install on macOS",
+        "issueNumber": 28466,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbeJGo",
+        "title": "Release QA: 4.69.0",
+        "issueNumber": 29419,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga2Az8",
+        "title": "No global activity item is shown when a policy is automatically created during software installer add",
+        "issueNumber": 28259,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbipgw",
+        "title": "🪲Automated Fleet-maintained app update PR opens when nothing changes",
+        "issueNumber": 28912,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbgqkI",
+        "title": "Ensure [here] / [click here] link anchors don't creep back into Markdown on the website",
+        "issueNumber": 30019,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiq44",
+        "title": "🪲Missing file path for some Windows software",
+        "issueNumber": 29449,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1shA",
+        "title": "🪲500 error when searching for a software that does not exist",
+        "issueNumber": 29197,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga7Ovc",
+        "title": "Fleet UI: Banner padding and flex direction on Vuln page only",
+        "issueNumber": 29578,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1sto",
+        "title": "🪲Vulnerabilities are not pulled for Ubuntu 24.10 and 25.04",
+        "issueNumber": 29345,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiq_U",
+        "title": "Verify VPP: guide updates",
+        "issueNumber": 29896,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbGDZM",
+        "title": "Links on website have \"here\" and \"click here\" anchors",
+        "issueNumber": 29720,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5XY",
+        "title": "🪲Incorrect software title name (SU_TITLE) when uploading Avid Codecs",
+        "issueNumber": 25588,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcbSkI",
+        "title": "Vulnerabilities count mismatch for various macOS versions",
+        "issueNumber": 29988,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcs0UM",
+        "title": "Self service modal displays incorrect message for VPP install status",
+        "issueNumber": 31003,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1sd4",
+        "title": "Error when uploading  Google Workspace Sync for Outlook MSI",
+        "issueNumber": 27522,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1tQ0",
+        "title": "Self-service uninstall: FE",
+        "issueNumber": 28845,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbiR7Q",
+        "title": "Add version freezing to Fleet-maintained app (FMA) manifest updates",
+        "issueNumber": 29218,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9tz4",
+        "title": "🪲Package edits to FMA software still indicate that the software is Fleet-maintained",
+        "issueNumber": 28687,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcUXp4",
+        "title": "Pagination limited to 5 apps when displaying software versions in Fleet UI",
+        "issueNumber": 30393,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb98yM",
+        "title": "Hashicorp Vault client vulnerability false positive (CVE-2015-5711)",
+        "issueNumber": 30229,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgaxnrw",
+        "title": "SHA-256 in vitals: FE",
+        "issueNumber": 29439,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga9nZs",
+        "title": "🪲Fleet maintained app Docker installs but reports as failed",
+        "issueNumber": 27577,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbim3M",
+        "title": "Verify VPP: DB migration",
+        "issueNumber": 29830,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb3feM",
+        "title": "🪲 Software URLs are not exported in `fleetctl generate-gitops`",
+        "issueNumber": 29617,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbipnA",
+        "title": "Tooltip issue while fetching host vitals",
+        "issueNumber": 22796,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga1tBM",
+        "title": "Vulnerable VPP apps are not returned when filtering by vulnerable software",
+        "issueNumber": 29308,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbbDa8",
+        "title": "Fleet UI: Not supported shouldn't look clickable",
+        "issueNumber": 26765,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgckQ9g",
+        "title": "Allow specifying (un)install scripts manually for Homebrew-based Fleet-maintained apps",
+        "issueNumber": 30780,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb9EIw",
+        "title": "Renamed homebrew cask fails silently in FMA",
+        "issueNumber": 30338,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzga5E74",
+        "title": "Spec/design: Ability to edit icon for custom packages uploaded to Fleet",
+        "issueNumber": 29539,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgb7Ypc",
+        "title": "Fleet-maintained apps do not persist or export their URL after being added via UI",
+        "issueNumber": 30282,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbirk8",
+        "title": "🪲Existing false-positive OVAL vulnerabilities for Amazon Linux 2 don't clear when upgrading to 4.56.0 goval-dictionary based scanning",
+        "issueNumber": 21947,
+        "changeType": "removed"
+      }
+    ]
   }
 ]
