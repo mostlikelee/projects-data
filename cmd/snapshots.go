@@ -1,4 +1,4 @@
-package projects_data
+package main
 
 import (
 	"encoding/json"
