@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+	"strings"
 	"time"
 )
 
@@ -404,6 +405,10 @@ func main() {
 	if snapshotPath == "" {
 		snapshotPath = "./snapshots"
 	}
+
+	// normalize sprint name
+	sprintName = strings.TrimSpace(sprintName)
+	sprintName = strings.ReplaceAll(sprintName, " ", "-")
 
 	snapshotPath = filepath.Join(snapshotPath, fmt.Sprintf("%s.json", sprintName))
 

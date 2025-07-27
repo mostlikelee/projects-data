@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 )
@@ -24,16 +25,24 @@ type Sprint struct {
 }
 
 func main() {
-	// Path to JSON file
-	jsonPath := ".tmp/items.json"
+	// Read environment variables
+	sprintName := os.Getenv("SPRINT_NAME")
+	if sprintName == "" {
+		log.Fatal("SPRINT_NAME environment variable is not set")
+	}
+	csvDir := os.Getenv("BURNDOWN_PATH")
+	if csvDir == "" {
+		log.Fatal("BURNDOWN_CSV_PATH environment variable is not set")
+	}
+	csvPath := filepath.Join(csvDir, sprintName+".csv")
 
-	// Get CSV path from environment
-	csvPath := os.Getenv("BURNDOWN_CSV_PATH")
-	if csvPath == "" {
-		log.Fatal("BURNDOWN_CSV_PATH env variable is not set")
+	// Ensure directory exists
+	if err := os.MkdirAll(csvDir, 0755); err != nil {
+		log.Fatalf("Failed to create directory: %v", err)
 	}
 
-	// Open JSON file
+	// Load and parse items.json
+	jsonPath := ".tmp/items.json"
 	file, err := os.Open(jsonPath)
 	if err != nil {
 		log.Fatalf("Failed to open JSON file: %v", err)
@@ -45,16 +54,25 @@ func main() {
 		log.Fatalf("Failed to decode JSON: %v", err)
 	}
 
-	// Aggregate point totals
+	// Calculate totals only for current sprint
 	var total, remaining int
 	for _, item := range snap.Items {
+		if item.Sprint == nil || item.Sprint.Title != sprintName {
+			continue
+		}
 		total += item.Estimate
-		if item.Status != "Done" {
+		if item.Status != "✔️Awaiting QA" && item.Status != "Done" && item.Status != "✅ Ready for release" {
 			remaining += item.Estimate
 		}
 	}
 
-	// Create or append to CSV
+	// Skip writing if no items matched the sprint
+	if total == 0 {
+		log.Printf("No items found for sprint %q — skipping CSV write.", sprintName)
+		return
+	}
+
+	// Open or create CSV file
 	csvFile, err := os.OpenFile(csvPath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatalf("Failed to open CSV file: %v", err)
@@ -63,10 +81,12 @@ func main() {
 
 	writer := csv.NewWriter(csvFile)
 
-	// Write header only if file is empty
+	// Write header if file is new
 	fi, err := csvFile.Stat()
 	if err == nil && fi.Size() == 0 {
-		_ = writer.Write([]string{"timestamp", "total_points", "remaining_points"})
+		if err := writer.Write([]string{"timestamp", "total_points", "remaining_points"}); err != nil {
+			log.Fatalf("Failed to write CSV header: %v", err)
+		}
 	}
 
 	now := time.Now().UTC().Format(time.RFC3339)
@@ -80,5 +100,5 @@ func main() {
 		log.Fatalf("Error flushing CSV: %v", err)
 	}
 
-	log.Printf("Appended snapshot: %s | total: %d | remaining: %d", now, total, remaining)
+	log.Printf("✅ Appended %s.csv: total=%d, remaining=%d", sprintName, total, remaining)
 }
