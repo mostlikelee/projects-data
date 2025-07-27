@@ -402,8 +402,10 @@ func main() {
 
 	snapshotPath := os.Getenv("SNAPSHOT_PATH")
 	if snapshotPath == "" {
-		snapshotPath = filepath.Join("snapshots", fmt.Sprintf("%s.json", sprintName))
+		snapshotPath = "./snapshots"
 	}
+
+	snapshotPath = filepath.Join(snapshotPath, fmt.Sprintf("%s.json", sprintName))
 
 	tmpDir := ".tmp"
 	items, err := parseItemsFile(filepath.Join(tmpDir, "items.json"), tmpDir)
