@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "2025-07-27T20:25:31.487036629Z",
+    "timestamp": "2025-07-27T23:23:56.869278Z",
     "items": [
       {
         "assignees": [
@@ -342,106 +342,6 @@
               "login": "iansltx"
             },
             "body": "Both PRs are merged. FMA updates (for Box/WARP) are now live. Custom package updates will be live in 4.72.0 alongside the other uninstall improvements."
-          }
-        ]
-      },
-      {
-        "assignees": [
-          "jacobshandling"
-        ],
-        "content": {
-          "body": "## Related user story\n\nSub-task of #30240 \n\u003c!-- A sub-task always belongs to exactly one story.  The parent user story for this technical sub-task is linked here.  Comment on the parent story, not on this sub-task. --\u003e\n\n## Task\n\n- [ ] Create **update details modal**\n- [ ] Update the **Install details modal**\n- [ ] Update the **uninstall details modal**\n- [ ] Allow all 3 modals to be accessed from both **Self-service page** and **Host details \u003e software \u003e Inventory page** with nuances in copy changes between each\n\n## Condition of satisfaction\n\n- [ ] Users click **update available** will be able to see the **Update details modal**\n- [ ] Users can **update** from the **Update details modal**\n- [ ] Users can **uninstall** from the **Update details modal**\n- [ ] Uninstall and install details modals have a new current version/versions section\n- [ ] Uninstall and install details modals have details hide/show with reveal button\n- [ ] Uninstall and install details modals can be reached via clicking **Install (pending)** / **Uninstall (pending)** / **Update available**, etc on an offline host\n- [ ] Nuance between copies for modals accessed from Self-service page vs. Host details \u003e software \u003e inventory page\n\n- See story's [Figma](https://www.figma.com/design/LaPOy2xbXSNIYtFenO7FTt/-30240-Show-appropriate-self-service-actions-based-on-whether-software-is-on-the-host?node-id=5317-1836\u0026t=wQkHuan83PAwlqaW-0) \n\u003c!-- Describe the conditions of satisfaction that will resolve this issue.  The \"definition of done\". It is always up to contributors to check their own work.  But especially keep in mind there is no external quality assurance check for sub-tasks.  (Only user stories get automatic external QA.  With sub-tasks, it's up to you.)  --\u003e\n",
-          "number": 30860,
-          "repository": "fleetdm/fleet",
-          "title": "Show appropriate self-service/host software \u003e Update details, Install details, and Uninstall details modals",
-          "type": "Issue",
-          "url": "https://github.com/fleetdm/fleet/issues/30860"
-        },
-        "id": "PVTI_lADOBDAnic4A4BEUzgck75Q",
-        "labels": [
-          "~frontend",
-          ":release",
-          "~sub-task",
-          "#g-orchestration",
-          "~assisting g-software"
-        ],
-        "milestone": {
-          "dueOn": "2025-08-08T00:00:00Z",
-          "title": "4.72.0"
-        },
-        "repository": "https://github.com/fleetdm/fleet",
-        "sprint": {
-          "duration": 21,
-          "iterationId": "80d566cb",
-          "startDate": "2025-07-07",
-          "title": "Sprint 44"
-        },
-        "status": "🐣 In progress",
-        "title": "Show appropriate self-service/host software \u003e Update details, Install details, and Uninstall details modals",
-        "comments": [
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "@RachelElysia @jacobshandling do you have an estimate you can add here?"
-          },
-          {
-            "author": {
-              "login": "jacobshandling"
-            },
-            "body": "**Update 7/24 - as of design clarifications today, this logic is now outdated**\n\nAdding this UI flowchart for the Install details modal (combination of current install details and current software details modals) \n\n\u003cimg width=\"2608\" height=\"1589\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/76ba6ec0-3fd9-405b-80e5-90063314971c\" /\u003e"
-          },
-          {
-            "author": {
-              "login": "jacobshandling"
-            },
-            "body": "New abstractions relevant for updated Install details UI:\n\n```\n - `InventoryVersions`\n    - handles versions card(s) rendering\n    - a base component used by others\n  - `InventoryVersionsModal`\n    - wraps `InventoryVersions`\n    - handles modal rendering logic, including title \n    - use in:\n      - DUP \u003e Software on table row click\n      - Host details \u003e\n        - SW Inventory \u003e on click table' File path column when \u003e 1 path present\n  `InstallDetailsModal` (wraps `InventoryVersions` or `AppInstallDetails` if is a VPP install)\n    -use in:\n      - Activity feeds\n      - DUP self-service\n      - (new) Host details \u003e SW Library \u003e Status\n```\n\n"
-          }
-        ]
-      },
-      {
-        "assignees": [
-          "jacobshandling"
-        ],
-        "content": {
-          "body": "\"...There’s a different install modal for app store apps vs software packages... so we’ll need to rebase/take that into account for the new modals\"",
-          "number": 31114,
-          "repository": "fleetdm/fleet",
-          "title": "Show appropriate self-service/host software \u003e AppInstallDetails modal",
-          "type": "Issue",
-          "url": "https://github.com/fleetdm/fleet/issues/31114"
-        },
-        "id": "PVTI_lADOBDAnic4A4BEUzgc0HQg",
-        "labels": [
-          ":release",
-          "~sub-task",
-          "#g-software"
-        ],
-        "milestone": {
-          "dueOn": "2025-08-08T00:00:00Z",
-          "title": "4.72.0"
-        },
-        "repository": "https://github.com/fleetdm/fleet",
-        "sprint": {
-          "duration": 21,
-          "iterationId": "80d566cb",
-          "startDate": "2025-07-07",
-          "title": "Sprint 44"
-        },
-        "status": "🐣 In progress",
-        "title": "Show appropriate self-service/host software \u003e AppInstallDetails modal",
-        "comments": [
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "@RachelElysia @jacobshandling this popped up on our release board.  is it a sub-task?"
-          },
-          {
-            "author": {
-              "login": "jacobshandling"
-            },
-            "body": "@mostlikelee yes"
           }
         ]
       },
@@ -2204,9 +2104,9 @@
         "repository": "https://github.com/fleetdm/fleet",
         "sprint": {
           "duration": 21,
-          "iterationId": "80d566cb",
-          "startDate": "2025-07-07",
-          "title": "Sprint 44"
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
         },
         "status": "Waiting",
         "title": "🪲Vulnerability webhook doesn't work in Fleet Free",
@@ -2270,59 +2170,6 @@
               "login": "iansltx"
             },
             "body": "@ilpianista Checking in here as you had submitted a PR and I had some feedback there. Any questions regarding that feedback? Thanks!"
-          }
-        ]
-      },
-      {
-        "assignees": [
-          "mostlikelee"
-        ],
-        "content": {
-          "body": "test issue description edit 1",
-          "number": 31307,
-          "repository": "fleetdm/fleet",
-          "title": "test issue title",
-          "type": "Issue",
-          "url": "https://github.com/fleetdm/fleet/issues/31307"
-        },
-        "estimate": 0,
-        "id": "PVTI_lADOBDAnic4A4BEUzgc_3wY",
-        "labels": [
-          ":release",
-          "#g-software",
-          "fma"
-        ],
-        "milestone": {
-          "dueOn": "2025-08-08T00:00:00Z",
-          "title": "4.72.0"
-        },
-        "repository": "https://github.com/fleetdm/fleet",
-        "status": "Waiting",
-        "title": "test issue title",
-        "comments": [
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "comment 1"
-          },
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "comment 2"
-          },
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "comment 3"
-          },
-          {
-            "author": {
-              "login": "mostlikelee"
-            },
-            "body": "comment 4"
           }
         ]
       },
@@ -3364,9 +3211,9 @@
         "repository": "https://github.com/fleetdm/fleet",
         "sprint": {
           "duration": 21,
-          "iterationId": "80d566cb",
-          "startDate": "2025-07-07",
-          "title": "Sprint 44"
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
         },
         "status": "🥚 Ready",
         "title": "Self-Service Updates: Guide/Docs"
@@ -3391,12 +3238,16 @@
           "~pushed",
           "#g-software"
         ],
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
         "repository": "https://github.com/fleetdm/fleet",
         "sprint": {
           "duration": 21,
-          "iterationId": "80d566cb",
-          "startDate": "2025-07-07",
-          "title": "Sprint 44"
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
         },
         "status": "🥚 Ready",
         "title": "Software page: filter by custom severity (CVSS score) ranges",
@@ -3672,6 +3523,39 @@
         "title": "Self-Service Update: Frontend"
       },
       {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "Tracking carry over work ",
+          "number": 31309,
+          "repository": "fleetdm/fleet",
+          "title": "Self-service actions carryover",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31309"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdAjcc",
+        "labels": [
+          "~frontend",
+          "~sub-task",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-08T00:00:00Z",
+          "title": "4.72.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "🐣 In progress",
+        "title": "Self-service actions carryover"
+      },
+      {
         "content": {
           "body": "**Fleet version**: \u003c!-- Copy this from the \"My account\" page in the Fleet UI, or run `fleetctl --version` --\u003e\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nThe host will switch to MDM off, and pending activity items will be cancelled, but the pending install just spins. Verification isn't sent, and there's no way to \"cancel\" the install. \nThere are other situations that have resulted in a vpp app install command being sent, and a VPP verify command being sent, but then verification never completes for some reason.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\nTo get a forever \"installing\" scenario, and you can't cancel the activity item:\n1. Add a VPP software item to the team's Library\n2. For an MDM enabled host, initiate the install, then turn off Wifi on the host\n3. Remove the MDM profile on the host \n4. Turn WiFi back on, refetch host vitals\n\nYou'll also get funny states if the app installs and you shut off WiFi before the verification is sent.\nI've also seen a state where a verification was sent but never verified... I don't recall exactly how I got in that state.\n\n### 🕯️ More info _(optional)_\nIn the described scenario, if you turn MDM off again while connected to WiFi, the install will be marked as failed. But this requires manual user intervention and it would be nice if we had an automatic way to clean up lingering unverified VPP installs\n\nIn other scenarios, if you can delete the upcoming activity, it will cancel the pending install, but having to manually cancel these installs could be time consuming, especially if there was an event that caused a large number of the VPP install verifications to fail (perhaps an APNS outage or something)\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n\u003c!-- ### 🛠️ To fix --\u003e\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\n\u003c!-- Product designer: _________________________ --\u003e \u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e",
           "number": 30902,
@@ -3940,6 +3824,9 @@
         ]
       },
       {
+        "assignees": [
+          "mostlikelee"
+        ],
         "content": {
           "body": "# Checklist for submitter\r\n\r\nVulnerability incremental jobs are broken.  NVD introduced a breaking change in their feed to use inconsistent time formats.\r\n\r\n## Testing\r\n\r\n- [ ] Added/updated automated tests\r\n- [X] QA'd all new/changed functionality manually:\r\nhttps://github.com/mostlikelee/vulnerabilities/actions/workflows/nvd.yml\r\n",
           "number": 31258,
@@ -3948,6 +3835,7 @@
           "type": "PullRequest",
           "url": "https://github.com/fleetdm/fleet/pull/31258"
         },
+        "estimate": 1,
         "id": "PVTI_lADOBDAnic4A4BEUzgc98wI",
         "labels": [
           "bug",
@@ -3955,6 +3843,12 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "80d566cb",
+          "startDate": "2025-07-07",
+          "title": "Sprint 44"
+        },
         "status": "Done",
         "title": "Fix NVD feed generation"
       },
@@ -3980,12 +3874,18 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
         "status": "✔️Awaiting QA",
         "title": "Release QA: 4.72.0"
       },
       {
         "assignees": [
-          "mostlikelee"
+          "RachelElysia"
         ],
         "content": {
           "body": "**Fleet version**: 4.70.1\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nType column sort is actually sorting by name even though the UI buttons light up correctly and the URL sort column is correct\n\nhttps://github.com/user-attachments/assets/3cbe7c75-2cee-412d-b109-299f006f1716\n\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Go to Fleet Desktop\n2. Go to software tab\n3. Try to sort software by type\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nEnsure the backend supports sorting by type column\nIf so, it's a FE fix, if not, need to confirm design if it should or not (maybe it was unintentional to have sort on type and we accidentally added it to the UI?)\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix \nProduct designer: @marko-lisica \n\nAs backend doesn't support this I believe we didn't design it. Remove sort indicator from Type column on the frontend and if needed we can always add later.",
@@ -3995,6 +3895,7 @@
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/30746"
         },
+        "estimate": 1,
         "id": "PVTI_lADOBDAnic4A4BEUzgc-Xts",
         "labels": [
           "bug",
@@ -4004,6 +3905,12 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "80d566cb",
+          "startDate": "2025-07-07",
+          "title": "Sprint 44"
+        },
         "status": "✔️Awaiting QA",
         "title": "Fleet UI: Fleet Desktop \u003e Software \u003e Type sort broken",
         "comments": [

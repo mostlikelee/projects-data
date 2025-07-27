@@ -33,3 +33,5 @@ go.work.sum
 
 snapshots/
 .tmp
+
+.DS_Store

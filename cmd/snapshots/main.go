@@ -482,7 +482,7 @@ func isInCurrentSprint(item Item, currentSprintTitle string) bool {
 }
 
 func hasNoSprint(item Item) bool {
-	return item.Sprint == nil || item.Sprint.Title == ""
+	return item.Sprint == nil
 }
 
 func isNotDone(item Item) bool {
