@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -34,7 +35,10 @@ func main() {
 	if csvDir == "" {
 		log.Fatal("BURNDOWN_CSV_PATH environment variable is not set")
 	}
-	csvPath := filepath.Join(csvDir, sprintName+".csv")
+
+	csvName := strings.TrimSpace(sprintName)
+	csvName = strings.ReplaceAll(csvName, " ", "-")
+	csvPath := filepath.Join(csvDir, csvName+".csv")
 
 	// Ensure directory exists
 	if err := os.MkdirAll(csvDir, 0755); err != nil {
