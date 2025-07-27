@@ -29,16 +29,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Use GitHub CLI
-        run: |
-          gh auth status
-          gh issue list --repo fleetdm/fleet --limit 5
-
       - name: Download projects data
-        run: |
-          mkdir -p .tmp
-          echo "Fetch all items (unfiltered)..."
-          gh project item-list ${{ env.PROJECT_ID }} --owner fleetdm --limit 1000 --format json > .tmp/items.json
+        run: bash get.sh
 
       - name: Setup Go
         uses: actions/setup-go@v4
