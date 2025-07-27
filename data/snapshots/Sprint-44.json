@@ -2068,5 +2068,2250 @@
         "title": "Fleet UI: Fleet Desktop \u003e Software \u003e Type sort broken"
       }
     ]
+  },
+  {
+    "timestamp": "2025-07-27T20:21:16.70971262Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcq9R8",
+        "comments": [
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Vulns in Linux OS,\nDesign spec, we compose,\nSecure paths, users chose."
+          }
+        ],
+        "issueNumber": 30979,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcbSkI",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "This doesn't appear specific to 15.4.1\nI have seen similar things across fleet instances. For example:\n\n\u003cimg width=\"1510\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4426f46f-0359-4214-98a8-0d5068237534\" /\u003e\n\nComparing the 15.3 hosts the main differences I see are virtual machines vs physical hardware, but if the vulnerabilities have to do with the OS then I'm not sure why hardware would matter. These are all ARM machines so it's not a case of it being counted twice for Intel + ARM.\n\n\u003cimg width=\"1510\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e5bf2644-5520-4b96-97b8-d4c3aac57512\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee based on the conversation in slack, I've put the 'to fix' as an investigation as to what might be going on. I'll send this to estimation."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1750682841206779"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "timebox 2"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Adding the repro label back onto this as it's been long enough that the mentioned Render instance is no longer online, and that version of macOS is no longer listed in Dogfood.\n\nCan't use QAWolf envs to repro this as vuln processing is all over the map on those. Enrolling a host on Fleet Free's Dogfood would work here; right now that env only has Linux hosts attached. Just need a macOS host on a vulnerable version that exists on both Dogfood and Dogfood-Free, where vuln counts mismatch between them."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Never mind, got enough info to repro. Moving this back."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, we have #27061 making this bug a bit harder to troubleshoot, but it seems like there's a reliability issue somewhere for associating OS vulnerabilities to OS versions. https://dogfood.fleetdm.com/software/vulnerabilities/CVE-2025-31241 for example should apply to macOS 15.2 and 15.1, and that link was made in @jmwatts's local environment, but not in Dogfood. There are a handful of other vulnerabilities where we're missing a link, and it feels like the quantity of vulns missed isn't necessarily consistent between vulns runs.\n\nConfirmed that this _is not_ a Free vs. Premium issue."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Issue here was that my fix for #28368 triggered a regression here. In order to avoid test flakiness I avoided bumping `updated_at` in the database when pieces of the vulnerability hadn't changed, but doing so meant that the stale cleanup step of vulnerability processing would delete an arbitrary number of OS vulnerabilities that had existed in the previous run. Then the next vulns run would insert them again...and rinse and repeat. This phenomenon is more obvious in environments that are running the vulns cron every hour, and for which the vulns cron takes a non-negligible amount of time.\n\nThis would've broken more obviously had #26404 been in place, as we would've seen dramatic flapping on OS vulns on consecurive runs, without those runs needing to be two hours apart.\n\nThe fix is to revert to the previous `updated_at` behavior (bumping updated_at to the current time on each OS vuln insert/on duplicate key update), then revise the return value of the containing function (which only gets used in tests) to correctly indicate when a row was inserted vs. updated (whether or not values changed on that row), and improve tests, including ensuring that updated_at actually gets bumped when necessary.\n\nTo QA:\n\n1. Run vulns from a clean DB with a host or two enrolled with OSes with vulns\n2. Check OS vulnerabilities\n3. Simulate time passing by running `UPDATE operating_system_vulnerabilities SET updated_at = NOW() - INTERVAL 3 HOUR`\n4. Run vulns again\n5. Check OS vulnerabilities\n\nPrior to the fix you'd see ~no vulns in the DB at all at step 5. With the fix you'd see the same number of vulns in steps 2 and 5."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Run vulns from a clean DB with a host or two enrolled with OSes with vulns\n2. Check OS vulnerabilities\n3. Simulate time passing by running UPDATE operating_system_vulnerabilities SET updated_at = NOW() - INTERVAL 3 HOUR\n4. Run vulns again\n5. Check OS vulnerabilities\n- [x] Confirm the same number of vulns are shown in steps 2 and 5\n\n```\nselect * from operating_system_vulnerabilities;\n2302 rows in set (0.03 sec)\n```\n\n```\nselect * from operating_system_vulnerabilities;\n2302 rows in set (0.02 sec)\n```\n\nAlso confirmed that host counts match between different fleet servers for identical macOS versions."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Mac's flaws, once hidden,\nIn glass city, now counted.\nFleet brings light to truth."
+          }
+        ],
+        "issueNumber": 29988,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVLvY",
+        "comments": [
+          {
+            "author": {
+              "login": "xpkoala"
+            },
+            "body": "Orchestration gives a 👍 for release."
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "MDM gives a 👍 for release"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "```\nFLEET_VERSION_A=v4.70.1 FLEET_VERSION_B=rc-minor-fleet-v4.71.0 go test -v\n--- PASS: TestUpgradeAToB (62.26s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t62.280s\n```\n\n```\nFLEET_VERSION_A=v4.70.0 FLEET_VERSION_B=rc-minor-fleet-v4.71.0 go test -v\n--- PASS: TestUpgradeAToB (84.37s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t84.387s\n```\n\n```\nFLEET_VERSION_A=v4.69.0 FLEET_VERSION_B=rc-minor-fleet-v4.71.0 go test -v\n--- PASS: TestUpgradeAToB (53.74s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t53.754s\n```"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Software gives 👍 for release. "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Fleet upgrade flow,\nSecurity we bestow,\nChecks like nature's ebb and flow. \n\nTest steps clear as glass,\nIn a cloud city, they pass,\nContributors amass.\n\nSmoke tests in the air,\nErrors have no lair,\nPeace of mind, no scare. \n\nQueries run like streams,\nReality, not dreams,\nIn a system that gleams. \n\nWith hosts added, viewed,\nTheir absence, not misconstrued,\nFleet's promise, renewed."
+          }
+        ],
+        "issueNumber": 30600,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX6m4",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Need to decide on a desired fix here. Only thing I'm sure about on my estimate is doing this for Windows, and I'm adding padding for macOS."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/27756?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per discussion yesterday, split off the macOS work; this is now a Windows-only ticket, and was already estimated as such."
+          }
+        ],
+        "issueNumber": 27756,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcz8Es",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Self-assigning this and pulling it onto the software release board as this interacts with #27758. Will set up a separate PR for FLeet-maintained apps, which will need this same fix, so there's less that needs to be QA'd on-branch."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Moving to In review because there are two PRs and one hasn't yet been approved, even though the whole thing has been QA'd."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Both PRs are merged. FMA updates (for Box/WARP) are now live. Custom package updates will be live in 4.72.0 alongside the other uninstall improvements."
+          }
+        ],
+        "issueNumber": 31077,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgck75Q",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@RachelElysia @jacobshandling do you have an estimate you can add here?"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "**Update 7/24 - as of design clarifications today, this logic is now outdated**\n\nAdding this UI flowchart for the Install details modal (combination of current install details and current software details modals) \n\n\u003cimg width=\"2608\" height=\"1589\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/76ba6ec0-3fd9-405b-80e5-90063314971c\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "New abstractions relevant for updated Install details UI:\n\n```\n - `InventoryVersions`\n    - handles versions card(s) rendering\n    - a base component used by others\n  - `InventoryVersionsModal`\n    - wraps `InventoryVersions`\n    - handles modal rendering logic, including title \n    - use in:\n      - DUP \u003e Software on table row click\n      - Host details \u003e\n        - SW Inventory \u003e on click table' File path column when \u003e 1 path present\n  `InstallDetailsModal` (wraps `InventoryVersions` or `AppInstallDetails` if is a VPP install)\n    -use in:\n      - Activity feeds\n      - DUP self-service\n      - (new) Host details \u003e SW Library \u003e Status\n```\n\n"
+          }
+        ],
+        "issueNumber": 30860,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc0HQg",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@RachelElysia @jacobshandling this popped up on our release board.  is it a sub-task?"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "@mostlikelee yes"
+          }
+        ],
+        "issueNumber": 31114,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcdwYg",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "changing the status to a released bug as we can duplicate this behavior in the API on an earlier version.  because this bug is now a lot more prominent after UI changes, we are prioritizing this for 4.72.0"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "blocked until we discuss API changes on Friday"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed software is no longer showing when:\n- It is not currently installed on the host\n- It is pending install or it has failed the install\n\nChecked both in the Self service software tab and on the Host \u003e\u003e Software \u003e\u003e Inventory tab"
+          }
+        ],
+        "issueNumber": 30747,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcs0UM",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Pulled this bug off the drafting board because it's in progress on the release board.\n\nThanks @jmwatts and @jahzielv!"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "When I click on \"Installed\" in Self service for VPP apps I'm getting the same \"Fleet is installing or will install\" message..."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Add a VPP software item to the team's Library, make it available in Self Service\n2. For an MDM enabled host, initiate the install, then once the app is installed, immediately delete it\n3. Wait 10 min. This will result in a \"Failed\" status for the VPP app, because it will fail to verify that the app was installed\n4. Click on the \"Failed\" status in the Host \u003e\u003e Software \u003e\u003e Library tab, and also in Self Service\n\n- [x] The copy in the modals should both indicate that the install failed"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "VPP status wrong,\nFleet in clouds adjusts course,\nClarity reborn."
+          }
+        ],
+        "issueNumber": 31003,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcvhSQ",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "1. Start on a previous Fleet version, I used 4.70.0\n2. Install a VPP app on a host via Fleet\n3. Migrate to v4.71.0\n4. Attempt to reinstall the VPP app via Fleet\n- [x] Confirm app is installed and returned in an InstalledApplicationList command for macOS\n- [x] Confirm app is installed and returned in an InstalledApplicationList command for iOS/iPadOS"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@jahzielv can you throw an estimate on here?"
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "@mostlikelee done! "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "VPP apps in flight,\nManaged, they shine so bright,\nFleet's update ignites."
+          }
+        ],
+        "issueNumber": 31060,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5uA",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "One thing I noticed between the two DB snapshots is the newer one doesn't have valid deprecation references for the top two matches on Adobe Reader DC, when the previous revision did; the rows were marked as deprecated but nothing was listed in the `deprecated_by` table."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx @mostlikelee I took a stab at the to fix based on Ian's comment but I'm not sure it's exactly accurate. I'm also not sure if this extends beyond Acrobat Reader.\n\nMoving this to Ready to estimate per current process pending future changes."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo That's not quite it. I intentionally left the fix commented because we need to do some digging here to figure out what expected behavior would be on that software, given that NVD made feed changes on their end that should be semantically significant (because those Adobe CPEs have been that way for 2+ years). Maybe the new CPE resolution is correct (though losing the CPE entirely for the Windows version of Adobe Reader is concerning). Estimation here should be more of a timebox to confirm what a proper fix is here, since from a half-hour or so of investigation last night I wasn't able to fill in \"To fix\" myself."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "assigning a 2pt timebox here"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "This one also seems to have reverted back to the expected CPE. The test passes when re-enabled. PR is up."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Reader in the cloud,\nSynced CPEs, clear and loud,\nErrors are not allowed."
+          }
+        ],
+        "issueNumber": 29570,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5pQ",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Something changed in [the latest rev of the CPE DB](https://github.com/fleetdm/nvd/releases/tag/202504230037) to cause this. It looks like the urllib entry is still there though. Assigning this as a released bug because we haven't touched the code path for CPE generation in a bit. Depending on what this is, this may be a feed fix."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Generally I put something in the 'to fix' area before moving this to ready to estimate. It sounds, however, like it's not clear what the fix is without someone having to do some work to figure this out? "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo We can estimate this one as a time boxed \"figure out what the problem is and if it's simple solve it and if not soon out another ticket or spend more time on it based on how broken things are\" so this can move across."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx thanks! I'll make a comment to that effect at the top"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/28490?planning-poker) with Zenhub @iansltx @ksykulev @jahzielv"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Python's urllib lacked,\nFleet's improved insight tracks,\nCloud city intact."
+          }
+        ],
+        "issueNumber": 28490,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgctKwA",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Add a VPP App to the team's library\n2. On an MDM enrolled host, attempt to install the app\n3. Once the app installs, but before the install is verified, turn off MDM\n4. Notice that in the host_vpp_software_installs table that the command for installing the app now has a verification_failed_at timestamp, and the app install has failed. You should also see an entry in host_mdm_commands indicating a pending VPP verification.\n5. Turn on MDM\n6. Queue up another app install\n7. Wait\n- [x] Verified that VPP apps successfully install after the above workflow"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Failed checks no more,\nClears path for new installs,\nLike sky after storm."
+          }
+        ],
+        "issueNumber": 31020,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX7do",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/27580?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Reproduced in 4.65.0, updated Fleet version"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Note: QA Wolf reported this as well with #28459\n\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@mostlikelee @eugkuo @RachelElysia is this one relatively easy to fix? This is blocking a QA Wolf test and would be great to have it fixed if we can fit it in. Thanks!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts This is is backend FWIW, and probably not something super obvious on the backend. I _might_ be able to take this later in the sprint (can put it at the top of the Estimated column) but I figure the solution for this won't be trivial."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Thanks @iansltx "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Confirmed the fix by grabbing a copy of the Dogfood DB and running the vulns list endpoint call against it. Pre-fix I was getting an artificially high count. After the fix I got a count that matched the number of rows (one per CVE) returned.\n\nIssue was one of deduplicating rows. Specifically, if a CVE got reported at different times or from different sources we'd get multiple entries. For example, a cross-platform CVE that was reported via OVAL for Linux and NVD for macOS, or a CVE that affected multiple pieces of software, where a host installed a new piece of affected software after the CVE was first found."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nTested a number of different combinations of filters and search terms and confirmed that all counts are now correct."
+          }
+        ],
+        "issueNumber": 27580,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcdkTI",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "\u003cimg width=\"362\" height=\"126\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1daf41fb-0ab0-4db6-b383-297e4afdf4c2\" /\u003e"
+          }
+        ],
+        "issueNumber": 30739,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcdAFs",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "\u003cimg width=\"355\" height=\"131\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/29f22707-2e02-46c6-981f-fb23ccf38d2b\" /\u003e"
+          }
+        ],
+        "issueNumber": 30724,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcdLoc",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @mostlikelee is this targeted for 4.72? Just noticed we're missing a milestone so I added 4.72. Please feel free to update it."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "\u003cimg width=\"366\" height=\"123\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1551207a-82f3-4eb6-88b2-7183429cfed3\" /\u003e"
+          }
+        ],
+        "issueNumber": 30727,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcgftg",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "\u003cimg width=\"353\" height=\"121\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9ed7b411-c2af-4496-aa18-ce1b974a5de8\" /\u003e"
+          }
+        ],
+        "issueNumber": 30802,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX6Nk",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/27758?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "My estimate is based on the ability to either implement this simultaneously with UpgradeCode changes on the automatic install query, or being able to drop that query until UpgradeCode starts coming in in inventory. Estimated scope also _does not_ include migrating existing uninstall scripts."
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "For context, osquery upgrade code PR https://github.com/osquery/osquery/pull/8587"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Reassigning since this got pulled back during sprint kickoff today."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "IIRC this got estimated as a 5 previously, so moving this back to estimated. There's a little more scope in here for a fallback, but given that we need the fallback anyway that means we don't need to retroactively fix package IDs/uninstall scripts on existing installers so this should wash out back to a 5."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving due to scope increases"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Plan here is to\n\n- [x] Add a ~nullable~ (changing to not null default blank because zero values) `upgrade_code` field to `software_installers`\n- [x] Refer to it via a new `$UPGRADE_CODE` var\n- [x] Retroactively populate UpgradeCode for existing MSIs (similar to uninstall population cron), but _don't_ retroactively change the uninstall script.\n- [x] Continue to map `$PACKAGE_ID` to ProductCode\n- [x] Update the UI to mention the new variable and show the upgrade code based script as a default, even though if we can't extract an UpgradeCode from an MSI we'll fall back to the product code based script if the uninstall script is either blank or the same as the golden script\n- [x] Have the same behavior for GitOps\n\nFYI @mostlikelee @marko-lisica "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Bonus points: we can get rid of the MSI uninstall disclaimer on self-service now that this is in place, so I'm including that cleanup in the PR."
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "QA Notes: \n\nWas able to reproduce the initial issue on 4.71, but after moving to main, any custom software can be uninstalled with any new script, even if there's a version mismatch. \nWent through the test plan and checked off all the items. Additionally, nothing has stood out during additional exploratory testing. "
+          }
+        ],
+        "issueNumber": 27758,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX6VI",
+        "comments": [
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee So if I am to understand this, in step 2 it's the same _version_ of the same app? The issue is that the MSI version is newer which is reinstalling the same _version_ of the same app?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Same app, different version.\n\nThe auto-install policy query should pass (no install queued) for any version of the same app (once installed the app isn't updated when checking that box). Instead, for MSIs, if you install a different version of the app than the custom package you uploaded, the policy will fail and the install will be triggered."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Oh! so this isn't a patching thing. The way things currently work we shouldn't update things b/c patching isn't a thing yet. Let me update the 'to fix' section. Thanks!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@mostlikelee Sounds like you're still doing research on this. Moving back to Ready to spec since if we're already using UpgradeCode and if that's the identifier being passed back by osquery this is a false alarm."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Moving this to Ready to Estimate now that we have a clearer idea of what we'd need to do here. osquery changes block this ticket, but aren't in scope for the ticket itself (going to add another ticket for the required osquery support so we can track that independently)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/27447?planning-poker) with Zenhub @jahzielv @ksykulev"
+          }
+        ],
+        "issueNumber": 27447,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX12Q",
+        "comments": [
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @mostlikelee Removed 'uninstall' from this ticket as the order of operations has determined that this ticket will go ahead of the uninstall ticket (#28038)"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@jmwatts I took a first pass at the test plan.\n\nQuestions for @mostlikelee:\n\n1. What YAML/API things might need done?\n\nQuestions for @RachelElysia \n\n1. On the carousel, if there are 6 items in the carousel are we thinking it would show 4 and 2 when paginating? Or would we always show four and selecting \"Next\" would go from showing 1 2 3 4 to showing 3 4 5 6?"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Notes from 14 April 2025:\n\n1. @noahtalerman : Can we scope this down to Mac only and FMA? \n    1. There are extra complications around Windows due to known issues that we've been discussing. There are also current research tickets on upgrade codes for Windows that are outstanding (#27776) which would be a pre-req for Windows.\n2. Do we want to add activity changes at this time? @mostlikelee and I think no for simplicty's sake.\n"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @noahtalerman : Can we scope this down to Mac only and FMA?\n\n@eugkuo @mostlikelee I think let's draft for all support we support on macOS, Windows, and Linux (custom packages, App Store apps, and Fleet-maintained apps).\n\nAfter we have designs, I think let's discuss and decide how to cut the story up.\n\nWhy? So we know where we're heading and we tease out more complications/unknowns. Then we can come up with a plan for how to address Windows and Linux even if the first iteration we build is just macOS Fleet-maintained apps. Which is a valid first iteration.\n\n\u003e Do we want to add activity changes at this time?\n\n@eugkuo same for activities. I think let's draft activities and then cut."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "\u003e @eugkuo @mostlikelee I think let's draft for all support we support on macOS, Windows, and Linux (custom packages, App Store apps, and Fleet-maintained apps).\n\n@noahtalerman Coolio. I don't think the design changes. The UI will be the same regardless of platform. (@mostlikelee correct me if I'm wrong).\n\nWRT activities, I added [an example](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5318-3291\u0026t=LPfejWpLp8jclkAm-11) to the ticket above."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @jmwatts @mostlikelee \n I've updated the selected state in the category filters to match work done on [#27245](https://github.com/fleetdm/fleet/issues/27245)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Question 1: what is expected behavior when multiple versions of a software are installed on a host:\n- On macOS, if an application is renamed (`Firefox.app` + `Firefox2.app`), Fleet will show both applications as pending updates in the carousel, but only 1 will patch successfully (Firefox.app because it matches the app name in the dmg)\n- This will also be the case on macOS with `/Applications/Firefox.app` + `~/Downloads/Firefox.app` (only the first will patch)\n- machine vs user installs will also see this symptom on Windows\n\nQuestion 2: Does the update disappear from the carousel if the software install executed successfully, but the app did not actually update?\nexamples:\n- macOS: Firefox.app is renamed to Firefox2.app, install completes successfully and the host now has Firefox.app + Firefox2.app\n- Windows: machine scope is installed, and installer is user scoped (or vice-versa)"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee @noahtalerman Updates from 7 May 2025 DR:\n\n1. Added [tooltip](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5366-4609\u0026t=3kh7v4Aj5lLSDppW-11) on `installed` status\n\n"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @mostlikelee \n\nUpdated the designs with the following:\n\n1. Removed \"Installed\" status from the update cards at the top of the page.\n2. Upgraded the 'update' action to a button.\n3. For installed apps, updated the action to 'reinstall'"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@eugkuo @noahtalerman we realized that we need design when multiple versions of an updatable app is installed"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee I'm not exactly sure what you mean by this. Wouldn't we still have a single update button for the app? I mean we'd want to update it all to the most recent. I think I might be missing some nuance here.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Chatted with @mostlikelee and here are the use cases:\n\n1. N different versions in the Applications folder\n2. N copies of the same version in the Applications folder\n    1. Currently can only update the one with the name we expect.\n4. N copies of various versions in different locations.\n\nWe can only update if have following criteria:\n1. Existing path needs to be what's expected (name, location, etc.)\n    1. Works for FMAs\n    2. Does not work as well for custom packages.\n    4. Big question mark around VPP.\n\nLet's discuss in USR.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looks like there's an off-by-one in step 11 in the test plan.\n\nAlso, for \"Updating\", can we show that status string always when inventory says a piece of software is installed but there's also a pending install? That would allow us to use the existing API there rather than having to build a new one.\n\nI have an idea on making this frontend-only to expedite: use the existing self-service filter, no pagination, and client-side filter to results that have only installed versions where version differs from the installer package. This gets this work out from behind further ListHostSoftware tweaks/derisks it a bit, at the cost of additional frontend munging."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx \n\u003e Looks like there's an off-by-one in step 11 in the test plan.\nThanks! Fixed.\n\n\u003eAlso, for \"Updating\", can we show that status string always when inventory says a piece of software is installed but there's also a pending install? That would allow us to use the existing API there rather than having to build a new one.\n\nSo there could be a pending install and we and updating over that? At any rate, if we're updating that software it seems reasonable to show the 'updating' status.\n\n@noahtalerman thoughts?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo To clarify, I'm saying that if we have a piece of software already in inventory and there's a pending install (from whatever Fleet-initiated source...Install button, update button, policy execution, whatever), we use the word \"Updating...\" rather than \"Installing...\" in the self-service UI. Then reserve \"Installing...\" for cases where a host _doesn't_ have the same software in inventory already.\n\nSo the pending statuses would be:\n\n* Installing - wasn't in inventory, install is pending\n* Updating - was in inventory, install is pending\n* Uninstalling - uninstall is pending\n\nIf the above are the rules, the frontend already has all of the information it needs (with existing API endpoints) to show the correct status (so, no backend/DB changes to differentiate between \"installing\" and \"updating\")."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Ohhhh! This works for me. Also,  in future we shouldn't have 'Install' as an action on installed software. It'll say 'uninstall' or 'update' so this would mesh nicely.\n\ncc @noahtalerman @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman Reverted to secondary update buttons in the update cards."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Bumping this as an unresolved question as we expedite this story: https://github.com/fleetdm/fleet/issues/27983#issuecomment-2877468972"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "During a call on \"Updates in self-service\" call on 2025-05-26, here's what @mostlikelee and I decided for the first iteration: \n\n![Image](https://github.com/user-attachments/assets/1b98c30b-6dc8-444e-826b-a6fc81e8d715)\n\nFleet will document this behavior is the self-service software guide. The UI will link IT admins to this guide (redirect PR is [here](https://github.com/fleetdm/fleet/pull/29445)):\n\n![Image](https://github.com/user-attachments/assets/f6ca58b1-8ce0-473b-a9f3-a9e574e7aaa0)\n\n![Image](https://github.com/user-attachments/assets/30d73148-cd03-4ad8-9b84-5ee89467e68a)\n\nEventually, Fleet will iterate on this behavior. Plan is to ship iterative improvements such that more apps show up in “Updates.”\n\ncc @eugkuo "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @eugkuo I moved this 480px width screen into scratchpad [here](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5408-9141\u0026t=2qzAG36eyoKjsBAb-1). Looking the discussion in [this closed PR](https://github.com/fleetdm/fleet/pull/28465), it sounds like we haven't added support for screen widths down to 480px yet.\n\n![Image](https://github.com/user-attachments/assets/d3909d83-841e-41be-a74c-319dffe80946)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Thinking through workflow for a moment, if an app shows up in the updates carousel, it's because we've seen it in inventory, and the version in inventory is less than the version of the corresponding installable software (FMA, custom package, or VPP) for that team (and we don't show a card if criteria around installed paths aren't met, see dev note mentioned above). Good so far? This has a side effect of VPP apps being most likely to be in that carousel, as we'll display a new version there within an hour of the version being published via Apple, with no ability for an admin to override this, but...that's probably okay?\n\nNext, an end user clicks \"Update\", at which point we either send the MDM command to install or queue up a package-based install. In both cases, currently there will be a point where the software is reported as installed but software invenotry has not yet been refreshed, even with #28738 implemented. This means that we can show the \"updating\" spinner right up until the install completes, at which point a purely inventory-based system would flip back to having the \"Update\" action displayed until inventory gets run again, which isn't what we want.\n\n## Update status alternative: install status\n\nOne alternative would be to take installation status into account in some form when installs are successful/failed, rather than just when they're pending. Catch here is that we're replicating issues around freshness that affect our existing host software inventory, where an out-of-band update (e.g. Chrome auto-updating) would cause the update card to show when it isn't necessary. This issue is relevant when the update installation fails but the software eventually gets updated out-of-band.\n\n### Install status freshness: version comparison\n\nOne mitigation for the freshness comparison issue would be to compare versions between inventory and the install receipts, and have the higher version win, but VPP installs currently break this as `host_vpp_software_installs` doesn't include the version that was installed, so we'd wind up in a case where VPP apps would never show up in the updates list once installed the first time because installed version would just reference back to the latest available version.\n\n### Install status freshness: refetch wins when more recent than install\n\nAnother mitigation would be to only take install statuses into account when they're more recent than the most recent host vitals refetch. We have install timestamp info and last refetch timestamp info, so this should be reliable, and we can use this nuance to show available updates with e.g. \"Update successful\" or \"Update failed\" if we wanted between getting an install result back and the next refetch.\n\nWe could actually extend this logic to host software listing in general, explicitly ignoring install receipts (success or failure) unless they've happened since the most recent vitals refetch as the vitals refetch should at that point be the source of truth.\n\n## Update status alternative: refetch on install success\n\nAnother alternative would be to retech host vitals (or at least rerun software inventory) after each successful install. Doing this right needs #28738 as a prerequisite so we don't refetch too early. If we did this, the window where software inventory alone was too stale for correctly showing the update carousel would be minimized.\n\n---\n\nWe could combine \"refetch wins when more recent than install\" and \"refetch on install success\", plus maybe polling of host details on the **My device** page while refetching, to get a nearly realtime view of what's actually installed. Clicking Update on a piece of software would pop up a spinner in place of the Update button, then the status would flip to Update Successful for \u003c 1 minute while a vitals refresh was triggered, then the update card would disappear entirely once the vitals refresh triggered by that install was completed. For failed updates, we'd show the \"Update failed\" status until the next vitals refetch, with a retry button, and that failure would go away (replaced with an \"Update\" action with no status) after the next refetch.\n\nThis combined approach will require API changes (but no fleetd changes) to work, but in return we get a clear path to cleaning up inventory-vs-install idiosyncrasies, and we avoid end-user frustration stemming from varying degrees of staleness on the updates list compared to what they have installed."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Unrelated to the above: hopefully installers get targeted properly with labels for e.g. Intel Macs in this customer's deployment, since otherwise we'll be presenting end users with prompts to update apps to versions that won't work on their architecture."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looking over the wireframes, looks like we have a different activity description than the standard \"installed X app.\" Given the complexity of this ticket as it stands, can we remove the activity from scope, reverting to the standard \"an end user installed X\" activity that we have right now? Otherwise we need to decide how we'll differentiate an update from an install (new param on the install reqeuest? Automatically server-side based on what's in inventory on the machine?) and define a structure for the revised activity record (I assume a new field on `installed_software`), neither of which we've spec'd. Feels like those changes can be added in a follow-up ticket."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "One interesting side effect of \"refetch vitals after every install\" is it could resolve the software install \"half\" of #25969/#28523, albeit in a heavier-weight fashion since IIRC a vitals refetch runs policy queries as well as software inventory queries. If we just run software inventory (so, not a full refetch) those issues are unaffected. TBD whether we'd want to start with a full vitals refetch hre since that's more computationally expensive both client- and server-side and once we implement it it's more likely that admins would rely on the full-refetch behavior so it'd be hard to back out.\n\nBut if we _didn't_ collect the entire set of host vitals, we'd need another timestamp on hosts to indicate how fresh software inventory was relative to the rest of host vitals, so just doing a full refetch is a lot less risky from a development perspective. So \"do a full refetch after an install completes\" still makes sense here I think.\n\nNote that this is _in addition to_, and _after_, the MDM polling covered in #28738, as that polling would only affect software install status and not inventory (even on iOS/iPadOS the polling would be checking for managed apps, while software inventory grabs the entire installed app list)."
+          },
+          {
+            "author": {
+              "login": "gillespi314"
+            },
+            "body": "FYI, we have some existing framework for refetching [critical queries](https://github.com/fleetdm/fleet/blob/f018066beef248bdb67700a3f458809f9bad410a/server/fleet/hosts.go#L361-L362) that might be useful here."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@gillespi314 Thanks for pointing that out! I think that in this case once we implement #28738 we'll only need to refetch once, after the install is confirmed succeeded (on script exit 0 + post-install for package-based, on MDM managed apps success for VPP) so we won't need to take the perf hit of a full refetch on every host check-in (we're making the assumption that the MDM managed app inventory command is less expensive to poll than our standard vitals suite)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx @mostlikelee Removed the updated activity feed and wrote a [FR](https://github.com/fleetdm/fleet/issues/29492) to update this in the future.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee @eugkuo, just checking, is this story ready to move to \"Estimated\"? Looks like it has an estimate on it."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "The estimate is from our expedited estimation session.  I'll remove the estimate as we're going to want to estimate this again after Spec.  This story is in the correct spot.  We'll move it over when https://github.com/fleetdm/fleet/issues/29494 is complete."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @iansltx just a reminder that this story is ready for spec? Can you please work with the team to get it estimated ahead of next sprint?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman on my list after my responsibilities for 4.69 are concluded."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts This test plan is ready for a last look. Make any edits that you need to make, and once it looks good pull this to Ready to Estimate. I've already pulled subtasks to Ready to Estimate as I'm sufficiently confident that I have them spec'd correctly and wanted to give folks a little more runway to put down their own estimates."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Workflow diagrams:\n\n![Image](https://github.com/user-attachments/assets/c265a375-fc3e-437e-8350-b685c605d56d)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx test plan looks good. \n\n\u003e Windows apps don't show in the available updates list if they don't have an associated install path \n\nDo we know if we plan to address https://github.com/fleetdm/fleet/issues/29449 before this ticket?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts That would get addressed in the same sprint at the earliest, given that this will be going into the next sprint. There isn't a direct dependency here, and these shouldn't touch the same code, so if/once that bug is fixed this implementation will \"just work.\""
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman adding this back into your queue based on our design review discussion re: copy/UI changes for unpatchable software"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee can you please update the test plan? We made a change to not worry about where the software is installed (paths). Tip: CMD+F for \"path\" in the issue description."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Revised the spec here (didn't touch Figmas), including test plan, to drop host paths interactions, and drop this down to FE-only. We'll likely need to reimplement with server-side changes in the next iteration, but workload-wise if we tried to implement this plus #30240 in a single sprint with backend changes we'd miss the release cut due to waiting for dependencies.\n\nThis story now consists of frontend changes plus docs changes, so tee shirt sizing is just above an XS. Likely scenario here is that dev gets done in the 4.72 sprint, and docs get updated during the 4.73 dev sprint but prior to 4.72 going GA.\n\nAPI change/path-related subtasks have been dissociated from this story and moved back to the \"New requests\" column; they'll need to be either associated with a new follow-up story or converted to stories themselves to be actionable.\n\nPulled the story back to USR to revalidate the test plan, while keeping subtasks in Estimated based on previous discussions."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "after some discussion, keeping the original estimates and moving to Estimated."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica thanks for jumping right into our team and the mountain of dev/design sync needed. Here's some recap of stuff I need/needed clarified.\n\nPrevious conversations:\n\n000. This isn't in the spec to be able to sort status from host details \u003e software \u003e library. But if we did it would be consistent with self-service status sort. I tried to implement but it proved difficult because of the server side pagination/query/sort happening and sorting on a column that is built in the FE doesn't play nice with server side sort. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175433082329?thread_ts=1752168568.807959\u0026cid=C086V2QK76X) Confirm we are intentionally scratching sorting on host details \u003e software \u003e library \u003e status column or I need to jump through a lot of hoops to make everything client side sort an then implement\n\n00. I dev-ed in clientside paginating self-service page to 20. When there's updates to specs like this, are you DRI for updating the Figma and QA plan? (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175280199089)\n\n0. We either needed to make 2 API calls, one for update software and the other for filtered software in the self-service section OR move the self-service software search query to be client side. We chose to make everything client side so we don't have to make so many API calls and deal with making 2x the API calls every time an install/uninstall/update action is clicked. It's sticky, partially because this is all frontend hoops jumped through because the API doesn't paginate, doesn't filter categories, and doesn't have a 1:1 map of status's in the API with status shown in the UI.  (https://fleetdm.slack.com/archives/C086V2QK76X/p1752180334175959)\n\nQuestions from [Self-service/Library updates thread](https://fleetdm.slack.com/archives/C086V2QK76X/p1752184798822479):\n\n1. I asked the channel, If there's more than one version installed on a host, what should go on the software updates card for the \"125.0.1 -\u003e 126.0.1\". If recalled correctly, we think the Figma is not correct, and should just show the library version.\n\n2. Do we show the update available modal if you click update in the carousel or does it just automatically make the API call to update\n\n3. When you click the Update all button, do we disable the \"update all\" button?\n\nMore questions not on the thread:\n\n5. Similarly, when you are updating all and there's no other software to update since they're all pending \"Updating...\", do we disable the \"update all\" button?\n\n6. This pagination but changing the number of update software tiles per page on page size might be a little too tricky. For example, you have 20 software that need updates, you're looking at the third page which shows software 9,10,11,12. You shrink your browser horizontally to only see 3 software, which 3 should be shown?? What page are you on now?\n\n7. Do we forsee an update section in host details \u003e software \u003e library? Is it in the works, any heads up might be good in making sure the code is reusable across fleet desktop \u003e self-service and host details \u003e software \u003e library\n\nI'm OOO tomorrow but I'll be back Monday and Thursday next week. If you can address any of these, that would be amazing, ty!\n "
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @RachelElysia, thanks for collecting all the questions in one place, it's really helpful.\n\n\u003e This isn't in the spec to be able to sort status from host details \u003e software \u003e library. But if we did it would be consistent with self-service status sort. I tried to implement but it proved difficult because of the server side pagination/query/sort happening and sorting on a column that is built in the FE doesn't play nice with server side sort. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175433082329?thread_ts=1752168568.807959\u0026cid=C086V2QK76X) Confirm we are intentionally scratching sorting on host details \u003e software \u003e library \u003e status column or I need to jump through a lot of hoops to make everything client side sort an then implement\n\nLet’s skip this. I’ll add follow up story to do some additional UI improvements (details modals without 2 tabs on library page, sorting by status on library page and pagination for self-service in API).\n\n\u003e I dev-ed in clientside paginating self-service page to 20. When there's updates to specs like this, are you DRI for updating the Figma and QA plan? (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175280199089)\n\nClient-side pagination sounds good to me. I added spec to Figma and test case.\n\n\u003e We either needed to make 2 API calls, one for update software and the other for filtered software in the self-service section OR move the self-service software search query to be client side. We chose to make everything client side so we don't have to make so many API calls and deal with making 2x the API calls every time an install/uninstall/update action is clicked. It's sticky, partially because this is all frontend hoops jumped through because the API doesn't paginate, doesn't filter categories, and doesn't have a 1:1 map of status's in the API with status shown in the UI. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752180334175959)\n\nI'm not sure I understand this. Are we going to request all self-service software, and then the frontend will find and display those with available updates in the \"Updates\" section? If that's correct, then I think that's fine.\n\n\u003e I asked the channel, If there's more than one version installed on a host, what should go on the software updates card for the \"125.0.1 -\u003e 126.0.1\". If recalled correctly, we think the Figma is not correct, and should just show the library version.\n\nWe decided to don’t show current version, to simplify in this iteration. We can add that later. It makes things complicated when user has multiple versions of the same app installed in different paths.\n\n\u003e Do we show the update available modal if you click update in the carousel or does it just automatically make the API call to update\n\nWe show update available modal only when user clicks on “update available” in status column. If user click “Update” in self-service table or in the carousel we just directly start update (user sees “Updating” status.\n\n\u003e When you click the Update all button, do we disable the \"update all\" button?\n\nI think we should disable “Update all“ button and show “Updating” status on each item in carousel and self-service table.\n\n\u003e Similarly, when you are updating all and there's no other software to update since they're all pending \"Updating...\", do we disable the \"update all\" button?\n\nI think so. Let’s disable the button if an update is started for all apps that have an update available.\n\n\u003e This pagination but changing the number of update software tiles per page on page size might be a little too tricky. For example, you have 20 software that need updates, you're looking at the third page which shows software 9,10,11,12. You shrink your browser horizontally to only see 3 software, which 3 should be shown?? What page are you on now?\n\nSorry, I don’t understand this. Let’s chat during the design review on Monday. If it’s too early for you, please add something to my calendar.\n\n\u003e Do we forsee an update section in host details \u003e software \u003e library? Is it in the works, any heads up might be good in making sure the code is reusable across fleet desktop \u003e self-service and host details \u003e software \u003e library\n\nI don’t think so. I don’t thin IT admin want’s to see that. They will probably make updates automatic based on some criteria. We might want an additional filter in the existing dropdown for apps that have updates available, but not planned AFAIK."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica thanks for all the clarification!\n\n\u003e I'm not sure I understand this. Are we going to request all self-service software, and then the frontend will find and display those with available updates in the \"Updates\" section? If that's correct, then I think that's fine.\n\nExactly\n\n\u003e Sorry, I don’t understand this. Let’s chat during the design review on Monday. If it’s too early for you, please add something to my calendar.\n\nWill add to your calendar\n\nI think everything else is addressed and unblocked so I can dev -- hvala!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica Another question re: https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5302-9691\u0026t=xsGXc1YLuwgfuqy1-0\n\nWhen the update fails, it shows \"Update\" button and a \"Failed\" button in the update card, but in the Self-service table view in the card below, should that installer show \"Failed\" or \"Update available\" in the status?\n\nNuances needing clarification from @marko-lisica :\n\n\u003cimg width=\"671\" height=\"187\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d94eb0bb-adeb-488e-a955-c7a2d365a791\" /\u003e\n\nScenario 1: Docker Desktop has an update available but it failed to update, what should be shown as the status in the table view?\n\nScenario 2: Docker Desktop has an update available but it failed to uninstall, what should be shown as the status in the table view?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @RachelElysia, I think that we should show \"Failed\" in self service table as well.\n\n\u003e Scenario 1: Docker Desktop has an update available but it failed to update, what should be shown as the status in the table view?\nWe should alwaythe s show latest status in the status column. If it's failed let's show it. Action should be update if update is available.\n\n\u003e Scenario 2: Docker Desktop has an update available but it failed to uninstall, what should be shown as the status in the table view?\n\nWhat do we display today if the uninstallation fails? Do we have a specific status like \"Failed (uninstall),\" or do we show \"Failed\" and then inform the user in the details modal that the uninstallation was unsuccessful?\n\n"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n\n\u003e What do we display today if the uninstallation fails? Do we have a specific status like \"Failed (uninstall),\" or do we show \"Failed\" and then inform the user in the details modal that the uninstallation was unsuccessful?\n\nWe show \"Failed (uninstall)\" which leads to the uninstall modal.\n\nI'll be sure to update these copies to not show update available and show \"Failed\" or \"Failed (uninstall)\" if it meets both criteria, I'll update the QA plan too since I'm in there RN, thank you!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica Update available has a tooltip and Failed/Failed (uninstall) has a separate tooltip. Because these options listed above fall into both, I made it so the tooltips show both the Update Available tooltip copy and Failed/Failed (uninstall) copy. WDYT?\n\n```\n  failed_install_update_available: {\n    iconName: \"error-outline\",\n    iconColor: \"ui-fleet-black-50\",\n    displayText: \"Failed\",\n    tooltip: ({ isSelfService, isHostOnline, lastInstalledAt }) =\u003e\n      isSelfService || isHostOnline ? (\n        \u003c\u003e\n          Fleet can update software.{\" \"}\n          \u003c\u003e\n            Software failed to install\n            {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}.{\" \"}\n            {isSelfService ? (\n              \u003c\u003e\n                Select \u003cb\u003eRetry\u003c/b\u003e to install again, or contact your IT\n                department.\n              \u003c/\u003e\n            ) : (\n              \u003c\u003e\n                Select \u003cb\u003eDetails \u0026gt; Activity\u003c/b\u003e to view errors.\n              \u003c/\u003e\n            )}\n          \u003c/\u003e\n        \u003c/\u003e\n      ) : (\n        \u003c\u003e\n          Fleet can update software\n          \u003cbr /\u003e when the host comes online.\n          \u003cbr /\u003e\n          Software failed to install\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}.{\" \"}\n          {isSelfService ? (\n            \u003c\u003e\n              Select \u003cb\u003eRetry\u003c/b\u003e to install again, or contact your IT\n              department.\n            \u003c/\u003e\n          ) : (\n            \u003c\u003e\n              Select \u003cb\u003eDetails \u0026gt; Activity\u003c/b\u003e to view errors.\n            \u003c/\u003e\n          )}\n        \u003c/\u003e\n      ),\n  },\n  failed_uninstall_update_available: {\n    iconName: \"error-outline\",\n    iconColor: \"ui-fleet-black-50\",\n    displayText: \"Failed (uninstall)\",\n    tooltip: ({ isSelfService, isHostOnline, lastInstalledAt }) =\u003e\n      isSelfService || isHostOnline ? (\n        \u003c\u003e\n          Fleet can update software.\n          \u003cbr /\u003e\n          Software failed to uninstall\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}. Select{\" \"}\n          \u003cb\u003eRetry\u003c/b\u003e to uninstall again\n          {isSelfService \u0026\u0026 \", or contact your IT department\"}.\n        \u003c/\u003e\n      ) : (\n        \u003c\u003e\n          Fleet can update software\n          \u003cbr /\u003e when the host comes online.\n          \u003cbr /\u003e Software failed to uninstall\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}. Select{\" \"}\n          \u003cb\u003eRetry\u003c/b\u003e to uninstall again\n          {isSelfService \u0026\u0026 \", or contact your IT department\"}.\n        \u003c/\u003e\n      ),\n  },\n```"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@RachelElysia I think we discussed this during standup. We decided not to don't show the update tooltip in the table if it fails. We'll show the update button in the \"Updates\" section + failed status."
+          }
+        ],
+        "issueNumber": 27983,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcp4X0",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nTested in load test environment, software is now installing for all types of packages. "
+          }
+        ],
+        "issueNumber": 30913,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcp5UA",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nVerified that the correct modal now appears when VPP app install is not verified:\n\n\u003cimg width=\"1510\" height=\"712\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/48b68c47-6359-4dd8-9194-08471c4a7796\" /\u003e\n\u003cimg width=\"1510\" height=\"714\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f0297374-aaf3-4f02-8fdc-2d2d242eb0c0\" /\u003e\n\u003cimg width=\"1510\" height=\"714\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/0e797df3-3b8f-4c14-8162-38c5e6403e47\" /\u003e\n\n"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Copy in modal, wrong,\nFleet's truth clearer than dawn,\nErrors, now they're gone."
+          }
+        ],
+        "issueNumber": 30938,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX8R4",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1747760158772119"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "more context: https://fleetdm.slack.com/archives/C086V2QK76X/p1747675290738609"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "This is seemingly pretty easily reproducible by adding a new team yml with box drive in gitops.\n```\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:51:27.200080 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 21:49:11.554490 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n5 rows in set (0.00 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| Slack-4.44.59-macOS.pkg | 28 |      10 | 2025-07-15 22:44:36.454515 |\n| BoxDrive-2.43.205.pkg   | 29 |      10 | 2025-07-15 22:44:36.460138 |\n| googlechrome.dmg        | 30 |      10 | 2025-07-15 22:44:36.464730 |\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 22:45:00.940530 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 22:44:45.480426 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n8 rows in set (0.00 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| Slack-4.44.59-macOS.pkg | 28 |      10 | 2025-07-15 22:44:36.454515 |\n| BoxDrive-2.43.205.pkg   | 29 |      10 | 2025-07-15 22:46:52.967720 |\n| googlechrome.dmg        | 30 |      10 | 2025-07-15 22:44:36.464730 |\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 22:47:20.744843 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 22:47:03.419169 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n8 rows in set (0.00 sec)\n```\n\nIt returns different updated_at results after apply, and then after a while it seems to stop changing. Will investigate further."
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Running it over and over again with a single team seems to keep the value consistent:\n```\n\u003e select filename, id, team_id, updated_at from software_installers;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:29:44.399978 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n+-------------------------+----+---------+----------------------------+\n3 rows in set (0.01 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:29:44.399978 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n+-------------------------+----+---------+----------------------------+\n3 rows in set (0.00 sec)\n```"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "So it looks like the uninstall script for box is changing. In specific:\n```\n  pkg_ids=(\n    \"com.box.desktop.installer.local.appsupport\"\n    \"com.box.desktop.installer.autoupdater\"\n    \"com.box.desktop.installer.desktop\"\n  )\n\n  pkg_ids=(\n    \"com.box.desktop.installer.desktop\"\n    \"com.box.desktop.installer.local.appsupport\"\n    \"com.box.desktop.installer.autoupdater\"\n  )\n```\n\nThen we have this fancy query to tell us if anything has changed:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software_installers.go#L2094-L2122\n```\nSELECT id,\nstorage_id != ? is_package_modified,\ninstall_script_content_id != ? OR uninstall_script_content_id != ? OR pre_install_query != ? OR\nCOALESCE(post_install_script_content_id != ? OR\n\t(post_install_script_content_id IS NULL AND ? IS NOT NULL) OR\n\t(? IS NULL AND post_install_script_content_id IS NOT NULL)\n, FALSE) is_metadata_modified FROM software_installers\nWHERE global_or_team_id = ?\tAND title_id IN (\n\tSELECT id FROM software_titles WHERE unique_identifier = ? AND source = ? AND browser = ''\n)\n```\nSo `is_metadata_modified` is returning true, because the `uninstall_script_content_id` is changing."
+          }
+        ],
+        "issueNumber": 29286,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcna-8",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed copy is no longer present for Android devices. \nAlso confirmed it is still present for other host types."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Android tab now clear,\nNo more software confusion,\nFleet's path is sincere."
+          }
+        ],
+        "issueNumber": 30905,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX7Ag",
+        "comments": [
+          {
+            "author": {
+              "login": "atharva-navani16"
+            },
+            "body": "Hi @iansltx  , @mostlikelee you are right Google doesn’t expose a versioned URL for Chrome downloads (unlike tools like Winget on Windows).\n\nAs you mentioned finding another source can be an option but reliable alternative source is challenging. They might not offer long-term stability or guaranteed authenticity, which raises concerns for maintaining and future support.\n\nA few possible solutions could be:\n**1.Self-Host Chrome Binaries**\nHost .dmg files on FleetDM-controlled storage (e.g., S3) and reference them in manifests.\nPros: Full control, stable URLs/hashes.\nCons: Manual uploads, storage/maintenance overhead.\n\n**2.Chrome for Testing** \nUse Google’s testing URLs and fetch versions/hashes via metadata feeds.\nPros: Automatable, no hosting required.\nCons: Not intended for production, arch-specific URLs.\n\n**3.Enterprise Bundle**\nDownload official .pkg installers from Google’s enterprise portal and rehost them.\nPros: Supported and stable.\nCons: Manual effort, may require licensing.\n\nFeel free to review these options and see which one aligns best with your product requirements and workflows. If any of these approaches seem like a good fit, I’d be happy to help implement or contribute further.\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@atharva-navani16 Thanks for the research here; I wasn't aware of Chrome for Testing as an option.\n\nFor Chrome for Testing, you're talking about [this feed](https://googlechromelabs.github.io/chrome-for-testing/known-good-versions-with-downloads.json), right? Either way, arch-specific, and a quite different install format vs. the PKGs, is probably a dealbreaker there.\n\nOf self-host and enterprise bundle, seems like the latter winds up with more steps/more issues for the same result, since the self-hosting could be automated (when a new version is detected, grab the downloader and upload it via object storage to object storage)."
+          },
+          {
+            "author": {
+              "login": "atharva-navani16"
+            },
+            "body": "@iansltx  Makes sense! self-hosting with automation sounds like the way to go! \n\nGrab the latest .dmg from Google’s URL,\nAuto-upload it to S3 with versioned paths + SHA256,\nUpdate Fleet’s manifest.\n\nHappy to share reference scripts if useful"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Dropping this back to Ready since, while this is filed as a bug, it'll be useful to figure out prioritization here given that this will require a decent lift for a secondary feature of a single app that'll generally auto-update anyway. Which sounds like riding the line between a bug and a story but basically all of the story template is irrelevant because this work will be entirely done in either infrastructure or FMA ingestion."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Coolio. How does prioritization happen in cases like this?\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Async else design review, I think?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per design review today, we'll show the Chrome version as \"latest\" in the UI with a tooltip when adding the FMA, and extract version information from the package once we download it. We _will not_ do anything to actually version-pin the package at this time (/cc @mostlikelee).\n\nTo avoid breaking existing FMA processing, we can key this behavior off of the `no_check` hash; if we see that in a manifest, we:\n\n1. Show `latest` on the version field on `GET /fleet_maintained_apps/:id`\n2. Extract the version from the package when adding the FMA rather than using what's in the API\n3. Show \"latest\" with a tooltip in the UI\n\nThis means that we'll have changes to the experimental [Get FMA API endpoint](https://fleetdm.com/docs/rest-api/rest-api#get-fleet-maintained-app) as a result of this bugfix (documenting \"latest\" as a version number), but no changes to FMA ingestion.\n\nWhile QA'ing this, we need to test against both Windows and macOS Chrome FMAs, as both don't check hashes right now. If the current version shows as \"latest\" on the FMA add screen for both, and the correct version is extracted on app add (even on a manifest that's out of date), we're good to go here."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo once you have the UI ready for this, ping me. Assuming the UI makes sense (it probably will) I'll move this back to Ready to Estimate and ping folks for Planning Poker on the backend side (and will ping Rachel to estimate the FE bit separately)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx I added a [Figma design](https://www.figma.com/design/rSYo3wpfkJo0EklCbF7MFp/-27919-macOS-Chrome-FMA-doesn-t-have-hash-specified-in-manifest?node-id=2-130\u0026p=f\u0026t=NObiCXiVgHjCPeb3-11) to the **To Fix** section.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Works for me. Revised \"To fix\" to link to my comment above since 95% of the work will be the backend tweaks."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@eugkuo small UI nit. It looks like we're using a mix of the underline and tooltip styles in your Figma [here](https://github.com/user-attachments/assets/f3097eed-f5ef-46fe-a0bf-fbf4cd6cb2c5).\n\nTooltips in Fleet either have an underline (tooltip shows up under the line with no arrow) or an arrow (no underline). I think we want to pick either one here. Up to you on which.\n\nHere's some examples live in dogfood:\n![Image](https://github.com/user-attachments/assets/539c00aa-1351-482e-a856-6b7ea4c6a8a3)\n\n![Image](https://github.com/user-attachments/assets/2a955b10-6718-4231-89c8-cfa4c8e0b76a)\n"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman Oh interesting. Perkins and I were trying to figure out what the convention was for where tooltips show. \n\nIs there an idea that the arrow one gives more information about the thing being rolled over and the one below provides more context about what the thing is?\n\nI updated this to show below using the above logic."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@eugkuo I think it's mostly a stylistic choice. Thought process: for a specific scenario, which makes the most sense?\n\ncc @marko-lisica @rachaelshaw "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman I'm going to try using the framework I outlined above and see how it goes for the next few tooltip scenarios in order to try and formalize something.\n\ncc @marko-lisica @rachaelshaw "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "updated the bug title based on the solution discussed in the comments"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@ksykulev @jahzielv @iansltx please add estimates to https://docs.google.com/forms/d/e/1FAIpQLSeGjTUV2G2NHQEAtLFodMgUSwpzGjdF-2SzUIa52J_j71hQbQ/viewform"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, we have a hangup here.\n\nThe version of Chrome that Homebrew links is a DMG. We don't parse those. Which means we can't extract the version on the Fleet server side as discussed in the recommended fix without making other changes.\n\nOne option would be to switch Chrome to use the PKG installer (https://dl.google.com/dl/chrome/mac/universal/stable/gcem/GoogleChrome.pkg), but question is whether we want to switch explicitly to Google CHrome Enterprise here (probably?) from the version Homebrew points to. There's also a PKG installer that @allenhouchins has listed https://github.com/fleetdm/fleet/blob/main/it-and-security/lib/macos/software/google-chrome.yml#L1.\n\nAt that point we _could_ extract version data on a \"latest\" tag (I already have that code written, though I think I still need to add support for FMA-via-GitOps), and our FMA manifest could be built without Homebrew entirely as everything in the manifest (version, URL, install/uninstall script) would be static (would just be a Chrome-specific version of our generic pkg install/uninstall scripts, which we know work because we're using them for dogfood).\n\nThe main alternative here would be to have an accelerated CI workflow _just for Mac Chrome_, where we run a copy of our FMA ingest pipeline dedicated to Chrome and immediately approve/merge changes there that only involve manifest version bumps. This is no worse from a QA perspective than our existing setup, since Fleet server admins are getting the new version anyway, and the level of effort required for this is quite low (and this would work with zero changes to Fleet server, and would let us keep the DMG package format).\n\nA final alternative would be to build at least version parsing from DMGs, but that would be a significantly larger undertaking, while the alternatives above could be completed within this ticket's estimate.\n\n@marko-lisica @mostlikelee which way do we want to go here?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "From Google:\n\n\"Google Chrome Enterprise is essentially the same Chrome browser used by consumers, but with additional features and management tools tailored for businesses and organizations\"\n\nI think having Google Chrome Enterprise is good solution. It's same browser for end-user, except it allows admins to specify org settings.\n\n@iansltx When you say static manifest, does that mean we'll need to add additional input method [here](https://github.com/fleetdm/fleet/tree/main/ee/maintained-apps/inputs)?\n\nHow does that change the contribution process?"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Just as a small aside, google chrome enterprise on windows is one of the applications that was missing the install path in osquery because it didn't set the registry correctly.\nhttps://github.com/fleetdm/fleet/issues/29449#issuecomment-2989108748\n\nI know we are talking about mac here, but just wanted to drop that in here, in case there are some differences on the mac version as well."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "+1 on google chrome enterprise.  It's already what is used for [Windows FMA](https://github.com/microsoft/winget-pkgs/blob/master/manifests/g/Google/Chrome/138.0.7204.101/Google.Chrome.installer.yaml) so we could possibly rename the FMA across platforms to something like `Chrome Enterprise` if we wish."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica I'm planning on nuking the input file for macOS Chrome entirely. Our FMA ingestion tool won't modify JSON files that aren't in-scope so it's safe to take this approach (which also means no code changes required to ingestion).\n\n@mostlikelee Given inventory constraints, I don't think we can change the name...it's still going to show up as Google Chrome IIRC. But given our audience I agree that Chrome Enterprise makes sense to serve by default; if someone is using Fleet Premium there's a decent chance they want Chroem Enterprise anyway.\n\n@ksykulev I think I've grabbed the Chrome Enterprise pkg before and haven't noticed anything amiss there, so we _should_ be good.\n\nI'll proceed with \"option 1\" above, so this is now unblocked."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e Given inventory constraints, I don't think we can change the name.\n\ntrue, if anything maybe we can update docs"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, I thought we'd be good to go with a static output file, but our generated PKG uninstall script doesn't clean up Chrome properly from what I can see, but the Homebrew version dos (gonna test with Chrome Enterprise momentarily; it successfully uninstalled the Chrome I had on this machine prior).\n\nSo we'll want Homebrew  + overrides rather than a static file.\n\nI'll want to build overrides off of @ksykulev's MSRC feed work _and_ @jahzielv's FMA Homebrew custom install script work, so first order of business is catching Konstantin's PR up to `main`. Then layer in updates on top of that.\n\nShould be able to get this turned tonight still, though it'll be in line behind the MS Office PR for merge."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica Making one minor tweak to Figma: showing \"Google Chrome\" rather than \"Chrome\" so we can just use the FMA name there rather than a bespoke value."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Also, Figma doesn't show what to do in the \"Show details\" modal so I added a tooltip there (screenshots incoming on PR)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@mostlikelee Added Chrome Enterprise to the description in apps.json. Probably makes more sense to mention there than in the docs."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "\u003e @marko-lisica Making one minor tweak to Figma: showing \"Google Chrome\" rather than \"Chrome\" so we can just use the FMA name there rather than a bespoke value.\n\n\u003e Also, Figma doesn't show what to do in the \"Show details\" modal so I added a tooltip there (screenshots incoming on PR).\n\nLooks good to me! Thanks!"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Do we plan on using \"latest\" for the windows FMA as well? I know it's not part of this issue, but looking at the download URL in `ee/maintained-apps/outputs/google-chrome/windows.json`, it is also not versioned `https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi`"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ksykulev No; @jahzielv is swapping Windows to a version-pinned installer in #27756."
+          }
+        ],
+        "issueNumber": 27919,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX2sI",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet self-service handling of custom packages for Linux distros #6554](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/f586902d-3b77-46a4-8c6a-8f9f231cbb1f)"
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "@mason-buettner, was this reproduced by you or reported by customer (and need reproduction)?\nAnyway, assigning Orchestration team."
+          },
+          {
+            "author": {
+              "login": "mason-buettner"
+            },
+            "body": "@sharon-fdm I've reproduced this. Attaching screenshots of the application details in self-service, and the view from the host that's still allowing me to retry the failed install.\n\n![Image](https://github.com/user-attachments/assets/acbc3f81-122f-4d2a-a64d-fd55ebdf004c)\n\n![Image](https://github.com/user-attachments/assets/e3c31560-93a8-4f93-a885-3b9a688a0339)\n\n![Image](https://github.com/user-attachments/assets/f5a9b126-cb74-4b85-8d52-656e4f46f6a9)"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee I took a stab at the to fix. It seems like it'd be the reasonable expectation but I don't know what would really have to go into that."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nTested on Ubuntu and Fedora.\n\nUploaded .deb, .rpm, and .tar.gz files\nConfirmed only .deb and .tar.gz files were available in self service for Ubuntu hosts.\nConfirmed only .rpm and .tar.gz files were available in self service for Fedora hosts. "
+          }
+        ],
+        "issueNumber": 29849,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX420",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Marking this as a released bug as this is almost certainly an issue with the `ListVulnsByOsNameAndVersion` data store function query, probably for both Fleet Free and Fleet Premium versions of the query, due to multiple rows in the OS versions table for the same OS name and version due to differing architectures.\n\n@rfairburn can you pull the results of the following query from Dogfood?\n\n```sql\nSELECT id FROM operating_systems WHERE name = \"macOS\" AND version = \"15.3.1\"\n```\n\nPretty sure there will be two rows there, one per arch, in which case that'll confirm my suspicion of where the problem is.\n\nIf that's the issue, fix would probably be to add a group-by on CVE number, at which point we'll need to pick a reasonable value for `created_at` (probably `MIN()`) for cases where multiple rows are returned."
+          },
+          {
+            "author": {
+              "login": "rfairburn"
+            },
+            "body": "@iansltx \n\n```\n+-----+\n| id  |\n+-----+\n| 487 |\n| 504 |\n+-----+\n2 rows in set (4.12 sec)\n```\n\nFurther inspection confirms that they are differentiated by `arch` but the same name and version."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1750360526707539"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Updated repro steps based on further analysis (enrolling two different-arch same-version hosts at the same time won't trigger this), and swapped repro to reference OS versions/vulns where this is still an issue in Dogfood."
+          }
+        ],
+        "issueNumber": 27061,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgckQ9g",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this is urgent enough I'm moving directly to the product board"
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "@jmwatts I think this test plan is gtg. We already have this behavior for winget-based FMAs, so it's just mirroring that. Wdyt?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @mostlikelee just noticed this story is missing a milestone. I added 4.72 to it. Please feel free to update that!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Of note, this will close out/go live once merged. I think there were questions about how to milestone items like that."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "correct, we typically don't milestone these if it's not tied directly to a release as it can confuse the release ceremony when items that have a milestone are already closed."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nIssue created as part of test #30884\nPR created as part of test #30875\n\n1. Create manual scripts for install and uninstall, and reference them in the input file for an existing Fleet-maintained app\n2. Run the app ingest script\n3. Add the modified app via Fleet\n\n- [x] Confirm that the specified install and uninstall scripts were imported alongside the package\n- [x] Confirm that the new uninstall script field is mutually exclusive with the existing pre and post uninstall script fields (ingestion should fail if all of them are set, because the uninstall script should include whatever may be put in those fields. Those fields are basically tacked on to the generated script, but the provided script should override the generated one entirely)\n\nBoth provided:\n```\njanis@Janiss-MacBook-Pro-2 fleet % go run cmd/maintained-apps/main.go --slug=\"beekeeper-studio/darwin\" --debug\n{\"level\":\"info\",\"msg\":\"starting maintained app ingestion\",\"ts\":\"2025-07-15T14:28:54.318331Z\"}\n{\"level\":\"info\",\"msg\":\"starting homebrew app data ingestion\",\"ts\":\"2025-07-15T14:28:54.31888Z\"}\n{\"level\":\"info\",\"msg\":\"ingesting homebrew app\",\"name\":\"Beekeeper Studio\",\"ts\":\"2025-07-15T14:28:54.319578Z\"}\npanic: ingesting homebrew app: cannot provide pre-uninstall scripts if uninstall script is provided\n\ngoroutine 1 [running]:\nmain.main()\n\t/Users/janis/Documents/GitHub/fleet/cmd/maintained-apps/main.go:45 +0x72c\nexit status 2\n```\nPost-uninstall provided:\n```\njanis@Janiss-MacBook-Pro-2 fleet % go run cmd/maintained-apps/main.go --slug=\"beekeeper-studio/darwin\" --debug\n{\"level\":\"info\",\"msg\":\"starting maintained app ingestion\",\"ts\":\"2025-07-15T14:29:49.906059Z\"}\n{\"level\":\"info\",\"msg\":\"starting homebrew app data ingestion\",\"ts\":\"2025-07-15T14:29:49.90639Z\"}\n{\"level\":\"info\",\"msg\":\"ingesting homebrew app\",\"name\":\"Beekeeper Studio\",\"ts\":\"2025-07-15T14:29:49.906859Z\"}\npanic: ingesting homebrew app: cannot provide post-uninstall scripts if uninstall script is provided\n\ngoroutine 1 [running]:\nmain.main()\n\t/Users/janis/Documents/GitHub/fleet/cmd/maintained-apps/main.go:45 +0x72c\nexit status 2\n```\nPre-uninstall provided:\n```\njanis@Janiss-MacBook-Pro-2 fleet % go run cmd/maintained-apps/main.go --slug=\"beekeeper-studio/darwin\" --debug\n{\"level\":\"info\",\"msg\":\"starting maintained app ingestion\",\"ts\":\"2025-07-15T14:30:14.601546Z\"}\n{\"level\":\"info\",\"msg\":\"starting winget app data ingestion\",\"ts\":\"2025-07-15T14:30:14.601606Z\"}\n{\"level\":\"info\",\"msg\":\"starting homebrew app data ingestion\",\"ts\":\"2025-07-15T14:30:14.602438Z\"}\n{\"level\":\"info\",\"msg\":\"ingesting homebrew app\",\"name\":\"Beekeeper Studio\",\"ts\":\"2025-07-15T14:30:14.60261Z\"}\npanic: ingesting homebrew app: cannot provide pre-uninstall scripts if uninstall script is provided\n\ngoroutine 1 [running]:\nmain.main()\n\t/Users/janis/Documents/GitHub/fleet/cmd/maintained-apps/main.go:45 +0x72c\nexit status 2\n```"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Brewed scripts now in hand,\nUnblock new apps to land,\nFleet soars, cloud city grand."
+          }
+        ],
+        "issueNumber": 30780,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcmo58",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e I've setup Fleet server on my instance, enabled the vulnerability_webhook and got nothing.\n\n\u003e I've setup Fleet server on my instance, enabled the vulnerability_webhook and got nothing.\n\n@ilpianista hmm, this sounds like a bug. Sorry you're running into this. What version of Fleet are you running?\n\nI updated this issue to use the bug report format.\n\nFYI @jmwatts @mostlikelee added `:reproduce` to put this bug in the \"Inbox\" state.\n\n"
+          },
+          {
+            "author": {
+              "login": "ilpianista"
+            },
+            "body": "@noahtalerman I was on 4.67.3. Didn't test 4.68.0 yet, but I haven't read anything relevant in the changelog."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I am not able to turn on automations when in Fleet Free.\n\n![Image](https://github.com/user-attachments/assets/3f35574a-ad94-40f3-91de-c51d8e7323b4)\n\nIt seems the only way to reproduce this is to first use fleet premium to enable the webook and then switch to fleet free. \n\nPer product decision in this [internal slack thread](https://fleetdm.slack.com/archives/C02A8BRABB5/p1748450168794829), removed :reproduce and adding :product"
+          },
+          {
+            "author": {
+              "login": "ilpianista"
+            },
+            "body": "Ah, I didn't look at the UI. I've enabled it via [GitOps](https://fleetdm.com/docs/configuration/yaml-files#vulnerabilities-webhook)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee Given the way the title is written it sounds like the webhook shouldn't be firing in Fleet Free, but then the steps to reproduce indicate that the webhook doesn't fire in Fleet free.\n\nSince I can't figure out what the fix is, I believe we agreed I'd move this to 'in progress' and assign to you? LMK if I have that mixed up."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e ### 🛠️ To fix\n\n\u003e - @noahtalerman: I think let’s accept this as a bug.\n\u003e   - The fact that @ilpianista can turn it (screenshot below) on makes me still believe we built this to be available in Fleet. And, we’ve been quite good at add validation for Premium only features.\n\u003e   - Also, Fleet has promised the community to never make free features paid. So, if @ilpianista had this working originally, I think that’d be a bad look for Fleet.\n\nFYI @eugkuo @mostlikelee updated title and the \"To fix\" based on [conversation in Slack](https://fleetdm.slack.com/archives/C02A8BRABB5/p1748536682747559?thread_ts=1748450168.794829\u0026cid=C02A8BRABB5) and moved this bug to ready to estimate."
+          },
+          {
+            "author": {
+              "login": "ilpianista"
+            },
+            "body": "Hi @noahtalerman any news here? I would like to know if I can expect this soon or not.\n\nIf you agree, I can provide a fix for my proposal:\n\n\u003e please consider to skip the RecentVulnerabilityMaxAge filter while using the Free plan."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @ilpianista sorry for the delay. Please feel free to open a PR with the fix! We haven't had room to prioritize this one in the last couple engineering sprints.\n\n@lukeheath I just tagged this bug as `P2`. I think we want to prioritize this one next sprint (4.73).\n\n\u003cimg width=\"849\" height=\"282\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a40936e3-c46c-4f99-8832-9e9512218590\" /\u003e\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@noahtalerman Agreed, thanks. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ilpianista Checking in here as you had submitted a PR and I had some feedback there. Any questions regarding that feedback? Thanks!"
+          }
+        ],
+        "issueNumber": 29076,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc_3wY",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "comment 1"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "comment 2"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "comment 3"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "comment 4"
+          }
+        ],
+        "issueNumber": 31307,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX2Wc",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Swapping this over to the product board for triage, as this hasn't been assigned a P1 so it can't hop onto the release board unestiamted."
+          },
+          {
+            "author": {
+              "login": "ksatter"
+            },
+            "body": "Thanks @iansltx "
+          },
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Help with potential Fleet bug in custom packages #7000](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/d55bc828-21c7-45e3-8626-613e52ada076)"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @mostlikelee, this issue appears to be preventing GitOps users from automatically installing software. We should prioritize this and assign it a `P2`. What do you think?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e Hey [@mostlikelee](https://github.com/mostlikelee), this issue appears to be preventing GitOps users from automatically installing software. We should prioritize this and assign it a `P2`. What do you think?\n\nAgree, adding the P2 label\n\ncc: @lukeheath \n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "I get a more explicit error rather than a silent failure:\n\n```\nError: 2 errors occurred:\n\t* software URL is required\n\t* failed to parse policy install_software \"macOS - Firefox installed\": install_software.package_path URL  not found on team: ../lib/software/firefox.yml\n```\n\nEDIT: Never mind. Old fleetctl version locally. Was able to repro what I believe to be the same issue."
+          }
+        ],
+        "issueNumber": 30435,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcd1GA",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Add a VPP app for iOS to the team's library\n2. On an enrolled iPhone, from Host \u003e\u003e Software \u003e\u003e Library click \"Install\"\n3. When the VPP app comes back as \"Installed\", refresh the browser to see that a refetch has been initiated automatically\n- [x] Inventory is refetched and the installed software is updated in the host's record"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Refetch glitch in iOS,\nClick to mend, data flows,\nFleet's path smoother grows."
+          }
+        ],
+        "issueNumber": 30754,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcagK8",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Add several VPP apps to setup experience configuration (I used ~20)\n2. Wipe an ADE mac and go through setup experience\n- [x] Setup experience succeeds, apps install"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Apps install with grace,\nIn the cloud's bright embrace,\nFleet's pace leaves no trace."
+          }
+        ],
+        "issueNumber": 30678,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX8dE",
+        "comments": [
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "I noticed in the database dump the label \"Nobody has this label\" was created at `2025-05-20 22:14:03`, however, the host's `label_updated_at` time was `2025-05-20 21:53:39`. In our previous available software query we are doing this check `:host_label_updated_at \u003e= lbl.created_at` with a comment above it stating\n```\nignore software that depends on labels created\n _after_ the label_updated_at timestamp of the host (because\nwe don't have results for that label yet, the host may or may\nnot be a member\n```\n\nWhich is why in this particular case firefox is getting excluded. When I run the following query `update hosts set label_updated_at = '2025-05-20 23:00:00' where id = 2;` and reload the page I get firefox in the result set.\n\n\u003cimg width=\"1639\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f99f21a8-171e-475e-abc5-d7c4e3999657\" /\u003e\n\nIt looks like that `label_updated_at` gets updated when we refetch the host vitals?"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Thanks @ksykulev I went back to 4.66.0 and confirm this works the same way. "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I'm leaving this as a bug because it's not intuitive for the end user to understand why it works the way it does. "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee @ksykulev I proposed a solution in the `to fix` area and am moving this to **Ready to estimate**.\n\n@mostlikelee do you want to keep this as a bug or convert it to a feature request?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "In the above case:\n1. A dynamic label was created (@jmwatts  can you confirm this is only for dynamic?)\n2. The host hasn't refreshed, so we don't know yet if it's a member of the label.  Fleet assumes the host does not have this label.\n3. This software has a target that excludes that label.\n\nSo the current state is that the host is not in the label, so it _should_ show in the list.\n\nCould use a sanity check from @lucasmrod here as this is the same behavior for policy targets."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@mostlikelee I was not using dynamic labels so it does apply to manual labels. "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e [@mostlikelee](https://github.com/mostlikelee) I was not using dynamic labels so it does apply to manual labels.\n\nok, let's scope this to remove timestamp consideration from manual labels.  updating the \"to Fix\" section."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1748525930809559"
+          },
+          {
+            "author": {
+              "login": "ksatter"
+            },
+            "body": "@ksykulev I'm seeing an issue where Manual labels are also not being respected for 'labels include any'. Do you think this is likely the same root problem, or should we break that out into a separate issue?"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "@ksatter ~~Right now the logic stands that if a label (manual or dynamic) is created and we don't fetch host vitals, whatever the label is doing will not apply to the host. So in your case, `labels include any` also falls under this case.~~\n~~After this issue is fixed, any type of manual label will apply despite the `created_at` time or host `label_updated_at` time~~\n\nI was incorrect, looking at the query it doesn't look like it's checking timestamp for `include_any`.\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L2645-L2662\n\n@jmwatts In the case of `exclude_any`, manual labels will apply \"immediately\" and dynamic labels will require a host refetch. How do we want `include_any` to work? Same logic? Or does timestamp not matter in their case?"
+          }
+        ],
+        "issueNumber": 29315,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX7LA",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/26618?planning-poker) with Zenhub @iansltx @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "I'm not able to repro this (wanted to check what was going on prior to throwing an estimate on). Both places have the same timestamp returned from the API (Jan 28 ~6:40a UTC), and both show the expected \"one month ago\" in the UI.\n\nMaybe we close this and if anyone sees this again we reopen?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e Maybe we close this and if anyone sees this again we reopen?\n\ni'm onboard with this, unless @RachelElysia has any other info that may get us into this state\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per [Slack](https://fleetdm.slack.com/archives/C086V2QK76X/p1741109822016689?thread_ts=1741109272.543039\u0026cid=C086V2QK76X), @jmwatts has a repro."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Can you grab your vulnerabilities table and confirm which `created_at` timestamp is the correct one? This feels like a join is propagating things across a bunch of columns where it shouldn't be, so I'm assuming that the individual CVE page is correct and the list is wrong, but want to make sure."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "There's a lot in that table :D so here's one example but let me know if you need more than this\n\n![Image](https://github.com/user-attachments/assets/e2a4def4-7ace-4802-b833-55bb6ec2aa09)\n\n![Image](https://github.com/user-attachments/assets/b4b6c662-824b-4a93-a727-a19a0060d60a)\n\n![Image](https://github.com/user-attachments/assets/54b65a28-9216-4cdd-af88-7e3a7a24013a)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "This is useful; thanks!\n\nLooks like we may have at least two bugs here. In the case you showed, the list view is correct but the individual vuln view shows detected as the current timestamp (though this seems to vary from vuln to vuln). In Rachel's example though both places have different values, both of which aren't the current timestamp. So we might need to scope this as \"fix the bugs that we can repro\", which won't necessarily be the original bug."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Here's one example that is showing detected as a minute ago, but the table view of vulns shows another time:\n\ndetails view\nhttps://dogfood.fleetdm.com/software/vulnerabilities/CVE-2025-0938\ntable view of vulns\nhttps://dogfood.fleetdm.com/software/vulnerabilities?exploit=false\u0026query=CVE-2025-0938\u0026order_direction=desc\u0026order_key=hosts_count\u0026page=0"
+          },
+          {
+            "author": {
+              "login": "rachaelshaw"
+            },
+            "body": "I haven't seen this issue exactly, but was about to report a similar issue: currently, every CVE detail page is saying detected \"less than a minute ago\"; In the API response, `created_at` always seems to be set to the current time. (List view is fine, only seeing this w/ `GET /vulnerabilities/:cve`). \n\n@RachelElysia do you think this is related, or should I report that bug seperately?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@rachaelshaw The one you're seeing is the one I mentioned. Thinking we'll resolve that one with this ticket and see if we can repro the other one afterward."
+          }
+        ],
+        "issueNumber": 26618,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVNHM",
+        "comments": [
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "fleetd [v1.45.0](https://github.com/fleetdm/fleet/pull/30672) has been released to `edge`."
+          },
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "We've decided to release fleetd `1.45.1` to `edge` today with the fix added for the offline indicator [here](https://github.com/fleetdm/fleet/pull/30703) and then do some minor smoke testing and release to `stable` also today (given the change is minimal/low-risk).\n\nMore context here:\n\u003cimg width=\"811\" height=\"499\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8f02250c-5836-4c7a-b9bc-bf45e300d213\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "@juan-fdz-hawa Could we get screenshots of how the menu will look like in 1.45.1?\n\n/cc @rachaelshaw "
+          },
+          {
+            "author": {
+              "login": "juan-fdz-hawa"
+            },
+            "body": "\u003e [@juan-fdz-hawa](https://github.com/juan-fdz-hawa) Could we get screenshots of how the menu will look like in 1.45.1?\n\u003e \n\u003e /cc [@rachaelshaw](https://github.com/rachaelshaw)\n\n\u003cimg width=\"480\" height=\"270\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3d74e57f-1bd8-4c29-91dc-dc37e2ed8f91\" /\u003e\n\u003cimg width=\"825\" height=\"271\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bb37adba-1f20-4670-8503-c972fbf38ab7\" /\u003e\n\u003cimg width=\"480\" height=\"270\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/131eece0-942d-453e-91d3-06f71786f7cc\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "New release takes flight,\nIn cloud cities, code finds home.\nStable, edge unite."
+          }
+        ],
+        "issueNumber": 30602,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcVMug",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Performed fleetd 1.45.0 smoke tests against 4.70.1 (current released version) and 4.71.0 (upcoming release version).\nFrom that perspective: 👍 for release to stable\n\n(MDM is still working on Windows Autopilot and macOS ADE enrollment tests)"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "windows autopilot and macOS ADE are gtg 👍 "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "\"Fleetd release, bright,\nOrbit and Desktop take flight,\nIn the cloud's pure light.\n\nTesting gates unfold,\nEnsuring new features bold,\nAs the version's told.\n\nFrom local to edge,\nThrough each step we pledge,\nStability's hedge.\n\nQueries flow with grace,\nIn the cloud's vast space,\nSecured is our base.\n\nHosts report and glow,\nAs their vitals show,\nIn this constant flow.\n\nScripts execute right,\nIn the day or night,\nA reassuring sight.\n\nSoftware installs swift,\nGiving hosts a lift,\nIn the cloud's soft drift.\n\nOS settings, keen,\nDisk encryption seen,\nIn the cloud's serene.\n\nPacks flow, work is done,\nUnder the cloud city's sun,\nFleetd 1.45.0, won.\""
+          }
+        ],
+        "issueNumber": 30601,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5dM",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/g-software-current-sprint-67685f6ff1830a000f347a73/issues/fleetdm/fleet/25587?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "timebox - we may not have data to use"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Another unexpected naming scenario: this package uploads as \"trial\" https://drive.google.com/file/d/16UdYLIENNcFNBstrtBTl4ZHiLFe9-qDB/view?usp=drive_link\n\n\u003cimg width=\"1505\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/54fff766-d7bb-4010-9b63-aab84ead0400\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looks like there's a quick fix for this, as the app has an install path: if the install path ends with .app, grab that install path and use it as the name:\n\n```\n~/code/fleet main $ go run tools/custom-package-parser/main.go -path /Users/ian/Downloads/SubEthaEdit-5.2.4.pkg \n- Name: 'SubEthaEdit'\n- Bundle Identifier: 'de.codingmonkeys.SubEthaEdit.MacFULL'\n- Package IDs: 'SEEMode.ActionScript,SEEMode.Base,SEEMode.C,SEEMode.CPP,SEEMode.CSS,SEEMode.Conference,SEEMode.Diff,SEEMode.EEx,SEEMode.ERB,SEEMode.Elixir,SEEMode.Erlang,SEEMode.HTML,SEEMode.JSON,SEEMode.Java,SEEMode.Javascript,SEEMode.LaTeX,SEEMode.Lua,SEEMode.Markdown,SEEMode.Objective-C,SEEMode.PHP-HTML,SEEMode.Perl,SEEMode.Python,SEEMode.Ruby,SEEMode.Swift,SEEMode.TOML,SEEMode.XML,SEEMode.bash,SEEMode.go,SEEMode.wren,de.codingmonkeys.SubEthaEdit.SeeTextImporterFULL,de.monkeydom.TCMPortMapper,isao.sonobe.OgreKit,org.mozilla.universalchardet,org.sparkle-project.InstallerConnection,org.sparkle-project.InstallerLauncher,org.sparkle-project.InstallerStatus,org.sparkle-project.Sparkle,org.sparkle-project.Sparkle.Updater'\n- Version: 5.2.4\n```"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "The fix included here also handles the Pixelmator Pro Trial nicely:\n\n```\n~/code/fleet 25587-pkg-name-extraction $ go run tools/custom-package-parser/main.go -path /Users/ian/Downloads/PixelmatorProTrial_3.6.14.pkg \n- Name: 'Pixelmator Pro Trial'\n- Bundle Identifier: 'com.pixelmatorteam.pixelmator.x.trial'\n- Package IDs: 'com.pixelmator.PXMEngine,com.pixelmator.pixelmatorteam.LibRaw,com.pixelmator.pixelmatorteam.PDFEngine,com.pixelmator.pixelmatorteam.PSDEngine,com.pixelmator.pixelmatorteam.SVGEngine,com.pixelmatorteam.PTFoundation,com.pixelmatorteam.PTImageIO,com.pixelmatorteam.PTPaintTools,com.pixelmatorteam.PTPhotoKit,com.pixelmatorteam.extended-raw-support,com.pixelmatorteam.pixelmator.PXMKit,com.pixelmatorteam.pixelmator.object-removal,com.pixelmatorteam.pixelmator.paint-selection,com.pixelmatorteam.pixelmator.x.PXMPhotoKitUI,com.pixelmatorteam.pixelmator.x.PXMUIKit,com.pixelmatorteam.pixelmator.x.automator.apply-color-adjustments-to-images,com.pixelmatorteam.pixelmator.x.automator.apply-effects-to-images,com.pixelmatorteam.pixelmator.x.automator.auto-enhance-images,com.pixelmatorteam.pixelmator.x.automator.auto-white-balance-images,com.pixelmatorteam.pixelmator.x.automator.change-type-of-images,com.pixelmatorteam.pixelmator.x.automator.denoise-images,com.pixelmatorteam.pixelmator.x.automator.increase-resolution-of-images,com.pixelmatorteam.pixelmator.x.automator.scale-images,com.pixelmatorteam.pixelmator.x.automator.trim-images,com.pixelmatorteam.pixelmator.x.pxmspotlight,com.pixelmatorteam.pixelmator.x.trial.PXMPro,com.pixelmatorteam.pixelmator.x.trial.photos-extension,com.pixelmatorteam.pixelmator.x.trial.quicklookpreviewextension,com.pixelmatorteam.pixelmator.x.trial.remove-background,com.pixelmatorteam.pixelmator.x.trial.thumbnailextension,com.revenuecat.Purchases'\n- Version: 3.6.14\n```"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nUploaded SubEthaEdit and Pixelmator ProTrial. Names are much more reflective of the software that was uploaded. \n\n\u003cimg width=\"1506\" height=\"589\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8e72b528-b074-46c7-a28f-72acbe3abd29\" /\u003e\n\n\u003cimg width=\"1411\" height=\"537\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/db3728de-f429-49cf-bc88-4a979ae1166a\" /\u003e\n\nNOTE: If the software has been previously uploaded, the name will still be wrong until the installer has been deleted from all teams and the corresponding row in `software_titles` has been removed from the database. Once that's done and the package is re-uploaded, the name will be the corrected one. "
+          }
+        ],
+        "issueNumber": 25587,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX51M",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Just checked and this doesn't appear to be a vuln feed issue at this point; the feed correctly shows Safari as excluding 18.5 for one vuln and doesn't show Safari at all for the other. My theory is that there were false positives in the feed previously (haven't looked into it further yet) and we didn't catch the feed update that dropped the false positives, so I would expect a brand new install not to repro this."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1748439832679799"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Just checked this and it looks like the vuln feed has been fixed since this issue was last repro'd. Checked the first 5 or so CVEs from the linked Apple advisory and they show the correct fix versions (\u003c= 18.5), and Safari 18.5 itself on Dogfood shows no applicable vulnerabilities. Going ahead and closing this one as these feed updates have hit other Fleet instances as well."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "False alerts now gone,\nSafari now stands secure.\nPeaceful as dawn's glow."
+          }
+        ],
+        "issueNumber": 29476,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX5XY",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/g-software-current-sprint-67685f6ff1830a000f347a73/issues/fleetdm/fleet/25588?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "timebox - we may not have enough data"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts @mostlikelee So, currently we handle this a bit better than before:\n\n```\n~/code/fleet main $ go run tools/custom-package-parser/main.go -path /Users/ian/Downloads/AvidCodecsLE.pkg \n- Name: 'com.avid.codecsle.pkg'\n- Bundle Identifier: 'com.avid.codecsle.pkg'\n- Package IDs: 'com.avid.avidcodecsle.pkg,com.avid.codecsle.pkg'\n- Version: 2.7.6\n```\n\nGiven that this returns the bundle ID as the name, and does so on a package whose signing cert expired over a year and a half ago (so it's quite unlikely to be added under normal operation), does our current behavior feel sufficient to y'all?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this LGTM, i'll close this"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Avid Codecs fixed,\nFleet now reads the true title,\nClarity in cloud."
+          }
+        ],
+        "issueNumber": 25588,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX1-s",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@noahtalerman: Decided to cut this \"smarter\" logic to solve these problems:\n- Multiple instances of the software installed\n- User v. machine scope on Windows\n\nCurrently, for macOS, only software that's installed in Applications/ shows the \"Update required\" status. If the software isn't in Applications/ but it's in inventory, Fleet shows \"Installed\" regardless of version. Fleet will use the install_path to know if the software is in Applications/\n\nCode wise: if (macOS and install_path is applications/), check only that path if it’s outdated and then show “update available” else show “Installed”\n\nFor Windows Fleet-maintained apps, software only shows \"Update available\" if the installed software is the same scope (user or machine) as the Fleet-maintained app. Based on install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\".\n\nFor Windows custom packages, software only shows \"Update available\" if the software title has an install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\"."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @RachelElysia, I added copy and a link to the contact URL based on `numa` feedback. We met with them today (2025-06-27) and showed them this story's wireframes.\n\n![Image](https://github.com/user-attachments/assets/6ca4ef45-09f2-4ac3-afee-bd5c995e151a)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts I realize this is offloading work to you that should've been done earlier by someone else, but can you work through a test plan here based on what's in Figma?\n\nIf it's more helpful to delegate the test plan for this to #27983, since these changes touch largely the same UI (though this hits both self-service and host software), that works too, and I can do a first pass there.\n\nWent ahead and updated the story template to remove non-test-plan TODOs to help a little."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx I've added the first pass test plan, just a couple questions left here:\n\n\u003cimg width=\"135\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1a202f1e-a311-4ccd-9aff-76ec85ef8dac\" /\u003e\n\n~~This is kind of vague, what is the criteria for this \"Update Available\" status?~~\n~~- Software is installed on host~~\n~~- Software installer is available~~\n~~- Software is a different version?~~\n~~- Software installer is a higher version than the version that's installed?~~\n\nNevermind, found that criteria in the [#27983](https://github.com/fleetdm/fleet/issues/27983) ticket. Only question left is:\n\nWhat are the available statuses for tar.gz items? \n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts No update available status for tarballs as they don't have an associated version."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving to estimated with an 8 based on prior discussions"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n\nIn the test plans it says:\n\n\u003e  If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n\nIs there a different tooltip? I currently have it with no tooltip if it was installed by the user not using Fleet. Can you add the tooltip to the Figma spec or remove this from the QA plan?"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "[Doc to track questions around the various modals](https://docs.google.com/document/d/1sAh752RZCCquWhI25emzNtnBVV3wA-GAhjbdlaB2Pls/edit?tab=t.0)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Heads up that we're marking this one for expedited drafting"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "@mostlikelee thanks. To over communicate, most of the remaining questions are regarding [the modals subtask](https://github.com/fleetdm/fleet/issues/30860)"
+          }
+        ],
+        "issueNumber": 30240,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcLd1w",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes** \n \n1. Navigate to Host details \u003e\u003e Software \u003e\u003e Library tab\n2. In the dropdown, select \"Self-service\"\n3. Either change the Name sort order or type something in the search bar\n- [x] dropdown is not reset"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Dropdown's memory honed,\nSorting, searching undisturbed,\nClarity bestowed."
+          }
+        ],
+        "issueNumber": 30514,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbpzkM",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "The version reported in osquery is 16.0 but when I look in \"About this Mac\" and System Settings \u003e\u003e General it's 26.0\nIt does get the build right though... 25A5279m"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "When I try to enforce encryption I'm not seeing the banner instructing me to restart or log out, until I've restarted or logged out. Then it stays there no matter how many times I restart. I'm not seeing the banner clear and even after running the `cleanups_then_aggregation` cron the encryption status isn't updated and it says `unrecognized`:\n\n![Image](https://github.com/user-attachments/assets/f3c0b064-8aae-4c39-9993-bd01af2fbd84)\n\nOn the host, I can see the disk encryption profile in System Settings and Filevault is turned on and a recovery key has been set:\n\n\u003cimg width=\"741\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/013cc568-6b97-4bbb-be68-a458bbbdf56b\" /\u003e\n\n\u003cimg width=\"730\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/986b4c3e-42f2-4b9c-9756-f1acc8e1f302\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "Apple introduced a new Device Migration feature (that only works with the latest OSes) which will move your host from a 3rd party MDM server over to Fleet,  all via ABM. It works! however during the enrollment to Fleet the Setup Experience SwiftDialogue window did not display the software Fleet was installing in the background"
+          },
+          {
+            "author": {
+              "login": "zayhanlon"
+            },
+            "body": "@PezHub from customer-numa\nmacOS 26 - MDM migration invokes Setup Experience (silently) - awaitconfigured\n\n- Upgraded endpoint to macOS 26 \n- ABM recognizes that\n- Able to set a deadline\n- Device starts to migrate\n- Unenrolled from previous MDM (didn’t have to initiate anything)\n- Recognizes that it needs to enroll into Fleet\n- Waiting for ‘device configured’ command\n- Starts going through setup experience again (calling through all apps, VPP apps, setup script)\n\nExpected behavior: Assume host has all apps already installed. It’s been previously managed. It’s not a net new device so it shouldn’t run setup experience. VPP apps would get removed from previous MDM so those would be the one thing that should run again\n\nNote from @mostlikelee : Technically, as soon as the device gets the Fleet MDM profile, the apps should come along with it. We should test"
+          },
+          {
+            "author": {
+              "login": "zayhanlon"
+            },
+            "body": "@PezHub from customer-eponym\nFleet menu bar item doesn't show up after enrollment in beta 2"
+          },
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet menu not showing after enrollment in macOS 26 beta 2 #6834](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/3ec39176-1e2a-49ec-aea4-3c44108d90d0)"
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Changing MDMs without a deadline doesn't not show a notification on the host. Maybe it takes a lot more time (writing this after waiting for 2-3 hours)"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "Hi all 👋 , any issues directly related to the new MDM migration feature Apple introduced in ABM should be tracked separately here https://github.com/orgs/fleetdm/projects/58/views/9?pane=issue\u0026itemId=119675644\u0026issue=fleetdm%7Cfleet%7C30695\n"
+          }
+        ],
+        "issueNumber": 30136,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX9VU",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Weird behavior for sure -- I thought it was put in boxes only if there were multiple versions installed but I guess not!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "If we want to just add a grey box around this, it's a EST: 1 FE only and should take 10 minutes.\n\nFrom #20638:\n```\n  // special case when we dont have installed versions. We can only show the\n  // software type atm.\n  if (!installed_versions || installed_versions.length === 0) {\n    return (\n      \u003cdiv className={`${baseClass}__software-details`}\u003e\n        \u003cDataSet\n          title=\"Type\"\n          value={formatSoftwareType({ source: software.source })}\n        /\u003e\n      \u003c/div\u003e\n    );\n  }\n```"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given the above movement, looks like this has been estimated, so moving forward."
+          }
+        ],
+        "issueNumber": 30232,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX4XA",
+        "comments": [
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Testing notes left on the PR: #30686"
+          }
+        ],
+        "issueNumber": 30082,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @lukeheath marking this story as `P2`. The current behavior makes it look like Fleet does not understand how people actually use CVSS.  But now we do."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "TODO RAchel: first draft of test plan"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Just filled in this story checklist so it's ready for User Story Review (credit to @RachelElysia for the test plan)."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "assigning to @RachelElysia to estimate"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@lukeheath needs your estimate here and we can move it to the software board"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "For everyone's info, I was asked to estimate this this morning and estimated it at a 4. Looks like changing the project removed the estimate. @sharon-fdm @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "oh no that's my bad.  we discussed in sprint kickoff review that Luke is going to take this one @jacobshandling "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "I'll assign a 4 here and move it to the software board for Luke"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath Might be minimal extra work to solve #30524 alongside this since filter + sort seems like it would be sufficient there. Maybe dev this with that request in mind and check with the customer to see whether that solves their issue?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "removing milestone.  will not get to this story this sprint"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath Can you create Sprint 45 and move this into it?"
+          }
+        ],
+        "issueNumber": 30248,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgckdFo",
+        "comments": [
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "Tested on `4.70.1` and `4.71.0` and all tests have passed ✅ "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Fleet's new update shines,\nTray icon basks in glow, edge,\nTests ensure safe climb."
+          }
+        ],
+        "issueNumber": 30846,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcmzng",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "This was created while testing #30780 and does not necessarily need to be merged. I will run through the whole process to see how it goes, can decide whether or not to merge it at that time."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Tested:\n- Beekeeper Studio is added to FMA Catalog\n- Scripts and category are populated\n- Installs\n- Uninstalls\n\nClosing this ticket as we will not be merging this app in. "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Beekeeper Studio,\nIn the cloud city it thrives,\nEffortless and smooth."
+          }
+        ],
+        "issueNumber": 30884,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgck8sI",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@RachelElysia can you add an estimate on this subtask?"
+          }
+        ],
+        "issueNumber": 30861,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcs61c",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e we can get into a state where a VPP app is stuck in pending indefinitely\n\n\u003e Add a cron job to clean up VPP install verifications that are stuck\n\n@jmwatts hmm, this sounds like a bug to me. Can you please update this issue to the bug format?\n\nNice catch!\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Previously written up as a suggestion for a cron to clean up VPP verify items:\n\n## Problem\n\nIf VPP install verification information isn't updated for some reason, we can get into a state where a VPP app is stuck in pending indefinitely. \n\nExample: I want to order a pair of shoes from my food delivery app, which does not show options for stores that don't carry food. --\u003e\n\n## What have you tried?\n\nDeleting the upcoming activity will cancel the pending install, but having to manually cancel these installs could be time consuming, especially if there was an event that caused a large number of the VPP install verifications to fail (perhaps an APNS outage or something)\n\n## Potential solutions\n\nAdd a cron job to clean up VPP install verifications that are stuck\n\n## What is the expected workflow as a result of your proposal?\n\nEach time the cron runs, it will look for VPP Verifications that were sent out but never verified.\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Closing this ticket because there were two known things contributing to getting into this state:\n\n#31028 - This will result in pending installs that will never get cleared out and will have to be resolved by manually editing the database\n#31020 - This is being resolved for 4.71.0\n\nI do think we should discuss how to clean up lingering issues if there are other scenarios that get us into this state but for now, this issue will be resolved once the above two issues are addressed."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "App installations paused,\nFleet now speaks to the cloud,\nEase for teams, applause."
+          }
+        ],
+        "issueNumber": 30902,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc5Hl8",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@ksykulev can you pop an estimate on this one?"
+          }
+        ],
+        "issueNumber": 31185,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc5rCE",
+        "comments": [
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Here is a bit of a mapping between legacy versions\nhttps://github.com/brave/brave-browser/wiki/Brave-Release-Schedule-Archive\nHere is the upcoming release schedule\nhttps://github.com/brave/brave-browser/wiki/Brave-Release-Schedule\n\nAnd we do have a mapping on github\nhttps://github.com/brave/brave-browser/releases/tag/v1.80.122\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per further discussion, we'll do the simplest possible fix, with test automation as a prerequisite, hence the 1 estimate here."
+          }
+        ],
+        "issueNumber": 31122,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX4P8",
+        "comments": [
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@mostlikelee Thanks for filing! This is a good investment and definitely something we need to do. Before I prioritize to drafting, would you please review the [create an engineering-initiated story](https://fleetdm.com/handbook/engineering#create-an-engineering-initiated-story) process? This should only have one user story, and the only section that should be removed is the \"Product\" section. \n\nOne user story allows us to focus on a single user and use case, and implement a simpler iteration. We can do a separate iteration if we want to focus on admin experience. "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@lukeheath thanks, updated!"
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@mostlikelee Thanks, I've prioritized to the drafting board and assigned to you as the product designer. You'll be responsible for moving this through the drafting board per the drafting engineering-initiated stories process (or assign to someone else to take it over.)"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee are we aiming to ship this in 4.72?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "I think we need to rewrite the name and story here to better reflect the scope (i think we're starting with macos), but yes we want to make some progress on this front in the next sprint to get in front of FMA issues.\n\n@ksykulev can you take a pass at updating this so we can estimate any further work needed outside the POC?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Applied estimate arrived at on Friday in chat."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "- add ability to skip slugs for version mismatches\n- add ability to skip version check"
+          }
+        ],
+        "issueNumber": 29183,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc8aTI",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving to ready for spec to discuss the best path forward here"
+          }
+        ],
+        "issueNumber": 31123,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc-Xts",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Reproduced on 4.70.1"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Done and merged this morning to not drag to next sprint"
+          }
+        ],
+        "issueNumber": 30746,
+        "changeType": "modified"
+      }
+    ]
   }
 ]
