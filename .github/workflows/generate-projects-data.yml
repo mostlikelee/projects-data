@@ -58,8 +58,8 @@ jobs:
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
-          git add ${{ env.SNAPSHOT_PATH }}
-          git add ${{ env.BURNDOWN_PATH }}
+          git add ${{ env.SNAPSHOT_PATH }} -f
+          git add ${{ env.BURNDOWN_PATH }} -f
           git commit -m "Update projects data for ${{ env.SPRINT_NAME }}"
           git push origin main
           
