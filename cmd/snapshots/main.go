@@ -294,7 +294,6 @@ func createDiffItem(oldItem, newItem Item) *Item {
 		return nil
 	}
 
-	fmt.Printf("Item %s changed: %+v\n", newItem.ID, diffItem)
 	return diffItem
 }
 
