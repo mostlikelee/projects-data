@@ -9,7 +9,7 @@ env:
   PROJECT_ID: 70  # <== customize this per team/project
   SNAPSHOT_PATH: ./snapshots  # <== customize where you want .json files to live
   SPRINT_NAME: Sprint-44  # <== customize this to your current sprint name
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # <== ensure this secret is set in your repo
+  GH_TOKEN: ${{ secrets.GH_PROJECTS_PAT}}  # <== ensure this secret is set in your repo
 
 
 jobs:
@@ -35,5 +35,5 @@ jobs:
         run: |
           mkdir -p .tmp
           echo "Fetch all items (unfiltered)..."
-          gh project item-list ${{ env.PROJECT_ID }} --org fleetdm --limit 1000 --format json > .tmp/items.json
+          gh project item-list ${{ env.PROJECT_ID }} --owner fleetdm --limit 1000 --format json > .tmp/items.json
           head -n 10 .tmp/items.json
