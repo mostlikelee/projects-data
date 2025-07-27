@@ -45,7 +45,7 @@ jobs:
       - name: Generate projects data
         run: |
           go mod tidy
-          go run ./cmd/snapshots.go
+          go run ./cmd/snapshots/main.go
 
       - name: Commit and push changes
         run: |
