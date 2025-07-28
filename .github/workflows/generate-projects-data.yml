@@ -1,15 +1,13 @@
 name: generate projects data
 
 on:
-  # schedule:
-  #   - cron: '0 */6 * * *'  # every 6 hours
+  schedule:
+  - cron: '0 7 * * *'  # Runs at midnight Denver time
+
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 env:
-  SPRINT_NAME: Sprint 44  # <== customize this to your current sprint name
+  SPRINT_NAME: Sprint 45  # <== customize this to your current sprint name
   PROJECT_ID: 70  # <== customize this per team/project
   SNAPSHOT_PATH: ./data/snapshots  # <== customize where you want snapshot .json files to live
   BURNDOWN_PATH: ./data/burndown  # <== customize where you want burndown .csv files to live
