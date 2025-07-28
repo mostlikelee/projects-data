@@ -2,7 +2,8 @@ name: generate projects data
 
 on:
   schedule:
-  - cron: '0 7 * * *'  # Runs at midnight Denver time
+  - cron: '0 7 * * *'   # 12:00 AM Denver time
+  - cron: '0 19 * * *'  # 12:00 PM Denver time
 
   workflow_dispatch:
 
