@@ -4620,5 +4620,161 @@
         ]
       }
     ]
+  },
+  {
+    "timestamp": "2025-07-29T19:06:41.731205762Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCo1s",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 26404,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "status": "🐣 In progress",
+        "issueNumber": 30853,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX120",
+        "status": "🦤 ‎In review",
+        "issueNumber": 29914,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX12Q",
+        "status": "🦤 ‎In review",
+        "issueNumber": 27983,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX124",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 29944,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: v4.68.1\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\nWhen setting up a policy automation, the background page scrolls unexpectedly. \n\nThis only occurs when the browser window is not full height, and the selection dropdown overflows the bottom of the page. \n\nLoom recording:\n\nhttps://www.loom.com/share/c796032677724e649c6af960ed3b0fc2?sid=216d9868-60eb-4d4e-b347-393800f46e2f\n\n\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Create a team \n2. Add policies (creating a large number of policies makes this easier to reproduce without making the screen 100px tall)\n3. Add scripts (see above)\n4. Navigate to the team's Policy view\n5. Adjust height of the browser window until the policy table overflows the bottom of the page. \n6. Make sure you are scrolled up to the top of the page. \n7. Click on **Manage automations**\n8. Select the last listed policy\n9. Open the dropdown menu \n10. Observe scrolling\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica\n\nSet dropdown menu `max-height` to 200px, so that the dropdown menu fits the modal. This should be changed for Scripts and Software automations modal. \n\n### est.\n\n\u003cimg width=\"467\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/80331afe-b6e9-41ca-a219-9e4c52336bcd\" /\u003e"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOYo",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet UI scrolling issue on policy automations page #6515](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/e0769c7b-805a-4272-897a-de7c5f7af36b)"
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "Timebox to 1 point."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Thanks @marko-lisica ! What a great, simple solution \u003c3\n\nEst: 1"
+          }
+        ],
+        "issueNumber": 30004,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "Related to https://github.com/fleetdm/fleet/issues/27756\r\nand https://github.com/fleetdm/fleet/pull/31118\r\n\r\nNoNewWindow prevents powershell from opening a new window when starting the process.\r\nforce-uninstall bypasses Chrome's confirmation dialog\r\n\r\nFixes were discovered when working on https://github.com/fleetdm/fleet/pull/31210\r\n\r\n# Checklist for submitter\r\n\r\n## Testing\r\n\r\n- [x] QA'd all new/changed functionality manually\r\n",
+          "number": 31367,
+          "repository": "fleetdm/fleet",
+          "title": "Forcing chrome to uninstall and no new powershell window",
+          "type": "PullRequest",
+          "url": "https://github.com/fleetdm/fleet/pull/31367"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdFX6o",
+        "labels": [
+          "bug",
+          ":release",
+          "#g-software",
+          "~qa-on-branch"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "✔️Awaiting QA",
+        "title": "Forcing chrome to uninstall and no new powershell window",
+        "issueNumber": 31367,
+        "changeType": "added"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: \u003c!-- Copy this from the \"My account\" page in the Fleet UI, or run `fleetctl --version` --\u003e\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nSome deb packages ask user questions during installation causing the install script to timeout.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. TODO\n2. TODO\n3. \n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n\u003c!-- ### 🛠️ To fix --\u003e\nFrom community contributor:\n\nSetting this variable within orbit itself, instead of in the default installation script template, accomplishes two things:\n\nAccomplishes what is usually considered the desired behavior retroactively, without requiring administrators to go back and update all of their install scripts\nAllows administrators to override the default behavior in their scripts, in case there is a need for package installation to actually prompt the currently logged-in user for information.\nNote that this does NOT prevent dpkg from blocking when a conffile has been changed since the previous installation. In these cases, the administrator should include\n-o Dpkg::Options=\"--force-(confdef|confold|confnew)\" in the dpkg or apt command in the install script.\n",
+          "number": 31396,
+          "repository": "fleetdm/fleet",
+          "title": "deb package hangs during install",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31396"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF67w",
+        "labels": [
+          "bug",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "title": "Fleetd-1.46.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "Waiting",
+        "title": "deb package hangs during install",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "blocking waiting on replication steps for QA steps from contributor"
+          }
+        ],
+        "issueNumber": 31396,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "marko-lisica"
+        ],
+        "content": {
+          "body": "### Requestor\n\n- Application name: TODO\n- Application platform: TODO (macOS/Windows)\n\n---\n\n### Validation\n\n- [ ] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [ ] Manifest name matches osquery `app.name` (macOS) or `programs.name` (Windows)\n- [ ] Manifest version scheme matches osquery `app.short_bundle_version` (macOS) or `programs.version` (Windows) version scheme\n- [ ] Manifest `unique_identifier` matches osquery `app.bundle_identifier` (macOS only)\n\n### QA\n\n- [ ] App adds successfully to team's library\n- [ ] App installs successfully on host\n- [ ] App opens successfully on host\n- [ ] App uninstalls successfully on host\n\n### Icon\n\n- [ ] Icon added to Figma\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog",
+          "number": 31398,
+          "repository": "fleetdm/fleet",
+          "title": "New FMA: \u003cApp Name\u003ei cant add my windows device to the server it says default ssl error even though i added the pem file to the correct folder",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31398"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF8xw",
+        "labels": [
+          ":release",
+          "#g-software",
+          "fma"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "New FMA: \u003cApp Name\u003ei cant add my windows device to the server it says default ssl error even though i added the pem file to the correct folder",
+        "comments": [
+          {
+            "author": {
+              "login": "LuckZo0o"
+            },
+            "body": "\u003cimg width=\"2414\" height=\"1121\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9bf67a33-27b7-49d0-9ac8-de54a128c740\" /\u003e"
+          }
+        ],
+        "issueNumber": 31398,
+        "changeType": "added"
+      }
+    ]
   }
 ]
