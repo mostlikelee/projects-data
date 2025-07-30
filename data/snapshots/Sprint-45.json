@@ -390,7 +390,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Unable to apply software installers with Fleet secrets via GitOps",
         "comments": [
           {
@@ -1633,7 +1633,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "🪲One particular software installer gets updated every time gitops run is conducted",
         "comments": [
           {
@@ -2223,7 +2223,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "🪲Software vuln detected dates do not match between screens",
         "comments": [
           {
@@ -2814,7 +2814,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Self-service actions carryover"
       },
       {
@@ -3134,7 +3134,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Fleet UI: Fleet Desktop \u003e Software \u003e Type sort broken",
         "comments": [
           {
@@ -3637,7 +3637,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "Waiting",
         "title": "HostSoftwareTable shows wrong empty state",
         "comments": [
           {
@@ -4967,6 +4967,287 @@
         ],
         "issueNumber": 30746,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-07-30T19:06:16.140612968Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCw2A",
+        "status": "🐣 In progress",
+        "issueNumber": 30197,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdC06A",
+        "status": "Waiting",
+        "issueNumber": 31334,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpoQ",
+        "labels": [
+          "story",
+          ":release",
+          "~vulnerability-management",
+          "customer-rialto",
+          "#g-software",
+          "~qa-on-branch"
+        ],
+        "status": "🐣 In progress",
+        "issueNumber": 30738,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "marko-lisica"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCntE",
+        "issueNumber": 31329,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCIqk",
+        "status": "Waiting",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts updated this and the other 2 bugs you filed to be filed according to the clarified process \u003c3 out of your court now, grazie"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looks like a combo icon + install script issue."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "the error also occurs after manual install, so i don't think we should block this on vendor pkg errors."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1 (\u003c 2 hours)\n\nNote: the scope of this ticket will only be the FE icon portion"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this may be a non issue, @RachelElysia will confirm"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I don't see the issue anymore\n\n\u003cimg width=\"347\" height=\"138\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/0616ced5-f3d4-4b5a-8c05-68aeb578e5cf\" /\u003e\n\u003cimg width=\"244\" height=\"94\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d10d3821-9fd4-401a-baee-0c1c48a0d6be\" /\u003e\n\u003cimg width=\"170\" height=\"46\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f8b647b1-867c-40a8-ac23-0d03f0a4ad0c\" /\u003e"
+          }
+        ],
+        "issueNumber": 30367,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCIzs",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts updated this and the other 2 bugs you filed to be filed according to the clarified process \u003c3 out of your court now, grazie"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts This is just the icon issue right?"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx Yes. The only other strange thing I noticed while testing was that if you double click on the Santa app it doesn't seem to do anything which, to me, is strange for a macOS app. But it does the same thing if you download it from github, and I can access santactl from terminal, so probably a non-issue. \n\nAlso looks like there's a new version of Santa as of yesterday https://github.com/northpolesec/santa/releases/tag/2025.6"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "I thought I saw this issue too, but now I'm not seeing it. Checked on Chrome and FF on https://localhost:8080/software/add/fleet-maintained?team_id=9 and various other pages just in case. Also checked the code and looks like no one's updated it so I don't understand why its no longer an issue.\n\n@jmwatts are you still seeing this?\n\nPutting this in the waiting column."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Nope, looks fine now. I'll close this one out. \n\n\u003cimg width=\"396\" height=\"141\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e7d51b51-a89f-42a3-9d10-027596af42dd\" /\u003e\n\u003cimg width=\"91\" height=\"42\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d9423393-8f5c-4f0d-9320-2eb4d853c91a\" /\u003e\n\u003cimg width=\"196\" height=\"97\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/36a1fec9-30a9-4e66-9a05-3d739a3d712e\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Icons squished, unclear,\nIn Fleet's cloud, they reappear,\nCalm, correct, and clear."
+          }
+        ],
+        "issueNumber": 30364,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "jahzielv"
+        ],
+        "content": {
+          "number": 31417,
+          "repository": "fleetdm/fleet",
+          "title": "Research: Linux detection bug",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31417"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdIa8U",
+        "labels": [
+          ":release",
+          "~sub-task",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🐣 In progress",
+        "title": "Research: Linux detection bug",
+        "issueNumber": 31417,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcp4X0",
+        "labels": [
+          "bug",
+          ":release",
+          "~released bug",
+          "#g-software"
+        ],
+        "issueNumber": 30913,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 3,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "getvictor"
+            },
+            "body": "@mostlikelee I believe this is a P1 since this feature is broken right now. However, I've marked it a P2 since customer was OK waiting until 4.73 for the fix.\n\n@harrisonravazzolo Please add the customer label since I couldn't find it."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1752521340977199"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "lowered estimate, we already had validation logic"
+          }
+        ],
+        "issueNumber": 30853,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "status": "🐣 In progress",
+        "issueNumber": 30248,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX120",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Found this: \n\n```\n#### Articles\n\n[Create an \"📝 Article\" issue](https://github.com/fleetdm/fleet/issues/new?template=fleet-article.md) and follow the instructions in the template to propose a new article for Fleet to publish.\n```"
+          }
+        ],
+        "issueNumber": 29914,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc-TB0",
+        "milestone": {
+          "dueOn": "2025-08-08T00:00:00Z",
+          "title": "4.72.0"
+        },
+        "issueNumber": 31274,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "Related to https://github.com/fleetdm/fleet/issues/27756\r\nand https://github.com/fleetdm/fleet/pull/31118\r\n\r\nNoNewWindow prevents powershell from opening a new window when starting the process.\r\nforce-uninstall bypasses Chrome's confirmation dialog\r\n\r\nFixes were discovered when working on https://github.com/fleetdm/fleet/pull/31210\r\n\r\n# Checklist for submitter\r\n\r\n## Testing\r\n\r\n- [x] QA'd all new/changed functionality manually\r\n\r\n## Manual Testing\r\nregression test Chrome Windows FMA (#27756)\r\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdFX6o",
+        "issueNumber": 31367,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF67w",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "blocking waiting on replication steps for QA steps from contributor"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "contributor is OOO, and fleetd cut happened this morning.  I'll figure out next steps here"
+          }
+        ],
+        "issueNumber": 31396,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF8xw",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "LuckZo0o"
+            },
+            "body": "\u003cimg width=\"2414\" height=\"1121\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9bf67a33-27b7-49d0-9ac8-de54a128c740\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this is not a Fleet maintained app request.  closing"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Windows device link,\nSSL error no more, peace.\nFleet's embrace expands."
+          }
+        ],
+        "issueNumber": 31398,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDFlI",
+        "title": "Windows FMA schema validator",
+        "issueNumber": 31349,
+        "changeType": "removed"
       }
     ]
   }
