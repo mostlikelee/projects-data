@@ -256,7 +256,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Clean up timing for clearing stale false-positive vulnerabilities",
         "comments": [
           {
@@ -390,7 +390,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Unable to apply software installers with Fleet secrets via GitOps",
         "comments": [
           {
@@ -526,7 +526,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Self-Service Updates: Guide/Docs"
       },
       {
@@ -1240,7 +1240,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "🖥️ Fleet Desktop \u003e Self-service: Add \"Update\" actions when updates are detected for installed software",
         "comments": [
           {
@@ -1558,7 +1558,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Self-Service Update: Frontend"
       },
       {
@@ -4494,7 +4494,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "**Fleet version**: v4.68.1\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\nWhen setting up a policy automation, the background page scrolls unexpectedly. \n\nThis only occurs when the browser window is not full height, and the selection dropdown overflows the bottom of the page. \n\nLoom recording:\n\nhttps://www.loom.com/share/c796032677724e649c6af960ed3b0fc2?sid=216d9868-60eb-4d4e-b347-393800f46e2f\n\n\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Create a team \n2. Add policies (creating a large number of policies makes this easier to reproduce without making the screen 100px tall)\n3. Add scripts (see above)\n4. Navigate to the team's Policy view\n5. Adjust height of the browser window until the policy table overflows the bottom of the page. \n6. Make sure you are scrolled up to the top of the page. \n7. Click on **Manage automations**\n8. Select the last listed policy\n9. Open the dropdown menu \n10. Observe scrolling\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n\u003c!-- ### 🛠️ To fix --\u003e\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\n\u003c!-- Product designer: _________________________ --\u003e \u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n\n### est.\n\n\u003cimg width=\"467\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/80331afe-b6e9-41ca-a219-9e4c52336bcd\" /\u003e",
+          "body": "**Fleet version**: v4.68.1\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\nWhen setting up a policy automation, the background page scrolls unexpectedly. \n\nThis only occurs when the browser window is not full height, and the selection dropdown overflows the bottom of the page. \n\nLoom recording:\n\nhttps://www.loom.com/share/c796032677724e649c6af960ed3b0fc2?sid=216d9868-60eb-4d4e-b347-393800f46e2f\n\n\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Create a team \n2. Add policies (creating a large number of policies makes this easier to reproduce without making the screen 100px tall)\n3. Add scripts (see above)\n4. Navigate to the team's Policy view\n5. Adjust height of the browser window until the policy table overflows the bottom of the page. \n6. Make sure you are scrolled up to the top of the page. \n7. Click on **Manage automations**\n8. Select the last listed policy\n9. Open the dropdown menu \n10. Observe scrolling\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica\n\nSet dropdown menu `max-height` to 200px, so that the dropdown menu fits the modal. This should be changed for Scripts and Software automations modal. \n\n### est.\n\n\u003cimg width=\"467\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/80331afe-b6e9-41ca-a219-9e4c52336bcd\" /\u003e",
           "number": 30004,
           "repository": "fleetdm/fleet",
           "title": "UI - Background page scrolls while editing Policy automations.",
@@ -4774,6 +4774,199 @@
         ],
         "issueNumber": 31398,
         "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-07-30T07:08:45.979422614Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCntE",
+        "status": "Waiting",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "This was surfaced with BYOD Apple devices. I tagged it with g-software but it could be `#g-mdm`\n@georgekarrv @mostlikelee preference on who tackles this one?\n\nWhen a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps). \nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\n\u003cimg width=\"1186\" height=\"374\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8c7dc1a7-ac0e-497a-91df-08dc8fb31702\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@georgekarrv we're going to take this.  removing it off your board"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "\u003e When a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps).\nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\nAbout to put in a PR to show the generic No software detected empty state (plus tests). @marko-lisica if @jmwatts is correct for a different empty state, can you update this ticket if it's imperative for 4.72, or open a new ticket for 4.73 to track the new empty state?\n\nThank you!"
+          }
+        ],
+        "issueNumber": 31329,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX8R4",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1747760158772119"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "more context: https://fleetdm.slack.com/archives/C086V2QK76X/p1747675290738609"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "This is seemingly pretty easily reproducible by adding a new team yml with box drive in gitops.\n```\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:51:27.200080 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 21:49:11.554490 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n5 rows in set (0.00 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| Slack-4.44.59-macOS.pkg | 28 |      10 | 2025-07-15 22:44:36.454515 |\n| BoxDrive-2.43.205.pkg   | 29 |      10 | 2025-07-15 22:44:36.460138 |\n| googlechrome.dmg        | 30 |      10 | 2025-07-15 22:44:36.464730 |\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 22:45:00.940530 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 22:44:45.480426 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n8 rows in set (0.00 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers order by team_id desc;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| Slack-4.44.59-macOS.pkg | 28 |      10 | 2025-07-15 22:44:36.454515 |\n| BoxDrive-2.43.205.pkg   | 29 |      10 | 2025-07-15 22:46:52.967720 |\n| googlechrome.dmg        | 30 |      10 | 2025-07-15 22:44:36.464730 |\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 22:47:20.744843 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n| BoxDrive-2.43.205.pkg   | 13 |       8 | 2025-07-15 22:47:03.419169 |\n| Slack-4.44.59-macOS.pkg | 14 |       8 | 2025-07-15 21:49:11.560796 |\n+-------------------------+----+---------+----------------------------+\n8 rows in set (0.00 sec)\n```\n\nIt returns different updated_at results after apply, and then after a while it seems to stop changing. Will investigate further."
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Running it over and over again with a single team seems to keep the value consistent:\n```\n\u003e select filename, id, team_id, updated_at from software_installers;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:29:44.399978 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n+-------------------------+----+---------+----------------------------+\n3 rows in set (0.01 sec)\n\n(fleet@[localhost]:3306) [fleet]\n\u003e select filename, id, team_id, updated_at from software_installers;\n+-------------------------+----+---------+----------------------------+\n| filename                | id | team_id | updated_at                 |\n+-------------------------+----+---------+----------------------------+\n| BoxDrive-2.43.205.pkg   |  1 |       9 | 2025-07-15 21:29:44.399978 |\n| Slack-4.44.59-macOS.pkg |  2 |       9 | 2025-07-15 21:29:44.406000 |\n| googlechrome.dmg        |  3 |       9 | 2025-07-15 21:29:44.417411 |\n+-------------------------+----+---------+----------------------------+\n3 rows in set (0.00 sec)\n```"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "So it looks like the uninstall script for box is changing. In specific:\n```\n  pkg_ids=(\n    \"com.box.desktop.installer.local.appsupport\"\n    \"com.box.desktop.installer.autoupdater\"\n    \"com.box.desktop.installer.desktop\"\n  )\n\n  pkg_ids=(\n    \"com.box.desktop.installer.desktop\"\n    \"com.box.desktop.installer.local.appsupport\"\n    \"com.box.desktop.installer.autoupdater\"\n  )\n```\n\nThen we have this fancy query to tell us if anything has changed:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software_installers.go#L2094-L2122\n```\nSELECT id,\nstorage_id != ? is_package_modified,\ninstall_script_content_id != ? OR uninstall_script_content_id != ? OR pre_install_query != ? OR\nCOALESCE(post_install_script_content_id != ? OR\n\t(post_install_script_content_id IS NULL AND ? IS NOT NULL) OR\n\t(? IS NULL AND post_install_script_content_id IS NOT NULL)\n, FALSE) is_metadata_modified FROM software_installers\nWHERE global_or_team_id = ?\tAND title_id IN (\n\tSELECT id FROM software_titles WHERE unique_identifier = ? AND source = ? AND browser = ''\n)\n```\nSo `is_metadata_modified` is returning true, because the `uninstall_script_content_id` is changing."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\nWas able to reproduce original issue (randomly, not consistently) on 4.71.0 with local GitOps script. Upgraded to 4.72.0 and attempted to reproduce the same behavior repeatedly. Was not able to reproduce with the fix in place. "
+          }
+        ],
+        "issueNumber": 29286,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX7LA",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/26618?planning-poker) with Zenhub @iansltx @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "I'm not able to repro this (wanted to check what was going on prior to throwing an estimate on). Both places have the same timestamp returned from the API (Jan 28 ~6:40a UTC), and both show the expected \"one month ago\" in the UI.\n\nMaybe we close this and if anyone sees this again we reopen?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e Maybe we close this and if anyone sees this again we reopen?\n\ni'm onboard with this, unless @RachelElysia has any other info that may get us into this state\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per [Slack](https://fleetdm.slack.com/archives/C086V2QK76X/p1741109822016689?thread_ts=1741109272.543039\u0026cid=C086V2QK76X), @jmwatts has a repro."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Can you grab your vulnerabilities table and confirm which `created_at` timestamp is the correct one? This feels like a join is propagating things across a bunch of columns where it shouldn't be, so I'm assuming that the individual CVE page is correct and the list is wrong, but want to make sure."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "There's a lot in that table :D so here's one example but let me know if you need more than this\n\n![Image](https://github.com/user-attachments/assets/e2a4def4-7ace-4802-b833-55bb6ec2aa09)\n\n![Image](https://github.com/user-attachments/assets/b4b6c662-824b-4a93-a727-a19a0060d60a)\n\n![Image](https://github.com/user-attachments/assets/54b65a28-9216-4cdd-af88-7e3a7a24013a)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "This is useful; thanks!\n\nLooks like we may have at least two bugs here. In the case you showed, the list view is correct but the individual vuln view shows detected as the current timestamp (though this seems to vary from vuln to vuln). In Rachel's example though both places have different values, both of which aren't the current timestamp. So we might need to scope this as \"fix the bugs that we can repro\", which won't necessarily be the original bug."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Here's one example that is showing detected as a minute ago, but the table view of vulns shows another time:\n\ndetails view\nhttps://dogfood.fleetdm.com/software/vulnerabilities/CVE-2025-0938\ntable view of vulns\nhttps://dogfood.fleetdm.com/software/vulnerabilities?exploit=false\u0026query=CVE-2025-0938\u0026order_direction=desc\u0026order_key=hosts_count\u0026page=0"
+          },
+          {
+            "author": {
+              "login": "rachaelshaw"
+            },
+            "body": "I haven't seen this issue exactly, but was about to report a similar issue: currently, every CVE detail page is saying detected \"less than a minute ago\"; In the API response, `created_at` always seems to be set to the current time. (List view is fine, only seeing this w/ `GET /vulnerabilities/:cve`). \n\n@RachelElysia do you think this is related, or should I report that bug seperately?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@rachaelshaw The one you're seeing is the one I mentioned. Thinking we'll resolve that one with this ticket and see if we can repro the other one afterward."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nGo to CVE details page (ex: /software/vulnerabilities/CVE-2025-24162) and note the detected date\nGo to vulnerabilities table page (ex: /software/vulnerabilities?exploit=false\u0026query=CVE-2025-24162\u0026order_direction=desc\u0026order_key=hosts_count\u0026page=0) and note the detected date\n\n- [x] Detected date on software vuln table should match detected date in details\n- [x] Check multiple CVEs"
+          }
+        ],
+        "issueNumber": 26618,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "status": "🦤 ‎In review",
+        "issueNumber": 30853,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdAjcc",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31309,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc-Xts",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Reproduced on 4.70.1"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Done and merged this morning to not drag to next sprint"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n- [x] Sort function has been removed from Type column on software and host software pages"
+          }
+        ],
+        "issueNumber": 30746,
+        "changeType": "modified"
       }
     ]
   }
