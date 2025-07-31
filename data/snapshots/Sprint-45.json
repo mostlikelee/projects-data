@@ -2125,7 +2125,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "🪲FMA/Custom packages not respecting custom scoping \"exclude any\" for label that doesn't exist on host",
         "comments": [
           {
@@ -2580,7 +2580,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "Waiting",
         "title": "Inconsistent style: Host details \u003e Software \u003e Show details",
         "comments": [
           {
@@ -2781,7 +2781,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "[fleetctl] fail api command when args present after uri"
       },
       {
@@ -3060,7 +3060,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Amazon DCV Viewer FMA version mismatch",
         "comments": [
           {
@@ -5504,6 +5504,320 @@
         ],
         "issueNumber": 30696,
         "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-07-31T19:06:37.246422562Z",
+    "items": [
+      {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "Bug observed during sprint [demos](https://fleetdm.slack.com/archives/C03C41L5YEL/p1753461589429129).\n\n[This](https://github.com/fleetdm/fleet/blob/02c5026436072355a70f97e756ecb04a569ee6b8/frontend/pages/hosts/details/cards/Software/HostSoftwareTable/HostSoftwareTable.tsx#L153-L154) seems to be the problem area. Looks like the check is purely based on the platform but it should be also checking for the presence of vulnerability query params.\n\n\n```tsx\n  const memoizedEmptyComponent = useCallback(() =\u003e {\n    const vulnFilterAndNotSupported = isIPadOrIPhone(platform);\n    return vulnFilterAndNotSupported ? (\n      \u003cVulnsNotSupported\n        platformText={APPLE_PLATFORM_DISPLAY_NAMES[platform as ApplePlatform]}\n      /\u003e\n    ) : (\n      \u003cEmptySoftwareTable noSearchQuery={searchQuery === \"\"} /\u003e\n    );\n  }, [platform, searchQuery]);\n```\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\nUI changes: [Figma](https://www.figma.com/design/bLdsOyLfY0IlyhxKSCBcHR/-31329-%F0%9F%AA%B2-HostSoftwareTable-shows-wrong-empty-state?node-id=2-130\u0026t=O3ljmyNs4PlpzS3j-1)\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCntE",
+        "status": "🐣 In progress",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "This was surfaced with BYOD Apple devices. I tagged it with g-software but it could be `#g-mdm`\n@georgekarrv @mostlikelee preference on who tackles this one?\n\nWhen a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps). \nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\n\u003cimg width=\"1186\" height=\"374\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8c7dc1a7-ac0e-497a-91df-08dc8fb31702\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@georgekarrv we're going to take this.  removing it off your board"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "\u003e When a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps).\nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\nAbout to put in a PR to show the generic No software detected empty state (plus tests). @marko-lisica if @jmwatts is correct for a different empty state, can you update this ticket if it's imperative for 4.72, or open a new ticket for 4.73 to track the new empty state?\n\nThank you!"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@RachelElysia I just realized this is already on g-software board. I added a few more copy changes that depend on the platform and enrollment type (MDM status). Not sure if you want to estimate this? I can add to planning poker.\n\nFigma link is in issue description."
+          }
+        ],
+        "issueNumber": 31329,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "ksykulev"
+        ],
+        "content": {
+          "body": "Chrome on windows stalled trying to uninstall for FMA test automation:\nhttps://github.com/fleetdm/fleet/pull/31210\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nhttps://github.com/fleetdm/fleet/actions/runs/16580117238/job/46894005707?pr=31210\n```\nlevel=info ts=2025-07-28T21:00:13.5176998Z caller=app_commander.go:95 app=\"Google Chrome\" msg=\"Executing uninstall script for app...\"\nlevel=error ts=2025-07-28T21:05:13.5339387Z caller=app_commander.go:98 app=\"Google Chrome\" msg=\"Error uninstalling app: exit status 1\"\nlevel=error ts=2025-07-28T21:05:13.5339387Z caller=app_commander.go:99 app=\"Google Chrome\" msg=\"Output: \\n--------------------\\nUninstall command: C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\138.0.7204.158\\\\Installer\\\\setup.exe\\nUninstall args: --uninstall --system-level --uninstall\\n\\n--------------------\"\n```\n\n\n### 🧑‍💻  Steps to reproduce\nUninstall chrome FMA on github runner\n\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\nhttps://github.com/fleetdm/fleet/pull/31367",
+          "number": 31455,
+          "repository": "fleetdm/fleet",
+          "title": "Chrome FMA not uninstalling on CI",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31455"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLIg0",
+        "labels": [
+          "bug",
+          ":release",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "✅ Ready for release",
+        "title": "Chrome FMA not uninstalling on CI",
+        "issueNumber": 31455,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCw2A",
+        "status": "🦤 ‎In review",
+        "issueNumber": 30197,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX9VU",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Weird behavior for sure -- I thought it was put in boxes only if there were multiple versions installed but I guess not!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "If we want to just add a grey box around this, it's a EST: 1 FE only and should take 10 minutes.\n\nFrom #20638:\n```\n  // special case when we dont have installed versions. We can only show the\n  // software type atm.\n  if (!installed_versions || installed_versions.length === 0) {\n    return (\n      \u003cdiv className={`${baseClass}__software-details`}\u003e\n        \u003cDataSet\n          title=\"Type\"\n          value={formatSoftwareType({ source: software.source })}\n        /\u003e\n      \u003c/div\u003e\n    );\n  }\n```"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given the above movement, looks like this has been estimated, so moving forward."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm confused. I don't get these modals when I go to Host details \u003e Software\n\nI only a modal if I look in Fleet desktop at the Software tab. I don't see anywhere in Self-service that I would get this modal, and \"Available for install\" isn't a thing anymore in Host details \u003e Software. Is that the only place this is applied? Or am I missing something?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia TODO confirm that we can no longer access this UI. If that's confirmed, close this."
+          }
+        ],
+        "issueNumber": 30232,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX124",
+        "status": "Waiting",
+        "issueNumber": 29944,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCIqk",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts updated this and the other 2 bugs you filed to be filed according to the clarified process \u003c3 out of your court now, grazie"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looks like a combo icon + install script issue."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "the error also occurs after manual install, so i don't think we should block this on vendor pkg errors."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1 (\u003c 2 hours)\n\nNote: the scope of this ticket will only be the FE icon portion"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this may be a non issue, @RachelElysia will confirm"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I don't see the issue anymore\n\n\u003cimg width=\"347\" height=\"138\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/0616ced5-f3d4-4b5a-8c05-68aeb578e5cf\" /\u003e\n\u003cimg width=\"244\" height=\"94\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d10d3821-9fd4-401a-baee-0c1c48a0d6be\" /\u003e\n\u003cimg width=\"170\" height=\"46\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f8b647b1-867c-40a8-ac23-0d03f0a4ad0c\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Unable to repro. Closing."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Icon, squished, obscure,\nFleet's clarity restored,\nSoftware's sky, now pure."
+          }
+        ],
+        "issueNumber": 30367,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdIa8U",
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "issueNumber": 31417,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Security Engineer on the Software page,\n| I want to filter by a custom severity (CVSS score) range\n| so that I can filter software by a vulnerability threshold my security team uses (ex. CVSS ≥ 7.5).\n\n## Key result\n\nNone. Prioritized because the current behavior makes it look like Fleet does not understand how people actually use CVSS. But now we do.\n\n## Original requests\n\n- #30237\n\n## Context\n- Product Designer: @RachelElysia + @iansltx \n- Engineer: @RachelElysia \n\n## Changes\n\n### Product\n- [ ] UI changes: [Figma](https://www.figma.com/design/J2mqgWcS9RG3jaQc43V67m/-30248--Software-page--filter-by-custom-severity--CVSS-score--ranges?node-id=0-1\u0026p=f\u0026t=YQB8wo6YOLyUzyFu-0)\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: No changes\n- [x] REST API changes: No changes (API endpoint already supports min/max)\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] GitOps changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Follows existing CVSS score filtering, so Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [x] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [x] Contributor API changes: No changes\n- [ ] Feature guide changes: Make sure the [vulns filtering article](https://fleetdm.com/guides/filtering-software-by-vulnerability) is current with the UI\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n\u003e Note: See Figma for single source of truth for exact text copies \n\nTest modals on Host \u003e Software \u003e Inventory page and Software page\n\n1. Min max is present and new help text is present\n2. Min max is enabled only if vuln software toggle is enabled\n3. Defaults to \"Any severity\"\n4. If a user clicks on a given severity like \"Critical severity\", the min and max will be auto populated\n5. If a user clicks on \"Any severity\", the min and max are cleared\n6. If a user clicks on \"Custom severity\", the min and max do not change\n7. If a user types in a custom min or custom max, the dropdown will change to \"Custom severity\"\n8. If a user clears both custom min/max, the dropdown will change to \"Any severity\" but returns to \"Custom severity\" if they start typing\n9. If the user hits apply with no severity entered, it will apply any severity\n10. If the user clicks apply with only a min entered, it will only apply the min (e.g. \u003e=4.0)\n11. If the user clicks apply with only a max entered, it will only apply the max (e.g. \u003c= 8.0)\n12. If the user types in an invalid number into either min/max (e.g. 4.11 or -3), the in label error states it must be a number between 0-10 with an increment of 0.1\n12b. The user cannot type in string as the input is limited to type number\n14. If the user types in a min larger than the max, the Apply button is disabled with a tooltip stating that the min can not be greater than the max.\n15. By clicking \"Apply\", the severity ranges will filter results to only vulnerable software with severity scores in the selected range\n16. Clearing the filter should show all software \n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "issueNumber": 30248,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdFX6o",
+        "status": "Done",
+        "issueNumber": 31367,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "noahtalerman"
+        ],
+        "content": {
+          "body": "**Fleet version**: Latest snapshot on dogfood\n\n**Web browser and operating system**: Any\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nThe text in the Updates section of Self-service says the following even when multiple apps are needing updates: \n\n\u003e The following app require updating. If you need help, reach out to IT\n\nThere should be logic to detect when to use `app` vs `apps` or update the text to a more generic `app(s)` approach. \n\n`require` vs `requires` also need to be context aware. \n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Have a device with multiple updates available\n2. Go to Self-service and observe the Updates text\n3. PATCH YOUR APPS! \n\n### 🕯️ More info _(optional)_\n\n\u003cimg width=\"1073\" height=\"268\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1527ae4d-85b6-4a07-b6a3-b195ff24977d\" /\u003e\n\n ### 🛠️ To fix \n\n- @noahtalerman: Let's update the copy to tell the end user \"why\" to update ([Figma wireframes](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5301-2182\u0026t=hxc2lNnNPhVI7pRT-1)):\n\n\"Your device has outdated software. Update to address potential security vulnerabilities or compatibility issues.\"\n\n- @noahtalerman: Also remove the \"If you need help...\"\n  - Why? Already exists in the \"Self-service\" section.\n\n\u003cimg width=\"727\" height=\"73\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/0076f8b5-25cc-4857-998b-23b475659e93\" /\u003e\n\n- @noahtalerman: Copy style borrowed by the following:\n\n\u003cimg width=\"1243\" height=\"90\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/128ee478-a7a3-4ae8-a510-8fb83fe0376a\" /\u003e\n\n\u003cimg width=\"629\" height=\"290\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ceae2da2-0c1e-4dd4-99ce-0547257369cd\" /\u003e",
+          "number": 31414,
+          "repository": "fleetdm/fleet",
+          "title": "Self-service: typo in Updates section",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31414"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdK3Mg",
+        "labels": [
+          "bug",
+          ":release",
+          "~unreleased bug",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "✔️Awaiting QA",
+        "title": "Self-service: typo in Updates section",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @jmwatts @mostlikelee I assigned myself and took a stab at this is an unreleased bug: \n- #31449\n\nWill move it to \"Ready for QA\" once the PR merges."
+          }
+        ],
+        "issueNumber": 31414,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "ksykulev"
+        ],
+        "content": {
+          "body": "**Fleet version**: 4.72\n\nhttps://fleetdm.slack.com/archives/C086V2QK76X/p1753829605060219\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nIf we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the LastInstallInstalledAt. This makes the `app_store_app.last_install` value `null`. This is a problem on the host library page:\n\u003cimg width=\"5102\" height=\"2742\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b42eef59-cb6d-457d-8cf9-566e45904c20\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n1. Trigger a vpp app to be installed by fleet\n2. Wait for the successful install\n3. Refetch host vitals\n4. Open up the library page\n\n### 🕯️ More info _(optional)_\nWhen passing `OnlyAvailableForInstall` to `ListHostSoftware` , if we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the `LastInstallInstalledAt` , `LastInstallInstallUUID`.\n\nHere is the reason.\nWe pull in fleet initiated vpp installs here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3261\nThey include `last_install_install_uuid`, `last_install_installed_at`.\nThen later if we are asking for applications that are available for install, we run this query https://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3614-L3632\nThe purpose of this query is to find osquery inventoried software that is not fleet installed but match vpp apps. The problem lays here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3647-L3649\n```\n\t\t\t\tif s.VPPAppAdamID != nil {\n\t\t\t\t\ttmpByVPPAdamID[*s.VPPAppAdamID] = s\n\t\t\t\t}\n```\nIf we find a vpp app installer we overwrite the record we pulled up from `hostInstalledVpps` (and lose the `last_install_*` data).\n\n### 🛠️ To fix\n\nWe should either:\nModify this query to exclude apps that are not installed by fleet\nModify that bit of code to say, if we already have that record in `tmpByVPPAdamID` we can copy over the `last_install_*` data vs just overwriting the record.\nSo why is this working properly on the self service page? Great question, it's because we are not filtering by \"only available for install\".\n\nself service opts:\n```\n\t\tSelfServiceOnly:            true,\n\t\tIncludeAvailableForInstall: true,\n\t\tOnlyAvailableForInstall:    false,\n\t\tIsMDMEnrolled:              true, \u003cmaybe true || false\u003e\n```\nhost library page opts:\n```\n\tSelfServiceOnly: false,\n\tIncludeAvailableForInstall: true,\n\tOnlyAvailableForInstall: true,\n```",
+          "number": 31459,
+          "repository": "fleetdm/fleet",
+          "title": "null on app_store_app.last_install for VPP apps installed by fleet",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31459"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLKz4",
+        "labels": [
+          "bug",
+          ":release",
+          "~released bug",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "🥚 Ready",
+        "title": "null on app_store_app.last_install for VPP apps installed by fleet",
+        "issueNumber": 31459,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "marko-lisica"
+        ],
+        "content": {
+          "body": "### Requestor\n\n- Application name: Windows App\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [ ] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [ ] Manifest name matches osquery `app.name`\n- [ ] Manifest version scheme matches osquery `app.short_bundle_version`\n- [ ] Manifest `unique_identifier` matches osquery `app.bundle_identifier`\n\n### QA\n\n- [ ] App adds successfully to team's library\n- [ ] App installs successfully on host\n- [ ] App opens successfully on host\n- [ ] App uninstalls successfully on host\n\n### Icon\n\n- [ ] Icon added to Figma\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog",
+          "number": 31468,
+          "repository": "fleetdm/fleet",
+          "title": "New FMA: Windows App",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31468"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLZck",
+        "labels": [
+          ":release",
+          "#g-software",
+          "fma"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "New FMA: Windows App",
+        "issueNumber": 31468,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc5Hl8",
+        "title": "🪲WhatsApp version different in software inventory",
+        "issueNumber": 31185,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc5rCE",
+        "title": "macOS Brave Browser FMA version mismatch",
+        "issueNumber": 31122,
+        "changeType": "removed"
       }
     ]
   }
