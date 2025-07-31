@@ -369,7 +369,7 @@
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/30853"
         },
-        "estimate": 5,
+        "estimate": 3,
         "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
         "labels": [
           "bug",
@@ -390,7 +390,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Unable to apply software installers with Fleet secrets via GitOps",
         "comments": [
           {
@@ -433,7 +433,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "Waiting",
         "title": "FMA automation carryover"
       },
       {
@@ -2676,7 +2676,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Software page: filter by custom severity (CVSS score) ranges",
         "comments": [
           {
@@ -3231,7 +3231,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "Waiting",
         "title": "Intune Company Portal - FMA Icon issue",
         "comments": [
           {
@@ -3292,7 +3292,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "Done",
         "title": "Incorrect icon on Santa FMA",
         "comments": [
           {
@@ -3853,7 +3853,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Software \u003e OS: Surface Linux kernel vulnerabilities",
         "comments": [
           {
@@ -4007,7 +4007,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Host Software API: Surface automatic install policies",
         "comments": [
           {
@@ -4684,7 +4684,7 @@
       },
       {
         "content": {
-          "body": "Related to https://github.com/fleetdm/fleet/issues/27756\r\nand https://github.com/fleetdm/fleet/pull/31118\r\n\r\nNoNewWindow prevents powershell from opening a new window when starting the process.\r\nforce-uninstall bypasses Chrome's confirmation dialog\r\n\r\nFixes were discovered when working on https://github.com/fleetdm/fleet/pull/31210\r\n\r\n# Checklist for submitter\r\n\r\n## Testing\r\n\r\n- [x] QA'd all new/changed functionality manually\r\n",
+          "body": "Related to https://github.com/fleetdm/fleet/issues/27756\r\nand https://github.com/fleetdm/fleet/pull/31118\r\n\r\nNoNewWindow prevents powershell from opening a new window when starting the process.\r\nforce-uninstall bypasses Chrome's confirmation dialog\r\n\r\nFixes were discovered when working on https://github.com/fleetdm/fleet/pull/31210\r\n\r\n# Checklist for submitter\r\n\r\n## Testing\r\n\r\n- [x] QA'd all new/changed functionality manually\r\n\r\n## Manual Testing\r\nregression test Chrome Windows FMA (#27756)\r\n",
           "number": 31367,
           "repository": "fleetdm/fleet",
           "title": "Forcing chrome to uninstall and no new powershell window",
@@ -4762,7 +4762,7 @@
           "fma"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "Done",
         "title": "New FMA: \u003cApp Name\u003ei cant add my windows device to the server it says default ssl error even though i added the pem file to the correct folder",
         "comments": [
           {
@@ -5248,6 +5248,262 @@
         "title": "Windows FMA schema validator",
         "issueNumber": 31349,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-07-31T07:07:36.210812112Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX9VU",
+        "status": "Waiting",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Weird behavior for sure -- I thought it was put in boxes only if there were multiple versions installed but I guess not!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "If we want to just add a grey box around this, it's a EST: 1 FE only and should take 10 minutes.\n\nFrom #20638:\n```\n  // special case when we dont have installed versions. We can only show the\n  // software type atm.\n  if (!installed_versions || installed_versions.length === 0) {\n    return (\n      \u003cdiv className={`${baseClass}__software-details`}\u003e\n        \u003cDataSet\n          title=\"Type\"\n          value={formatSoftwareType({ source: software.source })}\n        /\u003e\n      \u003c/div\u003e\n    );\n  }\n```"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given the above movement, looks like this has been estimated, so moving forward."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm confused. I don't get these modals when I go to Host details \u003e Software\n\nI only a modal if I look in Fleet desktop at the Software tab. I don't see anywhere in Self-service that I would get this modal, and \"Available for install\" isn't a thing anymore in Host details \u003e Software. Is that the only place this is applied? Or am I missing something?"
+          }
+        ],
+        "issueNumber": 30232,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX8dE",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "I noticed in the database dump the label \"Nobody has this label\" was created at `2025-05-20 22:14:03`, however, the host's `label_updated_at` time was `2025-05-20 21:53:39`. In our previous available software query we are doing this check `:host_label_updated_at \u003e= lbl.created_at` with a comment above it stating\n```\nignore software that depends on labels created\n _after_ the label_updated_at timestamp of the host (because\nwe don't have results for that label yet, the host may or may\nnot be a member\n```\n\nWhich is why in this particular case firefox is getting excluded. When I run the following query `update hosts set label_updated_at = '2025-05-20 23:00:00' where id = 2;` and reload the page I get firefox in the result set.\n\n\u003cimg width=\"1639\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f99f21a8-171e-475e-abc5-d7c4e3999657\" /\u003e\n\nIt looks like that `label_updated_at` gets updated when we refetch the host vitals?"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Thanks @ksykulev I went back to 4.66.0 and confirm this works the same way. "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I'm leaving this as a bug because it's not intuitive for the end user to understand why it works the way it does. "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee @ksykulev I proposed a solution in the `to fix` area and am moving this to **Ready to estimate**.\n\n@mostlikelee do you want to keep this as a bug or convert it to a feature request?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "In the above case:\n1. A dynamic label was created (@jmwatts  can you confirm this is only for dynamic?)\n2. The host hasn't refreshed, so we don't know yet if it's a member of the label.  Fleet assumes the host does not have this label.\n3. This software has a target that excludes that label.\n\nSo the current state is that the host is not in the label, so it _should_ show in the list.\n\nCould use a sanity check from @lucasmrod here as this is the same behavior for policy targets."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@mostlikelee I was not using dynamic labels so it does apply to manual labels. "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e [@mostlikelee](https://github.com/mostlikelee) I was not using dynamic labels so it does apply to manual labels.\n\nok, let's scope this to remove timestamp consideration from manual labels.  updating the \"to Fix\" section."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1748525930809559"
+          },
+          {
+            "author": {
+              "login": "ksatter"
+            },
+            "body": "@ksykulev I'm seeing an issue where Manual labels are also not being respected for 'labels include any'. Do you think this is likely the same root problem, or should we break that out into a separate issue?"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "@ksatter ~~Right now the logic stands that if a label (manual or dynamic) is created and we don't fetch host vitals, whatever the label is doing will not apply to the host. So in your case, `labels include any` also falls under this case.~~\n~~After this issue is fixed, any type of manual label will apply despite the `created_at` time or host `label_updated_at` time~~\n\nI was incorrect, looking at the query it doesn't look like it's checking timestamp for `include_any`.\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L2645-L2662\n\n@jmwatts In the case of `exclude_any`, manual labels will apply \"immediately\" and dynamic labels will require a host refetch. How do we want `include_any` to work? Same logic? Or does timestamp not matter in their case?"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Add a label to fleet, make sure the label isn't applied to any hosts\n2. Add an FMA or custom package to a team, use \"Custom\" target, exclude any, for the label that no hosts have. Make it available in Self service.\n3. For an enrolled host on that team, check the software that is \"Available for install\"\n4. Open Self service for the host\n- [x] Confirm the software is showing as available in Self Service\n\nAlso confirmed for manual and dynamic labels:\n- [x] Software is not available when using \"Include any\" for only labels the host does not have\n- [x] Software is available when using \"Include any\" for labels the host does have\n- [x] Software is not available when using exclude any for one or more labels the host does have"
+          }
+        ],
+        "issueNumber": 29315,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbpzkM",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 30136,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcgXr8",
+        "status": "✅ Ready for release",
+        "issueNumber": 30797,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc8aTI",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving to ready for spec to discuss the best path forward here"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "1. Add Amazon DCV Viewer as FMA\n2. Install app on host\n3. View installed version\n\n- [x] Confirm version is shown as 2024.0.8004"
+          }
+        ],
+        "issueNumber": 31123,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF67w",
+        "milestone": {
+          "title": "Fleetd-1.47.0"
+        },
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "blocking waiting on replication steps for QA steps from contributor"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "contributor is OOO, and fleetd cut happened this morning.  I'll figure out next steps here"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "the PR is reverted from the 1.46 release branch so we don't block the fleetd release"
+          }
+        ],
+        "issueNumber": 31396,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "create a json schema doc for Windows FMA PRs and associated CI",
+          "number": 31349,
+          "repository": "fleetdm/fleet",
+          "title": "Windows FMA schema validator",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31349"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdI8OQ",
+        "labels": [
+          ":release",
+          "~engineering-initiated",
+          "#g-software",
+          "fma"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Windows FMA schema validator",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "adding to sprint as low hanging fruit"
+          }
+        ],
+        "issueNumber": 31349,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "xpkoala",
+          "AndreyKizimenko",
+          "PezHub",
+          "jmwatts"
+        ],
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [ ] Test plan is finalized\n- [ ] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [ ] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [ ] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [ ] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [ ] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [ ] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n- [ ] TODO\n- [ ] Complete MDM Smoke test\n- [ ] Complete Orchestration Smoke test\n- [ ] Complete Software Smoke test\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "number": 30696,
+          "repository": "fleetdm/fleet",
+          "title": "Validate MacOS Tahoe on Fleet so that we can provide same day support when it goes to general release",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/30696"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdI9dE",
+        "labels": [
+          "story",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "✔️Awaiting QA",
+        "title": "Validate MacOS Tahoe on Fleet so that we can provide same day support when it goes to general release",
+        "comments": [
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@AndreyKizimenko While you will be leading this effort, it impacts all product groups, so feel free to request support from the rest of the QA team as needed. "
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @lukeheath @AndreyKizimenko, this got lost in drafting last two weeks. I don't think this needs to go through the drafting process, as it doesn't require product design or estimation. I moved this to \"Testing - QA board\" project."
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@xpkoala @PezHub @jmwatts - @AndreyKizimenko will be taking lead on this, but we'll be bringing into each product group's release board on Monday after sprint kickoff. We expect each QA engineer will be involved at some point as we validate MacOS Tahoe. \n\ncc @sharon-fdm @georgekarrv @mostlikelee "
+          }
+        ],
+        "issueNumber": 30696,
+        "changeType": "added"
       }
     ]
   }
