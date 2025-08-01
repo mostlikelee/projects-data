@@ -1558,7 +1558,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "Waiting",
         "title": "Self-Service Update: Frontend"
       },
       {
@@ -2650,7 +2650,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Security Engineer on the Software page,\n| I want to filter by a custom severity (CVSS score) range\n| so that I can filter software by a vulnerability threshold my security team uses (ex. CVSS ≥ 7.5).\n\n## Key result\n\nNone. Prioritized because the current behavior makes it look like Fleet does not understand how people actually use CVSS. But now we do.\n\n## Original requests\n\n- #30237\n\n## Context\n- Product Designer: @RachelElysia + @iansltx \n- Engineer: @RachelElysia \n\n## Changes\n\n### Product\n- [ ] UI changes: [Figma](https://www.figma.com/design/J2mqgWcS9RG3jaQc43V67m/-30248--Software-page--filter-by-custom-severity--CVSS-score--ranges?node-id=0-1\u0026p=f\u0026t=YQB8wo6YOLyUzyFu-0)\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: No changes\n- [x] REST API changes: No changes (API endpoint already supports min/max)\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] GitOps changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Follows existing CVSS score filtering, so Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [x] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [x] Contributor API changes: No changes\n- [ ] Feature guide changes: Make sure the [vulns filtering article](https://fleetdm.com/guides/filtering-software-by-vulnerability) is current with the UI\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n\u003e Note: See Figma for single source of truth for exact text copies \n\nTest modals on Host \u003e Software \u003e Inventory page and Software page\n\n1. Min max is present and new help text is present\n2. Min max is enabled only if vuln software toggle is enabled\n3. Defaults to \"Any severity\"\n4. If a user clicks on a given severity like \"Critical severity\", the min and max will be auto populated\n5. If a user clicks on \"Any severity\", the min and max are cleared\n6. If a user clicks on \"Custom severity\", the min and max do not change\n7. If a user types in a custom min or custom max, the dropdown will change to \"Custom severity\"\n8. If a user clears a custom min/max, the dropdown will not change to \"Any severity\" as they still might be typing\n9. If the user hits apply with no severity entered, it will apply any severity\n10. If the user clicks apply with only a min entered, it will only apply the min (e.g. \u003e=4.0)\n11. If the user clicks apply with only a max entered, it will only apply the max (e.g. \u003c= 8.0)\n12. If the user types in an invalid string into either min/max (e.g. 4.11 or abc), the Apply button is disabled with a tooltip stating it must be a number between 0-10 with an increment of 0.1\n13. If the user types in a min larger than the max, the Apply button is disabled with a tooltip stating that the min can not be greater than the max.\n14. By clicking \"Apply\", the severity ranges will filter results to only vulnerable software with severity scores in the selected range\n15. Clearing the filter should show all software \n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Security Engineer on the Software page,\n| I want to filter by a custom severity (CVSS score) range\n| so that I can filter software by a vulnerability threshold my security team uses (ex. CVSS ≥ 7.5).\n\n## Key result\n\nNone. Prioritized because the current behavior makes it look like Fleet does not understand how people actually use CVSS. But now we do.\n\n## Original requests\n\n- #30237\n\n## Context\n- Product Designer: @RachelElysia + @iansltx \n- Engineer: @RachelElysia \n\n## Changes\n\n### Product\n- [ ] UI changes: [Figma](https://www.figma.com/design/J2mqgWcS9RG3jaQc43V67m/-30248--Software-page--filter-by-custom-severity--CVSS-score--ranges?node-id=0-1\u0026p=f\u0026t=YQB8wo6YOLyUzyFu-0)\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: No changes\n- [x] REST API changes: No changes (API endpoint already supports min/max)\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] GitOps changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Follows existing CVSS score filtering, so Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [x] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [x] Contributor API changes: No changes\n- [ ] Feature guide changes: Make sure the [vulns filtering article](https://fleetdm.com/guides/filtering-software-by-vulnerability) is current with the UI\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n\u003e Note: See Figma for single source of truth for exact text copies \n\nTest modals on Host \u003e Software \u003e Inventory page and Software page\n\n1. Min max is present and new help text is present\n2. Min max is enabled only if vuln software toggle is enabled\n3. Defaults to \"Any severity\"\n4. If a user clicks on a given severity like \"Critical severity\", the min and max will be auto populated\n5. If a user clicks on \"Any severity\", the min and max are cleared\n6. If a user clicks on \"Custom severity\", the min and max do not change\n7. If a user types in a custom min or custom max, the dropdown will change to \"Custom severity\"\n8. If a user clears both custom min/max, the dropdown will change to \"Any severity\" but returns to \"Custom severity\" if they start typing\n9. If the user hits apply with no severity entered, it will apply any severity\n10. If the user clicks apply with only a min entered, it will only apply the min (e.g. \u003e=4.0)\n11. If the user clicks apply with only a max entered, it will only apply the max (e.g. \u003c= 8.0)\n12. If the user types in an invalid number into either min/max (e.g. 4.11 or -3), the in label error states it must be a number between 0-10 with an increment of 0.1\n12b. The user cannot type in string as the input is limited to type number\n14. If the user types in a min larger than the max, the Apply button is disabled with a tooltip stating that the min can not be greater than the max.\n15. By clicking \"Apply\", the severity ranges will filter results to only vulnerable software with severity scores in the selected range\n16. Clearing the filter should show all software \n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 30248,
           "repository": "fleetdm/fleet",
           "title": "Software page: filter by custom severity (CVSS score) ranges",
@@ -3231,7 +3231,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "Done",
         "title": "Intune Company Portal - FMA Icon issue",
         "comments": [
           {
@@ -3610,7 +3610,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "Bug observed during sprint [demos](https://fleetdm.slack.com/archives/C03C41L5YEL/p1753461589429129).\n\n[This](https://github.com/fleetdm/fleet/blob/02c5026436072355a70f97e756ecb04a569ee6b8/frontend/pages/hosts/details/cards/Software/HostSoftwareTable/HostSoftwareTable.tsx#L153-L154) seems to be the problem area. Looks like the check is purely based on the platform but it should be also checking for the presence of vulnerability query params.\n\n\n```tsx\n  const memoizedEmptyComponent = useCallback(() =\u003e {\n    const vulnFilterAndNotSupported = isIPadOrIPhone(platform);\n    return vulnFilterAndNotSupported ? (\n      \u003cVulnsNotSupported\n        platformText={APPLE_PLATFORM_DISPLAY_NAMES[platform as ApplePlatform]}\n      /\u003e\n    ) : (\n      \u003cEmptySoftwareTable noSearchQuery={searchQuery === \"\"} /\u003e\n    );\n  }, [platform, searchQuery]);\n```\n\n",
+          "body": "Bug observed during sprint [demos](https://fleetdm.slack.com/archives/C03C41L5YEL/p1753461589429129).\n\n[This](https://github.com/fleetdm/fleet/blob/02c5026436072355a70f97e756ecb04a569ee6b8/frontend/pages/hosts/details/cards/Software/HostSoftwareTable/HostSoftwareTable.tsx#L153-L154) seems to be the problem area. Looks like the check is purely based on the platform but it should be also checking for the presence of vulnerability query params.\n\n\n```tsx\n  const memoizedEmptyComponent = useCallback(() =\u003e {\n    const vulnFilterAndNotSupported = isIPadOrIPhone(platform);\n    return vulnFilterAndNotSupported ? (\n      \u003cVulnsNotSupported\n        platformText={APPLE_PLATFORM_DISPLAY_NAMES[platform as ApplePlatform]}\n      /\u003e\n    ) : (\n      \u003cEmptySoftwareTable noSearchQuery={searchQuery === \"\"} /\u003e\n    );\n  }, [platform, searchQuery]);\n```\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\nUI changes: [Figma](https://www.figma.com/design/bLdsOyLfY0IlyhxKSCBcHR/-31329-%F0%9F%AA%B2-HostSoftwareTable-shows-wrong-empty-state?node-id=2-130\u0026t=O3ljmyNs4PlpzS3j-1)\n",
           "number": 31329,
           "repository": "fleetdm/fleet",
           "title": "HostSoftwareTable shows wrong empty state",
@@ -3637,7 +3637,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "🐣 In progress",
         "title": "HostSoftwareTable shows wrong empty state",
         "comments": [
           {
@@ -4007,7 +4007,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Host Software API: Surface automatic install policies",
         "comments": [
           {
@@ -4706,7 +4706,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "Done",
         "title": "Forcing chrome to uninstall and no new powershell window",
         "issueNumber": 31367,
         "changeType": "added"
@@ -5817,6 +5817,254 @@
         "id": "PVTI_lADOBDAnic4A4BEUzgc5rCE",
         "title": "macOS Brave Browser FMA version mismatch",
         "issueNumber": 31122,
+        "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-01T07:08:48.392085601Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdC06A",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Carryover tracked well,\nLike leaves in a gentle stream,\nFleet flows with more grace."
+          }
+        ],
+        "issueNumber": 31334,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdIa8U",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "After looking at the XML feed data here: https://github.com/fleetdm/nvd/blob/master/oval_sources.json\nI found that we _are_ getting RHEL kernel-related vulns, but not processing them when we do vulns processing in Fleet. \n\nFiled a bug here: https://github.com/fleetdm/fleet/issues/31495"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Bug in Linux code,\nDetection now seamless, like\nWind through cloud city."
+          }
+        ],
+        "issueNumber": 31417,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX4P8",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@mostlikelee Thanks for filing! This is a good investment and definitely something we need to do. Before I prioritize to drafting, would you please review the [create an engineering-initiated story](https://fleetdm.com/handbook/engineering#create-an-engineering-initiated-story) process? This should only have one user story, and the only section that should be removed is the \"Product\" section. \n\nOne user story allows us to focus on a single user and use case, and implement a simpler iteration. We can do a separate iteration if we want to focus on admin experience. "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@lukeheath thanks, updated!"
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@mostlikelee Thanks, I've prioritized to the drafting board and assigned to you as the product designer. You'll be responsible for moving this through the drafting board per the drafting engineering-initiated stories process (or assign to someone else to take it over.)"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee are we aiming to ship this in 4.72?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "I think we need to rewrite the name and story here to better reflect the scope (i think we're starting with macos), but yes we want to make some progress on this front in the next sprint to get in front of FMA issues.\n\n@ksykulev can you take a pass at updating this so we can estimate any further work needed outside the POC?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Applied estimate arrived at on Friday in chat."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "- add ability to skip slugs for version mismatches\n- add ability to skip version check"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Automated tests flow,\nLike rivers through code canals,\nPatch hosts swiftly grow.\n\nApps refreshed each day,\nIn the cloud city they play,\nFleet's light shows the way.\n\nNo delay in sight,\nMac platform takes flight, \nIn the glass city's light."
+          }
+        ],
+        "issueNumber": 29183,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOeo",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "~released bug",
+          "~assisting g-mdm",
+          "customer-nortia",
+          "#g-software"
+        ],
+        "issueNumber": 30357,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdK3Mg",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @jmwatts @mostlikelee I assigned myself and took a stab at this is an unreleased bug: \n- #31449\n\nWill move it to \"Ready for QA\" once the PR merges."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@noahtalerman Is this an unreleased bug for 4.72? If so, please add the milestone per https://fleetdm.com/handbook/engineering#run-fleet-locally-for-qa-purposes \n\nAdditionally we'll need a cherry pick into the RC branch. Thanks!"
+          }
+        ],
+        "issueNumber": 31414,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "**Fleet version**: v4.68.1\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\nWhen setting up a policy automation, the background page scrolls unexpectedly. \n\nThis only occurs when the browser window is not full height, and the selection dropdown overflows the bottom of the page. \n\nLoom recording:\n\nhttps://www.loom.com/share/c796032677724e649c6af960ed3b0fc2?sid=216d9868-60eb-4d4e-b347-393800f46e2f\n\n\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Create a team \n2. Add policies (creating a large number of policies makes this easier to reproduce without making the screen 100px tall)\n3. Add scripts (see above)\n4. Navigate to the team's Policy view\n5. Adjust height of the browser window until the policy table overflows the bottom of the page. \n6. Make sure you are scrolled up to the top of the page. \n7. Click on **Manage automations**\n8. Select the last listed policy\n9. Open the dropdown menu \n10. Observe scrolling\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica\n\nSet dropdown menu `max-height` to 200px, so that the dropdown menu fits the modal. This should be changed for Scripts and Software automations modal. \n\n### est.\n\n\u003cimg width=\"467\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/80331afe-b6e9-41ca-a219-9e4c52336bcd\" /\u003e",
+          "number": 30004,
+          "repository": "fleetdm/fleet",
+          "title": "UI - Background page scrolls while editing Policy automations.",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/30004"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdL8SA",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "~released bug",
+          "~assisting g-orchestration",
+          "customer-cisneros",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "UI - Background page scrolls while editing Policy automations.",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet UI scrolling issue on policy automations page #6515](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/e0769c7b-805a-4272-897a-de7c5f7af36b)"
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "Timebox to 1 point."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Thanks @marko-lisica ! What a great, simple solution \u003c3\n\nEst: 1"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Was going to evict this bit the fix looks trivial so going to keep in for now."
+          }
+        ],
+        "issueNumber": 30004,
+        "changeType": "added"
+      },
+      {
+        "content": {
+          "body": "## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to see the CVE number displayed in the empty state on `/software/vulnerabilities/:cve` if no hosts are affected.\n| so that I can take a screenshot of that page and send it to my security team.\n\n## Roadmap item\n\nNone\n\n## Original requests\n\n#24807\n\n## Context\n- Product Designer: @marko-lisica  \n- Engineer: @iansltx \n\nThis story is the result of community PR: #31370\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Product\n- [x] UI changes:\n  - Include CVE number in empty state on  `/software/vulnerabilities/:cve` page, when no hosts are affected with that CVE:\n  - \u003cimg width=\"1615\" height=\"466\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/5a3f2a1d-8142-4860-9ae0-971bc2aed28f\" /\u003e\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: No changes.\n- [x] REST API changes: No changes.\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps mode UI changes: No changes.\n- [x] GitOps generation changes: No changes. \n- [x] Activity changes: No changes.\n- [x] Permissions changes: No changes.\n- [x] Changes to paid features or tiers: Fleet Free and Premium\n- [x] My device and fleetdm.com/better changes: No changes.\n- [x] Other reference documentation changes: No changes.\n- [x] First draft of test plan added\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: No changes\n- [ ] Feature guide changes: No changes\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### Fleet Premium\n\n1. Navigate to `/software/vulnerabilities/\u003ccve_that_isn't_detected\u003e`\n2. Verify that CVE number is included in the copy in empty state in both Fleet Free and Premium.\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "number": 31377,
+          "repository": "fleetdm/fleet",
+          "title": "Include CVE number in empty state on vulnerability details",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31377"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdMZs8",
+        "labels": [
+          "story",
+          "~frontend",
+          ":product",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "Waiting",
+        "title": "Include CVE number in empty state on vulnerability details",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\n\u003cimg width=\"697\" height=\"262\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/66df103f-b840-4d35-ac61-62b442934c0f\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\nCorrect, i'm DRI for anything Ready for Spec onward.   In many cases I'll delegate in those cases i'll re-assign the story."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta This is now spec'd; estimate is capacity allocation for my review. Feel free to self-assign (for some reason GitHub is fighting my ability to assign this to you), move from Waiting to In progress, and assign me for PR review when it's up. Thanks again!"
+          }
+        ],
+        "issueNumber": 31377,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOLw",
+        "title": "Query cursor out of alignment on ChromeOS",
+        "issueNumber": 30691,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOYo",
+        "title": "UI - Background page scrolls while editing Policy automations.",
+        "issueNumber": 30004,
         "changeType": "removed"
       }
     ]
