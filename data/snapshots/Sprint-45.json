@@ -433,7 +433,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "Done",
         "title": "FMA automation carryover"
       },
       {
@@ -2940,7 +2940,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Create Fleet Maintained Apps test automation",
         "comments": [
           {
@@ -5119,7 +5119,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Research: Linux detection bug",
         "issueNumber": 31417,
         "changeType": "added"
@@ -6065,6 +6065,196 @@
         "id": "PVTI_lADOBDAnic4A4BEUzgdDOYo",
         "title": "UI - Background page scrolls while editing Policy automations.",
         "issueNumber": 30004,
+        "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-01T19:05:55.788047706Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "status": "🦤 ‎In review",
+        "issueNumber": 30248,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX124",
+        "status": "🐣 In progress",
+        "issueNumber": 29944,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: 4.71\n\nhttps://fleetdm.slack.com/archives/C086V2QK76X/p1753829605060219\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nIf we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the LastInstallInstalledAt. This makes the `app_store_app.last_install` value `null`. This is a problem on the host library page:\n\u003cimg width=\"5102\" height=\"2742\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b42eef59-cb6d-457d-8cf9-566e45904c20\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n1. Trigger a vpp app to be installed by fleet\n2. Wait for the successful install\n3. Refetch host vitals\n4. Open up the library page\n\n### 🕯️ More info _(optional)_\nWhen passing `OnlyAvailableForInstall` to `ListHostSoftware` , if we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the `LastInstallInstalledAt` , `LastInstallInstallUUID`.\n\nHere is the reason.\nWe pull in fleet initiated vpp installs here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3261\nThey include `last_install_install_uuid`, `last_install_installed_at`.\nThen later if we are asking for applications that are available for install, we run this query https://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3614-L3632\nThe purpose of this query is to find osquery inventoried software that is not fleet installed but match vpp apps. The problem lays here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3647-L3649\n```\n\t\t\t\tif s.VPPAppAdamID != nil {\n\t\t\t\t\ttmpByVPPAdamID[*s.VPPAppAdamID] = s\n\t\t\t\t}\n```\nIf we find a vpp app installer we overwrite the record we pulled up from `hostInstalledVpps` (and lose the `last_install_*` data).\n\n### 🛠️ To fix\n\nWe should either:\nModify this query to exclude apps that are not installed by fleet\nModify that bit of code to say, if we already have that record in `tmpByVPPAdamID` we can copy over the `last_install_*` data vs just overwriting the record.\nSo why is this working properly on the self service page? Great question, it's because we are not filtering by \"only available for install\".\n\nself service opts:\n```\n\t\tSelfServiceOnly:            true,\n\t\tIncludeAvailableForInstall: true,\n\t\tOnlyAvailableForInstall:    false,\n\t\tIsMDMEnrolled:              true, \u003cmaybe true || false\u003e\n```\nhost library page opts:\n```\n\tSelfServiceOnly: false,\n\tIncludeAvailableForInstall: true,\n\tOnlyAvailableForInstall: true,\n```"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLKz4",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31459,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCw2A",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 30197,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbpzkM",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "The version reported in osquery is 16.0 but when I look in \"About this Mac\" and System Settings \u003e\u003e General it's 26.0\nIt does get the build right though... 25A5279m"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "When I try to enforce encryption I'm not seeing the banner instructing me to restart or log out, until I've restarted or logged out. Then it stays there no matter how many times I restart. I'm not seeing the banner clear and even after running the `cleanups_then_aggregation` cron the encryption status isn't updated and it says `unrecognized`:\n\n![Image](https://github.com/user-attachments/assets/f3c0b064-8aae-4c39-9993-bd01af2fbd84)\n\nOn the host, I can see the disk encryption profile in System Settings and Filevault is turned on and a recovery key has been set:\n\n\u003cimg width=\"741\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/013cc568-6b97-4bbb-be68-a458bbbdf56b\" /\u003e\n\n\u003cimg width=\"730\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/986b4c3e-42f2-4b9c-9756-f1acc8e1f302\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "Apple introduced a new Device Migration feature (that only works with the latest OSes) which will move your host from a 3rd party MDM server over to Fleet,  all via ABM. It works! however during the enrollment to Fleet the Setup Experience SwiftDialogue window did not display the software Fleet was installing in the background"
+          },
+          {
+            "author": {
+              "login": "zayhanlon"
+            },
+            "body": "@PezHub from customer-numa\nmacOS 26 - MDM migration invokes Setup Experience (silently) - awaitconfigured\n\n- Upgraded endpoint to macOS 26 \n- ABM recognizes that\n- Able to set a deadline\n- Device starts to migrate\n- Unenrolled from previous MDM (didn’t have to initiate anything)\n- Recognizes that it needs to enroll into Fleet\n- Waiting for ‘device configured’ command\n- Starts going through setup experience again (calling through all apps, VPP apps, setup script)\n\nExpected behavior: Assume host has all apps already installed. It’s been previously managed. It’s not a net new device so it shouldn’t run setup experience. VPP apps would get removed from previous MDM so those would be the one thing that should run again\n\nNote from @mostlikelee : Technically, as soon as the device gets the Fleet MDM profile, the apps should come along with it. We should test"
+          },
+          {
+            "author": {
+              "login": "zayhanlon"
+            },
+            "body": "@PezHub from customer-eponym\nFleet menu bar item doesn't show up after enrollment in beta 2"
+          },
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet menu not showing after enrollment in macOS 26 beta 2 #6834](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/3ec39176-1e2a-49ec-aea4-3c44108d90d0)"
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Changing MDMs without a deadline doesn't not show a notification on the host. Maybe it takes a lot more time (writing this after waiting for 2-3 hours)"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "Hi all 👋 , any issues directly related to the new MDM migration feature Apple introduced in ABM should be tracked separately here https://github.com/orgs/fleetdm/projects/58/views/9?pane=issue\u0026itemId=119675644\u0026issue=fleetdm%7Cfleet%7C30695\n"
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Noticed that MacOS26 isn't getting orbit updates from a local tuf server. WIll retest it later next week and file an issue "
+          }
+        ],
+        "issueNumber": 30136,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdK3Mg",
+        "milestone": {
+          "dueOn": "2025-08-08T00:00:00Z",
+          "title": "4.72.0"
+        },
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @jmwatts @mostlikelee I assigned myself and took a stab at this is an unreleased bug: \n- #31449\n\nWill move it to \"Ready for QA\" once the PR merges."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@noahtalerman Is this an unreleased bug for 4.72? If so, please add the milestone per https://fleetdm.com/handbook/engineering#run-fleet-locally-for-qa-purposes \n\nAdditionally we'll need a cherry pick into the RC branch. Thanks!"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n\u003cimg width=\"981\" height=\"476\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4d2b9050-fb6d-42eb-aa71-6aca42cb56c8\" /\u003e"
+          }
+        ],
+        "issueNumber": 31414,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "### Requestor\n\n- Application name: Windows App\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [x] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [x] Manifest name matches osquery `app.name`\n- [x] Manifest version scheme matches osquery `app.short_bundle_version`\n- [x] Manifest `unique_identifier` matches osquery `app.bundle_identifier`\n\n### QA\n\n- [ ] App adds successfully to team's library\n- [ ] App installs successfully on host\n- [ ] App opens successfully on host\n- [ ] App uninstalls successfully on host\n\n### Icon\n\n- [x] Icon added to Figma. @marko-lisica: macOS icon has a white background, and Windows app icon has blue background. Windows icon seems more recognizable, and I created SVG for it. [Link to Figma](https://www.figma.com/design/8oXlYXpgCV1Sn4ek7OworP/%F0%9F%A7%A9-Design-system?node-id=1365-4002\u0026t=Pqfnute9dj1VINxk-11)\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLZck",
+        "issueNumber": 31468,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "drvcodenta"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdMZs8",
+        "status": "🥚 Ready",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\n\u003cimg width=\"697\" height=\"262\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/66df103f-b840-4d35-ac61-62b442934c0f\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\nCorrect, i'm DRI for anything Ready for Spec onward.   In many cases I'll delegate in those cases i'll re-assign the story."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta This is now spec'd; estimate is capacity allocation for my review. Feel free to self-assign (for some reason GitHub is fighting my ability to assign this to you), move from Waiting to In progress, and assign me for PR review when it's up. Thanks again!"
+          },
+          {
+            "author": {
+              "login": "drvcodenta"
+            },
+            "body": "I'm not a collaborator on the repository or part of the organization/team with write access, so GitHub isn’t letting me self-assign this issue"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta Got it, that makes sense that I wasn't able to either. Either way, this is yours to move forward with as/when you see fit."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta Apparently there's a weird GitHub idiosyncrasy (bug? anti-abuse measure?) where external folks have to comment on the issue before they show up as a potential assignee, so your comment actually allowed me to assign you, which I've done. Thanks @lukeheath for assisting with troubleshooting that one :)\n\nMoving this to Ready now, and you can move to In progress when you're actively working on it."
+          }
+        ],
+        "issueNumber": 31377,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdC-p0",
+        "title": "New FMA: 7-zip for Windows",
+        "issueNumber": 31345,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX4P8",
+        "title": "Create Fleet Maintained Apps test automation",
+        "issueNumber": 29183,
         "changeType": "removed"
       }
     ]
