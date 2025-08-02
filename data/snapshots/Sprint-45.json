@@ -1240,7 +1240,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "🖥️ Fleet Desktop \u003e Self-service: Add \"Update\" actions when updates are detected for installed software",
         "comments": [
           {
@@ -1558,7 +1558,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Self-Service Update: Frontend"
       },
       {
@@ -2366,7 +2366,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a IT admin,\n| I want to show my end users only relevant actions\n| so that I provide my end users a clear self-service software experience.\n\n## Key result\n\nNone. Prioritized this because it's mission critical for `numa` to use Fleet as their software self-service tool.\n\n## Original requests\n\n- #30214\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @mostlikelee, @RachelElysia, @iansltx , @jacobshandling \n\n## Changes\n\n### Product\n- [ ] UI changes: Figma [here](https://www.figma.com/design/LaPOy2xbXSNIYtFenO7FTt/Template--Copy-?node-id=0-1\u0026t=BVXxwI7m9syoqGiA-1)\n- [ ] CLI (fleetctl) usage changes: No changes\n- [ ] YAML changes: No changes\n- [ ] REST API changes: No changes\n- [ ] Fleet's agent (fleetd) changes: No changes\n- [ ] GitOps changes: No changes\n- [ ] Activity changes: No changes\n- [ ] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [ ] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [ ] Contributor API changes: No changes\n- [ ] Feature guide changes: Ensure guides referencing software (self-service, software packages) correctly reference the UI as it currently stands, including caveats around software updates\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\n- [ ] [UI Status and UI actions spreadsheet ](https://docs.google.com/spreadsheets/d/1GKYTQ80RP_Zec32heeniav2rUS9Snegy4S3ob0lgXYc/edit?usp=sharing)\nTest on macOS, Windows, Linux hosts for Self-service\nTest with Chrome, Safari, Edge and Firefox\nTest with FMA, Custom packages, and VPP software\n\nOn host details page or Self service with several installers available:\n\n- [x] Default sorting order is by Name ascending\n- [x] Name sort order can be reversed\n- [x] Sorting by status sorts software by status in the order mentioned in Figma (and can be reversed)\n- [x] Font weight should be \"regular\"\n- [x] If software is not in software inventory, status is \"---\"\n- [x] If status is \"---\", available action is \"Install\" (Uninstall should not be available)\n- [x] When a user clicks \"Install\", status changes to \"Installing\"\n- [ ] If software installs successfully, status changes to \"Installed\"\n- [x] If software fails to install, status changes to \"Failed\"\n- [x] If software is in software inventory, Status is \"Installed\"\n- [x] If software status is \"Installed\", available actions are \"Reinstall\" and \"Uninstall\"\n- [x] When a user clicks \"Reinstall\", status changes to \"Installing\", and when the action completes, the status changes to \"Installed\"\n- [ ] When a user clicks \"Uninstall\", status changes to \"Uninstalling\" and when the action completes, the status changes to \"---\"\n- [x] If software fails to uninstall, status changes to \"Failed (uninstall)\"\n- [x] If software is in software inventory, and other criteria are met (see [#27983](https://github.com/fleetdm/fleet/issues/27983) ) status is \"Update available\"\n- [x] If status is \"Update available\", available actions are \"Update\" and \"Uninstall\"\n- [ ] If Update available is clicked, details modal is shown with detail of installed software and possible actions to take\n- [ ] When a user clicks \"Update\", modal closes and status changes to \"Updating\", and when the action completes, the status changes to \"Installed\"\n- [x] If software fails to update, status changes to \"Failed\"\n- [ ] If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n- [x] If software is a tarball (`tgz_packages`), Fleet won't do inventory, and status in Library tab will only reflect if install is triggered from Fleet.\n- [x] Make sure that when the tarball is installed by Fleet, show `Installed` status + `Reinstall` and `Uninstall` actions.\n- [x] Make sure that when tarball install failed, to show `Failed` status and `Install` action only.\n- [x] Make sure that when tarball is available in library that no status is displayed and only `Install` action is available.\n- [ ] Make sure that the new copy as specified in Figma is added to \"Install details\" modal for each package that is missing version information (no inventory). \n\n\nNOTE: Host details modal and Self service modal have different copy, see Figma\n- [ ] Clicking on any status for any operating system should open a details modal\n- [ ] Details modal title should match the status and should conform to Figma\n- [ ] Install and Uninstall details dropdown should be collapsed by default and only show for installs or uninstalls completed by fleet (If the software was installed by the user, the modal will still show but will not contain a details dropdown, see Figma)\n- [ ] Clicking on an available action button within the modal closes the modal and updates the status in the list, according to the action that was taken, the action completes, and the status is updated again.\n- [ ] Confirm multiple versions installed \n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a IT admin,\n| I want to show my end users only relevant actions\n| so that I provide my end users a clear self-service software experience.\n\n## Key result\n\nNone. Prioritized this because it's mission critical for `numa` to use Fleet as their software self-service tool.\n\n## Original requests\n\n- #30214\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @mostlikelee, @RachelElysia, @iansltx , @jacobshandling \n\n## Changes\n\n### Product\n- [ ] UI changes: Figma [here](https://www.figma.com/design/LaPOy2xbXSNIYtFenO7FTt/Template--Copy-?node-id=0-1\u0026t=BVXxwI7m9syoqGiA-1)\n- [ ] CLI (fleetctl) usage changes: No changes\n- [ ] YAML changes: No changes\n- [ ] REST API changes: No changes\n- [ ] Fleet's agent (fleetd) changes: No changes\n- [ ] GitOps changes: No changes\n- [ ] Activity changes: No changes\n- [ ] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [ ] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [ ] Contributor API changes: No changes\n- [ ] Feature guide changes: Ensure guides referencing software (self-service, software packages) correctly reference the UI as it currently stands, including caveats around software updates\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\n- [ ] [UI Status and UI actions spreadsheet ](https://docs.google.com/spreadsheets/d/1GKYTQ80RP_Zec32heeniav2rUS9Snegy4S3ob0lgXYc/edit?usp=sharing)\nTest on macOS, Windows, Linux hosts for Self-service\nTest with Chrome, Safari, Edge and Firefox\nTest with FMA, Custom packages, and VPP software\n\nOn host details page or Self service with several installers available:\n\n- [x] Default sorting order is by Name ascending\n- [x] Name sort order can be reversed\n- [x] Sorting by status sorts software by status in the order mentioned in Figma (and can be reversed)\n- [x] Font weight should be \"regular\"\n- [x] If software is not in software inventory, status is \"---\"\n- [x] If status is \"---\", available action is \"Install\" (Uninstall should not be available)\n- [x] When a user clicks \"Install\", status changes to \"Installing\"\n- [ ] If software installs successfully, status changes to \"Installed\"\n- [x] If software fails to install, status changes to \"Failed\"\n- [x] If software is in software inventory, Status is \"Installed\"\n- [x] If software status is \"Installed\", available actions are \"Reinstall\" and \"Uninstall\"\n- [x] When a user clicks \"Reinstall\", status changes to \"Installing\", and when the action completes, the status changes to \"Installed\"\n- [ ] When a user clicks \"Uninstall\", status changes to \"Uninstalling\" and when the action completes, the status changes to \"---\"\n- [x] If software fails to uninstall, status changes to \"Failed (uninstall)\"\n- [x] If software is in software inventory, and other criteria are met (see [#27983](https://github.com/fleetdm/fleet/issues/27983) ) status is \"Update available\"\n- [x] If status is \"Update available\", available actions are \"Update\" and \"Uninstall\"\n- [x] If Update available is clicked, details modal is shown with detail of installed software and possible actions to take\n- [ ] When a user clicks \"Update\", modal closes and status changes to \"Updating\", and when the action completes, the status changes to \"Installed\"\n- [x] If software fails to update, status changes to \"Failed\"\n- [ ] If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n- [x] If software is a tarball (`tgz_packages`), Fleet won't do inventory, and status in Library tab will only reflect if install is triggered from Fleet.\n- [x] Make sure that when the tarball is installed by Fleet, show `Installed` status + `Reinstall` and `Uninstall` actions.\n- [x] Make sure that when tarball install failed, to show `Failed` status and `Install` action only.\n- [x] Make sure that when tarball is available in library that no status is displayed and only `Install` action is available.\n- [x] Make sure that the new copy as specified in Figma is added to \"Install details\" modal for each package that is missing version information (no inventory). \n\n\nNOTE: Host details modal and Self service modal have different copy, see Figma\n- [x] Clicking on any status for any operating system should open a details modal EXCEPT\n- [x] The only non-clickable status is for Host details \u003e software \u003e library \u003e status for VPP successful and failed installs before @ksykulev 4.72 fix merged 8/1/25, those will still have a tooltip to go to the activity feed to view success/fail information\n- [x] Details modal title should match the status and should conform to Figma\n- [x] Install and Uninstall details dropdown should be collapsed by default and only show for installs or uninstalls completed by fleet (If the software was installed by the user, the modal will still show but will not contain a details dropdown, see Figma)\n- [x] Clicking on an available action button within the modal closes the modal and updates the status in the list, according to the action that was taken, the action completes, and the status is updated again.\n- [x] Confirm multiple versions installed \n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [x] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 30240,
           "repository": "fleetdm/fleet",
           "title": "Show appropriate self-service actions based on whether software is on the host",
@@ -2394,7 +2394,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Show appropriate self-service actions based on whether software is on the host",
         "comments": [
           {
@@ -3018,7 +3018,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Show appropriate self-service status and actions in the self-service table at all times",
         "comments": [
           {
@@ -5778,7 +5778,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✅ Ready for release",
         "title": "null on app_store_app.last_install for VPP apps installed by fleet",
         "issueNumber": 31459,
         "changeType": "added"
@@ -6497,6 +6497,188 @@
           }
         ],
         "issueNumber": 31533,
+        "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-02T19:04:32.107883478Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdMZs8",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\n\u003cimg width=\"697\" height=\"262\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/66df103f-b840-4d35-ac61-62b442934c0f\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e FYI @marko-lisica @mostlikelee I assigned Tim. Up to Tim to bring this through estimation.\n\nCorrect, i'm DRI for anything Ready for Spec onward.   In many cases I'll delegate in those cases i'll re-assign the story."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta This is now spec'd; estimate is capacity allocation for my review. Feel free to self-assign (for some reason GitHub is fighting my ability to assign this to you), move from Waiting to In progress, and assign me for PR review when it's up. Thanks again!"
+          },
+          {
+            "author": {
+              "login": "drvcodenta"
+            },
+            "body": "I'm not a collaborator on the repository or part of the organization/team with write access, so GitHub isn’t letting me self-assign this issue"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta Got it, that makes sense that I wasn't able to either. Either way, this is yours to move forward with as/when you see fit."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta Apparently there's a weird GitHub idiosyncrasy (bug? anti-abuse measure?) where external folks have to comment on the issue before they show up as a potential assignee, so your comment actually allowed me to assign you, which I've done. Thanks @lukeheath for assisting with troubleshooting that one :)\n\nMoving this to Ready now, and you can move to In progress when you're actively working on it."
+          },
+          {
+            "author": {
+              "login": "drvcodenta"
+            },
+            "body": "Hey! I’ve started work on this — PR here: [#31370](https://github.com/fleetdm/fleet/pull/31370).  \nI've updated the PR description to reference this issue instead, as it’s the more accurate one.  \nAlso, I don’t have permission to move the issue to “In progress,” just FYI. Let me know if anything else is needed. Thanks!\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@drvcodenta Thanks! Didn't know that had already been approved. I've gone ahead and merged it and am moving this to Awaiting QA."
+          },
+          {
+            "author": {
+              "login": "drvcodenta"
+            },
+            "body": "Thanks🙏🤗"
+          }
+        ],
+        "issueNumber": 31377,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdOJOc",
+        "labels": [
+          ":release",
+          "#g-mdm",
+          ":demo",
+          "#g-orchestration",
+          "#g-software"
+        ],
+        "issueNumber": 31533,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "iansltx"
+        ],
+        "content": {
+          "body": "**Fleet version**: Fleet v4.70.0\n**Orbit version**: Orbit v1.45.1\n**Osquery version**: Osquery v5.18.1\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nCustomer is experiencing issues when attempting to download a tarball to the variable install path on the fleet instance. Attempted several ways using scripts inside of the tarball, but the script is never accessed.\n\nError Messsage: \n`Fleet failed to install Code42_12.6.0_15252000061260_33_Linux.tgz (Code42_12.6.0_15252000061260_33_Linux.tgz) on ceppenge-l-pf4bx6pl (less than 10 seconds ago).`\n\nTODO\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Upload Code42 tar archive file to Fleet library\n2. Attempt to install on Linux host\n\n### 🕯️ More info _(optional)_\nCustomer provided package and install script used during testing, and can provide outside of issue\n\nNOTE: This is not happening for all tar archive files, but is happening for this specific one.",
+          "number": 31338,
+          "repository": "fleetdm/fleet",
+          "title": "Errors downloading tarball to $INSTALLER_PATH",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31338"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdO8_M",
+        "labels": [
+          "bug",
+          ":release",
+          "~released bug",
+          ":help-customers",
+          ":incoming",
+          "customer-cisneros",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🐣 In progress",
+        "title": "Errors downloading tarball to $INSTALLER_PATH",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Request to update documentation for $INSTALLER_PATH variable #7439](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/cf4ea9d0-d53c-4f25-9456-98ff1c558795)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@reeblybeebly can you please enter reproduce steps?"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@reeblybeebly can you also provide the install details for the failed install activity feed item? In the host record there should be an informational icon that can be clicked to show details. \n\n\u003cimg width=\"866\" height=\"427\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bdfecad5-fd79-467b-bb0a-28d203972532\" /\u003e\n\nPlease also provide the orbit log from the time of the failed install for the host the software was to be installed on. On Linux systems this is usually in:\nDebian systems: `/var/log/syslog`\nCentOS: `/var/log/messages`\nFedora: `journalctl -u orbit`\n\nThank you!\n"
+          },
+          {
+            "author": {
+              "login": "reeblybeebly"
+            },
+            "body": "Providing [google drive link to customer provided package and install script](https://drive.google.com/drive/folders/1craEM0TSeTrcqntvqOdIQvdgTxDWCUWk?usp=drive_link) for further testing."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I am able to reproduce this on the latest Fleet and Orbit versions. Will need to test back to see if this is due to a recent change. \n\nError from orbit logs (with private info redacted)\n\n```\nINF about to download software installer from URL installerID=10940530-121d-4308-9be8-90468be4aedc runner=installer\nINF done downloading installerID=10940530-121d-4308-9be8-90468be4aedc runner=installer\nINF detected tar.gz archive, extracting to subdirectory installerID=10940530-121d-4308-9be8-90468be4aedc runner=installer\nERR failed extract .tar.gz archive error=\"failed to create \\\"code42-install/install.sh\\\": open /tmp/535331487/extracted/code42-install/install.sh: no such file or directory\" installerID=10940530-121d-4308-9be8-90468be4aedc runner=installer\nERR failures found when processing installers errs=[\"failed to create \\\"code42-install/install.sh\\\": open /tmp/535331487/extracted/code42-install/install.sh: no such file or directory\"] runner=installer\nERR running config receivers error=\"failed to create \\\"code42-install/install.sh\\\": open /tmp/535331487/extracted/code42-install/install.sh: no such file or directory\"\n```\n\nThis is the same issue I am seeing. The installer downloads, we attempt to extract, but fails to locate expected files."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I was able to get the file to install by first extracting the tar file to `/` and then re-archiving it:\n\n```\ncd /\ncp -R /Users/janis/Downloads/code42-install .\ntar -czvf code42.tar.gz code42-install\n```\n\nThen uploaded the resulting package to Fleet, and installed. \n\nSounds like we have an idea of how to fix this so a manual work around won't be necessary. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Was able to repro the error by adding a file in a subdir directly to a brand new tarball without specifying the top level directory:\n\n[test.tar.gz](https://github.com/user-attachments/files/21559956/test.tar.gz)\n\nSo this is much easier to repro than I initially thought."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "The fix I have implemented ensures each dir exists before extracting files into it. That means we have at minimum an extra `stat` per file extracted but in exchange it'll work with all tarballs and it's a low-impact fix. If we need to optimize later to keep track of dirs we know exist, this fix doesn't prevent us from doing that."
+          }
+        ],
+        "issueNumber": 31338,
+        "changeType": "added"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: 4.71.0\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nInstall fails. UI says package failed to download. Orbit logs show:\n```\n2025-08-01T12:55:07.448501-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:07-05:00 INF about to download software installer from Fleet installerID=2a8f778e-8cb4-4e14-95de-63382710af86 runner=installer\n2025-08-01T12:55:08.067596-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 INF done downloading installerID=2a8f778e-8cb4-4e14-95de-63382710af86 runner=installer\n2025-08-01T12:55:08.067821-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 INF software installer downloaded installerID=2a8f778e-8cb4-4e14-95de-63382710af86 installerPath=/tmp/1721719821/timeshift-22.06.6.tar.gz runner=installer\n2025-08-01T12:55:08.067910-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 INF detected tar.gz archive, extracting to subdirectory installerID=2a8f778e-8cb4-4e14-95de-63382710af86 runner=installer\n2025-08-01T12:55:08.069230-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 ERR failed extract .tar.gz archive error=\"unknown flag type \\\"pax_global_header\\\": 103\" installerID=2a8f778e-8cb4-4e14-95de-63382710af86 runner=installer\n2025-08-01T12:55:08.181754-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 ERR failures found when processing installers errs=[\"unknown flag type \\\"pax_global_header\\\": 103\"] runner=installer\n2025-08-01T12:55:08.182137-05:00 nimda-Vivobook-ASUSLaptop-X1404VA-X1404VA orbit[4552]: 2025-08-01T12:55:08-05:00 ERR running config receivers error=\"unknown flag type \\\"pax_global_header\\\": 103\"\n```\n\n### 🛠️ To fix\n\nSkip unknown header types rather than failing on them.\n\nProduct designer: @iansltx \u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Upload timeshift tarball (can be found here: https://drive.google.com/file/d/1nKWzZBi65P1AUouvvvEYkbZ_EljXilI6/view?usp=drive_link ), install script is simply `mv $INSTALLER_PATH/* /usr/local`, just add gibberish in the uninstall script since we'll not be testing that part\n2. Attempt to install on Linux host\n3. Review UI Failure and orbit logs\n\n### 🕯️ More info _(optional)_\nExtracting the file manually to `/tmp` and then re-archiving the file, then uploading to Fleet allows the package to be installed. \n```\ncd /tmp\nsudo cp -R /Users/janis/Downloads/timeshift-22.06.6 .\ntar -czvf timeshift-22.06.6.tar.gz timeshift-22.06.6\n```\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "number": 31525,
+          "repository": "fleetdm/fleet",
+          "title": "pax_global_header error when attempting to install tar.gz",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31525"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdO96U",
+        "labels": [
+          "bug",
+          "~agent",
+          ":release",
+          "~released bug",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🐣 In progress",
+        "title": "pax_global_header error when attempting to install tar.gz",
+        "issueNumber": 31525,
         "changeType": "added"
       }
     ]
