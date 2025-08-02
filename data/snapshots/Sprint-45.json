@@ -1558,7 +1558,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "Waiting",
+        "status": "🐣 In progress",
         "title": "Self-Service Update: Frontend"
       },
       {
@@ -2676,7 +2676,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Software page: filter by custom severity (CVSS score) ranges",
         "comments": [
           {
@@ -4007,7 +4007,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Host Software API: Surface automatic install policies",
         "comments": [
           {
@@ -5734,7 +5734,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Self-service: typo in Updates section",
         "comments": [
           {
@@ -5752,7 +5752,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "**Fleet version**: 4.72\n\nhttps://fleetdm.slack.com/archives/C086V2QK76X/p1753829605060219\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nIf we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the LastInstallInstalledAt. This makes the `app_store_app.last_install` value `null`. This is a problem on the host library page:\n\u003cimg width=\"5102\" height=\"2742\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b42eef59-cb6d-457d-8cf9-566e45904c20\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n1. Trigger a vpp app to be installed by fleet\n2. Wait for the successful install\n3. Refetch host vitals\n4. Open up the library page\n\n### 🕯️ More info _(optional)_\nWhen passing `OnlyAvailableForInstall` to `ListHostSoftware` , if we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the `LastInstallInstalledAt` , `LastInstallInstallUUID`.\n\nHere is the reason.\nWe pull in fleet initiated vpp installs here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3261\nThey include `last_install_install_uuid`, `last_install_installed_at`.\nThen later if we are asking for applications that are available for install, we run this query https://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3614-L3632\nThe purpose of this query is to find osquery inventoried software that is not fleet installed but match vpp apps. The problem lays here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3647-L3649\n```\n\t\t\t\tif s.VPPAppAdamID != nil {\n\t\t\t\t\ttmpByVPPAdamID[*s.VPPAppAdamID] = s\n\t\t\t\t}\n```\nIf we find a vpp app installer we overwrite the record we pulled up from `hostInstalledVpps` (and lose the `last_install_*` data).\n\n### 🛠️ To fix\n\nWe should either:\nModify this query to exclude apps that are not installed by fleet\nModify that bit of code to say, if we already have that record in `tmpByVPPAdamID` we can copy over the `last_install_*` data vs just overwriting the record.\nSo why is this working properly on the self service page? Great question, it's because we are not filtering by \"only available for install\".\n\nself service opts:\n```\n\t\tSelfServiceOnly:            true,\n\t\tIncludeAvailableForInstall: true,\n\t\tOnlyAvailableForInstall:    false,\n\t\tIsMDMEnrolled:              true, \u003cmaybe true || false\u003e\n```\nhost library page opts:\n```\n\tSelfServiceOnly: false,\n\tIncludeAvailableForInstall: true,\n\tOnlyAvailableForInstall: true,\n```",
+          "body": "**Fleet version**: 4.71\n\nhttps://fleetdm.slack.com/archives/C086V2QK76X/p1753829605060219\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nIf we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the LastInstallInstalledAt. This makes the `app_store_app.last_install` value `null`. This is a problem on the host library page:\n\u003cimg width=\"5102\" height=\"2742\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b42eef59-cb6d-457d-8cf9-566e45904c20\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n1. Trigger a vpp app to be installed by fleet\n2. Wait for the successful install\n3. Refetch host vitals\n4. Open up the library page\n\n### 🕯️ More info _(optional)_\nWhen passing `OnlyAvailableForInstall` to `ListHostSoftware` , if we have a VPP app, that was installed by fleet, then indexed by osquery. We will lose the `LastInstallInstalledAt` , `LastInstallInstallUUID`.\n\nHere is the reason.\nWe pull in fleet initiated vpp installs here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3261\nThey include `last_install_install_uuid`, `last_install_installed_at`.\nThen later if we are asking for applications that are available for install, we run this query https://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3614-L3632\nThe purpose of this query is to find osquery inventoried software that is not fleet installed but match vpp apps. The problem lays here:\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L3647-L3649\n```\n\t\t\t\tif s.VPPAppAdamID != nil {\n\t\t\t\t\ttmpByVPPAdamID[*s.VPPAppAdamID] = s\n\t\t\t\t}\n```\nIf we find a vpp app installer we overwrite the record we pulled up from `hostInstalledVpps` (and lose the `last_install_*` data).\n\n### 🛠️ To fix\n\nWe should either:\nModify this query to exclude apps that are not installed by fleet\nModify that bit of code to say, if we already have that record in `tmpByVPPAdamID` we can copy over the `last_install_*` data vs just overwriting the record.\nSo why is this working properly on the self service page? Great question, it's because we are not filtering by \"only available for install\".\n\nself service opts:\n```\n\t\tSelfServiceOnly:            true,\n\t\tIncludeAvailableForInstall: true,\n\t\tOnlyAvailableForInstall:    false,\n\t\tIsMDMEnrolled:              true, \u003cmaybe true || false\u003e\n```\nhost library page opts:\n```\n\tSelfServiceOnly: false,\n\tIncludeAvailableForInstall: true,\n\tOnlyAvailableForInstall: true,\n```",
           "number": 31459,
           "repository": "fleetdm/fleet",
           "title": "null on app_store_app.last_install for VPP apps installed by fleet",
@@ -5778,7 +5778,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🦤 ‎In review",
         "title": "null on app_store_app.last_install for VPP apps installed by fleet",
         "issueNumber": 31459,
         "changeType": "added"
@@ -5788,7 +5788,7 @@
           "marko-lisica"
         ],
         "content": {
-          "body": "### Requestor\n\n- Application name: Windows App\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [ ] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [ ] Manifest name matches osquery `app.name`\n- [ ] Manifest version scheme matches osquery `app.short_bundle_version`\n- [ ] Manifest `unique_identifier` matches osquery `app.bundle_identifier`\n\n### QA\n\n- [ ] App adds successfully to team's library\n- [ ] App installs successfully on host\n- [ ] App opens successfully on host\n- [ ] App uninstalls successfully on host\n\n### Icon\n\n- [ ] Icon added to Figma\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog",
+          "body": "### Requestor\n\n- Application name: Windows App\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [x] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [x] Manifest name matches osquery `app.name`\n- [x] Manifest version scheme matches osquery `app.short_bundle_version`\n- [x] Manifest `unique_identifier` matches osquery `app.bundle_identifier`\n\n### QA\n\n- [ ] App adds successfully to team's library\n- [ ] App installs successfully on host\n- [ ] App opens successfully on host\n- [ ] App uninstalls successfully on host\n\n### Icon\n\n- [x] Icon added to Figma. @marko-lisica: macOS icon has a white background, and Windows app icon has blue background. Windows icon seems more recognizable, and I created SVG for it. [Link to Figma](https://www.figma.com/design/8oXlYXpgCV1Sn4ek7OworP/%F0%9F%A7%A9-Design-system?node-id=1365-4002\u0026t=Pqfnute9dj1VINxk-11)\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog",
           "number": 31468,
           "repository": "fleetdm/fleet",
           "title": "New FMA: Windows App",
@@ -6030,7 +6030,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "🥚 Ready",
         "title": "Include CVE number in empty state on vulnerability details",
         "comments": [
           {
@@ -6256,6 +6256,248 @@
         "title": "Create Fleet Maintained Apps test automation",
         "issueNumber": 29183,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-02T07:05:18.244254322Z",
+    "items": [
+      {
+        "content": {
+          "body": "## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a IT admin,\n| I want to show my end users only relevant actions\n| so that I provide my end users a clear self-service software experience.\n\n## Key result\n\nNone. Prioritized this because it's mission critical for `numa` to use Fleet as their software self-service tool.\n\n## Original requests\n\n- #30214\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @mostlikelee, @RachelElysia, @iansltx , @jacobshandling \n\n## Changes\n\n### Product\n- [ ] UI changes: Figma [here](https://www.figma.com/design/LaPOy2xbXSNIYtFenO7FTt/Template--Copy-?node-id=0-1\u0026t=BVXxwI7m9syoqGiA-1)\n- [ ] CLI (fleetctl) usage changes: No changes\n- [ ] YAML changes: No changes\n- [ ] REST API changes: No changes\n- [ ] Fleet's agent (fleetd) changes: No changes\n- [ ] GitOps changes: No changes\n- [ ] Activity changes: No changes\n- [ ] Permissions changes: No changes\n- [ ] Changes to paid features or tiers: Fleet Premium\n- [ ] My device and fleetdm.com/better changes: No changes\n- [ ] First draft of test plan added\n- [ ] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [ ] Contributor API changes: No changes\n- [ ] Feature guide changes: Ensure guides referencing software (self-service, software packages) correctly reference the UI as it currently stands, including caveats around software updates\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\n- [ ] [UI Status and UI actions spreadsheet ](https://docs.google.com/spreadsheets/d/1GKYTQ80RP_Zec32heeniav2rUS9Snegy4S3ob0lgXYc/edit?usp=sharing)\nTest on macOS, Windows, Linux hosts for Self-service\nTest with Chrome, Safari, Edge and Firefox\nTest with FMA, Custom packages, and VPP software\n\nOn host details page or Self service with several installers available:\n\n- [x] Default sorting order is by Name ascending\n- [x] Name sort order can be reversed\n- [x] Sorting by status sorts software by status in the order mentioned in Figma (and can be reversed)\n- [x] Font weight should be \"regular\"\n- [x] If software is not in software inventory, status is \"---\"\n- [x] If status is \"---\", available action is \"Install\" (Uninstall should not be available)\n- [x] When a user clicks \"Install\", status changes to \"Installing\"\n- [ ] If software installs successfully, status changes to \"Installed\"\n- [x] If software fails to install, status changes to \"Failed\"\n- [x] If software is in software inventory, Status is \"Installed\"\n- [x] If software status is \"Installed\", available actions are \"Reinstall\" and \"Uninstall\"\n- [x] When a user clicks \"Reinstall\", status changes to \"Installing\", and when the action completes, the status changes to \"Installed\"\n- [ ] When a user clicks \"Uninstall\", status changes to \"Uninstalling\" and when the action completes, the status changes to \"---\"\n- [x] If software fails to uninstall, status changes to \"Failed (uninstall)\"\n- [x] If software is in software inventory, and other criteria are met (see [#27983](https://github.com/fleetdm/fleet/issues/27983) ) status is \"Update available\"\n- [x] If status is \"Update available\", available actions are \"Update\" and \"Uninstall\"\n- [x] If Update available is clicked, details modal is shown with detail of installed software and possible actions to take\n- [ ] When a user clicks \"Update\", modal closes and status changes to \"Updating\", and when the action completes, the status changes to \"Installed\"\n- [x] If software fails to update, status changes to \"Failed\"\n- [ ] If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n- [x] If software is a tarball (`tgz_packages`), Fleet won't do inventory, and status in Library tab will only reflect if install is triggered from Fleet.\n- [x] Make sure that when the tarball is installed by Fleet, show `Installed` status + `Reinstall` and `Uninstall` actions.\n- [x] Make sure that when tarball install failed, to show `Failed` status and `Install` action only.\n- [x] Make sure that when tarball is available in library that no status is displayed and only `Install` action is available.\n- [x] Make sure that the new copy as specified in Figma is added to \"Install details\" modal for each package that is missing version information (no inventory). \n\n\nNOTE: Host details modal and Self service modal have different copy, see Figma\n- [x] Clicking on any status for any operating system should open a details modal EXCEPT\n- [x] The only non-clickable status is for Host details \u003e software \u003e library \u003e status for VPP successful and failed installs before @ksykulev 4.72 fix merged 8/1/25, those will still have a tooltip to go to the activity feed to view success/fail information\n- [x] Details modal title should match the status and should conform to Figma\n- [x] Install and Uninstall details dropdown should be collapsed by default and only show for installs or uninstalls completed by fleet (If the software was installed by the user, the modal will still show but will not contain a details dropdown, see Figma)\n- [x] Clicking on an available action button within the modal closes the modal and updates the status in the list, according to the action that was taken, the action completes, and the status is updated again.\n- [x] Confirm multiple versions installed \n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [x] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX1-s",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@noahtalerman: Decided to cut this \"smarter\" logic to solve these problems:\n- Multiple instances of the software installed\n- User v. machine scope on Windows\n\nCurrently, for macOS, only software that's installed in Applications/ shows the \"Update required\" status. If the software isn't in Applications/ but it's in inventory, Fleet shows \"Installed\" regardless of version. Fleet will use the install_path to know if the software is in Applications/\n\nCode wise: if (macOS and install_path is applications/), check only that path if it’s outdated and then show “update available” else show “Installed”\n\nFor Windows Fleet-maintained apps, software only shows \"Update available\" if the installed software is the same scope (user or machine) as the Fleet-maintained app. Based on install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\".\n\nFor Windows custom packages, software only shows \"Update available\" if the software title has an install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\"."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @RachelElysia, I added copy and a link to the contact URL based on `numa` feedback. We met with them today (2025-06-27) and showed them this story's wireframes.\n\n![Image](https://github.com/user-attachments/assets/6ca4ef45-09f2-4ac3-afee-bd5c995e151a)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts I realize this is offloading work to you that should've been done earlier by someone else, but can you work through a test plan here based on what's in Figma?\n\nIf it's more helpful to delegate the test plan for this to #27983, since these changes touch largely the same UI (though this hits both self-service and host software), that works too, and I can do a first pass there.\n\nWent ahead and updated the story template to remove non-test-plan TODOs to help a little."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx I've added the first pass test plan, just a couple questions left here:\n\n\u003cimg width=\"135\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1a202f1e-a311-4ccd-9aff-76ec85ef8dac\" /\u003e\n\n~~This is kind of vague, what is the criteria for this \"Update Available\" status?~~\n~~- Software is installed on host~~\n~~- Software installer is available~~\n~~- Software is a different version?~~\n~~- Software installer is a higher version than the version that's installed?~~\n\nNevermind, found that criteria in the [#27983](https://github.com/fleetdm/fleet/issues/27983) ticket. Only question left is:\n\nWhat are the available statuses for tar.gz items? \n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts No update available status for tarballs as they don't have an associated version."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving to estimated with an 8 based on prior discussions"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n\nIn the test plans it says:\n\n\u003e  If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n\nIs there a different tooltip? I currently have it with no tooltip if it was installed by the user not using Fleet. Can you add the tooltip to the Figma spec or remove this from the QA plan?"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "[Doc to track questions around the various modals](https://docs.google.com/document/d/1sAh752RZCCquWhI25emzNtnBVV3wA-GAhjbdlaB2Pls/edit?tab=t.0)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Heads up that we're marking this one for expedited drafting"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "@mostlikelee thanks. To over communicate, most of the remaining questions are regarding [the modals subtask](https://github.com/fleetdm/fleet/issues/30860)"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Throwing this over the fence to you @jmwatts ! I QAed as much as I could--happy Friday\n\nMy blind spots:\n- The intel computer race condition with host refetch/osquery\n- I don't have a macOS that is enrolled into MDM, only a iPad, so self-service VPP was not really QAed on my end, though I know Jacob did while he was deving"
+          }
+        ],
+        "issueNumber": 30240,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX12Q",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 27983,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX124",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 29944,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgck8sI",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 30861,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdLKz4",
+        "milestone": {
+          "dueOn": "2025-08-08T00:00:00Z",
+          "title": "4.72.0"
+        },
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Trigger a vpp app to be installed by fleet\n2. Wait for the successful install\n3. Refetch host vitals\n4. Open up the library page, show Dev tools and inspect the API response, click \"Installed\" link\n- [x] last_install field should not be null\n- [x] Install details modal should have dropdown with install details\n\nNoticed edge case for when app was previously installed with no install information (installed outside of fleet) and a VPP app exists for the same application - last_install will be null (expected) but the \"installed\" status will be clickable, and the modal will show \"Fleet is installing or will install...\" even though the software is not being installed. Will file separately. "
+          }
+        ],
+        "issueNumber": 31459,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCntE",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "This was surfaced with BYOD Apple devices. I tagged it with g-software but it could be `#g-mdm`\n@georgekarrv @mostlikelee preference on who tackles this one?\n\nWhen a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps). \nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\n\u003cimg width=\"1186\" height=\"374\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8c7dc1a7-ac0e-497a-91df-08dc8fb31702\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@georgekarrv we're going to take this.  removing it off your board"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "\u003e When a BYOD (personal) iPhone is enrolled, we only collect inventory for apps that Fleet installs (Managed apps).\nWe are currently showing \"Vulnerabilities are not supported for this type of host\" as the empty state for Inventory, but we should be showing a message telling the user that there are no apps displayed and that only managed apps are reported in inventory, unless they have added the vulnerabilities filter (then it makes sense to show the no vulnerabilities empty state).\n\nAbout to put in a PR to show the generic No software detected empty state (plus tests). @marko-lisica if @jmwatts is correct for a different empty state, can you update this ticket if it's imperative for 4.72, or open a new ticket for 4.73 to track the new empty state?\n\nThank you!"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@RachelElysia I just realized this is already on g-software board. I added a few more copy changes that depend on the platform and enrollment type (MDM status). Not sure if you want to estimate this? I can add to planning poker.\n\nFigma link is in issue description."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "In between in progress \u003c\u003e in review \u003c\u003e in design. PR open, just need some confirmation on specs "
+          }
+        ],
+        "issueNumber": 31329,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX9VU",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Weird behavior for sure -- I thought it was put in boxes only if there were multiple versions installed but I guess not!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "If we want to just add a grey box around this, it's a EST: 1 FE only and should take 10 minutes.\n\nFrom #20638:\n```\n  // special case when we dont have installed versions. We can only show the\n  // software type atm.\n  if (!installed_versions || installed_versions.length === 0) {\n    return (\n      \u003cdiv className={`${baseClass}__software-details`}\u003e\n        \u003cDataSet\n          title=\"Type\"\n          value={formatSoftwareType({ source: software.source })}\n        /\u003e\n      \u003c/div\u003e\n    );\n  }\n```"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given the above movement, looks like this has been estimated, so moving forward."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm confused. I don't get these modals when I go to Host details \u003e Software\n\nI only a modal if I look in Fleet desktop at the Software tab. I don't see anywhere in Self-service that I would get this modal, and \"Available for install\" isn't a thing anymore in Host details \u003e Software. Is that the only place this is applied? Or am I missing something?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia TODO confirm that we can no longer access this UI. If that's confirmed, close this."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Still a TODO on my list, no time today, will do second thing on Monday."
+          }
+        ],
+        "issueNumber": 30232,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "xpkoala",
+          "PezHub",
+          "jmwatts"
+        ],
+        "content": {
+          "body": "\n# Goal: easy-to-follow test steps for checking a release manually\n\n# Important reference data\n\n1. [fleetctl preview setup](https://fleetdm.com/fleetctl-preview)\n2. [permissions documentation](https://fleetdm.com/docs/using-fleet/permissions) \n3. premium tests require license key (needs renewal) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjQwOTk1MjAwLCJzdWIiOiJkZXZlbG9wbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6ImJhc2ljIiwiaWF0IjoxNjIyNDI2NTg2fQ.WmZ0kG4seW3IrNvULCHUPBSfFdqj38A_eiXdV_DFunMHechjHbkwtfkf1J6JQJoDyqn8raXpgbdhafDwv3rmDw`\n4. premium tests require license key (active - Expires Sunday, January 1, 2023 12:00:00 AM) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjcyNTMxMjAwLCJzdWIiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6InByZW1pdW0iLCJpYXQiOjE2NDI1MjIxODF9.EGHQjIzM73YyMbnCruswzg360DEYCsDi9uz48YcDwQHq90BabGT5PIXRiculw79emGj5sk2aKgccTd2hU5J7Jw`\n\n# Smoke Tests\nSmoke tests are limited to core functionality and serve as a pre-release final review. If smoke tests are failing, a release cannot proceed.\n\n## Fleet core:\n\n**Fleet version** (Head to the \"My account\" page in the Fleet UI or run `fleetctl version`):\n\n**Web browser** _(e.g. Chrome 88.0.4324)_: \n\n### Prerequisites\n\n1. `fleetctl preview` is set up and running the desired test version using [`--tag` parameters.](https://fleetdm.com/handbook/engineering#run-fleet-locally-for-qa-purposes)\n2. Unless you are explicitly testing older browser versions, browser is up to date.\n3. Certificate \u0026 flagfile are in place to create new host.\n4. In your browser, clear local storage using devtools.\n\n### Orchestration\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eUpdate flow\u003c/td\u003e\u003ctd\u003e\n\n1. remove all fleet processes/agents/etc using `fleetctl preview reset` for a clean slate\n2. run `fleetctl preview` with no tag for latest stable\n3. create a host/query to later confirm upgrade with\n4. STOP fleet-preview-server instances in containers/apps on Docker\n5. run `fleetctl preview` with appropriate testing tag \u003c/td\u003e\u003ctd\u003eAll previously created hosts/queries are verified to still exist\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eLogin flow\u003c/td\u003e\u003ctd\u003e\n\n1. navigate to the login page and attempt to login with both valid and invalid credentials to verify some combination of expected results.\n2. navigate to the login page and attempt to login with both valid and invalid sso credentials to verify expected results.\n\u003c/td\u003e\u003ctd\u003e\n\n1. text fields prompt when blank\n2. correct error message is \"authentication failed\"\n3. forget password link prompts for email\n4. valid credentials result in a successful login.\n5. valid sso credentials result in a successful login\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n\n1. Packs successfully run on host machines after migrations \n2. New Packs can be created\n3. Packs can be edited and deleted\n4. Packs results information is logged\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eLog destination flow\u003c/td\u003e\u003ctd\u003eVerify log destination for software, query, policy, and packs.\u003c/td\u003e\u003ctd\u003e\n\n1. Software, query, policy, and packs logs are successfully sent to external log destinations\n2. Software, query, policy, and packs logs are successfully sent to Filesystem log destinations\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### MDM\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMDM enrollment flow\u003c/td\u003e\u003ctd\u003eVerify MDM enrollments, run MDM commands\u003c/td\u003e\u003ctd\u003e\n  \n1. Erase an ADE-eligible macOS host and verify able to complete automated enrollment flow.\n2. With Windows MDM turned On, enroll a Windows host and verify MDM is turned On for the host.\n3. Verify able to run MDM commands on both macOS and Windows hosts from the CLI.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMDM migration flow\u003c/td\u003e\u003ctd\u003eVerify MDM migration for ADE and non-ADE hosts\u003c/td\u003e\u003ctd\u003e\n  \n1. Turn off MDM on an ADE-eligible macOS host and verify that the native, \"Device Enrollment\" macOS notification appears.\n2. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n3. Turn off MDM on a non ADE-eligible macOS host.\n4. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n5. Verify Windows host migrates from 3rd party MDM to Fleet when automatic migration is turned on.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify Profiles upload/download/delete (macOS \u0026 Windows).\n2. Verify Profiles are delivered to host and applied. \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSetup experience\u003c/td\u003e\u003ctd\u003eVerify macOS Setup experience\u003c/td\u003e\u003ctd\u003e\n\n1. Configure End user authentication.\n3. Upload a Bootstrap package.\n4. Add software (FMA, VPP, \u0026 Custom pkg)\n5. Add a script\n6. Enroll an ADE-eligible macOS host and verify successful authentication.\n7. Verify Bootstrap package is delivered.\n8. Verify SwiftDialogue window displays.\n9. Verify software installs and script runs.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS updates\u003c/td\u003e\u003ctd\u003eVerify OS updates flow\u003c/td\u003e\u003ctd\u003e\n\n1. Configure OS updates (macOS \u0026 Windows).\n2. Verify on-device that Nudge prompt appears (macOS 13).\n3. Verify enforce minimumOS occurs during enrollment (macOS 14+).\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eiOS/iPadOS\u003c/td\u003e\u003ctd\u003eVerify enrollment, profiles, \u0026 software installs\u003c/td\u003e\u003ctd\u003e\n\n1. Verify ADE enrollment.\n2. Verify OTA enrollment.\n3. Verify Profiles are delivered to host and applied.\n4. Verify VPP apps install \u0026 display correctly in Activity feed.\n5. Verify `Turn Off MDM` for BYOD \u0026 ADE hosts.\n \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eLock \u0026 Wipe\u003c/td\u003e\u003ctd\u003eVerify hosts can be locked \u0026 wiped\u003c/td\u003e\u003ctd\u003e\n\n1. Verify locking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n2. Verify unlocking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n3. Verify wiping a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n4. Verify wiping and locking hosts using `fleetctl` (macOS, Windows, \u0026 Linux)\n \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eCertificates Upload\u003c/td\u003e\u003ctd\u003eAPNs cert and ABM token renewal workflow\u003c/td\u003e\u003ctd\u003e\n\n1. Renew APNs Certificate.\n2. Renew ABM Token.\n3. Ensure ADE hosts can enroll.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n\n### Software\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eCreate, edit, run, and delete queries. \u003c/td\u003e\u003ctd\u003e\n\n1. permissions regarding creating/editing/deleting queries are up to date with documentation\n2. syntax errors result in error messaging\n3. queries can be run manually \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added and removed following modal instructions using your own device.\u003c/td\u003e\u003ctd\u003e\n\n1. Host is added via command line\n2. Host serial number and date added are accurate\n3. Host is not visible after it is deleted\n4. Warning and informational modals show when expected and make sense\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\n2. The \"My device\" page is populated correctly and as expected. \n3. Styling and padding appears correct.\n \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script library and execution\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to run a script on all host types from CLI.\n2. Verify scripts library upload/download/delete.\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\n4. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\n5. Verify UI loading state and statuses for scripts.\n8. Disable scripts globally and verify unable to run.\n9. Verify scripts display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software library and install / download\u003c/td\u003e\u003ctd\u003e\n\n1. Verify software library upload/download/delete.\n2. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\n3. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\n4. Verify UI loading state and statuses for installing software.\n7. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eMigration Test\u003c/td\u003e\u003ctd\u003eVerify Fleet can migrate to the next version with no issues.\u003c/td\u003e\u003ctd\u003e\n\nUsing the github action https://github.com/fleetdm/fleet/actions/workflows/db-upgrade-test.yml\n1. Using the most recent stable version of Fleet and `main`, click `Run workflow`\n2. Enter the Docker tag of Fleet starting version, e.g. 'v4.64.2'\n3. Enter the Docker tag of Fleet version to upgrade to, e.g. 'rc-minor-fleet-v4.65.0'\n4. Click `Run workflow`.\n5. Action should complete successfully.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### All Product Groups\n\u003ctable\u003e\n \u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eRelease blockers\u003c/td\u003e\u003ctd\u003eVerify there are no outstanding release blocking tickets.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this](https://github.com/fleetdm/fleet/labels/~release%20blocker) filter to view all open `~release blocker` tickets.\n2. If any are found raise an alarm in the `#help-engineering` and `#g-mdm` (or `#g-endpoint-ops`)  channels.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\n\u003ctr\u003e\u003ctd\u003eLoad tests - minor releases only unless otherwise specified\u003c/td\u003e\u003ctd\u003eVerify all load test metrics are within acceptable range on final build of RC.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this Google doc](https://docs.google.com/document/d/1V6QtFzcGDsLnn2PIvGin74DAxdAN_3likjxSssOMMQI/edit?tab=t.0#heading=h.15acjob4ji20) to review load test key metrics and checks.\n2. After all expected changes have been merged to the RC branch, two load tests will need to be run - a new instance with no data, and a migrated instance.\n3. For the new instance with no data, set up a load test environment using the RC branch and allow it at least 24hrs of run time.\n4. For the migrated instance, set up a load test environment on the previous minor release branch. Once the environment has been set up and stabilized, follow the instructions in [Deploying code changes to fleet](https://github.com/fleetdm/fleet/blob/main/infrastructure/loadtesting/terraform/readme.md#deploying-code-changes-to-fleet) to migrate to the RC branch. Monitor the metrics post-migration to determine if any performance issues arise.\n5. Record metrics in [this spreadsheet](https://docs.google.com/spreadsheets/d/1FOF0ykFVoZ7DJSTfrveip0olfyRQsY9oT1uXCCZmuKc/edit?usp=drive_link) for the two load test runs. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e \n\u003c/table\u003e\n\n### Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:\n\n\u003cbr\u003e\n\u003cbr\u003e\n\n# `fleetd` agent:\n\nIncludes updates to: \n- Orbit: True / False\n- Desktop: True / False\n- Chrome extension: True / False\n\nList versions changes for any component updates below: \n\u003c!-- Remove items without updates --\u003e\n- Orbit `v1.xx.x` \u003e `v1.xx.x`\n- Desktop `v1.xx.x` \u003e `v1.xx.x`\n- Chrome extension `v1.xx.x` \u003e `v1.xx.x`\n\n## Testing gates for new `fleetd` release\n\n### Goal: Ensure new `fleetd` is tested and promoted from local \u003e edge \u003e stable channels\n\n1. Build a new `fleetd` from the release candidate branch as needed for Orbit, Desktop, and Chrome Extension.\n\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e`fleetd` local testing\u003c/td\u003e\n\u003ctd\u003e\n1. Following [Testing TUF]([url](https://github.com/fleetdm/fleet/blob/main/tools/tuf/test/README.md)) instructions create binaries for Mac, Windows, and Ubuntu using your local TUF repository and install on macOS, Linux, and Windows hosts.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Confirm the hosts install with the updated version and are working correctly.\u003cbr\u003e\n2. Confirm any new features and/or bug fixes associated with this release are working as intended.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctd\u003e`fleetd` auto-update tests\u003c/td\u003e\n\u003ctd\u003e\n1. Conduct the [`fleetd` auto-update n+1 test]([url](https://github.com/fleetdm/fleet/blob/main/tools/tuf/test/Fleetd-auto-update-test-guide.md))\u003cbr\u003e\n2. QA certifies new release by commenting in issue.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Agent successfully auto-updates.\u003cbr\u003e\n2. Issue is certified by QA.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctd\u003e`fleetd` tests\u003c/td\u003e\n\u003ctd\u003e\n1. Set up a host in your instance to receive updates from the `edge` channels.\u003cbr\u003e\n2. Work with engineer leading the release to push changes to the `edge` channel.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Confirm the hosts running on the edge channel receive the update and are working correctly.\u003cbr\u003e\n2. Confirm any new features and/or bug fixes associated with this release are working as intended.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: edge` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\n\nInclude any notes on whether issues should block release or not as needed:\n",
+          "number": 31533,
+          "repository": "fleetdm/fleet",
+          "title": "Release QA: 4.71.1",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31533"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdOJOc",
+        "labels": [
+          ":release",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software"
+        ],
+        "milestone": {
+          "title": "4.71.1"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "✔️Awaiting QA",
+        "title": "Release QA: 4.71.1",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "```\nFLEET_VERSION_A=v4.71.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (65.24s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t65.258s\n```\n\n```\nFLEET_VERSION_A=v4.70.1 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (54.12s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t54.132s\n```\n\n```\nFLEET_VERSION_A=v4.70.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (52.26s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t52.281s\n```\n\n```\nFLEET_VERSION_A=v4.69.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (63.97s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t63.988s\n```"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "All software smoke tests pass, Software gives 👍 \n\n🔴 NOTE: In 4.70.0 I was able to have a trailing `/` in my Fleet url (`/settings/organization/webaddress`) but in 4.71.0 and 4.71.1 it will not let me log in with SSO if that trailing slash is in the url. I had to remove it to be able to sign in with SSO.\n\ncc @georgekarrv  @getvictor "
+          }
+        ],
+        "issueNumber": 31533,
+        "changeType": "added"
       }
     ]
   }
