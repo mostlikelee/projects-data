@@ -6030,7 +6030,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "Include CVE number in empty state on vulnerability details",
         "comments": [
           {
@@ -6680,6 +6680,69 @@
         "title": "pax_global_header error when attempting to install tar.gz",
         "issueNumber": 31525,
         "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-03T07:05:39.358878086Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdO8_M",
+        "milestone": {
+          "title": "Fleetd-1.46.0"
+        },
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "🦤 ‎In review",
+        "issueNumber": 31338,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "iansltx"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdO96U",
+        "milestone": {
+          "title": "Fleetd-1.46.0"
+        },
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "🦤 ‎In review",
+        "issueNumber": 31525,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdOJOc",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "```\nFLEET_VERSION_A=v4.71.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (65.24s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t65.258s\n```\n\n```\nFLEET_VERSION_A=v4.70.1 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (54.12s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t54.132s\n```\n\n```\nFLEET_VERSION_A=v4.70.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (52.26s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t52.281s\n```\n\n```\nFLEET_VERSION_A=v4.69.0 FLEET_VERSION_B=rc-patch-fleet-v4.71.1 go test -v\n--- PASS: TestUpgradeAToB (63.97s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t63.988s\n```"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "All software smoke tests pass, Software gives 👍 \n\n🔴 NOTE: In 4.70.0 I was able to have a trailing `/` in my Fleet url (`/settings/organization/webaddress`) but in 4.71.0 and 4.71.1 it will not let me log in with SSO if that trailing slash is in the url. I had to remove it to be able to sign in with SSO.\n\ncc @georgekarrv  @getvictor "
+          },
+          {
+            "author": {
+              "login": "getvictor"
+            },
+            "body": "\u003e All software smoke tests pass, Software gives 👍\n\u003e \n\u003e 🔴 NOTE: In 4.70.0 I was able to have a trailing `/` in my Fleet url (`/settings/organization/webaddress`) but in 4.71.0 and 4.71.1 it will not let me log in with SSO if that trailing slash is in the url. I had to remove it to be able to sign in with SSO.\n\u003e \n\u003e cc [@georgekarrv](https://github.com/georgekarrv) [@getvictor](https://github.com/getvictor)\n\nI filed #31545 for this issue. \n\nI recommend we fix it in 4.71.1 since customers may hit it with regular SSO and MDM SSO.\ncc: @ksatter "
+          }
+        ],
+        "issueNumber": 31533,
+        "changeType": "modified"
       }
     ]
   }
