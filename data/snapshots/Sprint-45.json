@@ -6602,7 +6602,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Errors downloading tarball to $INSTALLER_PATH",
         "comments": [
           {
@@ -6676,7 +6676,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "pax_global_header error when attempting to install tar.gz",
         "issueNumber": 31525,
         "changeType": "added"
@@ -6740,6 +6740,22 @@
             },
             "body": "\u003e All software smoke tests pass, Software gives 👍\n\u003e \n\u003e 🔴 NOTE: In 4.70.0 I was able to have a trailing `/` in my Fleet url (`/settings/organization/webaddress`) but in 4.71.0 and 4.71.1 it will not let me log in with SSO if that trailing slash is in the url. I had to remove it to be able to sign in with SSO.\n\u003e \n\u003e cc [@georgekarrv](https://github.com/georgekarrv) [@getvictor](https://github.com/getvictor)\n\nI filed #31545 for this issue. \n\nI recommend we fix it in 4.71.1 since customers may hit it with regular SSO and MDM SSO.\ncc: @ksatter "
           }
+        ],
+        "issueNumber": 31533,
+        "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-03T19:05:02.482658558Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdOJOc",
+        "labels": [
+          ":release",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software"
         ],
         "issueNumber": 31533,
         "changeType": "modified"
