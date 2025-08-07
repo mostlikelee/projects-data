@@ -1558,7 +1558,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Self-Service Update: Frontend"
       },
       {
@@ -3018,7 +3018,7 @@
           "startDate": "2025-07-07",
           "title": "Sprint 44"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Show appropriate self-service status and actions in the self-service table at all times",
         "comments": [
           {
@@ -4240,7 +4240,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "🥚 Ready",
         "title": "Linux icon showing in software inventory for macOS native app",
         "comments": [
           {
@@ -4301,7 +4301,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Bug: False-positive for CVE-2025-6554 on Linux/macOS hosts",
         "comments": [
           {
@@ -7692,7 +7692,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "Waiting",
         "title": "Taking action on a software item on the 2nd+ page of Self service resets pagination to 1st page",
         "issueNumber": 31632,
         "changeType": "added"
@@ -7719,7 +7719,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✅ Ready for release",
         "title": "Self service \"Learn more\" link doesn't link out to page",
         "issueNumber": 31630,
         "changeType": "added"
@@ -7746,7 +7746,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "When Self service software update is processed, update card does not show \"Updated\" with green check mark",
         "issueNumber": 31629,
         "changeType": "added"
@@ -7797,7 +7797,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "Waiting",
         "title": "Carousel and list view squishiness in Self Service at 768px",
         "comments": [
           {
@@ -8257,7 +8257,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "🦤 ‎In review",
         "title": "Add Windsurf and Cursor extensions to `vscode_extensions` table",
         "comments": [
           {
@@ -8376,7 +8376,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✅ Ready for release",
         "title": "Uninstall details activity modal for tar.gz files shows nothing in the dropdown",
         "comments": [
           {
@@ -8424,7 +8424,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Software status in list doesn't match modal if software previously reported as failed to install but actually installed, then failed to uninstall but reported success",
         "comments": [
           {
@@ -9661,6 +9661,608 @@
         ],
         "issueNumber": 31476,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-07T19:06:58.313349071Z",
+    "items": [
+      {
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet contributor,\n| I want to research the different ways Fleet can deploy custom iOS apps (`.ipa`'s)\n| so that I can draft and build this feature in Fleet.\n\n## Key result\n\nNone.\n\n## Original requests\n\n- https://github.com/fleetdm/fleet/issues/23736\n\n## Context\n- Product Designer: @noahtalerman \n- Engineering DRI: @mostlikelee \n  \n\n## Changes\n\n### Product\n- [x] Research: Create a public Google doc that answers the following questions:\n  - Current understanding: `customer-pingali` will compile an `.ipa` file and add it to Fleet. Fleet will install the `.ipa` on iOS/iPadOS hosts with an MDM command (more discussion in [this Google doc](https://docs.google.com/document/d/1zXsIxdpOVgZWJP74V9-2qaIuzZDPbg6MC_ZSlI8Jy74/edit?tab=t.0))\n    - What MDM command can Fleet use to deploy the app?\n    - What MDM command can Fleet use to check if the app is installed and add it to software inventory?\n    - https://docs.google.com/document/d/1j-26a7UU2_j0v81D9pl47jPvp-BLreAJXVy9DtVZjTE/edit?tab=t.0\n- [x] UI changes: No changes\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: No changes\n- [x] REST API changes: No changes\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] GitOps Mode UI changes: No changes\n- [x] GitOps generation changes: TODO \u003c!-- Specify changes to results from the fleetctl generate-gitops command. Put \"No changes\" if there are no changes necessary. --\u003e\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [x] Changes to paid features or tiers: No changes\n- [x] My device and fleetdm.com/better changes: No changes\n- [x] Other reference documentation changes: No changes\n- [x] First draft of test plan added\n- [x] Once shipped, requester has been notified: WONT for this research story.\n- [x] Once shipped, dogfooding issue has been filed: WONT for this research story.\n\n### Engineering\n\nNo changes for this research story.\n\n## QA\n\nNo changes for this research story.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxJc",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [ ] Research: Create a public Google doc that answers the following questions:\n\u003e   - Current understanding: `customer-pingali` will compile an `.ipa` file and add it to Fleet. Fleet will install the `.ipa` on iOS/iPadOS hosts with an MDM command (more discussion in [this Google doc](https://docs.google.com/document/d/1zXsIxdpOVgZWJP74V9-2qaIuzZDPbg6MC_ZSlI8Jy74/edit?tab=t.0))\n\u003e     - What MDM command can Fleet use to deploy the app?\n\u003e     - What MDM command can Fleet use to check if the app is installed and add it to software inventory?\n\n@mostlikelee moved this research story to reach to spec. Please feel free to update the research task (see issue description) if I'm missing anything.\n\ncc @marko-lisica "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "bringing this to standup today"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "https://support.apple.com/guide/deployment/distribute-proprietary-in-house-apps-depce7cefc4d/web#:~:text=Apps%20need%20to%20be%20in,access%20a%20server%20at%20Apple.\n\nApps need to be in .ipa format and be built with an in-house provisioning profile.\n\nThey need to have an XML manifest file.\n\nThey need to be downloaded from a website whose address begins with HTTPS.\n\nThey need to be signed by a certificate that’s trusted on the device.\n\nTheir network configuration needs to allow devices to access a server at Apple. For more information, see the Apple Support article [Use Apple products on enterprise networks](https://support.apple.com/101555)."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "this missed parking lot yesterday, bringing back today"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Jamf has this feature and has documentation that may be worth looking over:\n\nhttps://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/In-House_Apps.html\nhttps://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Provisioning_Profiles_for_In-House_Apps.html"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "https://foresightmobile.com/blog/ios-app-distribution-guide-2025\n\n[Not recommended]\n**Distribute through Testflight** https://developer.apple.com/testflight/ \n  - Each build is available to test for up to 90 days. Publishing a new build can reset the timer.\n  - \"Designate up to 100 members of your development team\" (internal testing, https://developer.apple.com/help/app-store-connect/test-a-beta-version/add-internal-testers / app store connect users)\n  - \"Up to 10,000 external testers\" (external testers, https://developer.apple.com/help/app-store-connect/test-a-beta-version/invite-external-testers) (It should like the app needs to go through a lighter version of the apple review process to enable external testers)\n  - Requires regular Apple developer program (99/year)\n\n[Not Recommended]\n**Unlisted Apps**\nhttps://support.apple.com/guide/deployment/distribute-unlisted-apps-dep36d738732/web\n  - Requires same review as regular applications\n  - Distributed through App Store via a direct link, not visible in search and categories\n  - Requires regular Apple developer program (99/year)\n\n**Custom App**\nhttps://support.apple.com/guide/apple-business-manager/learn-about-custom-apps-axm58ba3112a/web\n  - Requires same review as regular applications\n  - Distributed through App Store Connect and Apple Business Manager\n  - Requires regular Apple developer program (99/year)\n\n**Custom apps installation via mdm**\n`InstallApplication`: https://developer.apple.com/documentation/devicemanagement/install_an_app | https://developer.apple.com/documentation/devicemanagement/installapplicationcommand/command-data.dictionary\n  - We don't host or manage the .ipa files, company uploads app to App Store Connect \n  - App ID - The unique numerical identifier for the app from App Store Connect\n  - Bundle Identifier\n  - Apple Business Manager ID\n  - VPP Token\n  - Sync Apple Business Manager to retrieve available apps\n  - Send `InstallApplication` command to target devices\n\n**Enterprise app**\nhttps://developer.apple.com/programs/enterprise/\nhttps://support.apple.com/guide/deployment/distribute-proprietary-in-house-apps-depce7cefc4d/web\n  - Does not require review\n  - Distributed through website or mdm https://support.apple.com/guide/deployment/distribute-proprietary-in-house-apps-depce7cefc4d/web\n  - Requires Apple enterprise program (299/year)\n  - Apple enterprise program requirements\n    - Minimum 100 employees\n    - D-U-N-S Number\n    - Public website\n    - Apple conducts rigorous verification (can take up to 4 weeks)\n\n**Enterprise apps installation via mdm**\n`InstallApplication`: https://developer.apple.com/documentation/devicemanagement/install_an_app | https://developer.apple.com/documentation/devicemanagement/installapplicationcommand/command-data.dictionary\n`InstallEnterpriseApplication`: https://developer.apple.com/documentation/devicemanagement/install_an_enterprise_app | https://developer.apple.com/documentation/devicemanagement/installenterpriseapplicationcommand/command\n  - We must host or manage the .ipa and .plist files on fleet HTTPS server or have the client host the files\n  - iOS Distribution Certificate from client from Enterprise portal\n  - App ID\n  - Bundle Identifier\n  - Files required from client or client has to host the files\n    - YourApp.ipa - The application file\n    - manifest.plist - XML manifest file\n    - optional icons\n  - If files provided, upload files to https file server\n  - Send `InstallAplication` or `InstallEnterpriseApplication` commands to target devices\n  - Optional Provisioning profile (expire 12 months after they’re issued). So either the app needs to be re-exported (as an IPA) with the new profile\n    or you can distribute just the new .mobileprovision file, so users won’t have to install the app again. The new provisioning profile overrides the one already in the app archive. https://developer.apple.com/documentation/devicemanagement/install-provisioning-profile-command\n  - Do we want some alerting system about expiring provisioning profiles? Just display a banner? Something more fancy? The app will discontinue opening if the profile expires.\n\n\nHow to check if application has been installed:\nhttps://developer.apple.com/documentation/devicemanagement/installed-application-list-command\nhttps://github.com/fleetdm/fleet/blob/main/server/mdm/apple/commander.go#L313\n\nFront end\nForm to accept all values required. In the case of the enterprise application IPA + manifest file to serve\nNeed create and update functionality\n\nBack end\nAPI and database tables to store all information\nCode to send `InstallApplication` or `InstallEnterpriseApplication` commands"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Estimate this work at a medium tshirt size task. Looks like a lot of moving parts. Also the QA on this will be very non-trivial."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Renamed the story title to reflect `pingali` confirmation that they want elEnterprise (IPA upload)."
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "In reviewing the gong snippet, it seemed like there was a lot of talk about the importance of providing a programmatic way of pushing updates to the app. Even potentially pushing updates multiple times a day. "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "In clouds, research blooms,\nCustom iOS apps deployed,\nFleet's reach, ever grows."
+          }
+        ],
+        "issueNumber": 31174,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVLLc",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n I suggest:\n1. Updates section we change to drop down to 2 cards per page for under 880px (breakpoint small) instead of the current behavior down to 2 for under 768px (breakpoint xs)\n2. Self-service section, we could make this a scrollable table (which won't work if you end up making additional actions a dropdown) or we have a max width on the name column which is causing the push off the page\n3. Updates section, Add 16px (or whatever px) gap between Update all button and header on left side\n\nScreenshot of improvements in PR: https://github.com/fleetdm/fleet/pull/31627\n\n4. Maybe we truncate long software names on the update cards as well since that'll squish off the page too"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "\u003e 1. Updates section we change to drop down to 2 cards per page for under 880px (breakpoint small) instead of the current behavior down to 2 for under 768px (breakpoint xs)\n\n@RachelElysia sounds good to me.\n\n\u003e 2. Self-service section, we could make this a scrollable table (which won't work if you end up making additional actions a dropdown) or we have a max width on the name column which is causing the push off the page\n\nI think it makes sense to have max width on the name column, and if the name can't fit we truncate + tooltip on hover to show the full name.\n\n\u003e 3. Updates section, Add 16px (or whatever px) gap between Update all button and header on left side\n\nSounds good to me.\n\n\u003e 4. Maybe we truncate long software names on the update cards as well since that'll squish off the page too\n\nLet's do this as well.\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@marko-lisica and @RachelElysia I just want to confirm this is correct:\nI see 2 cards under 880px\nI see 3 cards between 880px and 1400px\nI see 4 cards over 1400px\n\nI see the comment above regarding \"change to drop down to 2 cards per page for under 880px\" which tracks with what I'm seeing, just wasn't sure about the 1400px breakpoint. \n"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "\u003e [@marko-lisica](https://github.com/marko-lisica) and [@RachelElysia](https://github.com/RachelElysia) I just want to confirm this is correct: I see 2 cards under 880px I see 3 cards between 880px and 1400px I see 4 cards over 1400px\n\u003e \n\u003e I see the comment above regarding \"change to drop down to 2 cards per page for under 880px\" which tracks with what I'm seeing, just wasn't sure about the 1400px breakpoint.\n\n@jmwatts @RachelElysia I think it makes sense to have 4 over 1400px. I tried on the larger screen, and it looks ok."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n- [x] Verify 2 cards under 880px\n- [x] Verify 3 cards between 880px and 1400px\n- [x] Verify 4 cards over 1400px\n- [x] Verify table (list) doesn't overflow at lower widths"
+          }
+        ],
+        "issueNumber": 31621,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 3,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVayQ",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Requires a new UI status and to check refetch time stamps against last_install to ensure \"updated\" vs. \"update available\", write tests 🫠"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "cc: @noahtalerman @marko-lisica @jmwatts \n\nDesign decision additions today during design-review: \n- Add temporary \"Installed\" status requires a new UI status and to check refetch time stamps against `last_install` to ensure \"installed\" vs. \"whatever other status would show\", write tests\n- Add temporary \"---\" status requires a new UI status and to check refetch time stamps against `last_uninstall` to ensure \"---\" vs. \"whatever other staus would show\", write tests\n- Add tooltips to all 3 temporary statuses to ensure users know it's a temporary status \"Fleet successfully [installed/uninstalled/updated] software and is fetching latest software inventory.\""
+          }
+        ],
+        "issueNumber": 31629,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVfUY",
+        "status": "🐣 In progress",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm still seeing this occasionally happen. If I never try to reorder the sort for name or status, it doesn't happen, but if I do that, then set it back to sorted by name, then try an action, it happens.\n\nhttps://github.com/user-attachments/assets/f37c46de-538f-4f57-be0b-a1498e4dd638"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Rachel:\nTODO:\nAdd all clientside filtering to URL bar to keep this from happening (I think it's missing categories, sort)"
+          }
+        ],
+        "issueNumber": 31632,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX1-s",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@noahtalerman: Decided to cut this \"smarter\" logic to solve these problems:\n- Multiple instances of the software installed\n- User v. machine scope on Windows\n\nCurrently, for macOS, only software that's installed in Applications/ shows the \"Update required\" status. If the software isn't in Applications/ but it's in inventory, Fleet shows \"Installed\" regardless of version. Fleet will use the install_path to know if the software is in Applications/\n\nCode wise: if (macOS and install_path is applications/), check only that path if it’s outdated and then show “update available” else show “Installed”\n\nFor Windows Fleet-maintained apps, software only shows \"Update available\" if the installed software is the same scope (user or machine) as the Fleet-maintained app. Based on install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\".\n\nFor Windows custom packages, software only shows \"Update available\" if the software title has an install_path. Otherwise, if the software is in inventory, Fleet shows \"Installed\"."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @RachelElysia, I added copy and a link to the contact URL based on `numa` feedback. We met with them today (2025-06-27) and showed them this story's wireframes.\n\n![Image](https://github.com/user-attachments/assets/6ca4ef45-09f2-4ac3-afee-bd5c995e151a)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts I realize this is offloading work to you that should've been done earlier by someone else, but can you work through a test plan here based on what's in Figma?\n\nIf it's more helpful to delegate the test plan for this to #27983, since these changes touch largely the same UI (though this hits both self-service and host software), that works too, and I can do a first pass there.\n\nWent ahead and updated the story template to remove non-test-plan TODOs to help a little."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx I've added the first pass test plan, just a couple questions left here:\n\n\u003cimg width=\"135\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1a202f1e-a311-4ccd-9aff-76ec85ef8dac\" /\u003e\n\n~~This is kind of vague, what is the criteria for this \"Update Available\" status?~~\n~~- Software is installed on host~~\n~~- Software installer is available~~\n~~- Software is a different version?~~\n~~- Software installer is a higher version than the version that's installed?~~\n\nNevermind, found that criteria in the [#27983](https://github.com/fleetdm/fleet/issues/27983) ticket. Only question left is:\n\nWhat are the available statuses for tar.gz items? \n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts No update available status for tarballs as they don't have an associated version."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "moving to estimated with an 8 based on prior discussions"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n\nIn the test plans it says:\n\n\u003e  If software is installed by end user make sure that tooltip over \"Installed\" status is different from one when Fleet installs. See Figma specs.\n\nIs there a different tooltip? I currently have it with no tooltip if it was installed by the user not using Fleet. Can you add the tooltip to the Figma spec or remove this from the QA plan?"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "[Doc to track questions around the various modals](https://docs.google.com/document/d/1sAh752RZCCquWhI25emzNtnBVV3wA-GAhjbdlaB2Pls/edit?tab=t.0)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Heads up that we're marking this one for expedited drafting"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "@mostlikelee thanks. To over communicate, most of the remaining questions are regarding [the modals subtask](https://github.com/fleetdm/fleet/issues/30860)"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Throwing this over the fence to you @jmwatts ! I QAed as much as I could--happy Friday\n\nMy blind spots:\n- The intel computer race condition with host refetch/osquery\n- I don't have a macOS that is enrolled into MDM, only a iPad, so self-service VPP was not really QAed on my end, though I know Jacob did while he was deving"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes** (In Progress)\n\nTest plan\n\nOn host details page or Self service with several installers available:\n\n- [x] Default sorting order is by Name ascending\n- [x] Name sort order can be reversed\n- [x] Sorting by status sorts software by status in the order mentioned in Figma (and can be reversed)\n- [x] Font weight should be \"regular\"\n- [x] If software is not in software inventory, status is \"---\"\n- [x] If status is \"---\", available action is \"Install\" (Uninstall should not be available)\n- [x] When a user clicks \"Install\", status changes to \"Installing\"\n- [x] If software installs successfully, status changes to \"Installed\"\n- [x] If software fails to install, status changes to \"Failed\"\n- [x] If software is in software inventory, Status is \"Installed\" NOTE: #31663 \n- [x] If software status is \"Installed\", available actions are \"Reinstall\" and \"Uninstall\"\n- [x] When a user clicks \"Reinstall\", status changes to \"Installing\", and when the action completes, the status changes to \"Installed\"\n- [x] When a user clicks \"Uninstall\", status changes to \"Uninstalling\" and when the action completes, the status changes to \"---\"\n- [x] If software fails to uninstall, status changes to \"Failed (uninstall)\"\n- [x] If software is in software inventory, and other criteria are met (see https://github.com/fleetdm/fleet/issues/27983 ) status is \"Update available\"\n- [x] If status is \"Update available\", available actions are \"Update\" and \"Uninstall\"\n- [x] If Update available is clicked, details modal is shown with detail of installed software and possible actions to take\n- [x] When a user clicks \"Update\", modal closes and status changes to \"Updating\", and when the action completes, the status changes to \"Installed\"\n- [x] If software fails to update, status changes to \"Failed\"\n- [x] If software is installed by end user there is not tooltip over \"Installed\" status. If the software was installed by Fleet, it states when the software was last successfully installed.\n- [x] If software is a tarball (tgz_packages), Fleet won't do inventory, and status in Library tab will only reflect if install is triggered from Fleet.\n- [x] Make sure that when the tarball is installed by Fleet, show Installed status + Reinstall and Uninstall actions. #31578 \n- [x] Make sure that when tarball install failed, to show Failed status and \"Retry\" action only.\n- [x] Make sure that when tarball is available in library that no status is displayed and only Install action is available.\n- [x] Make sure that the new copy as specified in Figma is added to \"Install details\" modal for each package that is missing version information (no inventory).\n\nClicking on any status for any operating system should open a details modal EXCEPT\n\n- [x] The only non-clickable status is for Host details \u003e software \u003e library \u003e status for VPP successful and failed installs before @ksykulev 4.72 fix merged 8/1/25, those will still have a tooltip to go to the activity feed to view success/fail information - This now shows the correct modal\n- [x] Details modal title should match the status and should conform to Figma\n- [x] Install and Uninstall details dropdown should be collapsed by default and only show for installs or uninstalls completed by fleet (If the software was installed by the user, the modal will still show but will not contain a details dropdown, see Figma)\n- [x] Clicking on an available action button within the modal closes the modal and updates the status in the list, according to the action that was taken, the action completes, and the status is updated again.\n- [x] Confirm multiple versions installed - Note, this only updates the version in the expected install location. Clicking update only installs/reinstalls the app in the expected location. So if you have two versions installed in non-expected locations, and you click update, you'll get a 3rd version installed in the expected location. "
+          }
+        ],
+        "issueNumber": 30240,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcX12Q",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @mostlikelee Removed 'uninstall' from this ticket as the order of operations has determined that this ticket will go ahead of the uninstall ticket (#28038)"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@jmwatts I took a first pass at the test plan.\n\nQuestions for @mostlikelee:\n\n1. What YAML/API things might need done?\n\nQuestions for @RachelElysia \n\n1. On the carousel, if there are 6 items in the carousel are we thinking it would show 4 and 2 when paginating? Or would we always show four and selecting \"Next\" would go from showing 1 2 3 4 to showing 3 4 5 6?"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Notes from 14 April 2025:\n\n1. @noahtalerman : Can we scope this down to Mac only and FMA? \n    1. There are extra complications around Windows due to known issues that we've been discussing. There are also current research tickets on upgrade codes for Windows that are outstanding (#27776) which would be a pre-req for Windows.\n2. Do we want to add activity changes at this time? @mostlikelee and I think no for simplicty's sake.\n"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @noahtalerman : Can we scope this down to Mac only and FMA?\n\n@eugkuo @mostlikelee I think let's draft for all support we support on macOS, Windows, and Linux (custom packages, App Store apps, and Fleet-maintained apps).\n\nAfter we have designs, I think let's discuss and decide how to cut the story up.\n\nWhy? So we know where we're heading and we tease out more complications/unknowns. Then we can come up with a plan for how to address Windows and Linux even if the first iteration we build is just macOS Fleet-maintained apps. Which is a valid first iteration.\n\n\u003e Do we want to add activity changes at this time?\n\n@eugkuo same for activities. I think let's draft activities and then cut."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "\u003e @eugkuo @mostlikelee I think let's draft for all support we support on macOS, Windows, and Linux (custom packages, App Store apps, and Fleet-maintained apps).\n\n@noahtalerman Coolio. I don't think the design changes. The UI will be the same regardless of platform. (@mostlikelee correct me if I'm wrong).\n\nWRT activities, I added [an example](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5318-3291\u0026t=LPfejWpLp8jclkAm-11) to the ticket above."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @jmwatts @mostlikelee \n I've updated the selected state in the category filters to match work done on [#27245](https://github.com/fleetdm/fleet/issues/27245)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Question 1: what is expected behavior when multiple versions of a software are installed on a host:\n- On macOS, if an application is renamed (`Firefox.app` + `Firefox2.app`), Fleet will show both applications as pending updates in the carousel, but only 1 will patch successfully (Firefox.app because it matches the app name in the dmg)\n- This will also be the case on macOS with `/Applications/Firefox.app` + `~/Downloads/Firefox.app` (only the first will patch)\n- machine vs user installs will also see this symptom on Windows\n\nQuestion 2: Does the update disappear from the carousel if the software install executed successfully, but the app did not actually update?\nexamples:\n- macOS: Firefox.app is renamed to Firefox2.app, install completes successfully and the host now has Firefox.app + Firefox2.app\n- Windows: machine scope is installed, and installer is user scoped (or vice-versa)"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee @noahtalerman Updates from 7 May 2025 DR:\n\n1. Added [tooltip](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5366-4609\u0026t=3kh7v4Aj5lLSDppW-11) on `installed` status\n\n"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman @mostlikelee \n\nUpdated the designs with the following:\n\n1. Removed \"Installed\" status from the update cards at the top of the page.\n2. Upgraded the 'update' action to a button.\n3. For installed apps, updated the action to 'reinstall'"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@eugkuo @noahtalerman we realized that we need design when multiple versions of an updatable app is installed"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee I'm not exactly sure what you mean by this. Wouldn't we still have a single update button for the app? I mean we'd want to update it all to the most recent. I think I might be missing some nuance here.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Chatted with @mostlikelee and here are the use cases:\n\n1. N different versions in the Applications folder\n2. N copies of the same version in the Applications folder\n    1. Currently can only update the one with the name we expect.\n4. N copies of various versions in different locations.\n\nWe can only update if have following criteria:\n1. Existing path needs to be what's expected (name, location, etc.)\n    1. Works for FMAs\n    2. Does not work as well for custom packages.\n    4. Big question mark around VPP.\n\nLet's discuss in USR.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looks like there's an off-by-one in step 11 in the test plan.\n\nAlso, for \"Updating\", can we show that status string always when inventory says a piece of software is installed but there's also a pending install? That would allow us to use the existing API there rather than having to build a new one.\n\nI have an idea on making this frontend-only to expedite: use the existing self-service filter, no pagination, and client-side filter to results that have only installed versions where version differs from the installer package. This gets this work out from behind further ListHostSoftware tweaks/derisks it a bit, at the cost of additional frontend munging."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx \n\u003e Looks like there's an off-by-one in step 11 in the test plan.\nThanks! Fixed.\n\n\u003eAlso, for \"Updating\", can we show that status string always when inventory says a piece of software is installed but there's also a pending install? That would allow us to use the existing API there rather than having to build a new one.\n\nSo there could be a pending install and we and updating over that? At any rate, if we're updating that software it seems reasonable to show the 'updating' status.\n\n@noahtalerman thoughts?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo To clarify, I'm saying that if we have a piece of software already in inventory and there's a pending install (from whatever Fleet-initiated source...Install button, update button, policy execution, whatever), we use the word \"Updating...\" rather than \"Installing...\" in the self-service UI. Then reserve \"Installing...\" for cases where a host _doesn't_ have the same software in inventory already.\n\nSo the pending statuses would be:\n\n* Installing - wasn't in inventory, install is pending\n* Updating - was in inventory, install is pending\n* Uninstalling - uninstall is pending\n\nIf the above are the rules, the frontend already has all of the information it needs (with existing API endpoints) to show the correct status (so, no backend/DB changes to differentiate between \"installing\" and \"updating\")."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Ohhhh! This works for me. Also,  in future we shouldn't have 'Install' as an action on installed software. It'll say 'uninstall' or 'update' so this would mesh nicely.\n\ncc @noahtalerman @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@noahtalerman Reverted to secondary update buttons in the update cards."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Bumping this as an unresolved question as we expedite this story: https://github.com/fleetdm/fleet/issues/27983#issuecomment-2877468972"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "During a call on \"Updates in self-service\" call on 2025-05-26, here's what @mostlikelee and I decided for the first iteration: \n\n![Image](https://github.com/user-attachments/assets/1b98c30b-6dc8-444e-826b-a6fc81e8d715)\n\nFleet will document this behavior is the self-service software guide. The UI will link IT admins to this guide (redirect PR is [here](https://github.com/fleetdm/fleet/pull/29445)):\n\n![Image](https://github.com/user-attachments/assets/f6ca58b1-8ce0-473b-a9f3-a9e574e7aaa0)\n\n![Image](https://github.com/user-attachments/assets/30d73148-cd03-4ad8-9b84-5ee89467e68a)\n\nEventually, Fleet will iterate on this behavior. Plan is to ship iterative improvements such that more apps show up in “Updates.”\n\ncc @eugkuo "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @eugkuo I moved this 480px width screen into scratchpad [here](https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5408-9141\u0026t=2qzAG36eyoKjsBAb-1). Looking the discussion in [this closed PR](https://github.com/fleetdm/fleet/pull/28465), it sounds like we haven't added support for screen widths down to 480px yet.\n\n![Image](https://github.com/user-attachments/assets/d3909d83-841e-41be-a74c-319dffe80946)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Thinking through workflow for a moment, if an app shows up in the updates carousel, it's because we've seen it in inventory, and the version in inventory is less than the version of the corresponding installable software (FMA, custom package, or VPP) for that team (and we don't show a card if criteria around installed paths aren't met, see dev note mentioned above). Good so far? This has a side effect of VPP apps being most likely to be in that carousel, as we'll display a new version there within an hour of the version being published via Apple, with no ability for an admin to override this, but...that's probably okay?\n\nNext, an end user clicks \"Update\", at which point we either send the MDM command to install or queue up a package-based install. In both cases, currently there will be a point where the software is reported as installed but software invenotry has not yet been refreshed, even with #28738 implemented. This means that we can show the \"updating\" spinner right up until the install completes, at which point a purely inventory-based system would flip back to having the \"Update\" action displayed until inventory gets run again, which isn't what we want.\n\n## Update status alternative: install status\n\nOne alternative would be to take installation status into account in some form when installs are successful/failed, rather than just when they're pending. Catch here is that we're replicating issues around freshness that affect our existing host software inventory, where an out-of-band update (e.g. Chrome auto-updating) would cause the update card to show when it isn't necessary. This issue is relevant when the update installation fails but the software eventually gets updated out-of-band.\n\n### Install status freshness: version comparison\n\nOne mitigation for the freshness comparison issue would be to compare versions between inventory and the install receipts, and have the higher version win, but VPP installs currently break this as `host_vpp_software_installs` doesn't include the version that was installed, so we'd wind up in a case where VPP apps would never show up in the updates list once installed the first time because installed version would just reference back to the latest available version.\n\n### Install status freshness: refetch wins when more recent than install\n\nAnother mitigation would be to only take install statuses into account when they're more recent than the most recent host vitals refetch. We have install timestamp info and last refetch timestamp info, so this should be reliable, and we can use this nuance to show available updates with e.g. \"Update successful\" or \"Update failed\" if we wanted between getting an install result back and the next refetch.\n\nWe could actually extend this logic to host software listing in general, explicitly ignoring install receipts (success or failure) unless they've happened since the most recent vitals refetch as the vitals refetch should at that point be the source of truth.\n\n## Update status alternative: refetch on install success\n\nAnother alternative would be to retech host vitals (or at least rerun software inventory) after each successful install. Doing this right needs #28738 as a prerequisite so we don't refetch too early. If we did this, the window where software inventory alone was too stale for correctly showing the update carousel would be minimized.\n\n---\n\nWe could combine \"refetch wins when more recent than install\" and \"refetch on install success\", plus maybe polling of host details on the **My device** page while refetching, to get a nearly realtime view of what's actually installed. Clicking Update on a piece of software would pop up a spinner in place of the Update button, then the status would flip to Update Successful for \u003c 1 minute while a vitals refresh was triggered, then the update card would disappear entirely once the vitals refresh triggered by that install was completed. For failed updates, we'd show the \"Update failed\" status until the next vitals refetch, with a retry button, and that failure would go away (replaced with an \"Update\" action with no status) after the next refetch.\n\nThis combined approach will require API changes (but no fleetd changes) to work, but in return we get a clear path to cleaning up inventory-vs-install idiosyncrasies, and we avoid end-user frustration stemming from varying degrees of staleness on the updates list compared to what they have installed."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Unrelated to the above: hopefully installers get targeted properly with labels for e.g. Intel Macs in this customer's deployment, since otherwise we'll be presenting end users with prompts to update apps to versions that won't work on their architecture."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Looking over the wireframes, looks like we have a different activity description than the standard \"installed X app.\" Given the complexity of this ticket as it stands, can we remove the activity from scope, reverting to the standard \"an end user installed X\" activity that we have right now? Otherwise we need to decide how we'll differentiate an update from an install (new param on the install reqeuest? Automatically server-side based on what's in inventory on the machine?) and define a structure for the revised activity record (I assume a new field on `installed_software`), neither of which we've spec'd. Feels like those changes can be added in a follow-up ticket."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "One interesting side effect of \"refetch vitals after every install\" is it could resolve the software install \"half\" of #25969/#28523, albeit in a heavier-weight fashion since IIRC a vitals refetch runs policy queries as well as software inventory queries. If we just run software inventory (so, not a full refetch) those issues are unaffected. TBD whether we'd want to start with a full vitals refetch hre since that's more computationally expensive both client- and server-side and once we implement it it's more likely that admins would rely on the full-refetch behavior so it'd be hard to back out.\n\nBut if we _didn't_ collect the entire set of host vitals, we'd need another timestamp on hosts to indicate how fresh software inventory was relative to the rest of host vitals, so just doing a full refetch is a lot less risky from a development perspective. So \"do a full refetch after an install completes\" still makes sense here I think.\n\nNote that this is _in addition to_, and _after_, the MDM polling covered in #28738, as that polling would only affect software install status and not inventory (even on iOS/iPadOS the polling would be checking for managed apps, while software inventory grabs the entire installed app list)."
+          },
+          {
+            "author": {
+              "login": "gillespi314"
+            },
+            "body": "FYI, we have some existing framework for refetching [critical queries](https://github.com/fleetdm/fleet/blob/f018066beef248bdb67700a3f458809f9bad410a/server/fleet/hosts.go#L361-L362) that might be useful here."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@gillespi314 Thanks for pointing that out! I think that in this case once we implement #28738 we'll only need to refetch once, after the install is confirmed succeeded (on script exit 0 + post-install for package-based, on MDM managed apps success for VPP) so we won't need to take the perf hit of a full refetch on every host check-in (we're making the assumption that the MDM managed app inventory command is less expensive to poll than our standard vitals suite)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx @mostlikelee Removed the updated activity feed and wrote a [FR](https://github.com/fleetdm/fleet/issues/29492) to update this in the future.\n\ncc @noahtalerman "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee @eugkuo, just checking, is this story ready to move to \"Estimated\"? Looks like it has an estimate on it."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "The estimate is from our expedited estimation session.  I'll remove the estimate as we're going to want to estimate this again after Spec.  This story is in the correct spot.  We'll move it over when https://github.com/fleetdm/fleet/issues/29494 is complete."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @iansltx just a reminder that this story is ready for spec? Can you please work with the team to get it estimated ahead of next sprint?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman on my list after my responsibilities for 4.69 are concluded."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts This test plan is ready for a last look. Make any edits that you need to make, and once it looks good pull this to Ready to Estimate. I've already pulled subtasks to Ready to Estimate as I'm sufficiently confident that I have them spec'd correctly and wanted to give folks a little more runway to put down their own estimates."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Workflow diagrams:\n\n![Image](https://github.com/user-attachments/assets/c265a375-fc3e-437e-8350-b685c605d56d)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx test plan looks good. \n\n\u003e Windows apps don't show in the available updates list if they don't have an associated install path \n\nDo we know if we plan to address https://github.com/fleetdm/fleet/issues/29449 before this ticket?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts That would get addressed in the same sprint at the earliest, given that this will be going into the next sprint. There isn't a direct dependency here, and these shouldn't touch the same code, so if/once that bug is fixed this implementation will \"just work.\""
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman adding this back into your queue based on our design review discussion re: copy/UI changes for unpatchable software"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee can you please update the test plan? We made a change to not worry about where the software is installed (paths). Tip: CMD+F for \"path\" in the issue description."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Revised the spec here (didn't touch Figmas), including test plan, to drop host paths interactions, and drop this down to FE-only. We'll likely need to reimplement with server-side changes in the next iteration, but workload-wise if we tried to implement this plus #30240 in a single sprint with backend changes we'd miss the release cut due to waiting for dependencies.\n\nThis story now consists of frontend changes plus docs changes, so tee shirt sizing is just above an XS. Likely scenario here is that dev gets done in the 4.72 sprint, and docs get updated during the 4.73 dev sprint but prior to 4.72 going GA.\n\nAPI change/path-related subtasks have been dissociated from this story and moved back to the \"New requests\" column; they'll need to be either associated with a new follow-up story or converted to stories themselves to be actionable.\n\nPulled the story back to USR to revalidate the test plan, while keeping subtasks in Estimated based on previous discussions."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "after some discussion, keeping the original estimates and moving to Estimated."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica thanks for jumping right into our team and the mountain of dev/design sync needed. Here's some recap of stuff I need/needed clarified.\n\nPrevious conversations:\n\n000. This isn't in the spec to be able to sort status from host details \u003e software \u003e library. But if we did it would be consistent with self-service status sort. I tried to implement but it proved difficult because of the server side pagination/query/sort happening and sorting on a column that is built in the FE doesn't play nice with server side sort. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175433082329?thread_ts=1752168568.807959\u0026cid=C086V2QK76X) Confirm we are intentionally scratching sorting on host details \u003e software \u003e library \u003e status column or I need to jump through a lot of hoops to make everything client side sort an then implement\n\n00. I dev-ed in clientside paginating self-service page to 20. When there's updates to specs like this, are you DRI for updating the Figma and QA plan? (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175280199089)\n\n0. We either needed to make 2 API calls, one for update software and the other for filtered software in the self-service section OR move the self-service software search query to be client side. We chose to make everything client side so we don't have to make so many API calls and deal with making 2x the API calls every time an install/uninstall/update action is clicked. It's sticky, partially because this is all frontend hoops jumped through because the API doesn't paginate, doesn't filter categories, and doesn't have a 1:1 map of status's in the API with status shown in the UI.  (https://fleetdm.slack.com/archives/C086V2QK76X/p1752180334175959)\n\nQuestions from [Self-service/Library updates thread](https://fleetdm.slack.com/archives/C086V2QK76X/p1752184798822479):\n\n1. I asked the channel, If there's more than one version installed on a host, what should go on the software updates card for the \"125.0.1 -\u003e 126.0.1\". If recalled correctly, we think the Figma is not correct, and should just show the library version.\n\n2. Do we show the update available modal if you click update in the carousel or does it just automatically make the API call to update\n\n3. When you click the Update all button, do we disable the \"update all\" button?\n\nMore questions not on the thread:\n\n5. Similarly, when you are updating all and there's no other software to update since they're all pending \"Updating...\", do we disable the \"update all\" button?\n\n6. This pagination but changing the number of update software tiles per page on page size might be a little too tricky. For example, you have 20 software that need updates, you're looking at the third page which shows software 9,10,11,12. You shrink your browser horizontally to only see 3 software, which 3 should be shown?? What page are you on now?\n\n7. Do we forsee an update section in host details \u003e software \u003e library? Is it in the works, any heads up might be good in making sure the code is reusable across fleet desktop \u003e self-service and host details \u003e software \u003e library\n\nI'm OOO tomorrow but I'll be back Monday and Thursday next week. If you can address any of these, that would be amazing, ty!\n "
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @RachelElysia, thanks for collecting all the questions in one place, it's really helpful.\n\n\u003e This isn't in the spec to be able to sort status from host details \u003e software \u003e library. But if we did it would be consistent with self-service status sort. I tried to implement but it proved difficult because of the server side pagination/query/sort happening and sorting on a column that is built in the FE doesn't play nice with server side sort. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175433082329?thread_ts=1752168568.807959\u0026cid=C086V2QK76X) Confirm we are intentionally scratching sorting on host details \u003e software \u003e library \u003e status column or I need to jump through a lot of hoops to make everything client side sort an then implement\n\nLet’s skip this. I’ll add follow up story to do some additional UI improvements (details modals without 2 tabs on library page, sorting by status on library page and pagination for self-service in API).\n\n\u003e I dev-ed in clientside paginating self-service page to 20. When there's updates to specs like this, are you DRI for updating the Figma and QA plan? (https://fleetdm.slack.com/archives/C086V2QK76X/p1752175280199089)\n\nClient-side pagination sounds good to me. I added spec to Figma and test case.\n\n\u003e We either needed to make 2 API calls, one for update software and the other for filtered software in the self-service section OR move the self-service software search query to be client side. We chose to make everything client side so we don't have to make so many API calls and deal with making 2x the API calls every time an install/uninstall/update action is clicked. It's sticky, partially because this is all frontend hoops jumped through because the API doesn't paginate, doesn't filter categories, and doesn't have a 1:1 map of status's in the API with status shown in the UI. (https://fleetdm.slack.com/archives/C086V2QK76X/p1752180334175959)\n\nI'm not sure I understand this. Are we going to request all self-service software, and then the frontend will find and display those with available updates in the \"Updates\" section? If that's correct, then I think that's fine.\n\n\u003e I asked the channel, If there's more than one version installed on a host, what should go on the software updates card for the \"125.0.1 -\u003e 126.0.1\". If recalled correctly, we think the Figma is not correct, and should just show the library version.\n\nWe decided to don’t show current version, to simplify in this iteration. We can add that later. It makes things complicated when user has multiple versions of the same app installed in different paths.\n\n\u003e Do we show the update available modal if you click update in the carousel or does it just automatically make the API call to update\n\nWe show update available modal only when user clicks on “update available” in status column. If user click “Update” in self-service table or in the carousel we just directly start update (user sees “Updating” status.\n\n\u003e When you click the Update all button, do we disable the \"update all\" button?\n\nI think we should disable “Update all“ button and show “Updating” status on each item in carousel and self-service table.\n\n\u003e Similarly, when you are updating all and there's no other software to update since they're all pending \"Updating...\", do we disable the \"update all\" button?\n\nI think so. Let’s disable the button if an update is started for all apps that have an update available.\n\n\u003e This pagination but changing the number of update software tiles per page on page size might be a little too tricky. For example, you have 20 software that need updates, you're looking at the third page which shows software 9,10,11,12. You shrink your browser horizontally to only see 3 software, which 3 should be shown?? What page are you on now?\n\nSorry, I don’t understand this. Let’s chat during the design review on Monday. If it’s too early for you, please add something to my calendar.\n\n\u003e Do we forsee an update section in host details \u003e software \u003e library? Is it in the works, any heads up might be good in making sure the code is reusable across fleet desktop \u003e self-service and host details \u003e software \u003e library\n\nI don’t think so. I don’t thin IT admin want’s to see that. They will probably make updates automatic based on some criteria. We might want an additional filter in the existing dropdown for apps that have updates available, but not planned AFAIK."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica thanks for all the clarification!\n\n\u003e I'm not sure I understand this. Are we going to request all self-service software, and then the frontend will find and display those with available updates in the \"Updates\" section? If that's correct, then I think that's fine.\n\nExactly\n\n\u003e Sorry, I don’t understand this. Let’s chat during the design review on Monday. If it’s too early for you, please add something to my calendar.\n\nWill add to your calendar\n\nI think everything else is addressed and unblocked so I can dev -- hvala!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica Another question re: https://www.figma.com/design/K9BTJ3aZAvwWBXU9N8aqGa/-27983-Fleet-Desktop-%3E-Self-service--Add-%22Update%22-actions-when-updates-are-detected-for-installed-so?node-id=5302-9691\u0026t=xsGXc1YLuwgfuqy1-0\n\nWhen the update fails, it shows \"Update\" button and a \"Failed\" button in the update card, but in the Self-service table view in the card below, should that installer show \"Failed\" or \"Update available\" in the status?\n\nNuances needing clarification from @marko-lisica :\n\n\u003cimg width=\"671\" height=\"187\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d94eb0bb-adeb-488e-a955-c7a2d365a791\" /\u003e\n\nScenario 1: Docker Desktop has an update available but it failed to update, what should be shown as the status in the table view?\n\nScenario 2: Docker Desktop has an update available but it failed to uninstall, what should be shown as the status in the table view?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @RachelElysia, I think that we should show \"Failed\" in self service table as well.\n\n\u003e Scenario 1: Docker Desktop has an update available but it failed to update, what should be shown as the status in the table view?\nWe should alwaythe s show latest status in the status column. If it's failed let's show it. Action should be update if update is available.\n\n\u003e Scenario 2: Docker Desktop has an update available but it failed to uninstall, what should be shown as the status in the table view?\n\nWhat do we display today if the uninstallation fails? Do we have a specific status like \"Failed (uninstall),\" or do we show \"Failed\" and then inform the user in the details modal that the uninstallation was unsuccessful?\n\n"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica \n\n\u003e What do we display today if the uninstallation fails? Do we have a specific status like \"Failed (uninstall),\" or do we show \"Failed\" and then inform the user in the details modal that the uninstallation was unsuccessful?\n\nWe show \"Failed (uninstall)\" which leads to the uninstall modal.\n\nI'll be sure to update these copies to not show update available and show \"Failed\" or \"Failed (uninstall)\" if it meets both criteria, I'll update the QA plan too since I'm in there RN, thank you!"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@marko-lisica Update available has a tooltip and Failed/Failed (uninstall) has a separate tooltip. Because these options listed above fall into both, I made it so the tooltips show both the Update Available tooltip copy and Failed/Failed (uninstall) copy. WDYT?\n\n```\n  failed_install_update_available: {\n    iconName: \"error-outline\",\n    iconColor: \"ui-fleet-black-50\",\n    displayText: \"Failed\",\n    tooltip: ({ isSelfService, isHostOnline, lastInstalledAt }) =\u003e\n      isSelfService || isHostOnline ? (\n        \u003c\u003e\n          Fleet can update software.{\" \"}\n          \u003c\u003e\n            Software failed to install\n            {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}.{\" \"}\n            {isSelfService ? (\n              \u003c\u003e\n                Select \u003cb\u003eRetry\u003c/b\u003e to install again, or contact your IT\n                department.\n              \u003c/\u003e\n            ) : (\n              \u003c\u003e\n                Select \u003cb\u003eDetails \u0026gt; Activity\u003c/b\u003e to view errors.\n              \u003c/\u003e\n            )}\n          \u003c/\u003e\n        \u003c/\u003e\n      ) : (\n        \u003c\u003e\n          Fleet can update software\n          \u003cbr /\u003e when the host comes online.\n          \u003cbr /\u003e\n          Software failed to install\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}.{\" \"}\n          {isSelfService ? (\n            \u003c\u003e\n              Select \u003cb\u003eRetry\u003c/b\u003e to install again, or contact your IT\n              department.\n            \u003c/\u003e\n          ) : (\n            \u003c\u003e\n              Select \u003cb\u003eDetails \u0026gt; Activity\u003c/b\u003e to view errors.\n            \u003c/\u003e\n          )}\n        \u003c/\u003e\n      ),\n  },\n  failed_uninstall_update_available: {\n    iconName: \"error-outline\",\n    iconColor: \"ui-fleet-black-50\",\n    displayText: \"Failed (uninstall)\",\n    tooltip: ({ isSelfService, isHostOnline, lastInstalledAt }) =\u003e\n      isSelfService || isHostOnline ? (\n        \u003c\u003e\n          Fleet can update software.\n          \u003cbr /\u003e\n          Software failed to uninstall\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}. Select{\" \"}\n          \u003cb\u003eRetry\u003c/b\u003e to uninstall again\n          {isSelfService \u0026\u0026 \", or contact your IT department\"}.\n        \u003c/\u003e\n      ) : (\n        \u003c\u003e\n          Fleet can update software\n          \u003cbr /\u003e when the host comes online.\n          \u003cbr /\u003e Software failed to uninstall\n          {lastInstalledAt ? ` (${dateAgo(lastInstalledAt)})` : \"\"}. Select{\" \"}\n          \u003cb\u003eRetry\u003c/b\u003e to uninstall again\n          {isSelfService \u0026\u0026 \", or contact your IT department\"}.\n        \u003c/\u003e\n      ),\n  },\n```"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@RachelElysia I think we discussed this during standup. We decided not to don't show the update tooltip in the table if it fails. We'll show the update button in the \"Updates\" section + failed status."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes** (In Progress)\n\nTest with Windows, macOS, Linux hosts\nTest with Chrome, Safari, Edge, Firefox\n\nUI\n\n1. Ensure that there there are more than 8 updates available for a host by installing older versions of the software (e.g. downloading old FMA copies based on previous manifest versions), then adding current versions as available in self-service on the same team.\n2. Navigate to Fleet Desktop.\n\n- [x] Verify that there the \"Updates\" section shows at the top of the page.\n- [🚫] Verify that the number next to the Self-service tab matches the number of available updates. #31646 This was not included in this story.\n- [x] Verify that selecting 'Next' swipes over to the next 4 update cards in the Updates section.\n- [x] Verify that the same software titles have 'Update' actions next to them in Self-service table.\n\n3. Select \"Update\" on a software title\n- [x] Verify that the status changes to 'Updating' with an animated circle progress spinner on both the app card and in the Self-service table..\n\n4. Navigate away from the page and navigate back\n- [x] Verify that the status remains.\n5. When the update is complete \n- [x] Verify that the software is updated locally, the card shows \"Updated\", and a refetch has been queued.\n6. Once the refetch completes, \n- [x] Verify that the card is removed from the top section and that the action in the Self-service table changes to \"Reinstall\" (when the one card is removed, the remaining 3 cards still show but the one that was removed is replaced with the next item in the list, so that it still shows 4 cards)\n- [x] Verify that the pagination always shows the correct number of cards based on the page width, so on the largest page width it shows 4 at a time, i.e. it goes from showing 1 2 3 4 to 5 6 7 8.\n7. Update all but 3 of the remaining \"update available\" apps.\n- [x] Verify that the Update section shows 3 cards and that the width of each card is the same as when there are 4 items in the Update section at widths above largest breakpoint #31621 \n- [x] Verify layout at S, M, L breakpoints. Note that 2 cards show below 880px and that 3 cards show above 880 but below largest breakpoint (determined in #31621)\n- [x] Verify that self-service is paginated and displays 20 items per page.\n\nOther items\n- [x] Double check for the additional change in host details for the Self service hover text to add a learn more link #31630 \n- [x] If there was only one update card and I update the app and it refetches, the Updates section disappears\n- [x] Clicking the Update all option, refetches will occur until all updates are completed. The count will continue decreasing until no further updates are available and then the section will disappear\n- [x] Failed modal should show details when clicked\n\nUpdate eligibility criteria\n- [x] Software not available for self-service should not show in the available updates list\n- [x] Software not in inventory should not show in the available updates list\n- [x] VPP apps should not show in the available updates list if MDM is turned off\n- [x] Software in inventory that is \u003e= the version for the installer doesn't show\n- [x] Software in inventory whose version can't be compared to the installer's version shouldn't show\n- [x] Software in inventory, installed multiple times, where one install is an older version and one install is a same-or-newer version, should show in the available updates list\n- [x] Software in inventory, installed once, that is older than the installer's version, should show in the available updates list\n- [x] Software in the list with a pending install SHOULD show install status, even if a refetch has happened since the install started\n- [x] Software in the list that has been successfully installed by Fleet since the last refetch SHOULD show install status\n- [x] Software that shows up in the list that has had an install failure by Fleet since the last refetch SHOULD show install status\n\nEdge cases:\n‼️ Software installed in multiple locations - Fleet will only update the software in the expected install location. If there are multiple versions installed, it will report \"Update available\" if any of the versions are lower than the Library version, but it will ONLY update the one in the expected install location. \n‼️ If you have a version installed in the non-expected install location, Fleet will show \"Update available\" but it will not update the software in the non-expected install location. It will do a new install in the expected location and will continue to report \"Update available\" until the older version in the non-expected install location is updated manually or uninstalled\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Removing from the orchestration board as QA/any fixes are being handled by #g-software."
+          }
+        ],
+        "issueNumber": 27983,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOeo",
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "status": "✔️Awaiting QA",
+        "issueNumber": 30357,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "\n# Goal: easy-to-follow test steps for checking a release manually\n\n# Important reference data\n\n1. [fleetctl preview setup](https://fleetdm.com/fleetctl-preview)\n2. [permissions documentation](https://fleetdm.com/docs/using-fleet/permissions) \n3. premium tests require license key (needs renewal) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjQwOTk1MjAwLCJzdWIiOiJkZXZlbG9wbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6ImJhc2ljIiwiaWF0IjoxNjIyNDI2NTg2fQ.WmZ0kG4seW3IrNvULCHUPBSfFdqj38A_eiXdV_DFunMHechjHbkwtfkf1J6JQJoDyqn8raXpgbdhafDwv3rmDw`\n4. premium tests require license key (active - Expires Sunday, January 1, 2023 12:00:00 AM) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjcyNTMxMjAwLCJzdWIiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6InByZW1pdW0iLCJpYXQiOjE2NDI1MjIxODF9.EGHQjIzM73YyMbnCruswzg360DEYCsDi9uz48YcDwQHq90BabGT5PIXRiculw79emGj5sk2aKgccTd2hU5J7Jw`\n\n# Smoke Tests\nSmoke tests are limited to core functionality and serve as a pre-release final review. If smoke tests are failing, a release cannot proceed.\n\n## Fleet core:\n\n**Fleet version** (Head to the \"My account\" page in the Fleet UI or run `fleetctl version`):\n\n**Web browser** _(e.g. Chrome 88.0.4324)_: \n\n### Prerequisites\n\n1. `fleetctl preview` is set up and running the desired test version using [`--tag` parameters.](https://fleetdm.com/handbook/engineering#run-fleet-locally-for-qa-purposes)\n2. Unless you are explicitly testing older browser versions, browser is up to date.\n3. Certificate \u0026 flagfile are in place to create new host.\n4. In your browser, clear local storage using devtools.\n\n### Orchestration\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eUpdate flow\u003c/td\u003e\u003ctd\u003e\n\n1. remove all fleet processes/agents/etc using `fleetctl preview reset` for a clean slate\n2. run `fleetctl preview` with no tag for latest stable\n3. create a host/query to later confirm upgrade with\n4. STOP fleet-preview-server instances in containers/apps on Docker\n5. run `fleetctl preview` with appropriate testing tag \u003c/td\u003e\u003ctd\u003eAll previously created hosts/queries are verified to still exist\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eLogin flow\u003c/td\u003e\u003ctd\u003e\n\n1. navigate to the login page and attempt to login with both valid and invalid credentials to verify some combination of expected results.\n2. navigate to the login page and attempt to login with both valid and invalid sso credentials to verify expected results.\n\u003c/td\u003e\u003ctd\u003e\n\n1. text fields prompt when blank\n2. correct error message is \"authentication failed\"\n3. forget password link prompts for email\n4. valid credentials result in a successful login.\n5. valid sso credentials result in a successful login\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n\n1. Packs successfully run on host machines after migrations \n2. New Packs can be created\n3. Packs can be edited and deleted\n4. Packs results information is logged\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eLog destination flow\u003c/td\u003e\u003ctd\u003eVerify log destination for software, query, policy, and packs.\u003c/td\u003e\u003ctd\u003e\n\n1. Software, query, policy, and packs logs are successfully sent to external log destinations\n2. Software, query, policy, and packs logs are successfully sent to Filesystem log destinations\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### MDM\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMDM enrollment flow\u003c/td\u003e\u003ctd\u003eVerify MDM enrollments, run MDM commands\u003c/td\u003e\u003ctd\u003e\n  \n1. Erase an ADE-eligible macOS host and verify able to complete automated enrollment flow.\n2. With Windows MDM turned On, enroll a Windows host and verify MDM is turned On for the host.\n3. Verify able to run MDM commands on both macOS and Windows hosts from the CLI.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMDM migration flow\u003c/td\u003e\u003ctd\u003eVerify MDM migration for ADE and non-ADE hosts\u003c/td\u003e\u003ctd\u003e\n  \n1. Turn off MDM on an ADE-eligible macOS host and verify that the native, \"Device Enrollment\" macOS notification appears.\n2. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n3. Turn off MDM on a non ADE-eligible macOS host.\n4. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n5. Verify Windows host migrates from 3rd party MDM to Fleet when automatic migration is turned on.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify Profiles upload/download/delete (macOS \u0026 Windows).\n2. Verify Profiles are delivered to host and applied. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSetup experience\u003c/td\u003e\u003ctd\u003eVerify macOS Setup experience\u003c/td\u003e\u003ctd\u003e\n\n1. Configure End user authentication.\n3. Upload a Bootstrap package.\n4. Add software (FMA, VPP, \u0026 Custom pkg)\n5. Add a script\n6. Enroll an ADE-eligible macOS host and verify successful authentication.\n7. Verify Bootstrap package is delivered.\n8. Verify SwiftDialogue window displays.\n9. Verify software installs and script runs.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS updates\u003c/td\u003e\u003ctd\u003eVerify OS updates flow\u003c/td\u003e\u003ctd\u003e\n\n1. Configure OS updates (macOS \u0026 Windows).\n2. Verify on-device that Nudge prompt appears (macOS 13).\n3. Verify enforce minimumOS occurs during enrollment (macOS 14+).\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eiOS/iPadOS\u003c/td\u003e\u003ctd\u003eVerify enrollment, profiles, \u0026 software installs\u003c/td\u003e\u003ctd\u003e\n\n1. Verify ADE enrollment.\n2. Verify OTA enrollment.\n3. Verify Profiles are delivered to host and applied.\n4. Verify VPP apps install \u0026 display correctly in Activity feed.\n5. Verify `Turn Off MDM` for BYOD \u0026 ADE hosts.\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eLock \u0026 Wipe\u003c/td\u003e\u003ctd\u003eVerify hosts can be locked \u0026 wiped\u003c/td\u003e\u003ctd\u003e\n\n1. Verify locking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n2. Verify unlocking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n3. Verify wiping a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n4. Verify wiping and locking hosts using `fleetctl` (macOS, Windows, \u0026 Linux)\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eCertificates Upload\u003c/td\u003e\u003ctd\u003eAPNs cert and ABM token renewal workflow\u003c/td\u003e\u003ctd\u003e\n\n1. Renew APNs Certificate.\n2. Renew ABM Token.\n3. Ensure ADE hosts can enroll.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n\n### Software\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eCreate, edit, run, and delete queries. \u003c/td\u003e\u003ctd\u003e\n\n1. permissions regarding creating/editing/deleting queries are up to date with documentation\n2. syntax errors result in error messaging\n3. queries can be run manually \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added and removed following modal instructions using your own device.\u003c/td\u003e\u003ctd\u003e\n\n1. Host is added via command line\n2. Host serial number and date added are accurate\n3. Host is not visible after it is deleted\n4. Warning and informational modals show when expected and make sense\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\n2. The \"My device\" page is populated correctly and as expected. \n3. Styling and padding appears correct.\n \n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script library and execution\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to run a script on all host types from CLI.\n2. Verify scripts library upload/download/delete.\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\n4. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\n5. Verify UI loading state and statuses for scripts.\n8. Disable scripts globally and verify unable to run.\n9. Verify scripts display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software library and install / download\u003c/td\u003e\u003ctd\u003e\n\n1. Verify software library upload/download/delete.\n2. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\n3. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\n4. Verify UI loading state and statuses for installing software.\n7. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eMigration Test\u003c/td\u003e\u003ctd\u003eVerify Fleet can migrate to the next version with no issues.\u003c/td\u003e\u003ctd\u003e\n\nUsing the github action https://github.com/fleetdm/fleet/actions/workflows/db-upgrade-test.yml\n1. Using the most recent stable version of Fleet and `main`, click `Run workflow`\n2. Enter the Docker tag of Fleet starting version, e.g. 'v4.64.2'\n3. Enter the Docker tag of Fleet version to upgrade to, e.g. 'rc-minor-fleet-v4.65.0'\n4. Click `Run workflow`.\n5. Action should complete successfully.\n\u003c/td\u003e\u003ctd\u003epass\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### All Product Groups\n\u003ctable\u003e\n \u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eRelease blockers\u003c/td\u003e\u003ctd\u003eVerify there are no outstanding release blocking tickets.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this](https://github.com/fleetdm/fleet/labels/~release%20blocker) filter to view all open `~release blocker` tickets.\n2. If any are found raise an alarm in the `#help-engineering` and `#g-mdm` (or `#g-endpoint-ops`)  channels.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\n\u003ctr\u003e\u003ctd\u003eLoad tests - minor releases only unless otherwise specified\u003c/td\u003e\u003ctd\u003eVerify all load test metrics are within acceptable range on final build of RC.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this Google doc](https://docs.google.com/document/d/1V6QtFzcGDsLnn2PIvGin74DAxdAN_3likjxSssOMMQI/edit?tab=t.0#heading=h.15acjob4ji20) to review load test key metrics and checks.\n2. After all expected changes have been merged to the RC branch, two load tests will need to be run - a new instance with no data, and a migrated instance.\n3. For the new instance with no data, set up a load test environment using the RC branch and allow it at least 24hrs of run time.\n4. For the migrated instance, set up a load test environment on the previous minor release branch. Once the environment has been set up and stabilized, follow the instructions in [Deploying code changes to fleet](https://github.com/fleetdm/fleet/blob/main/infrastructure/loadtesting/terraform/readme.md#deploying-code-changes-to-fleet) to migrate to the RC branch. Monitor the metrics post-migration to determine if any performance issues arise.\n5. Record metrics in [this spreadsheet](https://docs.google.com/spreadsheets/d/1FOF0ykFVoZ7DJSTfrveip0olfyRQsY9oT1uXCCZmuKc/edit?usp=drive_link) for the two load test runs. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e \n\u003c/table\u003e\n\n### Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:\n\n\u003cbr\u003e\n\u003cbr\u003e\n\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgc-TB0",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "```\nFLEET_VERSION_A=v4.71.1 FLEET_VERSION_B=rc-minor-fleet-v4.72.0 go test -v\n--- PASS: TestUpgradeAToB (57.07s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t57.084s\n```\n\n```\nFLEET_VERSION_A=v4.71.0 FLEET_VERSION_B=rc-minor-fleet-v4.72.0 go test -v\n--- PASS: TestUpgradeAToB (52.56s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t52.577s\n```\n\n```\nFLEET_VERSION_A=v4.70.0 FLEET_VERSION_B=rc-minor-fleet-v4.72.0 go test -v\n--- PASS: TestUpgradeAToB (112.70s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t112.715s\n```\n\n```\nFLEET_VERSION_A=v4.69.0 FLEET_VERSION_B=rc-minor-fleet-v4.72.0 go test -v\n--- PASS: TestUpgradeAToB (68.57s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t68.590s\n```"
+          }
+        ],
+        "issueNumber": 31274,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 0,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCluM",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@iansltx is going to spec out this ticket since I'm swamped with new 4.72 tickets"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "^ Also I'm not gonna take a capacity hit for this because the extent of my involvement is filling out the issue template and putting it up for estimation. We talked through this and dropped scope a bit during USR today."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Open instructions,\nLike a morning sun, guide us,\nKnowledge blooms, self-served."
+          }
+        ],
+        "issueNumber": 31316,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdUxWw",
+        "status": "🥚 Ready",
+        "issueNumber": 31571,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdXw9w",
+        "title": "Software status in list doesn't match modal if software previously reported as failed to install but actually installed, then failed to uninstall but reported success",
+        "issueNumber": 31663,
+        "changeType": "removed"
       }
     ]
   }
