@@ -540,7 +540,7 @@
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/31319"
         },
-        "estimate": 2,
+        "estimate": 3,
         "id": "PVTI_lADOBDAnic4A4BEUzgdCnk8",
         "labels": [
           ":release",
@@ -3515,7 +3515,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "GitOps software/setup experience restructure: `fleetctl generate-gitops` changes",
         "comments": [
           {
@@ -8337,7 +8337,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "✅ Ready for release",
         "title": "Apps that were not installed through Fleet but have a matching VPP app in Self-service show \"Fleet is installing or will install...\" message in \"Installed\" modal",
         "comments": [
           {
@@ -10274,7 +10274,7 @@
           "iansltx"
         ],
         "content": {
-          "body": "**Fleet version**: 4.72\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\u003cimg width=\"1346\" height=\"686\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/27aa322f-37ac-438b-8e96-1f4a56f2509e\" /\u003e\n\n### 🛠️ To fix\n\nOverride install statuses in the correct order (and update JS tests to repro this issue)\n\nProduct designer: @iansltx\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Add a tar.gz file to a team's library, made available for Self Service. Include install and uninstall scripts.\nFor a physical linux box you can use the go tar.gz file here: https://drive.google.com/file/d/15uKzk2J7IYH7MNYhBHdPAKP_uvVXSx1Z/view?usp=sharing\nFor a linux VM on Apple Silicon you can use the go tar.gz file here: https://drive.google.com/file/d/1ktV0lZH88Q7lqdFUIo3YCt_mgcql1NUN/view?usp=sharing\nInstall script is: `mv $INSTALLER_PATH/* /usr/local`\nUninstall script is: `rm -rf /usr/local/go`\n2. On enrolled linux host, open Self service and click \"Install\"\n3. Wait for install to complete, refetch to complete, then hover over \"Installed\" status\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "body": "**Fleet version**: 4.72\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\n\u003cimg width=\"720\" height=\"592\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3fb10186-89d6-4b2f-9d51-de7941e432a2\" /\u003e\n\n### 🛠️ To fix\n\nOverride install statuses in the correct order (and update JS tests to repro this issue)\n\nProduct designer: @iansltx\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Add a tar.gz file to a team's library, made available for Self Service. Include install and uninstall scripts.\nFor a physical linux box you can use the go tar.gz file here: https://drive.google.com/file/d/15uKzk2J7IYH7MNYhBHdPAKP_uvVXSx1Z/view?usp=sharing\nFor a linux VM on Apple Silicon you can use the go tar.gz file here: https://drive.google.com/file/d/1ktV0lZH88Q7lqdFUIo3YCt_mgcql1NUN/view?usp=sharing\nInstall script is: `mv $INSTALLER_PATH/* /usr/local`\nUninstall script is: `rm -rf /usr/local/go`\n2. On enrolled linux host, open Self service and click \"Install\"\n3. Wait for install to complete, refetch to complete, then hover over \"Installed\" status\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nI used a different tar.gz when reproducing to gather additional info, seems this is only happening for the first install.\nAPI Response:\n```\n    {\n      \"id\": 3875,\n      \"name\": \"gimp-3.0.0.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"gimp-3.0.0.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"e48dbdaf-dde1-44cb-b8c2-6f29839eeaec\",\n          \"installed_at\": \"2025-08-11T14:28:44.201641Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
           "number": 31721,
           "repository": "fleetdm/fleet",
           "title": "tar.gz installs show in Self service as fetching inventory after install and refetch has already happened",
@@ -10295,7 +10295,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "Waiting",
+        "status": "🥚 Ready",
         "title": "tar.gz installs show in Self service as fetching inventory after install and refetch has already happened",
         "issueNumber": 31721,
         "changeType": "added"
@@ -10934,6 +10934,114 @@
         "title": "🪲macOS apps with duplicate bundleIDs do not appear in Fleet",
         "issueNumber": 28788,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-12T07:06:41.986150834Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @lukeheath marking this story as `P2`. The current behavior makes it look like Fleet does not understand how people actually use CVSS.  But now we do."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "TODO RAchel: first draft of test plan"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Just filled in this story checklist so it's ready for User Story Review (credit to @RachelElysia for the test plan)."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "assigning to @RachelElysia to estimate"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@lukeheath needs your estimate here and we can move it to the software board"
+          },
+          {
+            "author": {
+              "login": "jacobshandling"
+            },
+            "body": "For everyone's info, I was asked to estimate this this morning and estimated it at a 4. Looks like changing the project removed the estimate. @sharon-fdm @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "oh no that's my bad.  we discussed in sprint kickoff review that Luke is going to take this one @jacobshandling "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "I'll assign a 4 here and move it to the software board for Luke"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath Might be minimal extra work to solve #30524 alongside this since filter + sort seems like it would be sufficient there. Maybe dev this with that request in mind and check with the customer to see whether that solves their issue?"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "removing milestone.  will not get to this story this sprint"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath Can you create Sprint 45 and move this into it?"
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@RachelElysia Thanks for taking this. I thought I'd be able to squeeze it in, but wasn't able to."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes** (In Progress)\n\n- [x] Min max is present and new help text is present\n- [x] Min max is enabled only if vuln software toggle is enabled\n- [x] Defaults to \"Any severity\"\n- [x] If a user clicks on a given severity like \"Critical severity\", the min and max will be auto populated\n- [x] If a user clicks on \"Any severity\", the min and max are cleared\n- [x] If a user clicks on \"Custom severity\", the min and max do not change\n- [x] If a user types in a custom min or custom max, the dropdown will change to \"Custom severity\"\n- [x] If a user clears both custom min/max, the dropdown will change to \"Any severity\" but returns to \"Custom severity\" if they start typing\n- [x] If the user hits apply with no severity entered, it will apply any severity\n- [x] If the user clicks apply with only a min entered, it will only apply the min (e.g. \u003e=4.0)\n- [x] If the user clicks apply with only a max entered, it will only apply the max (e.g. \u003c= 8.0)\n- [x] If the user types in an invalid number into either min/max (e.g. 4.11 or -3), the in label error states it must be a number between 0-10 with an increment of 0.1\n- [x] 12b. The user cannot type in string as the input is limited to type number\n- [x] If the user types in a min larger than the max, the Apply button is disabled with a tooltip stating that the min can not be greater than the max.\n- [x] By clicking \"Apply\", the severity ranges will filter results to only vulnerable software with severity scores in the selected range\n- [x] Clearing the filter should show all software\n\n@RachelElysia Questions:\n❓ The Figma appears to show placeholder text but I don't see any in the UI - should that be there?\n❓ The modal accepts 010 as a number - should it?\n❓ If I enter 10 in the max, it clears it out on save - should it?\n❓ If I set the filter to \"Critical Severity\" it changes it to \"Custom Severity\" on save and clears out the max value - should it?"
+          }
+        ],
+        "issueNumber": 30248,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoeo",
+        "status": "🦤 ‎In review",
+        "issueNumber": 25636,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgc-TB0",
+        "status": "✅ Ready for release",
+        "issueNumber": 31274,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdg7ps",
+        "status": "🐣 In progress",
+        "issueNumber": 31474,
+        "changeType": "modified"
       }
     ]
   }
