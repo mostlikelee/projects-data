@@ -3188,7 +3188,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Linux Vulns: Frontend",
         "comments": [
           {
@@ -3353,7 +3353,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "GitOps: Setup experience, custom targets (labels), self-service, \u0026 categories for all software in team YAML",
         "comments": [
           {
@@ -3853,7 +3853,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Software \u003e OS: Surface Linux kernel vulnerabilities",
         "comments": [
           {
@@ -3925,7 +3925,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Linux Vulns: Optimization",
         "comments": [
           {
@@ -4071,7 +4071,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "**Fleet version**: \u003e= 4.67.3\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nSee #28626. We've avoided the nil pointer panic (via #28674) but there's still probably an underlying issue for getting us to the warning point in the first place.\n\n### 🧑‍💻  Steps to reproduce\n\nTODO; primary effort for this ticket will be finding a valid repro scenario, and confirmaing expected behavior on software ingest for that repro behavior.\n\nTo see \n```\nlevel=warn msg=\"updateModifiedHostSoftwareDB: last opened at is nil for new software, but not for current software\" \n```\nSteps to reproduce are:\n\n1. Install software via fleet that does not automatically open after install (do not use CloudFlare Warp or TeamViewer), and open the software after install, then close it.\n2. Refetch host vitals\n3. Confirm \"Last used\" time is shown on Host \u003e Software \u003e Inventory tab\n4. Reinstall or Update the software via Fleet and make sure it doesn't open on its own. Do not open it. \n5. Refetch completes automatically after installation (or refetch manually)\n6. \"Last used\" time is cleared out on Host \u003e Software \u003eInventory tab\n7. Warning is shown in the log\n\n\n### 🕯️ More info\n\nThusfar we have only been able to reproduce this issue in customer environments, so what we probably need is enough logging to determine which host(s) have this issue, and then both snapshots of current host software and incoming detail queries to reproduce the broad issue.\n\n### 🛠️ To fix\n\nIt sounds like this is a little bit open pending the TODO in steps to reproduce and that the initial task will be that TODO task.",
+          "body": "**Fleet version**: \u003e= 4.67.3\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nSee #28626. We've avoided the nil pointer panic (via #28674) but there's still probably an underlying issue for getting us to the warning point in the first place.\n\n### 🧑‍💻  Steps to reproduce\n\nTODO; primary effort for this ticket will be finding a valid repro scenario, and confirmaing expected behavior on software ingest for that repro behavior.\n\nTo see \n```\nlevel=warn msg=\"updateModifiedHostSoftwareDB: last opened at is nil for new software, but not for current software\" \n```\nSteps to reproduce are:\n\n1. Install software via fleet that does not automatically open after install (do not use CloudFlare Warp or TeamViewer), and open the software after install, then close it.\n2. Refetch host vitals\n3. Confirm \"Last used\" time is shown on Host \u003e Software \u003e Inventory tab\n4. Reinstall or Update the software via Fleet and make sure it doesn't open on its own. Do not open it. \n5. Refetch completes automatically after installation (or refetch manually)\n6. \"Last used\" time is cleared out on Host \u003e Software \u003eInventory tab\n7. Warning is shown in the log\n\n\n### 🕯️ More info\n\nThusfar we have only been able to reproduce this issue in customer environments, so what we probably need is enough logging to determine which host(s) have this issue, and then both snapshots of current host software and incoming detail queries to reproduce the broad issue.\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\n- Drop the level of the last opened time exists -\u003e null swap warning (either remove entirely, keep as debug, or only log for when the source is something other than apps?)\n- Tooltip on macOS hosts to indicate that new versions reset last opened time\n  - ...\n- Tooltip on Windows/Linux hosts to indicate that new versions do not reset last opened time\n  - ...\n- TODO: Document the above…somewhere other than the UI, probably at least on the API endpoints since this is a significant nuance.",
           "number": 29061,
           "repository": "fleetdm/fleet",
           "title": "🪲Warning state on last-opened time calculation when changing the name of an existing software entry",
@@ -4240,7 +4240,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Linux icon showing in software inventory for macOS native app",
         "comments": [
           {
@@ -5971,7 +5971,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "UI - Background page scrolls while editing Policy automations.",
         "comments": [
           {
@@ -10295,7 +10295,7 @@
           "title": "4.72.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "tar.gz installs show in Self service as fetching inventory after install and refetch has already happened",
         "issueNumber": 31721,
         "changeType": "added"
@@ -11767,7 +11767,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "Software inventory: See last time Linux software was used",
         "comments": [
           {
@@ -12698,6 +12698,114 @@
         "status": "✔️Awaiting QA",
         "issueNumber": 27902,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-15T07:05:52.626394169Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdbCMM",
+        "labels": [
+          "bug",
+          "~backend",
+          ":release",
+          ":incoming",
+          "#g-software"
+        ],
+        "status": "Waiting",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Reassigning because I'm right in the middle of the interrupt work swimlane :("
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia thanks for noticing that _uninstall_ is the tooltip being shown, so we're going to want an API response for this one to troubleshoot further. Given that @jmwatts is out and to avoid a repro rabbit trail, going to make the call of not blocking the release for this; we'll troubleshoot and resolve in 4.73."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "More info:\nrecently_uninstalled UI status would only show if `newerDate === lastUninstallDate` which is super bizarre in this case and would require repro with API responses"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Updated ticket to show install UI status\n"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts / @iansltx I might need more help reproducing this, maybe in a call?\n\nBasically, something in `getUiStatus` helper function is pointing this installer to the wrong ui_status\n\nHere's the code:\n```\nexport const getUiStatus = (\n  software: IHostSoftware,\n  isHostOnline: boolean,\n  hostSoftwareUpdatedAt?: string | null\n): IHostSoftwareUiStatus =\u003e {\n  const { status, installed_versions } = software;\n\n  const lastInstallDate = getLastInstall(software)?.installed_at;\n  const lastUninstallDate = getLastUninstall(software)?.uninstalled_at;\n  const installerVersion = getInstallerVersion(software);\n\n  // 1. Failed install states\n  if (status === \"failed_install\") {\n    if (\n      installerVersion \u0026\u0026\n      installed_versions \u0026\u0026\n      installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      )\n    ) {\n      return \"failed_install_update_available\";\n    }\n    return \"failed_install\";\n  }\n\n  // 2. Failed uninstall states\n  if (status === \"failed_uninstall\") {\n    if (\n      installerVersion \u0026\u0026\n      installed_versions \u0026\u0026\n      installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      )\n    ) {\n      return \"failed_uninstall_update_available\";\n    }\n    return \"failed_uninstall\";\n  }\n\n  // 3. Pending install/update\n  if (status === \"pending_install\") {\n    if (\n      installed_versions \u0026\u0026\n      installed_versions.length \u003e 0 \u0026\u0026\n      installerVersion\n    ) {\n      const isUpdate = installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      );\n      if (isUpdate) {\n        return isHostOnline ? \"updating\" : \"pending_update\";\n      }\n    }\n    return isHostOnline ? \"installing\" : \"pending_install\";\n  }\n\n  // 4. Pending uninstall\n  if (status === \"pending_uninstall\") {\n    return isHostOnline ? \"uninstalling\" : \"pending_uninstall\";\n  }\n\n  // **Recently_uninstalled check comes BEFORE update_available**\n  if (software.status === null \u0026\u0026 lastUninstallDate \u0026\u0026 hostSoftwareUpdatedAt) {\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastUninstallDate);\n    if (newerDate === lastUninstallDate) {\n      return \"recently_uninstalled\";\n    }\n  }\n\n  // 5. Update available and recently updated\n  if (\n    installerVersion \u0026\u0026\n    installed_versions \u0026\u0026\n    installed_versions.some(\n      (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n    )\n  ) {\n    if (!lastInstallDate) {\n      return \"update_available\";\n    }\n    const newerDate = hostSoftwareUpdatedAt\n      ? getNewerDate(hostSoftwareUpdatedAt, lastInstallDate)\n      : lastInstallDate;\n    return newerDate === lastInstallDate\n      ? \"recently_updated\"\n      : \"update_available\";\n  }\n\n  // 6. Recently installed (not an update)\n  if (\n    software.status === \"installed\" \u0026\u0026\n    lastInstallDate \u0026\u0026\n    hostSoftwareUpdatedAt\n  ) {\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastInstallDate);\n    if (newerDate === lastInstallDate) {\n      return \"recently_installed\";\n    }\n  }\n\n  // 7. Tarballs edge case\n  if (software.source === \"tgz_packages\" \u0026\u0026 software.status === \"installed\") {\n    return \"installed\";\n  }\n\n  // 8. Default to installed or uninstalled based on installed_versions\n  if (installed_versions \u0026\u0026 installed_versions.length \u003e 0) return \"installed\";\n\n  return \"uninstalled\";\n};\n```\n\nSomehow it's passing both if statements in line 6 where it should be failing at least one of them:\nEither should fail:\n```\n    software.status === \"installed\" \u0026\u0026\n    lastInstallDate \u0026\u0026\n    hostSoftwareUpdatedAt\n```\n\nor should fail \n```\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastInstallDate);\n    if (newerDate === lastInstallDate) {\n```\n\nbut I can't tell which or why without help repro in real time.\n\nHere's a diagram of what we want fixed (crossed out is current behavior, circled is wanted behavior):\n\n\u003cimg width=\"396\" height=\"703\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/de100dc2-cee1-4260-bd33-9ff8ffc5cc61\" /\u003e\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "2nd to last API response:\n```\n{\n  \"host\": {\n    \"created_at\": \"2025-08-14T15:02:47Z\",\n    \"updated_at\": \"2025-08-14T20:55:26Z\",\n    \"software_updated_at\": \"2025-08-14T20:49:24Z\",\n    \"id\": 46,\n    \"detail_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"label_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"policy_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"last_enrolled_at\": \"2025-08-14T15:02:47Z\",\n    \"seen_time\": \"2025-08-14T20:55:31Z\",\n    \"refetch_requested\": true,\n    \"hostname\": \"nimda-Vivobook\",\n    \"uuid\": \"18005795-ed98-4640-89fe-f123c7dc0919\",\n    \"platform\": \"ubuntu\",\n    \"osquery_version\": \"5.19.0\",\n    \"orbit_version\": \"25.8.8984\",\n    \"fleet_desktop_version\": \"1.45.1\",\n    \"scripts_enabled\": true,\n    \"os_version\": \"Ubuntu 24.04.2 LTS\",\n    \"build\": \"\",\n    \"platform_like\": \"debian\",\n    \"code_name\": \"noble\",\n    \"uptime\": 283194000000000,\n    \"memory\": 16378298368,\n    \"cpu_type\": \"x86_64\",\n    \"cpu_subtype\": \"186\",\n    \"cpu_brand\": \"13th Gen Intel(R) Core(TM) i3-1315U\",\n    \"cpu_physical_cores\": 6,\n    \"cpu_logical_cores\": 8,\n    \"hardware_vendor\": \"ASUSTeK COMPUTER INC.\",\n    \"hardware_model\": \"Vivobook_ASUSLaptop X1404VA_X1404VA\",\n    \"hardware_version\": \"1.0\",\n    \"hardware_serial\": \"T2N0CX02929507A\",\n    \"computer_name\": \"nimda-Vivobook\",\n    \"primary_mac\": \"ec:8e:77:85:3b:c6\",\n    \"distributed_interval\": 10,\n    \"config_tls_refresh\": 60,\n    \"logger_tls_period\": 4,\n    \"team_id\": null,\n    \"pack_stats\": null,\n    \"team_name\": null,\n    \"users\": [\n      {\n        \"uid\": 0,\n        \"username\": \"root\",\n        \"type\": \"\",\n        \"groupname\": \"root\",\n        \"shell\": \"/bin/bash\"\n      },\n      {\n        \"uid\": 1000,\n        \"username\": \"nimda\",\n        \"type\": \"\",\n        \"groupname\": \"nimda\",\n        \"shell\": \"/bin/bash\"\n      }\n    ],\n    \"gigs_disk_space_available\": 938.2,\n    \"percent_disk_space_available\": 93,\n    \"gigs_total_disk_space\": 1006.45,\n    \"issues\": {\n      \"failing_policies_count\": 0,\n      \"critical_vulnerabilities_count\": 0,\n      \"total_issues_count\": 0\n    },\n    \"mdm\": {\n      \"enrollment_status\": null,\n      \"dep_profile_error\": false,\n      \"server_url\": null,\n      \"name\": \"\",\n      \"encryption_key_available\": false,\n      \"encryption_key_archived\": false,\n      \"os_settings\": {\n        \"disk_encryption\": {\n          \"status\": null,\n          \"detail\": \"\"\n        }\n      },\n      \"profiles\": null,\n      \"macos_setup\": {\n        \"bootstrap_package_status\": \"\",\n        \"detail\": \"\",\n        \"bootstrap_package_name\": \"\"\n      },\n      \"device_status\": \"unlocked\",\n      \"pending_action\": \"\",\n      \"connected_to_fleet\": false\n    },\n    \"refetch_critical_queries_until\": null,\n    \"dep_assigned_to_fleet\": false,\n    \"last_restarted_at\": \"2025-08-11T14:09:31Z\",\n    \"policies\": [],\n    \"labels\": [\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 9,\n        \"author_id\": null,\n        \"name\": \"All Hosts\",\n        \"description\": \"All hosts which have enrolled in Fleet\",\n        \"query\": \"select 1;\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 11,\n        \"author_id\": null,\n        \"name\": \"Ubuntu Linux\",\n        \"description\": \"All Ubuntu hosts\",\n        \"query\": \"select 1 from os_version where platform = 'ubuntu';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 15,\n        \"author_id\": null,\n        \"name\": \"All Linux\",\n        \"description\": \"All Linux distributions\",\n        \"query\": \"SELECT 1 FROM osquery_info WHERE build_platform LIKE '%ubuntu%' OR build_distro LIKE '%centos%';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      }\n    ],\n    \"packs\": [\n      {\n        \"created_at\": \"2025-03-06T19:03:44Z\",\n        \"updated_at\": \"2025-03-06T19:03:44Z\",\n        \"id\": 1,\n        \"name\": \"something\",\n        \"disabled\": false,\n        \"type\": null,\n        \"labels\": null,\n        \"label_ids\": null,\n        \"hosts\": null,\n        \"host_ids\": null,\n        \"teams\": null,\n        \"team_ids\": null\n      }\n    ],\n    \"batteries\": null,\n    \"last_mdm_enrolled_at\": null,\n    \"last_mdm_checked_in_at\": null,\n    \"status\": \"online\",\n    \"display_text\": \"nimda-Vivobook\",\n    \"display_name\": \"nimda-Vivobook\"\n  },\n  \"self_service\": true,\n  \"org_logo_url\": \"\",\n  \"org_logo_url_light_background\": \"\",\n  \"org_contact_url\": \"https://fleetdm.com/company/contact\",\n  \"license\": {\n    \"tier\": \"premium\",\n    \"organization\": \"Fleet Device Management Inc.\",\n    \"device_count\": 100,\n    \"expiration\": \"2025-12-30T18:00:00-06:00\",\n    \"note\": \"Created with Fleet License key dispenser\",\n    \"managed_cloud\": false\n  },\n  \"global_config\": {\n    \"mdm\": {\n      \"enabled_and_configured\": true\n    },\n    \"features\": {\n      \"enable_software_inventory\": true\n    }\n  }\n}\n\n```\nResponse after refetch completed:\n```\n{\n  \"host\": {\n    \"created_at\": \"2025-08-14T15:02:47Z\",\n    \"updated_at\": \"2025-08-14T20:56:05Z\",\n    \"software_updated_at\": \"2025-08-14T20:49:24Z\",\n    \"id\": 46,\n    \"detail_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"label_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"policy_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"last_enrolled_at\": \"2025-08-14T15:02:47Z\",\n    \"seen_time\": \"2025-08-14T20:55:31Z\",\n    \"refetch_requested\": false,\n    \"hostname\": \"nimda-Vivobook\",\n    \"uuid\": \"18005795-ed98-4640-89fe-f123c7dc0919\",\n    \"platform\": \"ubuntu\",\n    \"osquery_version\": \"5.19.0\",\n    \"orbit_version\": \"25.8.8984\",\n    \"fleet_desktop_version\": \"1.45.1\",\n    \"scripts_enabled\": true,\n    \"os_version\": \"Ubuntu 24.04.2 LTS\",\n    \"build\": \"\",\n    \"platform_like\": \"debian\",\n    \"code_name\": \"noble\",\n    \"uptime\": 283595000000000,\n    \"memory\": 16378298368,\n    \"cpu_type\": \"x86_64\",\n    \"cpu_subtype\": \"186\",\n    \"cpu_brand\": \"13th Gen Intel(R) Core(TM) i3-1315U\",\n    \"cpu_physical_cores\": 6,\n    \"cpu_logical_cores\": 8,\n    \"hardware_vendor\": \"ASUSTeK COMPUTER INC.\",\n    \"hardware_model\": \"Vivobook_ASUSLaptop X1404VA_X1404VA\",\n    \"hardware_version\": \"1.0\",\n    \"hardware_serial\": \"T2N0CX02929507A\",\n    \"computer_name\": \"nimda-Vivobook\",\n    \"primary_mac\": \"ec:8e:77:85:3b:c6\",\n    \"distributed_interval\": 10,\n    \"config_tls_refresh\": 60,\n    \"logger_tls_period\": 4,\n    \"team_id\": null,\n    \"pack_stats\": null,\n    \"team_name\": null,\n    \"users\": [\n      {\n        \"uid\": 0,\n        \"username\": \"root\",\n        \"type\": \"\",\n        \"groupname\": \"root\",\n        \"shell\": \"/bin/bash\"\n      },\n      {\n        \"uid\": 1000,\n        \"username\": \"nimda\",\n        \"type\": \"\",\n        \"groupname\": \"nimda\",\n        \"shell\": \"/bin/bash\"\n      }\n    ],\n    \"gigs_disk_space_available\": 937.9,\n    \"percent_disk_space_available\": 93,\n    \"gigs_total_disk_space\": 1006.45,\n    \"issues\": {\n      \"failing_policies_count\": 0,\n      \"critical_vulnerabilities_count\": 0,\n      \"total_issues_count\": 0\n    },\n    \"mdm\": {\n      \"enrollment_status\": null,\n      \"dep_profile_error\": false,\n      \"server_url\": null,\n      \"name\": \"\",\n      \"encryption_key_available\": false,\n      \"encryption_key_archived\": false,\n      \"os_settings\": {\n        \"disk_encryption\": {\n          \"status\": null,\n          \"detail\": \"\"\n        }\n      },\n      \"profiles\": null,\n      \"macos_setup\": {\n        \"bootstrap_package_status\": \"\",\n        \"detail\": \"\",\n        \"bootstrap_package_name\": \"\"\n      },\n      \"device_status\": \"unlocked\",\n      \"pending_action\": \"\",\n      \"connected_to_fleet\": false\n    },\n    \"refetch_critical_queries_until\": null,\n    \"dep_assigned_to_fleet\": false,\n    \"last_restarted_at\": \"2025-08-11T14:09:31Z\",\n    \"policies\": [],\n    \"labels\": [\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 9,\n        \"author_id\": null,\n        \"name\": \"All Hosts\",\n        \"description\": \"All hosts which have enrolled in Fleet\",\n        \"query\": \"select 1;\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 11,\n        \"author_id\": null,\n        \"name\": \"Ubuntu Linux\",\n        \"description\": \"All Ubuntu hosts\",\n        \"query\": \"select 1 from os_version where platform = 'ubuntu';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 15,\n        \"author_id\": null,\n        \"name\": \"All Linux\",\n        \"description\": \"All Linux distributions\",\n        \"query\": \"SELECT 1 FROM osquery_info WHERE build_platform LIKE '%ubuntu%' OR build_distro LIKE '%centos%';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      }\n    ],\n    \"packs\": [\n      {\n        \"created_at\": \"2025-03-06T19:03:44Z\",\n        \"updated_at\": \"2025-03-06T19:03:44Z\",\n        \"id\": 1,\n        \"name\": \"something\",\n        \"disabled\": false,\n        \"type\": null,\n        \"labels\": null,\n        \"label_ids\": null,\n        \"hosts\": null,\n        \"host_ids\": null,\n        \"teams\": null,\n        \"team_ids\": null\n      }\n    ],\n    \"batteries\": null,\n    \"last_mdm_enrolled_at\": null,\n    \"last_mdm_checked_in_at\": null,\n    \"status\": \"online\",\n    \"display_text\": \"nimda-Vivobook\",\n    \"display_name\": \"nimda-Vivobook\"\n  },\n  \"self_service\": true,\n  \"org_logo_url\": \"\",\n  \"org_logo_url_light_background\": \"\",\n  \"org_contact_url\": \"https://fleetdm.com/company/contact\",\n  \"license\": {\n    \"tier\": \"premium\",\n    \"organization\": \"Fleet Device Management Inc.\",\n    \"device_count\": 100,\n    \"expiration\": \"2025-12-30T18:00:00-06:00\",\n    \"note\": \"Created with Fleet License key dispenser\",\n    \"managed_cloud\": false\n  },\n  \"global_config\": {\n    \"mdm\": {\n      \"enabled_and_configured\": true\n    },\n    \"features\": {\n      \"enable_software_inventory\": true\n    }\n  }\n}\n\n```\n\nSoftware response after refetch:\n```\n {\n      \"id\": 3526,\n      \"name\": \"go1.24.3.linux-amd64.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"go1.24.3.linux-amd64.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"fdf7eeae-2df2-4694-95a1-e3665bfc0f6a\",\n          \"installed_at\": \"2025-08-14T20:55:26.882191Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Looks like this is a backend bug, specifically, `software_updated_at` on the host isn't getting updated after refetch:\n\n`\"software_updated_at\": \"2025-08-14T20:49:24Z\",`\nSo the frontend thinks the refetch hasn't happened because the API isn't returning an updated `software_updated_at` timestamp that's newer than the `last_install.installed_at`, which it has, but BE some reason didn't update `software_updated_at`"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica So, this appears to currently be expected behavior, but we need to figure out how to handle this. Bringing this to design review. Context:\n\n1. Currently, FE “recently installed” UX relies on software last updated\n2. This persists for tar.gz installers when they’re the only thing that changed on a host because tarballs don’t get inventoried even after the auto-refetch post-install\n3. Because there are no changes in inventory resulting from a tarball install, we hit the no-op branch when running software inventory even though we refetched successfully, which means that the software updated timestamp isn't touched\n4. If inventory doesn't change, we explicitly shouldn’t update software last updated timestamp per [this test](https://github.com/fleetdm/fleet/blob/250d26f53a0592f2748329f32c7df5e110ddc919/server/datastore/mysql/hosts_test.go#L3149-L3160)\n5. We _also_ no-op when last opened time on all inventoried software differs by less than a configured delta; the default is currently one hour despite changes in 4.71 for refetching vitals more often; if we touch the software last updated time on no-ops while retaining this delta we'll be shwoing software as recently updated when last opened times are stale\n6. Potential option: have FE look at details-updated timestamp rather than software-updated timestamp and keep existing behavior (don’t touch updated timestamp on no-op)\n\n[More context in Slack](https://fleetdm.slack.com/archives/C086V2QK76X/p1755195429676139)"
+          }
+        ],
+        "issueNumber": 31721,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "ksykulev"
+        ],
+        "content": {
+          "body": "**Fleet version**: 4.72\n**Web browser and operating system**: Version 139.0.7258.127\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nTwo versions installed of a software on a host. Both version are associated to the same software_title. The softwares are installed at different paths. One software has a last open time and the other software has a null last open time.\n```\n+--------+---------+------------+----------+---------------------+\n| id     | name    | version    | title_id | last_opened_at      |\n+--------+---------+------------+----------+---------------------+\n| 570198 | Spotify | 1.2.69.449 |     2839 | 2025-08-12 19:09:04 |\n| 573034 | Spotify | 1.2.70.409 |     2839 | NULL                |\n+--------+---------+------------+----------+---------------------+\n```\nAPI returns null last open time for both softwares\n\u003cimg width=\"1215\" height=\"900\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e1934b8a-bc61-44e9-8985-ebb6f1a01985\" /\u003e\n\n### 🛠️ To fix\nThe `ListHostSoftware` code properly fetches `last_opened_at` time for each software.\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L2424\nIt looks like something is going on here when assigning the `LastOpenTime` to the version\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L4196\n\n### 🧑‍💻  Steps to reproduce\n1. Install a software of version a\n2. Open that software\n3. Install a software of version b on a different path\n4. Run host vitals refresh\n5. open software inventory tab for the host\n\nThe key thing here to notice is the newer version does not have a last_open_time\n\n### 🕯️ More info _(optional)_\n\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "number": 31932,
+          "repository": "fleetdm/fleet",
+          "title": "last_opened_at not properly returned on host software inventory",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31932"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdqQM4",
+        "labels": [
+          "bug",
+          ":incoming",
+          "customer-numa",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "c0338111",
+          "startDate": "2025-07-28",
+          "title": "Sprint 45"
+        },
+        "status": "🦤 ‎In review",
+        "title": "last_opened_at not properly returned on host software inventory",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "adding `customer-numa` as they recently requested last_opened_at on windows"
+          }
+        ],
+        "issueNumber": 31932,
+        "changeType": "added"
       }
     ]
   }
