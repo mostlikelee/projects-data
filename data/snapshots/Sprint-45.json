@@ -558,7 +558,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Eng DRI: Custom Icons"
       },
       {
@@ -2814,7 +2814,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Self-service actions carryover"
       },
       {
@@ -3473,7 +3473,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "GitOps software/setup experience restructure: `fleetctl gitops` changes",
         "comments": [
           {
@@ -4071,10 +4071,10 @@
           "ksykulev"
         ],
         "content": {
-          "body": "**Fleet version**: \u003e= 4.67.3\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nSee #28626. We've avoided the nil pointer panic (via #28674) but there's still probably an underlying issue for getting us to the warning point in the first place.\n\n### 🧑‍💻  Steps to reproduce\n\nTODO; primary effort for this ticket will be finding a valid repro scenario, and confirmaing expected behavior on software ingest for that repro behavior.\n\nTo see \n```\nlevel=warn msg=\"updateModifiedHostSoftwareDB: last opened at is nil for new software, but not for current software\" \n```\nSteps to reproduce are:\n\n1. Install software via fleet that does not automatically open after install (do not use CloudFlare Warp or TeamViewer), and open the software after install, then close it.\n2. Refetch host vitals\n3. Confirm \"Last used\" time is shown on Host \u003e Software \u003e Inventory tab\n4. Reinstall or Update the software via Fleet and make sure it doesn't open on its own. Do not open it. \n5. Refetch completes automatically after installation (or refetch manually)\n6. \"Last used\" time is cleared out on Host \u003e Software \u003eInventory tab\n7. Warning is shown in the log\n\n\n### 🕯️ More info\n\nThusfar we have only been able to reproduce this issue in customer environments, so what we probably need is enough logging to determine which host(s) have this issue, and then both snapshots of current host software and incoming detail queries to reproduce the broad issue.\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\n- Drop the level of the last opened time exists -\u003e null swap warning (either remove entirely, keep as debug, or only log for when the source is something other than apps?)\n- Tooltip on macOS hosts to indicate that new versions reset last opened time\n  - ...\n- Tooltip on Windows/Linux hosts to indicate that new versions do not reset last opened time\n  - ...\n- TODO: Document the above…somewhere other than the UI, probably at least on the API endpoints since this is a significant nuance.",
+          "body": "**Fleet version**: \u003e= 4.67.3\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nSee #28626. We've avoided the nil pointer panic (via #28674) but there's still probably an underlying issue for getting us to the warning point in the first place.\n\n### 🧑‍💻  Steps to reproduce\n\nTODO; primary effort for this ticket will be finding a valid repro scenario, and confirmaing expected behavior on software ingest for that repro behavior.\n\nTo see \n```\nlevel=warn msg=\"updateModifiedHostSoftwareDB: last opened at is nil for new software, but not for current software\" \n```\nSteps to reproduce are:\n\n1. Install software via fleet that does not automatically open after install (do not use CloudFlare Warp or TeamViewer), and open the software after install, then close it.\n2. Refetch host vitals\n3. Confirm \"Last used\" time is shown on Host \u003e Software \u003e Inventory tab\n4. Reinstall or Update the software via Fleet and make sure it doesn't open on its own. Do not open it. \n5. Refetch completes automatically after installation (or refetch manually)\n6. \"Last used\" time is cleared out on Host \u003e Software \u003eInventory tab\n7. Warning is shown in the log\n\n\n### 🕯️ More info\n\nThusfar we have only been able to reproduce this issue in customer environments, so what we probably need is enough logging to determine which host(s) have this issue, and then both snapshots of current host software and incoming detail queries to reproduce the broad issue.\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\nUI changes [in Figma](https://www.figma.com/design/zST6dTwgH0B58BvtWEIzcQ/-29061%F0%9F%AA%B2Warning-state-on-last-opened-time-calculation-when-changing-the-name-of-an-existing-software?node-id=0-1\u0026t=0OUFyz3ugeIP80eA-1) plus changes below:\n\n- Drop the level of the last opened time exists -\u003e null swap warning (either remove entirely, keep as debug, or only log for when the source is something other than apps?)\n- API docs changes: #31958",
           "number": 29061,
           "repository": "fleetdm/fleet",
-          "title": "🪲Warning state on last-opened time calculation when changing the name of an existing software entry",
+          "title": "🪲Warning state on last-opened time calculation when changing the name of an existing software",
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/29061"
         },
@@ -10274,7 +10274,7 @@
           "iansltx"
         ],
         "content": {
-          "body": "**Fleet version**: 4.72\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\n\u003cimg width=\"720\" height=\"592\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3fb10186-89d6-4b2f-9d51-de7941e432a2\" /\u003e\n\n### 🛠️ To fix\n\nOverride install statuses in the correct order (and update JS tests to repro this issue)\n\nProduct designer: @iansltx\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Add a tar.gz file to a team's library, made available for Self Service. Include install and uninstall scripts.\nFor a physical linux box you can use the go tar.gz file here: https://drive.google.com/file/d/15uKzk2J7IYH7MNYhBHdPAKP_uvVXSx1Z/view?usp=sharing\nFor a linux VM on Apple Silicon you can use the go tar.gz file here: https://drive.google.com/file/d/1ktV0lZH88Q7lqdFUIo3YCt_mgcql1NUN/view?usp=sharing\nInstall script is: `mv $INSTALLER_PATH/* /usr/local`\nUninstall script is: `rm -rf /usr/local/go`\n2. On enrolled linux host, open Self service and click \"Install\"\n3. Wait for install to complete, refetch to complete, then hover over \"Installed\" status\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nI used a different tar.gz when reproducing to gather additional info, seems this is only happening for the first install.\nAPI Response:\n```\n    {\n      \"id\": 3875,\n      \"name\": \"gimp-3.0.0.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"gimp-3.0.0.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"e48dbdaf-dde1-44cb-b8c2-6f29839eeaec\",\n          \"installed_at\": \"2025-08-11T14:28:44.201641Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "body": "**Fleet version**: 4.72\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\n\u003cimg width=\"720\" height=\"592\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3fb10186-89d6-4b2f-9d51-de7941e432a2\" /\u003e\n\n### 🛠️ To fix\n\nOverride install statuses in the correct order (and update JS tests to repro this issue)\n\nProduct designer: @iansltx\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Add a tar.gz file to a team's library, made available for Self Service. Include install and uninstall scripts.\nFor a physical linux box you can use the go tar.gz file here: https://drive.google.com/file/d/15uKzk2J7IYH7MNYhBHdPAKP_uvVXSx1Z/view?usp=sharing\nFor a linux VM on Apple Silicon you can use the go tar.gz file here: https://drive.google.com/file/d/1ktV0lZH88Q7lqdFUIo3YCt_mgcql1NUN/view?usp=sharing\nInstall script is: `mv $INSTALLER_PATH/* /usr/local`\nUninstall script is: `rm -rf /usr/local/go`\n2. On enrolled linux host, open Self service and click \"Install\"\n3. Wait for install to complete, refetch to complete, then hover over \"Installed\" status\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nI used a different tar.gz when reproducing to gather additional info, seems this is only happening for the first install.\nAPI Response:\n```\n    {\n      \"id\": 3875,\n      \"name\": \"gimp-3.0.0.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"gimp-3.0.0.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"e48dbdaf-dde1-44cb-b8c2-6f29839eeaec\",\n          \"installed_at\": \"2025-08-11T14:28:44.201641Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n## 🛠️ To fix\n\nProduct designer @marko-lisica \n\nDo a special case for tarballs, so we don't have a state where we wait for refetch, as it's not in the inventory.\nIt should be possible to click on the status to see more information about script results in details modal.",
           "number": 31721,
           "repository": "fleetdm/fleet",
           "title": "tar.gz installs show in Self service as fetching inventory after install and refetch has already happened",
@@ -10801,7 +10801,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Error when viewing details for CVE-2025-36350 and CVE-2025-36357",
         "comments": [
           {
@@ -10837,7 +10837,7 @@
           "jahzielv"
         ],
         "content": {
-          "body": "**Fleet version**: 4.72.0\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nVulns that should show up for RHEL (CentOS and Fedora) OS' Linux kernels are not shown in Fleet.\n\n### 🛠️ To fix\n\u003c!-- Add the expected fix here. If you're not sure, leave this blank for product to specify.  --\u003e\nTBD\n\nProduct designer: _________________________\u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Enroll a RHEL (CentOS or Fedora) host in Fleet. \n2. Run vulns processing\n3. Note that the Linux kernel shows up as software for this host, but does not have any vulnerabilities.\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "body": "**Fleet version**: 4.72.0\n\n**Web browser and operating system**: \u003c!-- e.g. Chrome 88.0.4324 running on macOS --\u003e\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nVulns that should show up for RHEL (CentOS and Fedora) OS' Linux kernels are not shown in Fleet.\n\n### 🛠️ To fix\n\nHere's what we decided during #g-software design review on 2025-08-15:\n\n\u003cimg width=\"964\" height=\"581\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/71e39c76-c548-4038-baa5-183a15935d8a\" /\u003e\n\nIan: Also need \"Not supported\" on the OS details page. In the Kernels list. And the Software version detail page (kernel view):\n\n\u003cimg width=\"1142\" height=\"711\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1e52ee41-54ae-4f3f-a9ca-b875c59bca2d\" /\u003e\n\n\u003cimg width=\"611\" height=\"401\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/b296aa88-f525-4666-b1cc-b306212c03fb\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Enroll a RHEL (CentOS or Fedora) host in Fleet. \n2. Run vulns processing\n3. Note that the Linux kernel shows up as software for this host, but does not have any vulnerabilities.\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
           "number": 31495,
           "repository": "fleetdm/fleet",
           "title": "RHEL kernels don't have expected vulnerabilities in Fleet",
@@ -11735,7 +11735,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "Done",
         "title": "Admin initiated Windows Uninstall pending script returning 404 when host is offline",
         "comments": [
           {
@@ -12772,7 +12772,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "**Fleet version**: 4.72\n**Web browser and operating system**: Version 139.0.7258.127\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nTwo versions installed of a software on a host. Both version are associated to the same software_title. The softwares are installed at different paths. One software has a last open time and the other software has a null last open time.\n```\n+--------+---------+------------+----------+---------------------+\n| id     | name    | version    | title_id | last_opened_at      |\n+--------+---------+------------+----------+---------------------+\n| 570198 | Spotify | 1.2.69.449 |     2839 | 2025-08-12 19:09:04 |\n| 573034 | Spotify | 1.2.70.409 |     2839 | NULL                |\n+--------+---------+------------+----------+---------------------+\n```\nAPI returns null last open time for both softwares\n\u003cimg width=\"1215\" height=\"900\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e1934b8a-bc61-44e9-8985-ebb6f1a01985\" /\u003e\n\n### 🛠️ To fix\nThe `ListHostSoftware` code properly fetches `last_opened_at` time for each software.\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L2424\nIt looks like something is going on here when assigning the `LastOpenTime` to the version\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L4196\n\n### 🧑‍💻  Steps to reproduce\n1. Install a software of version a\n2. Open that software\n3. Install a software of version b on a different path\n4. Run host vitals refresh\n5. open software inventory tab for the host\n\nThe key thing here to notice is the newer version does not have a last_open_time\n\n### 🕯️ More info _(optional)_\n\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "body": "**Fleet version**: 4.72\n**Web browser and operating system**: Version 139.0.7258.127\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nTwo versions installed of a software on a host. Both version are associated to the same software_title. The softwares are installed at different paths. One software has a last open time and the other software has a null last open time.\n```\n+--------+---------+------------+----------+---------------------+\n| id     | name    | version    | title_id | last_opened_at      |\n+--------+---------+------------+----------+---------------------+\n| 570198 | Spotify | 1.2.69.449 |     2839 | 2025-08-12 19:09:04 |\n| 573034 | Spotify | 1.2.70.409 |     2839 | NULL                |\n+--------+---------+------------+----------+---------------------+\n```\nAPI returns null last open time for both softwares\n\u003cimg width=\"1215\" height=\"900\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e1934b8a-bc61-44e9-8985-ebb6f1a01985\" /\u003e\n\n### 🛠️ To fix\nThe `ListHostSoftware` code properly fetches `last_opened_at` time for each software.\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L2424\nIt looks like something is going on here when assigning the `LastOpenTime` to the version\nhttps://github.com/fleetdm/fleet/blob/main/server/datastore/mysql/software.go#L4196\n\n### 🧑‍💻  Steps to reproduce\n1. Install a software of version a\n2. Open that software\n3. Install a software of version b on a different path\n4. Run host vitals refresh\n5. open software inventory tab for the host\n\nIt's important to note that this only happens with there is 2+ version of the software title.\nThe other key thing here to note is that one version doesn't have a last_open_time.\n\nDepending on database order you may get no `last_opened_at` timestamp, or you may see them both have the same one. This is the bug.\n\n### 🕯️ More info _(optional)_\n\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
           "number": 31932,
           "repository": "fleetdm/fleet",
           "title": "last_opened_at not properly returned on host software inventory",
@@ -12794,7 +12794,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "last_opened_at not properly returned on host software inventory",
         "comments": [
           {
@@ -13258,6 +13258,338 @@
         "title": "Release QA: 4.71.1",
         "issueNumber": 31533,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-16T07:04:28.520058625Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk8Q",
+        "labels": [
+          "story",
+          ":release",
+          "customer-faltona",
+          "~pushed",
+          "customer-numa",
+          "#g-software",
+          "~context"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ksykulev Per comments on the original request from @noahtalerman and @mostlikelee, we want to:\n\n1. Add a `setup_experience` bool on the same level as `self_service` on custom packages, VPP apps, and FMAs, default `false`. Use that to determine whether software is included in setup experience.\n2. Stub the `macos_setup.software` key in GitOps; if it exists in a config, hard-fail with a link to docs for the new way of specifying setup experience.\n\nPlan will be that we _don't_ have a deprecation period on this to keep the code clean and avoid drawing out instances where we have to support both cases. Throwing a prompt at an LLM or two to see if we can make a bot do the work of moving YAML around (we might want a step 3 above of providing a tool to move YAML around)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Actually, scratch the LLM option for now, as the migration path is more nuanced. One nuance here is that if Team A and Team B both import a set of software, but Team A has a piece of software marked for setup experience and Team B does not, we now need two software files (one with the setup experience flag set, one without) where we previously had one.\n\n@allenhouchins Does this tweak (and its downstream requirements) make sense? In our case the Workstations team has setup experience software defined, but the corresponding canary team doesn't, so for our own setup we'd need to split package YAMLs.\n\nFor reference, here's the prompt I threw into JetBrains Junie, as well as Zed + Claude Sonnet 4:\n\n```\nIn `it-and-security`, for each app store app under `macos_setup.software`, remove it from there and add `setup_experience: true` under the corresponding entry in `app_store_apps` in the same team file. For each software package under `macos_setup.software`, remove it from there and add `setup_experience: true` inside the corresponding YAML file. Finally, remove the `macos_setup.software` key in the YAML file.\n```\n\nNote that the above does _not_ cover the package YAML splitting nuance, and my attempts at making this work with an open-weights model small enough to run in 64GB unified memory failed."
+          },
+          {
+            "author": {
+              "login": "allenhouchins"
+            },
+            "body": "I much prefer the current set up of adding it to the `software` block to basically say \"make this software available to this team\" then creating a secondary reference in `macos_setup.software` to say \"make this software available through this method\". For any software we expect all employees to use (\"critical\"), I want it to be installed via `macos_setup`, `auto-install` if its removed, and available in `self-service` for patching and easy re-installation/troubleshooting. I don't want to have to create multiple `software_title.yml` to achieve this. \n\nI'm already running into challenges with some of the recent changes we've made to software where I will have to [create multiple software entries if I want software scoped differently in teams](https://github.com/fleetdm/fleet/issues/29567) so anything we can do to handle additional logic behind the scenes and avoid having to create multiple software entries of the same software just to use it differently, will always get my vote.\n\n\u003e run in 64GB unified memory failed.\n\n64GB?! Yikes! "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e I much prefer the current set up of adding it to the software block to basically say \"make this software available to this team\" then creating a secondary reference in macos_setup.software to say \"make this software available through this method\".\n\n@allenhouchins interesting! I added you to Tuesday's #g-software design review to take a look at the current designs and discuss."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Decided to push this story (T-shirt size: S) out of the current design sprint because we won't have space to ship it in 4.72. Here's what we're shipping instead:\n\n- Fleet-maintained apps bugs\n- https://github.com/fleetdm/fleet/issues/30240\n- https://github.com/fleetdm/fleet/issues/27983"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica based on the late, significant scope reduction on #27983, there's now enough backend capacity in the 4.72 sprint to bring this in if it's ready in time, though based on the source of this original request the software GitOps update activity should be split into its own story, as the customer isn't asking for that, \"core to Fleet\" notwithstanding, as the activity work is likely the majority of the effort on this ticket if it's brought in. Splitting stories allows for easier parallelization, and allows for derisking both stories."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Based on linked issues, looks like we missed calling out some scope here. I'm assuming that allowing specifying macOS setup experience in `fleet_maintained_apps`, as well as in `app_store_apps`, is in scope here. Revising YAML docs so that's clearer now (as well as contributor API docs).\n\nEDIT: Never mind. YAML docs don't include this explicitly, but it's dev note'd in a comment on the PR. And it's in the test plan."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Turns out, the contributor API for this already has the correct (per-package) format, so these changes won't have a server-side component (all `fleetctl`)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman I thought we had missed frontend scope here because there might have been changes to the modals/exports we added in #28110. But it looks like we don't show custom targets, self-service, and categories in the sample YAML there already so moving them around wouldn't make a difference to what we would display?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e it looks like we don't show custom targets, self-service, and categories in the sample YAML there already so moving them around wouldn't make a difference to what we would display?\n\n@iansltx that's right!"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [x] REST API changes: No changes\n\n@iansltx also, for future stories can you please leave in the explicit \"No changes\" items in the \"Product\" section? (example above). I added them back this time.\n\nThis helps us remember during [confirm and celebrate](https://fleetdm.com/handbook/product-design#confirm-and-celebrate) and 3 months from now whether or not we intended.\n\nWe've learned that removing the checkboxes introduces questions later like \"did we mean to make UI changes for this story?\""
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "\u003e \u003e * [x]  REST API changes: No changes\n\u003e \n\u003e [@iansltx](https://github.com/iansltx) also, for future stories can you please leave in the explicit \"No changes\" items in the \"Product\" section? (example above). I added them back this time.\n\u003e \n\u003e This helps us remember during [confirm and celebrate](https://fleetdm.com/handbook/product-design#confirm-and-celebrate) and 3 months from now whether or not we intended.\n\u003e \n\u003e We've learned that removing the checkboxes introduces questions later like \"did we mean to make UI changes for this story?\"\n\n@noahtalerman All of the \"no changes\" items are still in the issue description, under the \"No-ops\" heading (\"Product no-ops\" probably makes more sense here, and I've used that heading title on other tickets where I've done this). Sounds like you missed them because they were \"below the fold\" but they're there, and splitting them out should actually make the \"we intentionally didn't do these things\" rundown easier. Thoughts on maintaining that \"split out into a subheading\" pattern, but moving that subheading up above the Engineering section?\n\nMy reason for doing this tweak (was going to mention this in chat channels but ran out of time, but discussed this with @mostlikelee ahead of time) is that stories are generally 80-95% \"No changes\", and when spec'ing/dev'ing it's easy to miss actual work in a sea of \"No changes\" items, and missing a spec item while in spec or development has more serious consequences than having to scroll down in the Confirm and celebrate ritual.\n\nAdditionally, the act of explicitly moving items to a \"these are the things that won't change\" heading during spec provides another \"are we _sure_ this isn't changing\" checkpoint prior to estimation. That actually wound up helpful on #30849, as some GitOps Mode UI changes had been miscategorized as generic UI changes. Moving the Figma link to the more appropriate checkbox decreased likelihood of confusion during both development (imminently) and Confirm and celebrate (later), while maintaining an explicit list of parts of the product that are out of scope for the story.\n\nI hadn't PR'd a handbook/story template change for this because I wanted to dial in how it looked with real-world examples first, hence why you're seeing this for the first time here."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e stories are generally 80-95% \"No changes\", and when spec'ing/dev'ing it's easy to miss actual work in a sea of \"No changes\" items, and missing a spec item while in spec or development\n\n@iansltx ah, I hear you but the current way has been working for the other product groups. We just have to look at all the checkboxes to see which have \"No changes\".\n\nTo keep things consistent across product groups and reduce change for now let's please keep the story issue template the same. I removed \n\nThanks for testing it out!\n\n\u003eThat actually wound up helpful on https://github.com/fleetdm/fleet/issues/30849, as some GitOps Mode UI changes had been miscategorized as generic UI changes.\n\nIt sounds like we (it was me) messed up in this case. That's a whoops from me. I forgot about the new GitOps mode checkbox."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Pulled this back to Ready for spec as there are outstanding test plan questions that we're working through."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman heads up that this story is getting pushed to sprint 46"
+          }
+        ],
+        "issueNumber": 30095,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoAQ",
+        "labels": [
+          "story",
+          ":release",
+          "~pushed",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "DONE @noahtalerman: What do we do about policy automations? Right now policies in GitOps assume one package per package YAML file.\n  - @iansltx: Today, `fleetctl generate-gitops` works around this by using a `hash_256` to specify the hash. Maybe we can use the same to solve this.\n \n@noahtalerman: Decided like this: either use hash or path to a file. If the file has more than one package, Fleet will error. Specified in [this dev note](https://github.com/fleetdm/fleet/pull/31086/files#r2222732518)."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [ ] In your team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages. \n\u003e   - @noahtalerman: I think testing this requires the changes in this separate user story: https://github.com/fleetdm/fleet/issues/30095\n\nDONE: @noahtalerman: Pull this into #30095\n\n- @noahtalerman: Added the below to the test plan for #30095.\n\n#### Multiple custom packages in one package YAML\n\n- [ ] Create a package YAML file with two custom packages specified by url. Reference the package YAML in a team YAML file and run GitOps. Verify that the two packages are added to the correct team in Fleet. \n- Next, In a team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @iansltx @jmwatts ^"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "TODOs (will write these up better later):\n\n* Deprecating non-list behavior (vs. not deprecating vs. removing/erroring + adding an automatic migration)\n* Documenting \"error if multiple packages in setup experience YAML file\"\n* Documenting that \"list length of 1\" is valid for places where a single YAML path is expected now?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e Deprecating non-list behavior (vs. not deprecating vs. removing/erroring + adding an automatic migration)\n\nWe decided to deprecate support for the non-list behavior but maintain backwards compatibility. See this dev note: https://github.com/fleetdm/fleet/pull/31086/files#r2219494344\n\n\u003e Documenting \"error if multiple packages in setup experience YAML file\"\n\nIn this [separate GitOps story](https://github.com/fleetdm/fleet/issues/30095), we decided to support applying `setup_experience`. From that separate stories QA plan:\n\n#### Multiple custom packages in one package YAML\n\n- [ ] Create a package YAML file with two custom packages specified by url. Reference the package YAML in a team YAML file and run GitOps. Verify that the two packages are added to the correct team in Fleet. \n- Next, In a team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages. \n\n\u003e Documenting that \"list length of 1\" is valid for places where a single YAML path is expected now?\n\nI think this is covered by the [YAML reference doc updates](https://github.com/fleetdm/fleet/pull/31086). We're showing that a list length of 1 is the best practice."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman FYI we'll need to make some slight tweaks to the modal implemented in #28110 if we're removing the top-level style of software package YAML from documentation, otherwise we'll be recommending that people use an undocumented/deprecated format.\n\nAlso, thoughts on removing the old functionality and adding a script to fix existing software YAML files (linked from the \"this was removed\" error) instead of moving the schema to undocumented but still incurring the maintenance burden of supporting it? If we think this is the proper way to format software packages, \"indent the existing file by two spaces and prepend a `- ` to the first line might be simple enough to perform with a single sed/awk command."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "- UPDATE: @noahtalerman: Added [Figma wireframes](https://www.figma.com/design/VEN5nFcJKd4JOloCgcOOr2/-30849-GitOps--Support-multiple-software-packages-in-one-YAML-file?node-id=0-1\u0026t=84pueN40iALwPkhk-1) to the issue description (including test plan).\n\n\u003e FYI we'll need to make some slight tweaks to the modal implemented in https://github.com/fleetdm/fleet/issues/28110 if we're removing the top-level style of software package YAML from documentation, otherwise we'll be recommending that people use an undocumented/deprecated format.\n\nYep! We want to tweak the UI here with an indent and a hyphen.\n\nDONE: @noahtalerman \n\nAlso, update the package name to include `.package`:\n\n\u003cimg width=\"597\" height=\"83\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6b09f13a-630f-48bf-81b7-4555fc4c81a5\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Sorry for the delay on this one. Subtasks are created. Ask away with questions you have."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman heads up that this story is getting pushed to sprint 46"
+          }
+        ],
+        "issueNumber": 30849,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdI9dE",
+        "labels": [
+          "story",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software",
+          "macos26"
+        ],
+        "issueNumber": 30696,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVUIs",
+        "sprint": {},
+        "issueNumber": 31476,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "jkatz01"
+        ],
+        "content": {
+          "body": "### 🧑‍💻  Expected behavior\nWhen a new host first enrolls and has not yet sent software to Fleet (i.e. before the host's first check in with the software inventory), the `GET /host/:id` endpoint should return empty slice for the `software` field.\n\n### 💥  Actual behavior\n`software` field is not present in API response.\n\n### To fix\n- If there's no software, include the `software` field (empty array) in the `GET /host/:id` API endpoint.\n",
+          "number": 4498,
+          "repository": "fleetdm/fleet",
+          "title": "`GET /host/:id` endpoint should return empty array for `software`",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/4498"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdsLBo",
+        "labels": [
+          "bug",
+          "~backend",
+          ":product",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "1636da2b",
+          "startDate": "2025-08-18",
+          "title": "Sprint 46"
+        },
+        "status": "🦤 ‎In review",
+        "title": "`GET /host/:id` endpoint should return empty array for `software`",
+        "comments": [
+          {
+            "author": {
+              "login": "mikermcneil"
+            },
+            "body": "+💯 had to add a bunch of assertions for this in some code that uses the API myself."
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@noahtalerman What do you think of triaging this as a bug? Should be a very quick code change so seems like it's not worth going through the full user story process. "
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@iansltx Assigning to you since you brought it back to life. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath Fair point on keeping this as a bug, since that's what it's ticketed as. I've assigned to @marko-lisica for triage as a bug (with the fix scope being just the `software` entry) to run through the bug process."
+          }
+        ],
+        "issueNumber": 4498,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "xpkoala",
+          "PezHub",
+          "jmwatts"
+        ],
+        "content": {
+          "body": "\n# Goal: easy-to-follow test steps for checking a release manually\n\n# Important reference data\n\n1. [fleetctl preview setup](https://fleetdm.com/fleetctl-preview)\n2. [permissions documentation](https://fleetdm.com/docs/using-fleet/permissions) \n3. premium tests require license key (needs renewal) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjQwOTk1MjAwLCJzdWIiOiJkZXZlbG9wbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6ImJhc2ljIiwiaWF0IjoxNjIyNDI2NTg2fQ.WmZ0kG4seW3IrNvULCHUPBSfFdqj38A_eiXdV_DFunMHechjHbkwtfkf1J6JQJoDyqn8raXpgbdhafDwv3rmDw`\n4. premium tests require license key (active - Expires Sunday, January 1, 2023 12:00:00 AM) `fleetctl preview --license-key=eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCBJbmMuIiwiZXhwIjoxNjcyNTMxMjAwLCJzdWIiOiJGbGVldCBEZXZpY2UgTWFuYWdlbWVudCIsImRldmljZXMiOjEwMCwibm90ZSI6ImZvciBkZXZlbG9wbWVudCBvbmx5IiwidGllciI6InByZW1pdW0iLCJpYXQiOjE2NDI1MjIxODF9.EGHQjIzM73YyMbnCruswzg360DEYCsDi9uz48YcDwQHq90BabGT5PIXRiculw79emGj5sk2aKgccTd2hU5J7Jw`\n\n# Smoke Tests\nSmoke tests are limited to core functionality and serve as a pre-release final review. If smoke tests are failing, a release cannot proceed.\n\n## Fleet core:\n\n**Fleet version** (Head to the \"My account\" page in the Fleet UI or run `fleetctl version`):\n\n**Web browser** _(e.g. Chrome 88.0.4324)_: \n\n### Prerequisites\n\n1. `fleetctl preview` is set up and running the desired test version using [`--tag` parameters.](https://fleetdm.com/handbook/engineering#run-fleet-locally-for-qa-purposes)\n2. Unless you are explicitly testing older browser versions, browser is up to date.\n3. Certificate \u0026 flagfile are in place to create new host.\n4. In your browser, clear local storage using devtools.\n\n### Orchestration\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eUpdate flow\u003c/td\u003e\u003ctd\u003e\n\n1. remove all fleet processes/agents/etc using `fleetctl preview reset` for a clean slate\n2. run `fleetctl preview` with no tag for latest stable\n3. create a host/query to later confirm upgrade with\n4. STOP fleet-preview-server instances in containers/apps on Docker\n5. run `fleetctl preview` with appropriate testing tag \u003c/td\u003e\u003ctd\u003eAll previously created hosts/queries are verified to still exist\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eLogin flow\u003c/td\u003e\u003ctd\u003e\n\n1. navigate to the login page and attempt to login with both valid and invalid credentials to verify some combination of expected results.\n2. navigate to the login page and attempt to login with both valid and invalid sso credentials to verify expected results.\n\u003c/td\u003e\u003ctd\u003e\n\n1. text fields prompt when blank\n2. correct error message is \"authentication failed\"\n3. forget password link prompts for email\n4. valid credentials result in a successful login.\n5. valid sso credentials result in a successful login\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n\n1. Packs successfully run on host machines after migrations \n2. New Packs can be created\n3. Packs can be edited and deleted\n4. Packs results information is logged\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eLog destination flow\u003c/td\u003e\u003ctd\u003eVerify log destination for software, query, policy, and packs.\u003c/td\u003e\u003ctd\u003e\n\n1. Software, query, policy, and packs logs are successfully sent to external log destinations\n2. Software, query, policy, and packs logs are successfully sent to Filesystem log destinations\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### MDM\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMDM enrollment flow\u003c/td\u003e\u003ctd\u003eVerify MDM enrollments, run MDM commands\u003c/td\u003e\u003ctd\u003e\n  \n1. Erase an ADE-eligible macOS host and verify able to complete automated enrollment flow.\n2. With Windows MDM turned On, enroll a Windows host and verify MDM is turned On for the host.\n3. Verify able to run MDM commands on both macOS and Windows hosts from the CLI.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMDM migration flow\u003c/td\u003e\u003ctd\u003eVerify MDM migration for ADE and non-ADE hosts\u003c/td\u003e\u003ctd\u003e\n  \n1. Turn off MDM on an ADE-eligible macOS host and verify that the native, \"Device Enrollment\" macOS notification appears.\n2. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n3. Turn off MDM on a non ADE-eligible macOS host.\n4. On the My device page, follow the \"Turn on MDM\" instructions and verify that MDM is turned on.\n5. Verify Windows host migrates from 3rd party MDM to Fleet when automatic migration is turned on.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n\n1. Verify Profiles upload/download/delete (macOS \u0026 Windows).\n2. Verify Profiles are delivered to host and applied. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSetup experience\u003c/td\u003e\u003ctd\u003eVerify macOS Setup experience\u003c/td\u003e\u003ctd\u003e\n\n1. Configure End user authentication.\n3. Upload a Bootstrap package.\n4. Add software (FMA, VPP, \u0026 Custom pkg)\n5. Add a script\n6. Enroll an ADE-eligible macOS host and verify successful authentication.\n7. Verify Bootstrap package is delivered.\n8. Verify SwiftDialogue window displays.\n9. Verify software installs and script runs.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS updates\u003c/td\u003e\u003ctd\u003eVerify OS updates flow\u003c/td\u003e\u003ctd\u003e\n\n1. Configure OS updates (macOS \u0026 Windows).\n2. Verify on-device that Nudge prompt appears (macOS 13).\n3. Verify enforce minimumOS occurs during enrollment (macOS 14+).\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eiOS/iPadOS\u003c/td\u003e\u003ctd\u003eVerify enrollment, profiles, \u0026 software installs\u003c/td\u003e\u003ctd\u003e\n\n1. Verify ADE enrollment.\n2. Verify OTA enrollment.\n3. Verify Profiles are delivered to host and applied.\n4. Verify VPP apps install \u0026 display correctly in Activity feed.\n5. Verify `Turn Off MDM` for BYOD \u0026 ADE hosts.\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eLock \u0026 Wipe\u003c/td\u003e\u003ctd\u003eVerify hosts can be locked \u0026 wiped\u003c/td\u003e\u003ctd\u003e\n\n1. Verify locking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n2. Verify unlocking a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n3. Verify wiping a host from the Fleet UI (macOS, Windows, \u0026 Linux)\n4. Verify wiping and locking hosts using `fleetctl` (macOS, Windows, \u0026 Linux)\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eCertificates Upload\u003c/td\u003e\u003ctd\u003eAPNs cert and ABM token renewal workflow\u003c/td\u003e\u003ctd\u003e\n\n1. Renew APNs Certificate.\n2. Renew ABM Token.\n3. Ensure ADE hosts can enroll.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n\n### Software\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eCreate, edit, run, and delete queries. \u003c/td\u003e\u003ctd\u003e\n\n1. permissions regarding creating/editing/deleting queries are up to date with documentation\n2. syntax errors result in error messaging\n3. queries can be run manually \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added and removed following modal instructions using your own device.\u003c/td\u003e\u003ctd\u003e\n\n1. Host is added via command line\n2. Host serial number and date added are accurate\n3. Host is not visible after it is deleted\n4. Warning and informational modals show when expected and make sense\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\n2. The \"My device\" page is populated correctly and as expected. \n3. Styling and padding appears correct.\n \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script library and execution\u003c/td\u003e\u003ctd\u003e\n\n1. Verify able to run a script on all host types from CLI.\n2. Verify scripts library upload/download/delete.\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\n4. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\n5. Verify UI loading state and statuses for scripts.\n8. Disable scripts globally and verify unable to run.\n9. Verify scripts display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software library and install / download\u003c/td\u003e\u003ctd\u003e\n\n1. Verify software library upload/download/delete.\n2. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\n3. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\n4. Verify UI loading state and statuses for installing software.\n7. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\n\u003ctr\u003e\u003ctd\u003eMigration Test\u003c/td\u003e\u003ctd\u003eVerify Fleet can migrate to the next version with no issues.\u003c/td\u003e\u003ctd\u003e\n\nUsing the github action https://github.com/fleetdm/fleet/actions/workflows/db-upgrade-test.yml\n1. Using the most recent stable version of Fleet and `main`, click `Run workflow`\n2. Enter the Docker tag of Fleet starting version, e.g. 'v4.64.2'\n3. Enter the Docker tag of Fleet version to upgrade to, e.g. 'rc-minor-fleet-v4.65.0'\n4. Click `Run workflow`.\n5. Action should complete successfully.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003c/table\u003e\n\n### All Product Groups\n\u003ctable\u003e\n \u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003eRelease blockers\u003c/td\u003e\u003ctd\u003eVerify there are no outstanding release blocking tickets.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this](https://github.com/fleetdm/fleet/labels/~release%20blocker) filter to view all open `~release blocker` tickets.\n2. If any are found raise an alarm in the `#help-engineering` and `#g-mdm` (or `#g-endpoint-ops`)  channels.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\n\u003ctr\u003e\u003ctd\u003eLoad tests - minor releases only unless otherwise specified\u003c/td\u003e\u003ctd\u003eVerify all load test metrics are within acceptable range on final build of RC.\u003c/td\u003e\u003ctd\u003e\n  \n1. Check [this Google doc](https://docs.google.com/document/d/1V6QtFzcGDsLnn2PIvGin74DAxdAN_3likjxSssOMMQI/edit?tab=t.0#heading=h.15acjob4ji20) to review load test key metrics and checks.\n2. After all expected changes have been merged to the RC branch, two load tests will need to be run - a new instance with no data, and a migrated instance.\n3. For the new instance with no data, set up a load test environment using the RC branch and allow it at least 24hrs of run time.\n4. For the migrated instance, set up a load test environment on the previous minor release branch. Once the environment has been set up and stabilized, follow the instructions in [Deploying code changes to fleet](https://github.com/fleetdm/fleet/blob/main/infrastructure/loadtesting/terraform/readme.md#deploying-code-changes-to-fleet) to migrate to the RC branch. Monitor the metrics post-migration to determine if any performance issues arise.\n5. Record metrics in [this spreadsheet](https://docs.google.com/spreadsheets/d/1FOF0ykFVoZ7DJSTfrveip0olfyRQsY9oT1uXCCZmuKc/edit?usp=drive_link) for the two load test runs. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e \n\u003c/table\u003e\n\n### Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:\n\n\u003cbr\u003e\n\u003cbr\u003e\n\n# `fleetd` agent:\n\nIncludes updates to: \n- Orbit: True / False\n- Desktop: True / False\n- Chrome extension: True / False\n\nList versions changes for any component updates below: \n\u003c!-- Remove items without updates --\u003e\n- Orbit `v1.xx.x` \u003e `v1.xx.x`\n- Desktop `v1.xx.x` \u003e `v1.xx.x`\n- Chrome extension `v1.xx.x` \u003e `v1.xx.x`\n\n## Testing gates for new `fleetd` release\n\n### Goal: Ensure new `fleetd` is tested and promoted from local \u003e edge \u003e stable channels\n\n1. Build a new `fleetd` from the release candidate branch as needed for Orbit, Desktop, and Chrome Extension.\n\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e`fleetd` local testing\u003c/td\u003e\n\u003ctd\u003e\n1. Following [Testing TUF]([url](https://github.com/fleetdm/fleet/blob/main/tools/tuf/test/README.md)) instructions create binaries for Mac, Windows, and Ubuntu using your local TUF repository and install on macOS, Linux, and Windows hosts.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Confirm the hosts install with the updated version and are working correctly.\u003cbr\u003e\n2. Confirm any new features and/or bug fixes associated with this release are working as intended.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctd\u003e`fleetd` auto-update tests\u003c/td\u003e\n\u003ctd\u003e\n1. Conduct the [`fleetd` auto-update n+1 test]([url](https://github.com/fleetdm/fleet/blob/main/tools/tuf/test/Fleetd-auto-update-test-guide.md))\u003cbr\u003e\n2. QA certifies new release by commenting in issue.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Agent successfully auto-updates.\u003cbr\u003e\n2. Issue is certified by QA.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctd\u003e`fleetd` tests\u003c/td\u003e\n\u003ctd\u003e\n1. Set up a host in your instance to receive updates from the `edge` channels.\u003cbr\u003e\n2. Work with engineer leading the release to push changes to the `edge` channel.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003e\n1. Confirm the hosts running on the edge channel receive the update and are working correctly.\u003cbr\u003e\n2. Confirm any new features and/or bug fixes associated with this release are working as intended.\u003cbr\u003e\n\u003c/td\u003e\n\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: edge` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\n\nInclude any notes on whether issues should block release or not as needed:\n",
+          "number": 31999,
+          "repository": "fleetdm/fleet",
+          "title": "Release QA: 4.73.0",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31999"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdsS6Q",
+        "labels": [
+          ":release",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Release QA: 4.73.0",
+        "issueNumber": 31999,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "noahtalerman"
+        ],
+        "content": {
+          "body": "### Requestor\n\n- Application name: iTerm2\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [X] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [X] Manifest name matches osquery `app.name` (macOS) or `programs.name` (Windows)\n- [X] Manifest version scheme matches osquery `app.short_bundle_version` (macOS) or `programs.version` (Windows) version scheme\n- [X] Manifest `unique_identifier` matches osquery `app.bundle_identifier` (macOS only)\n\n### QA\n\n- [X] App adds successfully to team's library\n- [X] App installs successfully on host\n- [X] App opens successfully on host\n- [X] App uninstalls successfully on host\n\n### Icon\n\n- [ ] Icon added to Figma\n- [x] Icon added to Fleet\n- [x] Correct icon appears in the app catalog",
+          "number": 30724,
+          "repository": "fleetdm/fleet",
+          "title": "New FMA:  iTerm2",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/30724"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdsTIY",
+        "labels": [
+          "story",
+          ":release",
+          "~mdm-maturity",
+          "#g-software",
+          "~context",
+          "fma"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-08T00:00:00Z",
+          "title": "4.72.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "New FMA:  iTerm2",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "\u003cimg width=\"355\" height=\"131\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/29f22707-2e02-46c6-981f-fb23ccf38d2b\" /\u003e"
+          }
+        ],
+        "issueNumber": 30724,
+        "changeType": "added"
       }
     ]
   }
