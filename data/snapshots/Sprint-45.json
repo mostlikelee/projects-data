@@ -13592,5 +13592,117 @@
         "changeType": "added"
       }
     ]
+  },
+  {
+    "timestamp": "2025-08-17T07:05:14.155506786Z",
+    "items": [
+      {
+        "assignees": [
+          "iansltx"
+        ],
+        "content": {
+          "body": "**Fleet version**: 4.70.0.\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nThe `deb_packages` table detects residual files from `.deb` packages, such as `screen`, even after they are removed using `sudo apt remove \u003cpackage_name\u003e`, leading to incorrect policy results.\n\nFleet's \"automatic install\" policy does not consider the `status`, resulting in Fleet failing to install a package that is actually missing.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Upload .deb pakage to Fleet\n2. Enable automatic install \n3. Once the sofware is installed, delete it using `sudo apt remove` command\n4. Verify that the software isn't installed again since the policy won't fail\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- ### 🛠️ To fix --\u003e\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\nProduct designer: @marko-lisica \n\nImprove query to take the `status` field (from the `deb_packages` table) into account. ",
+          "number": 29894,
+          "repository": "fleetdm/fleet",
+          "title": "deb_packages auto-install query detects some packages that have been removed by apt remove",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/29894"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdtOjc",
+        "labels": [
+          "bug",
+          "~osquery core",
+          ":product",
+          "customer-cisneros",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "1636da2b",
+          "startDate": "2025-08-18",
+          "title": "Sprint 46"
+        },
+        "status": "🐣 In progress",
+        "title": "deb_packages auto-install query detects some packages that have been removed by apt remove",
+        "comments": [
+          {
+            "author": {
+              "login": "pintomi1989"
+            },
+            "body": "Updated to include Gong snippet provided by customer-cisneros @ddribeiro @sharon-fdm "
+          },
+          {
+            "author": {
+              "login": "juan-fdz-hawa"
+            },
+            "body": "I don't think this is a bug. \n\nThe contents of the `deb_packages` table reflects the behavior of the `dpkg` tools. If they want to exclude packages that leave behind config files they can take a look at the status column:\n\n```\nosquery\u003e select name,status FROM deb_packages WHERE name='screen';\n+--------+----------------------+\n| name   | status               |\n+--------+----------------------+\n| screen | install ok installed |\n+--------+----------------------+\nosquery\u003e select name,status FROM deb_packages WHERE name='screen';\n+--------+---------------------------+\n| name   | status                    |\n+--------+---------------------------+\n| screen | deinstall ok config-files |\n+--------+---------------------------+\n\n```"
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Was able to reproduce the initially described issue, also confirmed that a proposed policy will properly fail if we are checking for the status column. \n\nPolicy that I used: \n`SELECT 1 WHERE EXISTS (\n  SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed'\n);`\n\nRemoving the reproduce label and adding the product to decide whether this is an expected behavior or not "
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "@noahtalerman , we think this is not a bug.\nCare to close?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@ddribeiro while it's not ideal, we learned that this is the current, expected behavior of osquery. Today, to detect if a package is installed, we have to write special policies against [`deb_packages`](https://fleetdm.com/tables/deb_packages) using the `status` column. For example:\n\n```sql\nSELECT 1 WHERE EXISTS ( SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed' );\n```\n\nI flipped this bug to a feature request."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Moved the original bug report here:\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nSome .deb files leave residual files on disk when they are removed using `sudo apt remove \u003cpackage_name\u003e`. In these cases, the `deb_packages` osquery table detects them as still present on the system, even though they have been removed.\n\nSome examples of packages that behave like this are `duo-desktop` and `screen`.\n\nThis is especially problematic for Fleet admins who use the `deb_packages` table to write polices that trigger automations to detect and install specific software on their hosts.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Install a .deb package that is known to leave residual files after being removed on a Linux host. I used `screen` (`sudo apt install screen`).\n2. Write a policy that uses the deb_packages table to detect if screen is installed. This policy should pass when `screen` is installed and fail when it's not installed. Example:\n```\nSELECT 1 WHERE EXISTS (\n    SELECT 1 WHERE (SELECT COUNT(*) FROM deb_packages) = 0\n) OR EXISTS (\n    SELECT 1 FROM deb_packages WHERE name = 'screen'\n);\n````\n3. Remove the screen package by using `sudo apt remove screen`. Refetch vitals on your test host, **observe that the policy is still passing**, despite `screen` being removed from the system.\n4. Run `sudo purge -y screen` to purge the package from the system. Refetch vitals on your test host, observe that running this command fully removes the package and gets the policy to fail.\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nSlack thread for more context: https://fleetdm.slack.com/archives/C072L58U878/p1748879907377119\n\nIt seems most Linux users would use `sudo apt remove` instead of `sudo apt purge -y`, which is what makes this problematic.\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n\u003c!-- ### 🛠️ To fix --\u003e\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\n\u003c!-- Product designer: _________________________ --\u003e \u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman FYI this is 100% something on the osquery side, as this affects the built-in osquery `deb_packages` table. Our [software host vital](https://fleetdm.com/vitals/software-linux#linux) already takes `deb_packages` behavior into account.\n\nWith that said, our current default auto-install policies for `deb_packages` _don't_ take this into account, so we're reporting software that was installed and removed as still installed, so the automation won't fire.\n\nThis feels like a bug with automatic install policies, and the fix would be to revise the default automatic install policy to account for this nuance. This is a 1-2pt fix  that I could likely turn around on Monday if you and @mostlikelee are up for it, and I'm betting this would go a long way toward solving the underlying problem without expecting osquery to change."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "To the above point, our [guide with sample policies](https://fleetdm.com/guides/automatic-software-install-in-fleet#debian-based-deb) doesn't account for status in the query, and in this case it should because if you're trying to enforce \"installed and latest\" you don't want \"installed and latest, but was removed\" to pass."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e This feels like a bug with automatic install policies, and the fix would be to revise the default automatic install policy to account for this nuance. \n\n@iansltx aha! Thanks for calling this out. It sounds like `cisneros` reported this because they're using automatic install policies. \n\nI though they wrote a custom policy. I was wrong.\n\nIf our automatic install policies don't take this into account, I agree this is a bug. Can you please help us update this issue into bug format?\n\nAlso, good call on the guide. I think we address the guide change as part of this bug.\n\nAnd, I think if you want to jump on the bug, go for it. cc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @iansltx aha! Thanks for calling this out. It sounds like `cisneros` reported this because they're using automatic install policies. \n\u003e \n\u003e I though they wrote a custom policy. I was wrong.\n\u003e \n\u003e If our automatic install policies don't take this into account, I agree this is a bug.\n\nFYI @ddribeiro "
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Original issue description:\n\n---\n\n- `customer-cisneros` Gong snippet: https://us-65885.app.gong.io/call?id=4834666570271096977\u0026highlights=%5B%7B%22type%22%3A%22SHARE%22%2C%22from%22%3A4%2C%22to%22%3A223%7D%5D\n* @noahtalerman: *User requested this because* The `deb_packages` table detects residual files from `.deb` packages, such as `screen`, even after they are removed using `sudo apt remove \u003cpackage_name\u003e`, leading to incorrect policy results.\n\n  - @noahtalerman *In the interim* IT admins can detect if a package is installed by writing a special policy against [`deb_packages`](https://fleetdm.com/tables/deb_packages) using the `status` column. For example:\n\n```sql\nSELECT 1 WHERE EXISTS ( SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed' );\n```\n\n  * @noahtalerman: *Eventually* Fleet could ensure that the `deb_packages` table correctly reflects the absence of packages even after `sudo apt remove` is used, potentially by addressing residual files or providing a more reliable method for package removal detection."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ddribeiro @marko-lisica Updated the issue title because the thing we'll be fixing here is the auto-install query; we _won't_ be making changes to the underlying osquery table as part of this fix. Our understanding is that fixes the customer issue, but would want a different issue if it doesn't."
+          }
+        ],
+        "issueNumber": 29894,
+        "changeType": "added"
+      }
+    ]
   }
 ]
