@@ -3036,7 +3036,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "deb_packages auto-install query detects some packages that have been removed by apt remove",
         "comments": [
           {
@@ -4329,7 +4329,7 @@
           "jmwatts"
         ],
         "content": {
-          "body": "# `fleetd` agent: 1.46.0\n\nIncludes updates to: \n- Fleet Desktop tray icon application.\n- Changes in `orbit` executable.\n\n- Desktop `v1.45.1` \u003e `v1.46.0`\n\nFleet 1.46.0 has been released to the `edge` channel.\n\nSmoke tests should be performed in `edge` before promoting it to `stable`.\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n0. You can generate packages that use `edge` by running: `fleetctl package [] --orbit-channel edge --desktop-channel edge`.\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: stable` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003e\n4.71.0:\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:",
+          "body": "# `fleetd` agent: 1.46.0\n\nIncludes updates to: \n- Fleet Desktop tray icon application.\n- Changes in `orbit` executable.\n\n- Desktop `v1.45.1` \u003e `v1.46.0`\n\nFleet 1.46.0 has been released to the `edge` channel.\n\nSmoke tests should be performed in `edge` before promoting it to `stable`.\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n0. You can generate packages that use `edge` by running: `fleetctl package [] --orbit-channel edge --desktop-channel edge`.\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: stable` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:",
           "number": 32066,
           "repository": "fleetdm/fleet",
           "title": "Release QA: fleetd v1.46.0",
@@ -4403,6 +4403,665 @@
         "id": "PVTI_lADOBDAnic4A4BEUzgdwdew",
         "issueNumber": 32066,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-19T19:04:31.836831112Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpos",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31215,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdsLBo",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 4498,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdAjcc",
+        "labels": [
+          "~frontend",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Confirmed during 8/4 standup:: This was previously approved in #31384, but since much of the code has been in flux, I am holding off until 4.72 is completely QAed and this PR will solely be a code organization PR and no changes to ensure another deep dive QA will be unnecessary"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Upped this from a 3 to a 5 because I realized that there are 0 tests on the VPP install modal, software package install modal, and software uninstall modal. \n\nNeeded tests on each of those modals: \n- various status message based on what page they're on and whether it's successfulxpendingxfailed\n- whether they show versions or not\n- whether they show more details\n- what the action button is (since it's different for self-service vs admin)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@RachelElysia are we just adding test coverage here or does QA need to retest any self service flows?"
+          }
+        ],
+        "issueNumber": 31309,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP0g",
+        "status": "🐣 In progress",
+        "issueNumber": 30238,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: 4.72\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\n\n\u003cimg width=\"720\" height=\"592\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3fb10186-89d6-4b2f-9d51-de7941e432a2\" /\u003e\n\n### 🛠️ To fix\n\nProduct designer @marko-lisica \n\nFor tarballs, we'll go straight to the \"Installed\" status (won't wait for refetch, as it's not in the inventory). Click on \"Installed\" will show the details modal with install script output.\n\nNo tooltips over \"Installed.\" See this separate issue here: https://github.com/fleetdm/fleet/issues/31297\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Add a tar.gz file to a team's library, made available for Self Service. Include install and uninstall scripts.\nFor a physical linux box you can use the go tar.gz file here: https://drive.google.com/file/d/15uKzk2J7IYH7MNYhBHdPAKP_uvVXSx1Z/view?usp=sharing\nFor a linux VM on Apple Silicon you can use the go tar.gz file here: https://drive.google.com/file/d/1ktV0lZH88Q7lqdFUIo3YCt_mgcql1NUN/view?usp=sharing\nInstall script is: `mv $INSTALLER_PATH/* /usr/local`\nUninstall script is: `rm -rf /usr/local/go`\n2. On enrolled linux host, open Self service and click \"Install\"\n3. Wait for install to complete, refetch to complete, then hover over \"Installed\" status\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nI used a different tar.gz when reproducing to gather additional info, seems this is only happening for the first install.\nAPI Response:\n```\n    {\n      \"id\": 3875,\n      \"name\": \"gimp-3.0.0.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"gimp-3.0.0.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"e48dbdaf-dde1-44cb-b8c2-6f29839eeaec\",\n          \"installed_at\": \"2025-08-11T14:28:44.201641Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdbCMM",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "status": "🥚 Ready",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Reassigning because I'm right in the middle of the interrupt work swimlane :("
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia thanks for noticing that _uninstall_ is the tooltip being shown, so we're going to want an API response for this one to troubleshoot further. Given that @jmwatts is out and to avoid a repro rabbit trail, going to make the call of not blocking the release for this; we'll troubleshoot and resolve in 4.73."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "More info:\nrecently_uninstalled UI status would only show if `newerDate === lastUninstallDate` which is super bizarre in this case and would require repro with API responses"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Updated ticket to show install UI status\n"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts / @iansltx I might need more help reproducing this, maybe in a call?\n\nBasically, something in `getUiStatus` helper function is pointing this installer to the wrong ui_status\n\nHere's the code:\n```\nexport const getUiStatus = (\n  software: IHostSoftware,\n  isHostOnline: boolean,\n  hostSoftwareUpdatedAt?: string | null\n): IHostSoftwareUiStatus =\u003e {\n  const { status, installed_versions } = software;\n\n  const lastInstallDate = getLastInstall(software)?.installed_at;\n  const lastUninstallDate = getLastUninstall(software)?.uninstalled_at;\n  const installerVersion = getInstallerVersion(software);\n\n  // 1. Failed install states\n  if (status === \"failed_install\") {\n    if (\n      installerVersion \u0026\u0026\n      installed_versions \u0026\u0026\n      installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      )\n    ) {\n      return \"failed_install_update_available\";\n    }\n    return \"failed_install\";\n  }\n\n  // 2. Failed uninstall states\n  if (status === \"failed_uninstall\") {\n    if (\n      installerVersion \u0026\u0026\n      installed_versions \u0026\u0026\n      installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      )\n    ) {\n      return \"failed_uninstall_update_available\";\n    }\n    return \"failed_uninstall\";\n  }\n\n  // 3. Pending install/update\n  if (status === \"pending_install\") {\n    if (\n      installed_versions \u0026\u0026\n      installed_versions.length \u003e 0 \u0026\u0026\n      installerVersion\n    ) {\n      const isUpdate = installed_versions.some(\n        (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n      );\n      if (isUpdate) {\n        return isHostOnline ? \"updating\" : \"pending_update\";\n      }\n    }\n    return isHostOnline ? \"installing\" : \"pending_install\";\n  }\n\n  // 4. Pending uninstall\n  if (status === \"pending_uninstall\") {\n    return isHostOnline ? \"uninstalling\" : \"pending_uninstall\";\n  }\n\n  // **Recently_uninstalled check comes BEFORE update_available**\n  if (software.status === null \u0026\u0026 lastUninstallDate \u0026\u0026 hostSoftwareUpdatedAt) {\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastUninstallDate);\n    if (newerDate === lastUninstallDate) {\n      return \"recently_uninstalled\";\n    }\n  }\n\n  // 5. Update available and recently updated\n  if (\n    installerVersion \u0026\u0026\n    installed_versions \u0026\u0026\n    installed_versions.some(\n      (iv) =\u003e compareVersions(iv.version, installerVersion) === -1\n    )\n  ) {\n    if (!lastInstallDate) {\n      return \"update_available\";\n    }\n    const newerDate = hostSoftwareUpdatedAt\n      ? getNewerDate(hostSoftwareUpdatedAt, lastInstallDate)\n      : lastInstallDate;\n    return newerDate === lastInstallDate\n      ? \"recently_updated\"\n      : \"update_available\";\n  }\n\n  // 6. Recently installed (not an update)\n  if (\n    software.status === \"installed\" \u0026\u0026\n    lastInstallDate \u0026\u0026\n    hostSoftwareUpdatedAt\n  ) {\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastInstallDate);\n    if (newerDate === lastInstallDate) {\n      return \"recently_installed\";\n    }\n  }\n\n  // 7. Tarballs edge case\n  if (software.source === \"tgz_packages\" \u0026\u0026 software.status === \"installed\") {\n    return \"installed\";\n  }\n\n  // 8. Default to installed or uninstalled based on installed_versions\n  if (installed_versions \u0026\u0026 installed_versions.length \u003e 0) return \"installed\";\n\n  return \"uninstalled\";\n};\n```\n\nSomehow it's passing both if statements in line 6 where it should be failing at least one of them:\nEither should fail:\n```\n    software.status === \"installed\" \u0026\u0026\n    lastInstallDate \u0026\u0026\n    hostSoftwareUpdatedAt\n```\n\nor should fail \n```\n    const newerDate = getNewerDate(hostSoftwareUpdatedAt, lastInstallDate);\n    if (newerDate === lastInstallDate) {\n```\n\nbut I can't tell which or why without help repro in real time.\n\nHere's a diagram of what we want fixed (crossed out is current behavior, circled is wanted behavior):\n\n\u003cimg width=\"396\" height=\"703\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/de100dc2-cee1-4260-bd33-9ff8ffc5cc61\" /\u003e\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "2nd to last API response:\n```\n{\n  \"host\": {\n    \"created_at\": \"2025-08-14T15:02:47Z\",\n    \"updated_at\": \"2025-08-14T20:55:26Z\",\n    \"software_updated_at\": \"2025-08-14T20:49:24Z\",\n    \"id\": 46,\n    \"detail_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"label_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"policy_updated_at\": \"2025-08-14T20:49:25Z\",\n    \"last_enrolled_at\": \"2025-08-14T15:02:47Z\",\n    \"seen_time\": \"2025-08-14T20:55:31Z\",\n    \"refetch_requested\": true,\n    \"hostname\": \"nimda-Vivobook\",\n    \"uuid\": \"18005795-ed98-4640-89fe-f123c7dc0919\",\n    \"platform\": \"ubuntu\",\n    \"osquery_version\": \"5.19.0\",\n    \"orbit_version\": \"25.8.8984\",\n    \"fleet_desktop_version\": \"1.45.1\",\n    \"scripts_enabled\": true,\n    \"os_version\": \"Ubuntu 24.04.2 LTS\",\n    \"build\": \"\",\n    \"platform_like\": \"debian\",\n    \"code_name\": \"noble\",\n    \"uptime\": 283194000000000,\n    \"memory\": 16378298368,\n    \"cpu_type\": \"x86_64\",\n    \"cpu_subtype\": \"186\",\n    \"cpu_brand\": \"13th Gen Intel(R) Core(TM) i3-1315U\",\n    \"cpu_physical_cores\": 6,\n    \"cpu_logical_cores\": 8,\n    \"hardware_vendor\": \"ASUSTeK COMPUTER INC.\",\n    \"hardware_model\": \"Vivobook_ASUSLaptop X1404VA_X1404VA\",\n    \"hardware_version\": \"1.0\",\n    \"hardware_serial\": \"T2N0CX02929507A\",\n    \"computer_name\": \"nimda-Vivobook\",\n    \"primary_mac\": \"ec:8e:77:85:3b:c6\",\n    \"distributed_interval\": 10,\n    \"config_tls_refresh\": 60,\n    \"logger_tls_period\": 4,\n    \"team_id\": null,\n    \"pack_stats\": null,\n    \"team_name\": null,\n    \"users\": [\n      {\n        \"uid\": 0,\n        \"username\": \"root\",\n        \"type\": \"\",\n        \"groupname\": \"root\",\n        \"shell\": \"/bin/bash\"\n      },\n      {\n        \"uid\": 1000,\n        \"username\": \"nimda\",\n        \"type\": \"\",\n        \"groupname\": \"nimda\",\n        \"shell\": \"/bin/bash\"\n      }\n    ],\n    \"gigs_disk_space_available\": 938.2,\n    \"percent_disk_space_available\": 93,\n    \"gigs_total_disk_space\": 1006.45,\n    \"issues\": {\n      \"failing_policies_count\": 0,\n      \"critical_vulnerabilities_count\": 0,\n      \"total_issues_count\": 0\n    },\n    \"mdm\": {\n      \"enrollment_status\": null,\n      \"dep_profile_error\": false,\n      \"server_url\": null,\n      \"name\": \"\",\n      \"encryption_key_available\": false,\n      \"encryption_key_archived\": false,\n      \"os_settings\": {\n        \"disk_encryption\": {\n          \"status\": null,\n          \"detail\": \"\"\n        }\n      },\n      \"profiles\": null,\n      \"macos_setup\": {\n        \"bootstrap_package_status\": \"\",\n        \"detail\": \"\",\n        \"bootstrap_package_name\": \"\"\n      },\n      \"device_status\": \"unlocked\",\n      \"pending_action\": \"\",\n      \"connected_to_fleet\": false\n    },\n    \"refetch_critical_queries_until\": null,\n    \"dep_assigned_to_fleet\": false,\n    \"last_restarted_at\": \"2025-08-11T14:09:31Z\",\n    \"policies\": [],\n    \"labels\": [\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 9,\n        \"author_id\": null,\n        \"name\": \"All Hosts\",\n        \"description\": \"All hosts which have enrolled in Fleet\",\n        \"query\": \"select 1;\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 11,\n        \"author_id\": null,\n        \"name\": \"Ubuntu Linux\",\n        \"description\": \"All Ubuntu hosts\",\n        \"query\": \"select 1 from os_version where platform = 'ubuntu';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 15,\n        \"author_id\": null,\n        \"name\": \"All Linux\",\n        \"description\": \"All Linux distributions\",\n        \"query\": \"SELECT 1 FROM osquery_info WHERE build_platform LIKE '%ubuntu%' OR build_distro LIKE '%centos%';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      }\n    ],\n    \"packs\": [\n      {\n        \"created_at\": \"2025-03-06T19:03:44Z\",\n        \"updated_at\": \"2025-03-06T19:03:44Z\",\n        \"id\": 1,\n        \"name\": \"something\",\n        \"disabled\": false,\n        \"type\": null,\n        \"labels\": null,\n        \"label_ids\": null,\n        \"hosts\": null,\n        \"host_ids\": null,\n        \"teams\": null,\n        \"team_ids\": null\n      }\n    ],\n    \"batteries\": null,\n    \"last_mdm_enrolled_at\": null,\n    \"last_mdm_checked_in_at\": null,\n    \"status\": \"online\",\n    \"display_text\": \"nimda-Vivobook\",\n    \"display_name\": \"nimda-Vivobook\"\n  },\n  \"self_service\": true,\n  \"org_logo_url\": \"\",\n  \"org_logo_url_light_background\": \"\",\n  \"org_contact_url\": \"https://fleetdm.com/company/contact\",\n  \"license\": {\n    \"tier\": \"premium\",\n    \"organization\": \"Fleet Device Management Inc.\",\n    \"device_count\": 100,\n    \"expiration\": \"2025-12-30T18:00:00-06:00\",\n    \"note\": \"Created with Fleet License key dispenser\",\n    \"managed_cloud\": false\n  },\n  \"global_config\": {\n    \"mdm\": {\n      \"enabled_and_configured\": true\n    },\n    \"features\": {\n      \"enable_software_inventory\": true\n    }\n  }\n}\n\n```\nResponse after refetch completed:\n```\n{\n  \"host\": {\n    \"created_at\": \"2025-08-14T15:02:47Z\",\n    \"updated_at\": \"2025-08-14T20:56:05Z\",\n    \"software_updated_at\": \"2025-08-14T20:49:24Z\",\n    \"id\": 46,\n    \"detail_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"label_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"policy_updated_at\": \"2025-08-14T20:56:06Z\",\n    \"last_enrolled_at\": \"2025-08-14T15:02:47Z\",\n    \"seen_time\": \"2025-08-14T20:55:31Z\",\n    \"refetch_requested\": false,\n    \"hostname\": \"nimda-Vivobook\",\n    \"uuid\": \"18005795-ed98-4640-89fe-f123c7dc0919\",\n    \"platform\": \"ubuntu\",\n    \"osquery_version\": \"5.19.0\",\n    \"orbit_version\": \"25.8.8984\",\n    \"fleet_desktop_version\": \"1.45.1\",\n    \"scripts_enabled\": true,\n    \"os_version\": \"Ubuntu 24.04.2 LTS\",\n    \"build\": \"\",\n    \"platform_like\": \"debian\",\n    \"code_name\": \"noble\",\n    \"uptime\": 283595000000000,\n    \"memory\": 16378298368,\n    \"cpu_type\": \"x86_64\",\n    \"cpu_subtype\": \"186\",\n    \"cpu_brand\": \"13th Gen Intel(R) Core(TM) i3-1315U\",\n    \"cpu_physical_cores\": 6,\n    \"cpu_logical_cores\": 8,\n    \"hardware_vendor\": \"ASUSTeK COMPUTER INC.\",\n    \"hardware_model\": \"Vivobook_ASUSLaptop X1404VA_X1404VA\",\n    \"hardware_version\": \"1.0\",\n    \"hardware_serial\": \"T2N0CX02929507A\",\n    \"computer_name\": \"nimda-Vivobook\",\n    \"primary_mac\": \"ec:8e:77:85:3b:c6\",\n    \"distributed_interval\": 10,\n    \"config_tls_refresh\": 60,\n    \"logger_tls_period\": 4,\n    \"team_id\": null,\n    \"pack_stats\": null,\n    \"team_name\": null,\n    \"users\": [\n      {\n        \"uid\": 0,\n        \"username\": \"root\",\n        \"type\": \"\",\n        \"groupname\": \"root\",\n        \"shell\": \"/bin/bash\"\n      },\n      {\n        \"uid\": 1000,\n        \"username\": \"nimda\",\n        \"type\": \"\",\n        \"groupname\": \"nimda\",\n        \"shell\": \"/bin/bash\"\n      }\n    ],\n    \"gigs_disk_space_available\": 937.9,\n    \"percent_disk_space_available\": 93,\n    \"gigs_total_disk_space\": 1006.45,\n    \"issues\": {\n      \"failing_policies_count\": 0,\n      \"critical_vulnerabilities_count\": 0,\n      \"total_issues_count\": 0\n    },\n    \"mdm\": {\n      \"enrollment_status\": null,\n      \"dep_profile_error\": false,\n      \"server_url\": null,\n      \"name\": \"\",\n      \"encryption_key_available\": false,\n      \"encryption_key_archived\": false,\n      \"os_settings\": {\n        \"disk_encryption\": {\n          \"status\": null,\n          \"detail\": \"\"\n        }\n      },\n      \"profiles\": null,\n      \"macos_setup\": {\n        \"bootstrap_package_status\": \"\",\n        \"detail\": \"\",\n        \"bootstrap_package_name\": \"\"\n      },\n      \"device_status\": \"unlocked\",\n      \"pending_action\": \"\",\n      \"connected_to_fleet\": false\n    },\n    \"refetch_critical_queries_until\": null,\n    \"dep_assigned_to_fleet\": false,\n    \"last_restarted_at\": \"2025-08-11T14:09:31Z\",\n    \"policies\": [],\n    \"labels\": [\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 9,\n        \"author_id\": null,\n        \"name\": \"All Hosts\",\n        \"description\": \"All hosts which have enrolled in Fleet\",\n        \"query\": \"select 1;\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 11,\n        \"author_id\": null,\n        \"name\": \"Ubuntu Linux\",\n        \"description\": \"All Ubuntu hosts\",\n        \"query\": \"select 1 from os_version where platform = 'ubuntu';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      },\n      {\n        \"created_at\": \"2025-03-06T15:26:01Z\",\n        \"updated_at\": \"2025-03-06T15:26:01Z\",\n        \"id\": 15,\n        \"author_id\": null,\n        \"name\": \"All Linux\",\n        \"description\": \"All Linux distributions\",\n        \"query\": \"SELECT 1 FROM osquery_info WHERE build_platform LIKE '%ubuntu%' OR build_distro LIKE '%centos%';\",\n        \"platform\": \"\",\n        \"label_type\": \"builtin\",\n        \"label_membership_type\": \"dynamic\"\n      }\n    ],\n    \"packs\": [\n      {\n        \"created_at\": \"2025-03-06T19:03:44Z\",\n        \"updated_at\": \"2025-03-06T19:03:44Z\",\n        \"id\": 1,\n        \"name\": \"something\",\n        \"disabled\": false,\n        \"type\": null,\n        \"labels\": null,\n        \"label_ids\": null,\n        \"hosts\": null,\n        \"host_ids\": null,\n        \"teams\": null,\n        \"team_ids\": null\n      }\n    ],\n    \"batteries\": null,\n    \"last_mdm_enrolled_at\": null,\n    \"last_mdm_checked_in_at\": null,\n    \"status\": \"online\",\n    \"display_text\": \"nimda-Vivobook\",\n    \"display_name\": \"nimda-Vivobook\"\n  },\n  \"self_service\": true,\n  \"org_logo_url\": \"\",\n  \"org_logo_url_light_background\": \"\",\n  \"org_contact_url\": \"https://fleetdm.com/company/contact\",\n  \"license\": {\n    \"tier\": \"premium\",\n    \"organization\": \"Fleet Device Management Inc.\",\n    \"device_count\": 100,\n    \"expiration\": \"2025-12-30T18:00:00-06:00\",\n    \"note\": \"Created with Fleet License key dispenser\",\n    \"managed_cloud\": false\n  },\n  \"global_config\": {\n    \"mdm\": {\n      \"enabled_and_configured\": true\n    },\n    \"features\": {\n      \"enable_software_inventory\": true\n    }\n  }\n}\n\n```\n\nSoftware response after refetch:\n```\n {\n      \"id\": 3526,\n      \"name\": \"go1.24.3.linux-amd64.tar.gz\",\n      \"source\": \"tgz_packages\",\n      \"status\": \"installed\",\n      \"installed_versions\": null,\n      \"software_package\": {\n        \"name\": \"go1.24.3.linux-amd64.tar.gz\",\n        \"automatic_install_policies\": null,\n        \"version\": \"\",\n        \"platform\": \"linux\",\n        \"self_service\": true,\n        \"icon_url\": null,\n        \"last_install\": {\n          \"install_uuid\": \"fdf7eeae-2df2-4694-95a1-e3665bfc0f6a\",\n          \"installed_at\": \"2025-08-14T20:55:26.882191Z\"\n        },\n        \"last_uninstall\": null,\n        \"package_url\": null\n      },\n      \"app_store_app\": null\n    },\n```"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Looks like this is a backend bug, specifically, `software_updated_at` on the host isn't getting updated after refetch:\n\n`\"software_updated_at\": \"2025-08-14T20:49:24Z\",`\nSo the frontend thinks the refetch hasn't happened because the API isn't returning an updated `software_updated_at` timestamp that's newer than the `last_install.installed_at`, which it has, but BE some reason didn't update `software_updated_at`"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica So, this appears to currently be expected behavior, but we need to figure out how to handle this. Bringing this to design review. Context:\n\n1. Currently, FE “recently installed” UX relies on software last updated\n2. This persists for tar.gz installers when they’re the only thing that changed on a host because tarballs don’t get inventoried even after the auto-refetch post-install\n3. Because there are no changes in inventory resulting from a tarball install, we hit the no-op branch when running software inventory even though we refetched successfully, which means that the software updated timestamp isn't touched\n4. If inventory doesn't change, we explicitly shouldn’t update software last updated timestamp per [this test](https://github.com/fleetdm/fleet/blob/250d26f53a0592f2748329f32c7df5e110ddc919/server/datastore/mysql/hosts_test.go#L3149-L3160)\n5. We _also_ no-op when last opened time on all inventoried software differs by less than a configured delta; the default is currently one hour despite changes in 4.71 for refetching vitals more often; if we touch the software last updated time on no-ops while retaining this delta we'll be shwoing software as recently updated when last opened times are stale\n6. Potential option: have FE look at details-updated timestamp rather than software-updated timestamp and keep existing behavior (don’t touch updated timestamp on no-op)\n\n[More context in Slack](https://fleetdm.slack.com/archives/C086V2QK76X/p1755195429676139)"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "As part of the solution for [this bug](https://github.com/fleetdm/fleet/issues/31297), we are removing tooltips."
+          }
+        ],
+        "issueNumber": 31721,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdL8SA",
+        "status": "Waiting",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet UI scrolling issue on policy automations page #6515](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/e0769c7b-805a-4272-897a-de7c5f7af36b)"
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "Timebox to 1 point."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Thanks @marko-lisica ! What a great, simple solution \u003c3\n\nEst: 1"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Was going to evict this bit the fix looks trivial so going to keep in for now."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm still seeing this a bit on the latest RC build.\n\nhttps://github.com/user-attachments/assets/82a6b2ca-ddf5-4475-b171-f3f75c0a2a0f"
+          }
+        ],
+        "issueNumber": 30004,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxFk",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "The reason for this is we starts-with match on Linux platform names for app icons, and `arch` is a Linux platform name.\n\nWe wind up using the same code paths for software icons as for OS icons, so this code winds up being rather brittle; just dropping \"Arch\" out of the list would mean we'd get a generic package icon for Arch Linux hosts rather than the penguin. So getting this right without breaking something else is going to require a bit of a refactor as the current algorithm is too naive.\n\n@marko-lisica do we even want to show the penguin for software packages? Our default for Linux packages of various types is a generic package icon, so right now we have a mix of penguins (for items that have a linux platform inside the name) and generic package icons (for everything else), for no reason that's obvious to an admin. Maybe OS icons (penguin, Windows, Apple OSes, Android, ChromeOS) should have their own bucket, limited to use on the OS list/detail pages, at which point the penguin would no longer leak into software?\n\nPushing this back to In Progress to get an answer on the above."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "\u003e Maybe OS icons (penguin, Windows, Apple OSes, Android, ChromeOS) should have their own bucket, limited to use on the OS list/detail pages, at which point the penguin would no longer leak into software?\n\n@iansltx I think this is a good solution. We have a default icon for Linux packages, so we won't need the \"penguin\" icon for that purpose. Also, other platforms have a default icon for packages."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1752671903129569"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Thanks for filing @nonpunctual and looking into the root cause @iansltx and product designing/updating the to-fix @marko-lisica .\n\nBold Est: 1 rounding up to 2 to add tests and internal documentation\n\n"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nViewed software inventory for several macOS, Linux, and Windows hosts. Also searched for any containing \"arch\". Penguin icon no longer appears. \nAlso confirmed that it still appears for Linux OS versions."
+          }
+        ],
+        "issueNumber": 30803,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "title": "(Timebox) 🪲Warning state on last-opened time calculation when changing the name of an existing software"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxBg",
+        "title": "(Timebox) 🪲Warning state on last-opened time calculation when changing the name of an existing software",
+        "comments": [
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx I see that the steps to reproduce is still a **to do**.\n\nHowever, the way you've written it sounds like part of the ticket will be to find a way to reproduce this. I'm a little uncertain how to proceed. Should I move this forward and indicate that todo as part of the fix area?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Whoops, my bad on removing `:reproduce`"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Yeah, this will need to be moved through to engineering with the reproduce tag intact as we'll likely need to coordinate with customers to get a repro."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "let's timebox this, whether it is reproduction, or adding logging"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Pulling the :reproduce label off of this since that makes it less clear whose work queue this is in. Timebox is for investigation/repro by an engineer."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@ksykulev heads up that this is a related ticket: https://github.com/fleetdm/fleet/issues/29050"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman @marko-lisica See [this Slack thread](https://fleetdm.slack.com/archives/C086V2QK76X/p1754591131297309) for context on why this is Waiting. We have some product questions on whether/when we should clear \"last opened\", and the behavior may not be consistent right now cross-os (e.g. @zwass mentioned that we don't take version into account when checking package last-opened times in Linux)."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Was able to reproduce the warning in the log:\n\n```\nlevel=warn ts=2025-08-07T19:08:27.209411Z msg=\"updateModifiedHostSoftwareDB: last opened at is nil for new software, but not for current software\" new_software=\"Microsoft Word\" current_software=\"Microsoft Word\" bundle_identifier=com.microsoft.Word\n```\nBy doing the following:\n\n1. Install Microsoft Word, and open\n2. Refetch host vitals\n3. Confirm \"Last used\" time is shown on Host \u003e Software \u003eInventory tab\n4. Reinstall or Update Microsoft Word via Fleet, do not open\n5. Refetch completes after installation automatically\n6. \"Last used\" time is cleared out on Host \u003e Software \u003eInventory tab\n\nAdded steps to repro in description."
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Not sure we need more confirmation, but..\nI downloaded firefox 139.0.4, installed it\n\n\u003cimg width=\"1206\" height=\"105\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9c714aa4-6e4b-4e9a-9741-8f5bdddcd980\" /\u003e\n\nOpened firefox\n\n\u003cimg width=\"1219\" height=\"126\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a07f13ee-cacb-4f58-bbde-092b31846c7b\" /\u003e\n\nDownloaded firefox 141.0.3, installed it\n\n\u003cimg width=\"1203\" height=\"126\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9f4138ea-edd9-4bf8-9c00-e1c274526c2f\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @noahtalerman @marko-lisica See [this Slack thread](https://fleetdm.slack.com/archives/C086V2QK76X/p1754591131297309) for context on why this is Waiting. We have some product questions on whether/when we should clear \"last opened\", and the behavior may not be consistent right now cross-os (e.g. @zwass mentioned that we don't take version into account when checking package last-opened times in Linux).\n\nUp to @marko-lisica "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "waiting on copy change, documenting the oddity"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "- A tooltip will be added on macOS hosts to indicate that updating the application in place will resets last opened time\n- A tooltip will be added on Windows/Linux hosts to indicate that last open time is tied to an install path/package name verse a version. So updating an application in place will not clear the last open time.\n- Add documentation in the API endpoint describing the nuance.\n- Change the log level when it is detected that a last open time will be changed to null and the source is not apps (aka windows/linux)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "bringing this to design review"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Design review didn't get to this 8/19, going to be discussed 8/20. #32064 and #32067 not quite sub-tasks as they are results of the time-box"
+          }
+        ],
+        "issueNumber": 29061,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdhNKc",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 28189,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwOKI",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31546,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwOYw",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "~released bug",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "status": "✔️Awaiting QA",
+        "issueNumber": 32025,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwVd4",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31966,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk8s",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 31163,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 31165,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCnxU",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 31206,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCn44",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 31207,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "# Welcome to Fleet!  \n\n## First things first, let's get you up and running! 🏃💨\n\n#### Slack\n\n- [x] Accept the invitation to join [Fleet's Slack workspace](http://fleetdm.slack.com/) sent to your `@fleetdm.com` email address.\n- [x] Introduce yourself in `#random` in Fleet's Slack. If this is your first time using Slack, review the [Slack quick start guide](https://slack.com/help/articles/360059928654-How-to-use-Slack--your-quick-start-guide). \n\n\n#### Google \n\n- [x] Accept the invitation to Fleet's Google Workspace sent to your personal email and access your `@fleetdm.com` email address, calendar, and the [\"Fleet\" shared drive](https://drive.google.com/drive/u/0/folders/0AExI02dV1NO8Uk9PVA) in Google Drive.\n- [x] Set up [two-factor authentication](https://fleetdm.com/handbook/security#2step-verification) for Google Workspace using thier [YubiKeys](https://fleetdm.com/handbook/security#hardware-security-keys). \n- [x] Set up your emergency [backup method](https://support.google.com/accounts/answer/9289445?hl=en\u0026co=GENIE.Platform%3DAndroid). This is only to be used if you are unable to use your YubiKeys for two-factor authentication.\n\n\n#### GitHub\n\n- [x] Accept the invite to the `@fleetdm` org [as a top-level member in the \"Teammates\" team](https://github.com/orgs/fleetdm/teams/teammates/members).\n- [x] To avoid confusion, ensure your name in GitHub is your actual name (not just your user name). Click on your profile icon in the top right of screen, click \"Your profile\", then under your GitHub image click \"Edit profile\" and change your name to your preferred name.\n- [x] Access Fleet's private repos, namely [fleetdm/confidential](https://github.com/fleetdm/confidential). Sometimes seeing a \"404 Not Found\" page on GitHub might _actually_ mean you don't have access to the page you're trying to reach.  (For example, if you haven't accepted your invitation yet, or if you aren't logged in to GitHub.)\n- [x] If you don't already have a set of \"Managed bookmarks\" Download and import this [set of bookmarks](https://drive.google.com/uc?export=download\u0026id=1Nih_CACAzPQJE4_BZ7TsK3tro6WrJg8o).\n- [x] Check off the steps you've already taken as part of this tools setup meeting!\n\n\n## Now that we've got that out of the way, grab your breakfast of champions ☕️ and read a bit about our training.\n\nTraining and onboarding [are important](https://fleetdm.com/handbook/company/why-this-way#why-the-emphasis-on-training). Your **first three days at Fleet** are dedicated (exclusively) for training and working on this onboarding issue, and it will be **the major focus of your first two weeks**.\n\n\u003e If other tasks or priorities emerge other than working on this issue during your first 3 days, **please don't do them**.  Instead, work on this issue.  If you are unsure, please send a Slack DM to our CEO ([@mikermcneil](https://fleetdm.slack.com/archives/D04V67ZA97H)) who will help make sure everyone is on the same page about the importance of onboarding at the company.\n\n\u003cins\u003e ☀ Your first day \u003c/ins\u003e\n\nOn your first day, you'll have a [tool setup call](#first-day-setup-call) with the Head of People and Head of Digital Workplace \u0026 GTM Systems and [your first manager 1:1](#your-first-11-meeting). Here's a breakdown of what to expect to cover in those calls.\n\n\n### Prepare for your first-day calls\n\nPlease complete the following as early as possible during your first day to prepare for your first-day meetings. It's fine to complete these steps after your first-day set-up call, but best to have them completed before your first manager 1:1.\n\n- [x] **Schedule your onboarding calls**: Schedule a 30-minute recurring call once every weekday for your first 2 weeks at Fleet with your manager. \n  - [x] Subscribe to your manager's calendar to find a time daily that works for both of you.\n  - [x] Schedule the recurring call with your manager in Google Calendar.\n- [x] Schedule a contributor experience training call using this [calendly link](https://calendly.com/fleetdm/contributor-experience-training). Read more about this call [in our handbook](https://fleetdm.com/handbook/company/communications#contributor-experience-training).\n- [x] **Set up your 1:1 agenda doc**: Make a copy of [Fleet's 1:1 agenda template](https://docs.google.com/document/d/1IkGQJ4PPU0MyW35Xo8BuvoUPKpStsmcw_nHWt71W2yE/copy) and rename your new agenda doc to `[your GitHub username]:[your manager's GitHub username]`. This helps your manager find your 1:1 agenda quickly, which means you're more likely to get prompt, useful feedback.\n  - [x] Share the document with your manager to using their `@fleetdm.com` email address, and grant \"Edit\" access.\n  - [x] Copy your job description commit URL (column \"W\") from your row in [🧑‍🚀 Fleeties](https://docs.google.com/spreadsheets/d/1OSLn-ZCbGSjPusHPiR5dwQhheH1K8-xqyZdsOe9y7qc/edit?gid=0#gid=0\u0026range=W1) and paste it next to \"Job description:\" in the \"Vision\" section of your 1:1 document.\n  - [x] Lastly, check out the [link in the footnote of your new agenda doc](https://about.gitlab.com/handbook/leadership/1-1/suggested-agenda-format/#hallway) to learn more about the agenda doc format and how to use it.\n\n\n### Your first 1:1 meeting\n\nIn your first 1:1 meeting with your manager we encourage you to cover the topics in this section. If you have time for more, you can take a look at [\"Discussions with your manager in daily onboarding 1:1's\"](#discussions-with-your-manager-in-daily-onboarding-11s) and get a headstart on future 1:1's.\n\n\n#### Suggested agenda\n\n - [x] Talk a little bit about yourself, and your background.\n - [x] Discuss your job title, responsibilities, and function.\n - [x] Discuss with your manager who all of their other direct reports are (your peers).\n - [x] Discuss with your manager who they anticipate you will work with day-to-day outside your department. Pick 2 people with your manager and schedule time with them to introduce yourself and your role and learn how they've successfully collaborated with people in your role in the past.\n - [x] Discuss with your manager the importance of this [Google doc regarding licenses](https://docs.google.com/document/d/1BXGAYt_7FTfQOjYIuXDgmxd7DX4JMiSRoOWknGgfp1c/edit).\n\n\n### Remote work\n\n- [x] Set up your personal workspace. Fleet is 100% remote, so get comfortable! Your work schedule should be sustainable and your workspace ergonomic.\n- [x] Find yourself in [\"Fleeties\" spreadsheet](https://docs.google.com/spreadsheets/d/1OSLn-ZCbGSjPusHPiR5dwQhheH1K8-xqyZdsOe9y7qc/edit#gid=0) and update any incomplete or incorrect information.\n  - [x] Take the [Enneagram test](https://docs.google.com/spreadsheets/d/1OSLn-ZCbGSjPusHPiR5dwQhheH1K8-xqyZdsOe9y7qc/edit#gid=0\u0026range=AA1) and fill in your results in the \"Enneagram\" column of [\"Fleeties\"](https://docs.google.com/spreadsheets/d/1OSLn-ZCbGSjPusHPiR5dwQhheH1K8-xqyZdsOe9y7qc/edit?gid=0#gid=0\u0026range=AA1) (Pay with your Brex card)\n- [x] Study the [\"Company\" page](https://fleetdm.com/handbook/company) to learn Fleet's purpose, values, history, and advisors.  The links to external website and articles are carefully curated.  (It's worthwhile to click and read them, too.)\n- [x] Study the [\"Why this way\" page](https://fleetdm.com/handbook/company/why-this-way) to learn Fleet's most important decisions about the best way to work and the reasoning for them.  (The links to external websites and articles on that page are carefully curated.  It's worthwhile to click and read them.)\n- [x] Read Fleet's [\"Communications\"](https://fleetdm.com/handbook/company/communications) page to learn our policies on company equipment, spending company money, travel, receiving feedback, meetings, Slack etiquette, and more.  \n- [ ] At Fleet, everyone uses the handbook, so it's important to learn how to quickly use it and contribute to it.\n  - [x] First, study the philosophy behind why Fleet uses a [\"handbook-first\" strategy\"](https://fleetdm.com/handbook/company/why-this-way#why-handbook-first-strategy).\n  - [x] Then,  study the [basics of markdown syntax](https://fleetdm.com/handbook/company/communications#writing-in-fleet-flavored-markdown) (bold text, italics, links, bullet points, and headings) so that you can contribute yourself.\n  - [ ] Next, read [how the handbook is structured](https://fleetdm.com/handbook/company/leadership#outline-of-departmental-page-structure).\n  - [ ] Find your department and add yourself to its \"Team\" section by making a pull request (aka \"PR\" aka \"merge request\" aka \"MR\"). At Fleet, everyone makes pull requests; not just engineers. Open source is forever.  Any changes you make in a repository are permanently visible in the history, even if you revert them.\n  - [ ] Add your GitHub user name to the [list of humans](https://github.com/fleetdm/fleet/blob/26ada37c501870b5329cd80da32366b8a96ea32b/website/api/controllers/webhooks/receive-from-github.js#L57). \n\n\n\n# 🌙 Your first few days - Getting oriented at Fleet\n\nHopefully by this point you've completed your day 1 meetings and are looking forward to the rest of the week! In this section, we'll prompt you to seek out information about your role, your responsibilities, how the Fleet product works, and dive deeper into customizing your workspace tools for efficiency.\n\n\n### CEO shadow program\n\n- [x] Locate the three-day \"CEO shadow program\" event on your calendar (it's usually within your first two weeks) and create an \"Out Of Office\" event on your calendar for the same dates to make sure you're available for the program.\n  - [x] Read through the [CEO shadow program](https://fleetdm.com/handbook/company/leadership#ceo-shadow-program) and [prepare for the program](https://fleetdm.com/handbook/company/leadership#[prepare-for-the-program) sections of the handbook and discuss any questions with Digital Experience during your onboarding.\n\n\n### Device transparency \n\n- [x] Read [what we can see about your work computer](https://fleetdm.com/transparency). (If you have any concerns or would prefer not to enroll your personal device, talk to your manager.)\n- [x] Visit our [Fleet dogfood instance](https://dogfood.fleetdm.com) and use the \"Sign on with Google\" option with your `@fleetdm.com` email to log in and become a user on our internal version of Fleet.\n\n\n## Discussions with your manager in daily onboarding 1:1's\n\n### GitHub\n\n - [x] Discuss with your manager [which kanban board](https://fleetdm.com/handbook/company/why-this-way#why-make-work-visible) that you, your manager, and your team use to track work in progress. \n   - There is one board per team and they correspond with the [Fleet handbook](https://fleetdm.com/handbook).\n - [x] Pull your onboarding issue into your team's Github Project board, and move it to \"In progress\".\n - [x] Discuss with your manager when to make a public issue versus a confidential issue. (At Fleet, everything we do is [public by default](https://fleetdm.com/handbook/company#openness).)\n - [x] Discuss the [preferred alternatives to posting `@fleetdm.com` email addresses publicly](https://github.com/fleetdm/confidential/issues/224) in repositories, issue trackers, blog posts, social media, or anywhere else viewable by people (and bots) outside the company.\n\n\n### Security\n\n- [x] Discuss with your manager the dangers of phishing emails, and why it's important not to click links in an untrusted email.\n\n\n### Holidays\n\n- [ ] Discuss with your manager [Fleet's time off policy](https://fleetdm.com/handbook/company/communications#paid-time-off), and you understand how to [take time off at Fleet](https://fleetdm.com/handbook/company/communications#taking-time-off).\n- [ ] Choose one of the following [holiday schedules](https://fleetdm.com/handbook/company/communications#holidays) and let your manager know your preference:\n- [ ] Add your holidays to your calendar based on the country where you work (If you are not in the US, please tell your manager the dates of national holidays)\n- [ ] Mark these and any other dates you plan to be out of office in the calendar using the [time-off process](https://fleetdm.com/handbook/company/communications#taking-time-off).\n\n\n### Performance feedback\n\n- [ ] You understand [how performance feedback at Fleet works, from the perspective of your manager](https://fleetdm.com/handbook/company/communications#feedback).\n- [ ] You understand and have read the relevant section in the handbook about how [compensation decisions](https://fleetdm.com/handbook/company/communications#compensation) are evaluated and updated shortly after the yearly workiversary.\n\n\n## Customizing your tools\n\nYou will have accessed most of our standard tools during the tool setup meeting with Digital Experience. Now you're set up, here are some ways to customize them to be most efficient for our use of them at Fleet. Take your time and read through each prompt.\n\n### Google Workspace \n\n#### Gmail\n\n- [ ] Set up your fleetdm email signature by following the instructions in [this guide](https://docs.google.com/document/d/1SaAjH8G8DwAcpsiytIDMq8cImiQzVb6Lj-75Y-w1aGs).\n\n\n#### Google Calendar\n\n\n##### How to use Google Calendar at Fleet\n\n- Check your calendar every morning to see if anything has been added. \n- Schedule internal meetings with Google Calendar and not personal Calendly links so all team members attending can add meeting notes and attachments. For calendar event descriptions, use \"Agenda: LINK\", where \"LINK\" is the URL of your 1:1 doc (this is important to play nicely with some automation we have set up. Be sure to put the string \"Agenda: \" at the beginning of the description for any calendar event for a recurring meeting -- otherwise, unexpected automation may trigger).\n- Please do not move events between calendars or add new calendars.\n- [ ] Share your calendar with the \"everyone@fleetdm.com\" group and select \"make changes to events.\"\n       \n\u003cimg width=\"768\" alt=\"Screenshot 2023-01-17 at 9 50 18 AM\" src=\"https://user-images.githubusercontent.com/100798688/212967248-76717523-031e-4606-8893-3868f9b85328.png\"\u003e\n\n- [x] [Set your working hours in Google Calendar](https://support.google.com/calendar/answer/7638168?hl=en#zippy=%2Csee-how-to-set-working-hours).\n- [x] Use this link to subscribe to the [\"Celebrations\" calendar](https://calendar.google.com/calendar/u/0?cid=Y19kaW9lNzlrYWk1cnY4bzgxamd2cnF2NWk1Z0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t) in Google Calendar and add your birthday as an all-day event with your full name in the title (\"Jasmine Stone's birthday\"), and set it up to recur annually.\n- Subscribe to the following calendars in Google Calendar:\n  - [x] The [\"Events and speaking dates\" calendar](https://calendar.google.com/calendar/u/0?cid=Y19qa2w5OWs0Z29qdGpyNGZmYzJiczhmbTRhZ0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t). \n  - [x] The [\"Scrum: MDM\" calendar](https://calendar.google.com/calendar/u/0?cid=Y18yNGI5MDI2YmZiM2Q1ZDA5NWRkMzcwNmUxMzFkN2YxNmEyZjQ4YzdhNTA1NTQ3MTcwNTY5ZjA3ODgzYjZlNzMyQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20).\n  - [x] The [\"Scrum: Orchestration\" calendar](https://calendar.google.com/calendar/u/0?cid=Y19jYzdlMGU1Y2JjMGZjOTE1NDlmM2MyNTc3NTI3YjYxYTUxMmQ3ZjI4ZGZiM2UxYWYyNzE2MGVlYjIyZWUxZTViQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20).\n  - [x] The [\"Scrum: Software\" calendar](https://calendar.google.com/calendar/u/0?cid=Y180MzExYTdhNGQ2NDgzMGM4NzEzYjIzMTU3Nzc3ZDk5NmZkOWRkZWQ5ZGZiZjMxMjdiZjg1ZDJmZmUzMjdlODczQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20).\n  - [x] The [\"Fleet releases\" calendar](https://calendar.google.com/calendar/u/0?cid=Y192Nzk0M2RlcW4xdW5zNDg4YTY1djJkOTRic0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t).\n  - [x] The [\"Office hours\"](https://calendar.google.com/calendar/u/0?cid=Y18zMjIzNzY4MmRkZTk4ZTMyODI1YTU2NWQxMmY5NDAxMjZjYzFiNGQ5Y2I2YzY4MmM0NjI3MWRmNDdlMzYzOTQ2QGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20) calendar in Google Calendar and talk to your manager about which meetings you should add yourself to. These calls are for you to meet everyone and learn who does what so that when you need something, you know who to reach out to for help.\n\n \n#### Google Drive\n\n- [x] Access and explore the Fleet shared drive in Google Drive and see how it [is organized](https://docs.google.com/drawings/d/1rl_q3Meph74h5md2g1GLanFIwQbkhvoK3cbD-FubTwc/edit).  \n- [x] Watch [this video](https://www.loom.com/share/89314389ccab44558d42ed88a70d9d24) _(4m)_ to learn how we share files with each other in Google Drive.  (It is different than the default way.)\n\n\n### Your equipment\n\n- [x] Tag `@Allen Houchins` in the [#help-onboarding](https://fleetdm.slack.com/archives/C02QG7P5571) Slack channel with your laptop's serial number and operating system. Why?  Now that you've received the new laptop, a Fleet administrator will ensure you're successfully enrolled in Fleet with MDM turned on, and with all of Fleet's baseline system preferences and other settings (\"configuration profiles\").\n\n\n#### Security and compliance\n\n- [x] Configure your [YubiKeys](https://www.loom.com/share/e0d428ec49ee448d9b851b033a387364).\n- [x] Complete your initial Vanta security training (you will be emailed an invite to the training)\n\n\n### Slack\n\n- [ ] **Slack + GitHub:** Install and configure the [Toast Slack app](https://fleetdm.slack.com/apps/AC6M092SD-toast-for-github)\n  - [ ] After installing, be sure to **finish configuration**: \n\n  \u003cimg width=\"1636\" alt=\"image\" src=\"https://user-images.githubusercontent.com/618009/220965748-30cb47be-e386-4cbb-b5b5-fe8e892d435d.png\"\u003e\n  \n  - [ ] Confirm that you get a Slack notification when someone mentions you in a GitHub issue comment. If this didn't happen, grab time with Sam Pfluger or manager before the end of your first two weeks to perform this test. the [Toast app working correctly](https://fleetdm.com/handbook/company/communications#getting-github-notifications-in-slack) is critical for working at Fleet.)\n  \n- [x] **Slack + Google Calendar:** Install the [Google Calendar + Slack integration](https://fleetdm.slack.com/apps/ADZ494LHY-google-calendar) and configure this tool so that you're notified in Slack just before your scheduled calendar events start (e.g. at t-minus one minute).\n- **Optional**: Join the [#random-coffee](https://fleetdm.slack.com/archives/C06BF23ALDA) channel to virtually meet up with a fellow Fleetie every week.\n\n\n### Zoom\n\n- [ ] Update your Zoom display name to be `[your name] | [your title]` (e.g. \"Jayne Doo | Train Conductor\").\n- [ ] Create a Google Calendar Task for the night before or morning of your first day of the CEO shadow program to update your Zoom display name to be `CEO shadow | [your name]` (e.g. \"CEO shadow | Jayne Doo\")\n- [ ] Create a Google Calendar Task for the end of the last day of the CEO shadow program to update your Zoom display name to be `[your name] | [your title]` (e.g. \"Jayne Doo | Train Conductor\").\n- [x] **Google Calendar + Zoom:** Verify you can host meetings using your Fleet Zoom account and your `@fleetdm.com` calendar in Google Calendar.\n\n\n### Unblocked\n\nYou have access to Fleet's instance of Unblocked. \n- [x] [Sign into Unblocked using GitHub](https://getunblocked.com/). You'll automatically be granted access to the [Fleet team]([url](https://getunblocked.com/dashboard/team/8e9a24fe-5638-4bc0-a8c2-b09d53b4621a/questions/team)). Unblocked is an LLM that has been trained on our GitHub repo, and is capable of answering a variety of questions about how Fleet works.\n\n\n\n## 🗓️ Your first two weeks\n\n\n### Immerse yourself in the world of device management and security\n\nIf you aren't already familiar with device management/security, this can be a lot to take in. Don't worry if you're still confused.\n- [x] Check out this list of [commonly used terms](https://fleetdm.com/handbook/company/communications#commonly-used-terms)\n- [x] Read the [2024 investor memo](https://docs.google.com/document/d/1VWRVwp0Ar8qASmHkP-uW3Da1ZParupO2OUCx9BN5GGg/edit). \n- [x] Read [Why Fleet?](https://docs.google.com/document/d/1E0VU4AcB6UTVRd4JKD45Saxh9Gz-mkO3LnGSTBDLEZo/edit#heading=h.vfxwnwufxzzi) to learn about the company's roadmap, and what people are using the product for in the real world. You'll get to know the customer persona and a few example case studies.\n- [x] Read [The Five Dysfunctions of a Team](https://wtf.tw/ref/lencioni.pdf) or check out the [audio book](https://www.audible.co.uk/pd/The-Five-Dysfunctions-of-a-Team-Audiobook/B004EXKC5M).\n- [ ] The first two-thirds of [The Phoenix Project](https://www.audible.com/pd/The-Phoenix-Project-Audiobook/B00VAZZY32) to live a few days in the life of one of Fleet's customers, an IT leader named Bill, a CISO named John, a couple of IT middle managers named Patty and Wes, and an IT engineer named Brent.  You'll also get a good perspective on why Fleet works the way we do.\n- [ ] **New managers**: Please also read [\"No rules rules\"](https://www.audible.com/pd/No-Rules-Rules-Audiobook/1984891170?qid=1729182831\u0026sr=1-1\u0026ref_pageloadid=not_applicable\u0026pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f\u0026pf_rd_r=EB42E4EEBQEPGH7E6HD7\u0026pageLoadId=gJnRnUoPxOnoqcIA\u0026creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c\u0026ref=a_search_c3_lProduct_1_1 ) and [\"The goal\"](https://www.audible.com/pd/The-Goal-Audiobook/B00IFG88SM?qid=1729183058\u0026sr=1-1\u0026ref_pageloadid=not_applicable\u0026pf_rd_p=83218cca-c308-412f-bfcf-90198b687a2f\u0026pf_rd_r=DDZQ8MX4GS8QATQ5QGEX\u0026pageLoadId=pR8nv6URmTfyvTHk\u0026creativeId=0d6f6720-f41c-457e-a42b-8c8dceb62f2c\u0026ref=a_search_c3_lProduct_1_1 ) and the [\"Leadership\" page](https://fleetdm.com/handbook/company/leadership).\n\n\n### Open-source community\n\n- [ ] Join the \"Mac Admins\" Slack to get connected with the community of sysadmin users who use Fleet.\n  - Sign up for the [Mac Admins Slack workspace](https://join.slack.com/t/macadmins/shared_invite/zt-34vzyf677-v4FuM9xOWQu1Yu7dAFHpZg)\n  - Join the [`#fleet`](https://macadmins.slack.com/archives/C0214NELAE7) and [`#osquery`](https://macadmins.slack.com/archives/C07DGNRGS) channels\n  - Set your status with the `:fleet:` emoji and text like \"Software Engineer, Fleet\" (replace with your title). See [Mike (@mikermcneil) for an example](https://osquery.slack.com/team/U019VQA6R5F)\n  - Introduce yourself to the community in the channel.\n- [ ] Join the osquery Slack to get connected with the community of osquery aficionados who use Fleet.\n  - Sign up for the osquery [Slack workspace](https://fleetdm.com/community) using your work email address\n  - Set your standard profile pic\n  - Join the [`#fleet`](https://osquery.slack.com/archives/C01DXJL16D8) channel\n  - Set your status with the `:fleet:` emoji and text like \"Software Engineer, Fleet\" (replace with your title). See [Mike (@mikermcneil) for an example](https://osquery.slack.com/team/U019VQA6R5F)\n  - Lurk a bit and see what folks talk about, and how often and how quickly folks from Fleet respond.\n  - Introduce yourself to the community in the channel.\n\n\n## 🎉 Making it official\n\n- [ ] Order one hoodie, backpack, t-shirt or other piece of branded merchandise for yourself using your Brex card at [Printful (login in 1password)](https://www.printful.com/dashboard/default). Select one item from Product templates or from the order history.\n- [ ] **LinkedIn:** Update your LinkedIn profile and send connection requests to your colleagues. This is a suggestion, not a requirement. Consider using the same picture as your LinkedIn everywhere at Fleet for continuity.\n- [ ] **GitHub:** You've [publicized your membership](https://github.com/orgs/fleetdm/people) in [Fleet's GitHub org](https://github.com/fleetdm) if you are comfortable doing so. This is a suggestion, not a requirement.  It will help folks in the community understand that you are part of the Fleet Device Management team.  \n\n### Engineering\n\n - [ ] Talk with your manager about the on-call rotation.\n    - If you've been added to the on-call rotation, talk with your manager about the responsibilities of an on-call engineer.\n - [ ] Bookmark this list of [\"triaged\"](https://github.com/issues?q=is%3Aopen+archived%3Afalse+org%3Afleetdm+no%3Amilestone+no%3Aassignee+sort%3Aupdated-desc+) issues.\n  - [ ] Add yourself to the recurring engineering meetings (i.e. roundup, standup, and release retrospectives) and understand the purpose of each of these meetings.\n  - [ ] Request access to [☁️ Customer environments \u0026 license keys](https://docs.google.com/spreadsheets/d/1nGgy7Gx1Y3sYHinL8kFWnhejghV1QDtv9uQgKu91F9E/edit#gid=0)\n  - [ ] Accept the invite to the @fleetdm GitHub org [in a special team like \"Core engineering\" or \"Growth engineering\", so that you have full write access](https://github.com/orgs/fleetdm/teams/teammates/teams) \n   - Ask your manager about a good first code change of some kind that you can push a PR for on your first day. \n  - [ ] [Front-end engineers](https://github.com/orgs/fleetdm/teams/frontend) only: [Request a \"full\" Figma license](https://www.figma.com/team_invite/redeem/7GHxFEQ5ruTld3Z61l1IRC) in order to interact with wireframes easier. \n- [ ] Discuss with your manager why we use [Bootstrap 4](https://getbootstrap.com/docs/4.6/getting-started/introduction/) when working on fleetdm.com.\n  - [ ] Discuss with your manager why we avoid writing custom CSS/LESS in stylesheets, instead opting for inline Bootstrap classes and, occasionally, inline styles where possible.  \n  - [ ] Discuss with your manager why we custom stylesheets are still sometimes used, especially for media queries, but we favor custom selectors like `[purpose=\"navbar-button\"] {  }` rather than `.navbar-button { }`. \n    - This helps make Bootstrap classes easier to distinguish in the HTML since it means every class in the HTML is a Bootstrap class.\n\n\u003c!--\n### 🐋 Sales onboarding\n\nThis issue is to be started after finishing your welcoming onboarding ticket. It is intended to get you more familiar with how we sell at Fleet, and it will help you ramp and get you closer to being able to contribute to revenue generation.\n\n## Get to know the team\n- [ ] Schedule 1:1s with at least 3 team members, including one Solution Consultant\n  - [ ] Ask SC to show you dogfood and help you open it\n- [ ] Begin attending daily standup meetings\n- [ ] Ask teammates what recurring meetings you should attend\n- [ ] Ask one person to be your “onboarding buddy” to help with daily flow\n- [ ] Take the [Enneagram test](https://docs.google.com/spreadsheets/d/1OSLn-ZCbGSjPusHPiR5dwQhheH1K8-xqyZdsOe9y7qc/edit#gid=0\u0026range=AA1) (pay with your Brex card)\n\n## Get familiar with the [Why Fleet](https://docs.google.com/document/d/1E0VU4AcB6UTVRd4JKD45Saxh9Gz-mkO3LnGSTBDLEZo/edit?usp=sharing) document\n- [ ] Bookmark this file, the main source of all Fleet product marketing information\n- Read the file to learn:\n   - [ ] The high-level positioning of Fleet\n   - [ ] Product categories Fleet plays in\n   - [ ] Fleet’s Ideal Customer Profile\n   - [ ] Personas that Fleet sells to and works with\n   - [ ] Buying situations\n \n## Familiarize yourself with prospect/customer calls\n- [ ] Go to the [Gong Sales Onboarding folder](https://us-65885.app.gong.io/library/company?workspace-id=9148397688380544352\u0026folder-id=2713722867517278137#) and start watching call recordings, making note of the comments both at the folder level describing each call and during the call where notes are made about what is being said in the call at that time; add your own notes to the calls as desired\n- [ ] Find the notes for these calls in Google Drive (Docs) and learn the format and types of items captured\n- [ ] Bring questions to daily standups, sales office hours and sales enablement meetings\n- [ ] Ask CRO which upcoming calls you should shadow\n\n\n## Learn tech stack - in an AE 1:1 or CRO 1:1, discuss tools used and which you'll need to request a license for\n- [ ] Once licenses are obtained, walk through each of the tools with the CRO and then again with an AE\n   - [ ] Salesforce+Einstein activity capture\n   - [ ] Sales nav\n   - [ ] Dripify\n   - [ ] Snitcher\n   - [ ] Calendly\n   - [ ] Gong\n\n\n## Watch videos and read content to learn why customers bought Fleet\n- [ ] Start with clips at top of fleetdm.com\n  - [ ] Watch Austin from Rivian discuss [why they bought Fleet](https://us-65885.app.gong.io/call?id=6020709985747924682)\n  - [ ] Watch Nick from Reddit discuss [why they bought Fleet](https://us-65885.app.gong.io/call?id=320232857290997743)\n  - [ ] Find the notes for these calls in Google Drive (Docs) and learn the format and types of items captured\n- [ ] Read why other customers bought Fleet Premium [here](https://docs.google.com/spreadsheets/d/1yrsjltGJ9DZohCw6hhJ-uWMDjbWvEuGTF0yGJeyxwrI/edit?usp=sharing)\n\n\n## Learn how we sell at Fleet\n- [ ] Read the [Sales Playbook One Pager](https://docs.google.com/document/d/1v5qEUH-aMxIQFQDIs6gdGorr8_iDD7f6/edit?usp=sharing\u0026ouid=101039358388338051104\u0026rtpof=true\u0026sd=true) and the detailed [Sales Playbook](https://docs.google.com/document/d/1xVmpCYoxWbOvzQdwGhf9xMQ6ZYoLVjsDA_cEeJb0mEE/edit?usp=sharing)\n- [ ] Schedule 1:1 with another AE to discuss the sales process and how Salesforce is used\n- [ ] Schedule (or use existing) 1:1 with CRO to review all the above\n- [ ] If not already invited to the weekly Sales Enablement meeting, add yourself and attend!\n- [ ] Review the [GitLab MEDDPPICC content](https://handbook.gitlab.com/handbook/sales/meddppicc/).\n\n\n## Review content and collateral\n- [ ] [Sales collateral list](https://docs.google.com/document/d/1grgxTXRIDEDrwk4xDQCZcxvZK0La407b7O3tTvrOnlE/edit?usp=sharing)\n- [ ] [Security Tools Terms](https://docs.google.com/spreadsheets/d/1bF7ct4Ibyo-GPaehFRwZrlN2PQqQmyi1D1gx-gqNlpc/edit?usp=sharing)\n- [ ] [Fleet ROI](https://docs.google.com/spreadsheets/d/14Cfj77ynOB6z4pmb9DD7HNRGo0kcKJuEIifgnz-YO50/edit?usp=sharing)\n- [ ] [TEMPLATE - Prospect discovery/qualification](https://docs.google.com/document/d/14kgtz7o3kwXy-T3YysLyeakiIGNVFDpHQ9CiJ_k8uXI/edit?usp=sharing)\n\n\n--\u003e\n\n## 🏁 All good?\n\n- [ ] Run through the checklists above one last time to make sure there's nothing you might have overlooked.\n- [ ] Remove your Fleet Google account from the [\"onboarding@\" Google group](https://groups.google.com/).\n\n---------\n\n🙌 That's it!  Thank you for all of your patience and attention to detail.  We are all very excited to have you on the team, and we can't wait to see what you accomplish.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdrGeE",
+        "issueNumber": 11828,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdhCgY",
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "issueNumber": 31495,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "# `fleetd` agent: 1.46.0\n\nIncludes updates to: \n- Fleet Desktop tray icon application.\n- Changes in `orbit` executable.\n\n- Desktop `v1.45.1` \u003e `v1.46.0`\n\nFleet 1.46.0 has been released to the `edge` channel.\n\nSmoke tests should be performed in `edge` before promoting it to `stable`.\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n0. You can generate packages that use `edge` by running: `fleetctl package [] --orbit-channel edge --desktop-channel edge`.\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: stable` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003e\n4.71.0: Pass\n4.72.0: Pass\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwdew",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "fleetd [v1.46.0](https://github.com/fleetdm/fleet/blob/main/orbit/CHANGELOG.md#orbit-1460-aug-15-2025) has been released to stable!"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Fleet upgrade shines,\nEdge tested, all systems go,\nSmoother user flow glows."
+          }
+        ],
+        "issueNumber": 32066,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "**Fleet version**: Observed in Fleet's dogfood environment (commit `45c366c`)\n\n**Web browser and operating system**: N/A\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nOn the Vulnerability detail page, the font size in 19.2px:\n\n\u003cimg width=\"328\" height=\"356\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/5724cda7-a891-4be3-80a2-bfd257912fc4\" /\u003e\n\nOn the Software title details page and Host details page the font size is 24px:\n\n\u003cimg width=\"407\" height=\"244\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f35b318a-8e74-4696-9db9-9db46da6cd42\" /\u003e\n\n\u003cimg width=\"533\" height=\"192\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/ff370510-ed83-497d-8958-93cd7e349adf\" /\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Visit the Vulnerability details page and check the font size of the CVE header\n\n### 🛠️ To fix\n\nUpdate the header on the Vulnerability details page to be 24px font size.",
+          "number": 31383,
+          "repository": "fleetdm/fleet",
+          "title": "Vulnerability (CVE) details page: Inconsistent text size",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31383"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdyYJg",
+        "labels": [
+          "bug",
+          "~frontend",
+          ":release",
+          "~released bug",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "1636da2b",
+          "startDate": "2025-08-18",
+          "title": "Sprint 46"
+        },
+        "status": "🦤 ‎In review",
+        "title": "Vulnerability (CVE) details page: Inconsistent text size",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Hey @mostlikelee @RachelElysia if we have frontend capacity in the current sprint, this one could be a quick one to knock out."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Est: 1\n\nThanks @noahtalerman -- will likely get it in 4.73"
+          }
+        ],
+        "issueNumber": 31383,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "mostlikelee",
+          "Illbjorn"
+        ],
+        "content": {
+          "body": "**Fleet version**: 4.71.0\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nAfter updating to Fleet 4.71.0, `customer-leiden` is not able to upload any custom installers that are greater than 16MB to their Fleet server. They are using min.io for S3 compatible storage for their software installers.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n\nTo reproduce you may need to run minio \"not in localhost\" (behind ngrok) so that the AWS SDK attempts to do chunking instead of one giant request with the whole content of the package.\n\n1. Configure a Fleet server running 4.71.0 to use min.io as S3 compatible storage for software installers.\n2. Run a ngrok tunnel to http://localhost:9000/.\nRun Fleet the following way (replace FLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL with your ngrok tunnel URL):\n```\nFLEET_S3_SOFTWARE_INSTALLERS_BUCKET=software-installers-dev \\\nFLEET_S3_SOFTWARE_INSTALLERS_REGION=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_PREFIX=dev-prefix \\\nFLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL=https://\u003cngrok-tunnel-url\u003e \\\nFLEET_S3_SOFTWARE_INSTALLERS_ACCESS_KEY_ID=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_SECRET_ACCESS_KEY='minio123!' \\\nFLEET_S3_SOFTWARE_INSTALLERS_FORCE_S3_PATH_STYLE=true \\\n./build/fleet serve --dev --dev_license --logging_debug 2\u003e\u00261 | tee ~/fleet.txt \n```\n3. Upload a .pkg greater than 16MB as a custom package to a Fleet team.\n4. An error will appear that says `api error BadRequest: chunk too big: choose chunk size \u003c= 16MiB`.\n\u003cimg width=\"798\" height=\"103\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/85d03f9d-c377-4aa7-ac81-ad38ce7c6f09\" /\u003e\n\n### 🕯️ More info _(optional)_\n\n- Version reported by customer: minio version `RELEASE.2025-02-28T09-55-16Z` (Community edition.)\n\n- Comment from customer:\n\u003e https://github.com/fleetdm/fleet/blob/main/server/datastore/s3/common_file_store.go#L63\nthey are not using the s3manager which means they cant specify the chunk size\nyeah that means minio is forcing the 16MB chunk size now\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\n\nImplement an upload manager to chunk uploads. PR: #32010\n\nMore context:\n\n\u003cimg width=\"688\" height=\"596\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/44c533ef-9e5e-4de1-9c08-084230eebd04\" /\u003e",
+          "number": 31667,
+          "repository": "fleetdm/fleet",
+          "title": "Unable to upload custom installers greater than 16MB using min.io as S3 compatible storage",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31667"
+        },
+        "estimate": 5,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdyz6Q",
+        "labels": [
+          "bug",
+          ":product",
+          "customer-leiden",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "1636da2b",
+          "startDate": "2025-08-18",
+          "title": "Sprint 46"
+        },
+        "status": "🐣 In progress",
+        "title": "Unable to upload custom installers greater than 16MB using min.io as S3 compatible storage",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@ddribeiro can you provide additional info on how they have min.io deployed?\nI have min.io as part of my docker container setup and do not see this issue, but it may be related to the way it's configured in the environment so any additional information you can provide would be helpful. "
+          },
+          {
+            "author": {
+              "login": "ddribeiro"
+            },
+            "body": "@jmwatts It sounds like the customer is using the default configuration. See this thread in Slack: https://fleetdm.slack.com/archives/C07NZ7B02AF/p1754576328724309?thread_ts=1754489427.523069\u0026cid=C07NZ7B02AF"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@ddribeiro I found this bug https://github.com/minio/minio/issues/21303\nI'm not 100% sure on what the fix is at the moment, but will continue to try to reproduce. I think I may need an updated minio image in my docker setup. Will consult the team on this one though. Thanks!"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I am still not able to reproduce this issue using the same build of minio that the customer is using. @lucasmrod any thoughts on what else we can try here?"
+          },
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "@jmwatts \n\nFinally I was able to reproduce.\n\nIt seems you need to run minio \"not in localhost\" (behind ngrok) so that the AWS SDK attempts to do chunking instead of one giant request with the whole content of the package.\n\n1. Run a ngrok tunnel to http://localhost:9000.\n2. Run Fleet the following way (replace `FLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL` with your ngrok tunnel URL):\n```\nFLEET_S3_SOFTWARE_INSTALLERS_BUCKET=software-installers-dev \\\nFLEET_S3_SOFTWARE_INSTALLERS_REGION=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_PREFIX=dev-prefix \\\nFLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL=https://\u003cngrok-tunnel-url\u003e \\\nFLEET_S3_SOFTWARE_INSTALLERS_ACCESS_KEY_ID=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_SECRET_ACCESS_KEY='minio123!' \\\nFLEET_S3_SOFTWARE_INSTALLERS_FORCE_S3_PATH_STYLE=true \\\n./build/fleet serve --dev --dev_license --logging_debug 2\u003e\u00261 | tee ~/fleet.txt \n```\n3. Attempt to upload **custom** software installer larger than ~16 MB."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Thank you so much @lucasmrod !!\n\nWas able to reproduce with above steps. "
+          },
+          {
+            "author": {
+              "login": "Illbjorn"
+            },
+            "body": "I believe the solution to this is to use the S3 upload manager to take advantage of chunked uploads as the `PUT` operation reads the entire upload target into memory before starting the upload. See [here](https://github.com/fleetdm/fleet/pull/32010) for more details."
+          },
+          {
+            "author": {
+              "login": "Illbjorn"
+            },
+            "body": "Copied from [here](https://github.com/fleetdm/fleet/pull/32010#discussion_r2282653577), I believe this is the root cause of the problem (conclusion at the bottom).\n\n# RCA\n\nHoly cow that was an adventure...\n- [Here](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1796) is the base PUT object handler.\n- In that function, we [switch on the AWS v4 signature header](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1893-L1906) ([header](https://github.com/minio/minio/blob/master/internal/http/headers.go#L122) key is `X-Amz-Content-Sha256`)\n- If this header has any of the following values, a [signed](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1895) or [unsigned](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1902) chunked reader is used:\n  - `authTypeStreamingSigned` ([value](https://github.com/minio/minio/blob/master/cmd/streaming-signature-v4.go#L43) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L85-L88))\n  - `authTypeStreamingSignedTrailer` ([value](https://github.com/minio/minio/blob/master/cmd/streaming-signature-v4.go#L44) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L91-L94))\n  - `authTypeStreamingUnsignedTrailer` ([value](https://github.com/minio/minio/blob/master/cmd/signature-v4-utils.go#L43) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L97-L100))\n\nNow, looking at AWS SDK v2:\n- The third header above (`X-Amz-Content-Sha256: STREAMING-UNSIGNED-PAYLOAD-TRAILER`) is used [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_compute_input_checksum.go#L157-L171) if:\n  - The request is HTTPS\n  - `EnableComputePayloadHash` is true\n- `EnableComputePayloadHash` is set only [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L85).\n- The above assignment is, itself, set [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L74) via `EnableComputeSHA256PayloadHash`.\n- The above assignment comes in as an InputMiddlewareOptions[ param](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L59).\n\nLooking further for where `EnableComputeSHA256PayloadHash` is assigned (still AWS SDK v2):\n- It's only ever assigned [here](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L990), but it's a static true value assigned.\n- The above is a smithy request middleware, which is added to a middleware stack [here](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L917).\n- The above middleware stack is added from, :tada: , [here ](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L150)(`s3Client.PutObject`).\n\n# Conclusion\n\nSo, I think this means: if the request is over HTTPS, period, the 16MB chunk limitation from MinIO should always present itself.\n"
+          }
+        ],
+        "issueNumber": 31667,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "**Fleet version**: 4.71.0\n\n**Web browser and operating system**: n/a\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\nIf I switch to a team that has the software installer but no hosts with that software, the pill for the software name filter still shows and I get \"No hosts match the current criteria\":\n![Image](https://github.com/user-attachments/assets/cf2c427c-0344-4030-be29-9bb4849ed009)\nbut if I switch to a team that doesn't have the software installer added, the pill goes away:\n![Image](https://github.com/user-attachments/assets/18645f92-a406-45f8-98ca-e9640b9cbb92)\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Click on a software title in the fleet software library\n2. Click on the host count so that a filtered view shows for hosts with that software installed\n3. Change the team dropdown to a different team (try one that has an installer added for that software title, and one that does not)\n\n### 🕯️ More info _(optional)_\nLikely existing prior to 4.71.0 but the fix for #26258 uncovered this issue\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n### 🛠️ To fix\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\nProduct designer: @marko-lisica \n\n- When the user changes team, filter pill should remain (no matter if the team has that software) on the page until user click \"x\" icon inside the pill.\n- Add `software_title` to response of`/api/latest/fleet/hosts?software_title_id=\u003cid\u003e` even when there are no hosts that have this software installed in specific team.\n- If the user shouldn't have access to that software, we can return `software_title.name` so we can display a filter pill on the hosts page.",
+          "number": 30340,
+          "repository": "fleetdm/fleet",
+          "title": "Unable to remove filter if team dropdown selection is changed when viewing host list for an installed software title",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/30340"
+        },
+        "estimate": 2,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdzKe0",
+        "labels": [
+          "bug",
+          "~good first issue",
+          "~backend",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-09-19T00:00:00Z",
+          "title": "4.74.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "sprint": {
+          "duration": 21,
+          "iterationId": "1636da2b",
+          "startDate": "2025-08-18",
+          "title": "Sprint 46"
+        },
+        "status": "🥚 Ready",
+        "title": "Unable to remove filter if team dropdown selection is changed when viewing host list for an installed software title",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Can you confirm existence for \u003c= 4.70? If this is truly unrelease we'll need assistance from another team on getting this fixed I think, due to OOO and such."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx This is the behavior in 4.69.0\nAt first, the filter is there, but eventually it disappears. So I'm not sure whether to call this released or unreleased. The difference in 4.69.0 is that there is a short window where you can remove the filter by clicking the x and then you're no longer looking at a filtered view. That is not possible in the 4.71.0 code path.\nhttps://github.com/user-attachments/assets/23c4dbe2-d794-4f9e-a252-b2a50d5a62b2"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Got it. This feels closer to \"unreleased\" than \"released\" (yay stacked bugs!), but we also need design input on the fix here.\n\nI can think of two options here:\n\nOption 1: Add a filter chip mentioning the software title ID, with the X to remove, e.g. \"Software Title: 123\". We could do this client-side, or could do this server-side with an elided app name.\n\nOption 2: Add a \"reset all filters\" link on the empty state that clears everything out. I can take an initial stab at copy here.\n\n@marko-lisica Which makes sense here?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@iansltx @jmwatts I'm looking at dogfood (4.70) and I don't see this behavior. It looks good to me.\n\nhttps://github.com/user-attachments/assets/2f00276d-dad6-4689-9363-f99f848633f5"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@marko-lisica on 4.70 you have to wait on the page a while for it to happen. However, this bug is filed against 4.71.0 where we've fixed the issue where you see the \"Something's gone wrong\" message, but the filter disappears immediately. That is why we're calling this one an unreleased bug.\n\n4.70 Dogfood:\n\nhttps://github.com/user-attachments/assets/a35b879f-1898-4cbe-acbc-dbb2e56e6995"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@jmwatts I think it should work as before. The filter pill should stay on the screen until the user selects \"x\" icon. I'm going to add \"To fix\" section to the issue description."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica Tricky bit here is that if you navigate to a team that doesn't have a given title and make the API call, delivering the name of the app has some access control implications.\n\nSince we're filtering on software version ID, and some teams don't have that version ID listed anywhere, users limited to those teams would be able to use this endpoint to enumerate installed software versions that they wouldn't normally be able to see, if we just grabbed the software version information as-is without looking at access controls.\n\nWe could remediate this by doing an access control check in the not-found case, and skipping the filter response when the user shouldn't be able to see the filtered software version. That would result in the same \"broken\" screen as above, but doesn't leak any information. Or we could return a 403 like we do when an API client asks for a software version by ID that doesn't exist on the team they're looking at, and that they don't have access to via another team (this is a slight info leak, but we already explicitly do it elsewhere)."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Planning poker: [link](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1753879914055519)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "adding to release board for full stack work"
+          }
+        ],
+        "issueNumber": 30340,
+        "changeType": "added"
       }
     ]
   }
