@@ -64,7 +64,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "✔️Awaiting QA",
         "title": "GitOps software/setup experience restructure: `fleetctl generate-gitops` changes",
         "comments": [
           {
@@ -3292,7 +3292,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Eng DRI / custom iOS Apps"
       },
       {
@@ -5184,6 +5184,245 @@
         ],
         "issueNumber": 30136,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-20T19:04:31.056111791Z",
+    "items": [
+      {
+        "content": {
+          "body": "## Related user story\n\n#30738\n\n## Task\n\nChange copy for empty state (if no vulnerabilities detected) on software version details.\n\nWhat Fleet covers link: https://fleetdm.com/guides/vulnerability-processing#coverage\n\n\u003cimg width=\"1148\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/fb4c4055-fb02-4a86-b53d-aa74b4532e85\" /\u003e\n\n## Condition of satisfaction\n\nThe UI is updated per the req above.\n"
+        },
+        "estimate": 3,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv040",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 32027,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdL8SA",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet UI scrolling issue on policy automations page #6515](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/e0769c7b-805a-4272-897a-de7c5f7af36b)"
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "Timebox to 1 point."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Thanks @marko-lisica ! What a great, simple solution \u003c3\n\nEst: 1"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Was going to evict this bit the fix looks trivial so going to keep in for now."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@RachelElysia I'm still seeing this a bit on the latest RC build.\n\nhttps://github.com/user-attachments/assets/82a6b2ca-ddf5-4475-b171-f3f75c0a2a0f"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Discussed at standup. New behavior will be addressed in a future feature request. \n\nScrolling was improved with this ticket, so ready for release."
+          }
+        ],
+        "issueNumber": 30004,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv5qg",
+        "status": "🐣 In progress",
+        "issueNumber": 32043,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdyYJg",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31383,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVUIs",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Seems like the `vscode_edition` column serves the same purpose here?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@iansltx oh interesting! Does `vscode_edition` already tell us VS Code v. Cursor v. Windsurf?\n\nIf yes, then it sounds like no osquery changes are needed.\n\nIf not, then I think we stick with a new `ide_type` column. While we're making osquery changes, we take the opportunity to make `vscode_extensions` consistent with the [`chrome_extensions` table](https://fleetdm.com/tables/chrome_extensions).\n\ncc @zwass "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman It doesn't give us that ability right now (because it doesn't have the mapping added for the user data dirs for windsurf/cursor/vscode-oss), but it uses the exact same method to pull the information that we'd use to get that info, so adding a new column would either wind us up with two columns for the exact same info or one column that we'd have to artificially pin to older behavior, complicating dev/maintenance."
+          },
+          {
+            "author": {
+              "login": "zwass"
+            },
+            "body": "\nAh, I didn't notice the `vscode_edition` column when we discussed this. I agree with @iansltx this should definitely be used to better match the behavior of the `chrome_extensions` table where `edge` vs. `beta` vs. `brave`, etc. are included in the same column."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [x] Fleet's agent (fleetd) changes: Add 3 new values to the existing column `vscode_edition` to the [`vscode_extensions` osquery table](https://osquery.io/schema/5.18.1/#vscode_extensions). `cursor` can be one of `windsurf`, or `vscode_oss`.\n\n@zwass just chatted with @iansltx and we decided update the specs to use the `vscode_edition` column.\n\nWe also decided to bring in VSCodium which will return `vscode_oss`.\n\nNot sure if other forks (less used) have the same value. Can you please help us do that research? We want to know if `vscode_oss` is VSCodium specific so we can show \"VSCodium\" in the UI/API. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Made some tweaks to the test plan for more accuracy, given that we need a users cross join to get VSCode extensions. The new query is based on [our existing VSCode extensions detail query](https://fleetdm.com/vitals/v-scode-extensions#apple)."
+          },
+          {
+            "author": {
+              "login": "zwass"
+            },
+            "body": "\u003e Not sure if other forks (less used) have the same value. Can you please help us do that research? We want to know if vscode_oss is VSCodium specific so we can show \"VSCodium\" in the UI/API.\n\nCan we have it return `vscodium` for maximum clarity?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@zwass The pattern of dotfiles dirs is `.vscode-oss`, hence my thought of maintaining the \"hyphens to underscores\" pattern. I'm also not 100% sure whether VSCodium is the only fork that uses that dir naming scheme; mind doing a quick check? If that really _is_ VSCodium specific, fair enough and we can break the pattern to specifically call out that we know VSCodium is the only fork that uses that dir naming convention."
+          },
+          {
+            "author": {
+              "login": "zwass"
+            },
+            "body": "https://github.com/osquery/osquery/pull/8664\n\nWent with `vscodium` since the server and insiders variants seem to use that. I'm guessing the `vscode-oss` string is a bit of a historical artifact.\n\nIt was also easy to add Trae so I did that."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@zwass Hate to pile on at the last second, but maybe we should include AWS's new Kiro editor in here?"
+          },
+          {
+            "author": {
+              "login": "zwass"
+            },
+            "body": "It's an easy change but wouldn't go out til the next osquery release in 6 weeks or so. "
+          }
+        ],
+        "issueNumber": 31476,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "Illbjorn"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdyz6Q",
+        "issueNumber": 31667,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "zwass"
+        ],
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Security Engineer,\n| I want to see Cursor and Windsurf extensions and their vulnerabilities (CVEs) in Fleet's software inventory\n| so that I can track which hosts have which have vulnerable extensions.\n\n## Roadmap item\n\nNone. \n\n## Original requests\n\n- #30260\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @zwass \n\n## Changes\n\n### Product\n- [x] UI changes: On the **Software** page in Fleet, add these new types: IDE extension (Windsurf|Cursor|VSCodium/VS Code fork); the last type is a fallback for when we know an extension is for VSCode but haven't mapped that particular fork even though osquery returns it (e.g. Trae)\n\nScreenshot below shows the existing \"IDE extension (VS Code)\" type as an example:\n\n\u003cimg width=\"1263\" height=\"424\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/85b15916-e62a-4797-b523-eec610a93955\" /\u003e\n\n  - These new types also show up on the **Software \u003e Versions** page (`/software/versions`), **Software title details** page (`/software/titles/:id`), and **Software version** details page (`/software/versions/:id`). \n  - Screenshots below show the **Software title details** page and **Software version details** page pages for a VS Code extension as examples:\n\n\u003cimg width=\"698\" height=\"453\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/f733d96c-ce2a-4a12-a8b0-8c7119f912da\" /\u003e\n\n\u003cimg width=\"848\" height=\"633\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/1ed619e7-4652-4147-b2c0-1c8157c3457a\" /\u003e\n\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: No changes.\n- [x] REST API changes: #31760\n\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] GitOps mode UI changes: No changes\n- [x] GitOps generation changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [x] Changes to paid features or tiers: Fleet Free and Fleet Premium\n- [x] My device and fleetdm.com/better changes: No changes\n- [x] Other reference documentation changes: No changes\n- [ ] First draft of test plan added\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [ ] Test plan is finalized\n- [ ] Contributor API changes: #31760\n- [ ] Feature guide changes: #31488\n- [ ] Revise host vitals queries for `vscode_extensions` to take edition into account\n- [ ] Revise host vitals queries using `browser` to use `extension_for` as the aliased column\n- [ ] Database schema migrations: Rename `browser` to `extension_for` in the database on `software` and `software_titles`, and use that column for storying VSCode edition\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n- Risk description: We're renaming a column in a hot table, but this should only affect migrations\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n1. Install Cursor, Windsurf, VSCodium, VS Code, and Trae on each of Windows, macOS, and Linux hosts. Install a different but overlapping set of extensions on each editor. At least one extension on each editor fork should have at least one vulnerability.\n2. Enroll the hosts into Fleet using an osquery version new enough to include #31476.\n3. Confirm that each extension shows up as a separate software title for each editor (Software view), and that extensions are inventoried across all OSes (all three OSes should resolve to the same software title for the same extension on the same editor). Trae should be listed as \"IDE extension (VS Code fork)\" to confirm that we have a fallback for any editor forks that we don't explicitly support.\n4. Confirm that extensions are visible and tagged with the associated editor fork in Host details \u003e Software \u003e Inventory and in My device \u003e Software views.\n5. Run vulnerability processing and confirm that a vulnerable extension is marked as such across all editor forks.\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "number": 31397,
+          "repository": "fleetdm/fleet",
+          "title": "Software inventory and vulnerabilities: Add Cursor and Windsurf extensions",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31397"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgd1guQ",
+        "labels": [
+          "story",
+          ":release",
+          ":help-customers",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Software inventory and vulnerabilities: Add Cursor and Windsurf extensions",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Does Windsurf even have extensions? Based on some quick research it sounds like no. Does Cursor? Sounds like yes but I'm not sure if it's 100% overlap with VS Code extensions. All VS Code extensions + Cursor specific ones?"
+          },
+          {
+            "author": {
+              "login": "zwass"
+            },
+            "body": "I'm using Cursor and AFAIU it uses regular VSCode extensions. It actually offers to import your extensions from VSCode.\n\nI opened up Windsurf and it also seems to use regular VSCode extensions, it says it gets them from https://open-vsx.org/."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@zwass do Cursor and Windsurf extensions have unique vulnerabilities (CVEs) that their VS Code extension equivalent doesn't? \n\nOr do they just have the same CVEs as their equivalent VS Code extensions? For example this [Claude Code CVE](https://nvd.nist.gov/vuln/detail/CVE-2025-52882) affects VS Code, Cursor, and Windsurf extensions. \n\nThe reason I ask is because I think we want to do CVE mapping for Cursor and Windsurf extensions like we do for VS Code: https://github.com/fleetdm/fleet/pull/31488\n\nThe follow up question is, do we do that as part of this story or follow up in a separate story?\n\nMaybe if Cursor and Windsurf extensions just have the same CVEs as their VS Code extensions equivalent (already in Fleet), and/or it's relatively quick to add CVE mapping for Cursor and Windsurf extensions, we do that as part of this story.\n\nWhat do you think?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e For additional UI changes, thinking we want to rename `browser` to `subtype` in the database if we really want to split type out here, so we can use the same column for VSCode vs. a fork like Cursor as we do for Chrome vs. a fork like Edge. Otherwise we wind up running into database design/maintenance messiness.\n\n@iansltx if you get the chance, can you please update the specs with this so @zwass can work off of it?\n\nAlso, can you please move the API design to a PR? Thanks!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Figured out a better field name for what I was getting at: `extension_for`, which works for both browsers and editors, and slots into eventual JetBrains work. `ide` feels super weird here because while JetBrains products are IDEs, VSCode isn't."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts @mostlikelee This sould be ready for a likely-async User story review."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @zwass do Cursor and Windsurf extensions have unique vulnerabilities (CVEs) that their VS Code extension equivalent doesn't? \n\u003e \n\u003e Or do they just have the same CVEs as their equivalent VS Code extensions? For example this [Claude Code CVE](https://nvd.nist.gov/vuln/detail/CVE-2025-52882) affects VS Code, Cursor, and Windsurf extensions. \n\u003e \n\u003e The reason I ask is because I think we want to do CVE mapping for Cursor and Windsurf extensions like we do for VS Code: https://github.com/fleetdm/fleet/pull/31488\n\u003e \n\u003e The follow up question is, do we do that as part of this story or follow up in a separate story?\n\u003e \n\u003e Maybe if Cursor and Windsurf extensions just have the same CVEs as their VS Code extensions equivalent (already in Fleet), and/or it's relatively quick to add CVE mapping for Cursor and Windsurf extensions, we do that as part of this story.\n\u003e \n\u003e What do you think?\n\n@iansltx do you know?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman The extensions are still VSCode extensions under the hood, so we would treat them as VSCode extensions for vuln processing. We get this for free because the source column in the database will be vscode_extensions across the board."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @iansltx I unassigned you (specs and API design are done) so it's clear that @zwass is now responsible for moving it forward when Zach has capacity.\n\n@mostlikelee I moved this story to the `:release` board so you can track it there. Up to you to move it to \"Ready for QA\" when the changes are ready to test. This is what we do when Zach is helping build stories for other product groups.\n\ncc @lukeheath "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "cc @ddribeiro ^"
+          }
+        ],
+        "issueNumber": 31397,
+        "changeType": "added"
       }
     ]
   }
