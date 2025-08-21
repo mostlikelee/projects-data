@@ -86,14 +86,14 @@
           "jahzielv"
         ],
         "content": {
-          "body": "## Related user story\n\n#30738\n\n## Task\n\nImplement the changes specified here: https://github.com/fleetdm/fleet/issues/31495#issuecomment-3191921812\n\u003c!-- What needs to be done. --\u003e\n\n## Condition of satisfaction\n\nThe UI is updated per the req above.\n",
+          "body": "## Related user story\n\n#30738\n\n## Task\n\nChange copy for empty state (if no vulnerabilities detected) on software version details.\n\nWhat Fleet covers link: https://fleetdm.com/guides/vulnerability-processing#coverage\n\n\u003cimg width=\"1148\" height=\"601\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/fb4c4055-fb02-4a86-b53d-aa74b4532e85\" /\u003e\n\n## Condition of satisfaction\n\nThe UI is updated per the req above.\n",
           "number": 32027,
           "repository": "fleetdm/fleet",
           "title": "Update UI to show \"Not supported\" for kernel vulns on OS's we don't support",
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/32027"
         },
-        "estimate": 2,
+        "estimate": 3,
         "id": "PVTI_lADOBDAnic4A4BEUzgdv040",
         "labels": [
           "~sub-task",
@@ -106,7 +106,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Update UI to show \"Not supported\" for kernel vulns on OS's we don't support"
       },
       {
@@ -430,7 +430,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "Waiting",
+        "status": "✅ Ready for release",
         "title": "UI - Background page scrolls while editing Policy automations.",
         "comments": [
           {
@@ -3315,7 +3315,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Eng DRI - fleetctl return mdm command result"
       },
       {
@@ -4864,7 +4864,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Vulnerability (CVE) details page: Inconsistent text size",
         "comments": [
           {
@@ -5423,6 +5423,151 @@
         ],
         "issueNumber": 31397,
         "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-21T07:07:47.119461599Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP74",
+        "status": "🐣 In progress",
+        "issueNumber": 29478,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdyz6Q",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@ddribeiro can you provide additional info on how they have min.io deployed?\nI have min.io as part of my docker container setup and do not see this issue, but it may be related to the way it's configured in the environment so any additional information you can provide would be helpful. "
+          },
+          {
+            "author": {
+              "login": "ddribeiro"
+            },
+            "body": "@jmwatts It sounds like the customer is using the default configuration. See this thread in Slack: https://fleetdm.slack.com/archives/C07NZ7B02AF/p1754576328724309?thread_ts=1754489427.523069\u0026cid=C07NZ7B02AF"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@ddribeiro I found this bug https://github.com/minio/minio/issues/21303\nI'm not 100% sure on what the fix is at the moment, but will continue to try to reproduce. I think I may need an updated minio image in my docker setup. Will consult the team on this one though. Thanks!"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "I am still not able to reproduce this issue using the same build of minio that the customer is using. @lucasmrod any thoughts on what else we can try here?"
+          },
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "@jmwatts \n\nFinally I was able to reproduce.\n\nIt seems you need to run minio \"not in localhost\" (behind ngrok) so that the AWS SDK attempts to do chunking instead of one giant request with the whole content of the package.\n\n1. Run a ngrok tunnel to http://localhost:9000.\n2. Run Fleet the following way (replace `FLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL` with your ngrok tunnel URL):\n```\nFLEET_S3_SOFTWARE_INSTALLERS_BUCKET=software-installers-dev \\\nFLEET_S3_SOFTWARE_INSTALLERS_REGION=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_PREFIX=dev-prefix \\\nFLEET_S3_SOFTWARE_INSTALLERS_ENDPOINT_URL=https://\u003cngrok-tunnel-url\u003e \\\nFLEET_S3_SOFTWARE_INSTALLERS_ACCESS_KEY_ID=minio \\\nFLEET_S3_SOFTWARE_INSTALLERS_SECRET_ACCESS_KEY='minio123!' \\\nFLEET_S3_SOFTWARE_INSTALLERS_FORCE_S3_PATH_STYLE=true \\\n./build/fleet serve --dev --dev_license --logging_debug 2\u003e\u00261 | tee ~/fleet.txt \n```\n3. Attempt to upload **custom** software installer larger than ~16 MB."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Thank you so much @lucasmrod !!\n\nWas able to reproduce with above steps. "
+          },
+          {
+            "author": {
+              "login": "Illbjorn"
+            },
+            "body": "I believe the solution to this is to use the S3 upload manager to take advantage of chunked uploads as the `PUT` operation reads the entire upload target into memory before starting the upload. See [here](https://github.com/fleetdm/fleet/pull/32010) for more details."
+          },
+          {
+            "author": {
+              "login": "Illbjorn"
+            },
+            "body": "Copied from [here](https://github.com/fleetdm/fleet/pull/32010#discussion_r2282653577), I believe this is the root cause of the problem (conclusion at the bottom).\n\n# RCA\n\nHoly cow that was an adventure...\n- [Here](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1796) is the base PUT object handler.\n- In that function, we [switch on the AWS v4 signature header](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1893-L1906) ([header](https://github.com/minio/minio/blob/master/internal/http/headers.go#L122) key is `X-Amz-Content-Sha256`)\n- If this header has any of the following values, a [signed](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1895) or [unsigned](https://github.com/minio/minio/blob/master/cmd/object-handlers.go#L1902) chunked reader is used:\n  - `authTypeStreamingSigned` ([value](https://github.com/minio/minio/blob/master/cmd/streaming-signature-v4.go#L43) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L85-L88))\n  - `authTypeStreamingSignedTrailer` ([value](https://github.com/minio/minio/blob/master/cmd/streaming-signature-v4.go#L44) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L91-L94))\n  - `authTypeStreamingUnsignedTrailer` ([value](https://github.com/minio/minio/blob/master/cmd/signature-v4-utils.go#L43) by way of [this](https://github.com/minio/minio/blob/master/cmd/auth-handler.go#L97-L100))\n\nNow, looking at AWS SDK v2:\n- The third header above (`X-Amz-Content-Sha256: STREAMING-UNSIGNED-PAYLOAD-TRAILER`) is used [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_compute_input_checksum.go#L157-L171) if:\n  - The request is HTTPS\n  - `EnableComputePayloadHash` is true\n- `EnableComputePayloadHash` is set only [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L85).\n- The above assignment is, itself, set [here](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L74) via `EnableComputeSHA256PayloadHash`.\n- The above assignment comes in as an InputMiddlewareOptions[ param](https://github.com/aws/aws-sdk-go-v2/blob/cdf4c4b3fa27b48a7614c78551f74cbcc0c8ec47/service/internal/checksum/middleware_add.go#L59).\n\nLooking further for where `EnableComputeSHA256PayloadHash` is assigned (still AWS SDK v2):\n- It's only ever assigned [here](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L990), but it's a static true value assigned.\n- The above is a smithy request middleware, which is added to a middleware stack [here](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L917).\n- The above middleware stack is added from, :tada: , [here ](https://github.com/aws/aws-sdk-go-v2/blob/service/s3/v1.81.0/service/s3/api_op_PutObject.go#L150)(`s3Client.PutObject`).\n\n# Conclusion\n\nSo, I think this means: if the request is over HTTPS, period, the 16MB chunk limitation from MinIO should always present itself.\n"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Upload limit fixed,\nLike rivers in the cloud, flow,\nFleet users rejoice."
+          }
+        ],
+        "issueNumber": 31667,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv040",
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "issueNumber": 32027,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdVUIs",
+        "labels": [
+          "story",
+          ":release",
+          ":help-customers",
+          "customer-numa",
+          "#g-software"
+        ],
+        "issueNumber": 31476,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "status": "🐣 In progress",
+        "issueNumber": 31165,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "\u003e **This issue is based on a [Slack message](https://fleetdm.slack.com/archives/C019WG4GH0A/p1755716347111089?thread_ts=1755712252.282599\u0026cid=C019WG4GH0A) from Anthony Maxwell in `#help-engineering`  and may contain confidential information. Issue created by anthonymaxwell**\n\n## Goal\n```\nIt looks like https://github.com/fleetdm/fleet/actions/runs/17104155390/job/48508533130#step:14:804this one\u003e's been failing for a bit. We have https://github.com/Illbjorn/fleet/blob/feat/minio-tls-support/server/vulnerabilities/nvd/cve_test.go#L158-L564statically defined CPE-to-CVE mappings\u003e in there, but are pulling the latest vuln data from https://github.com/Illbjorn/fleet/blob/feat/minio-tls-support/server/vulnerabilities/nvd/cve.go#L79-L117fleetdm/vulnerabilities\u003e + https://github.com/Illbjorn/fleet/blob/feat/minio-tls-support/server/vulnerabilities/nvd/cve.go#L119-L152NVD\u003e. CPE-to-CVE mappings can be updated so I think we need to update this test to seed the database rather than pull latest data.\n```\n\n\u003c!--\n\u003e ##### About this integration\n\u003e - There may or may not be file attachments in the original Slack message.  Either way, they are not included here.\n\u003e - The link to the original Slack message will always break eventually, and may already be broken.  (Slack messages are deleted after 90 days.)\n\u003e - This automation lives in mikermcneil's Zapier account.\n--\u003e\n\n## How?\n- [ ] TODO",
+          "number": 11935,
+          "repository": "fleetdm/confidential",
+          "title": "💬 #help-engineering: It looks like https://github.com/fleetdm/fleet/actions/runs/17104155390/job/48508533130#step:14:804this one\u003e's been failing for a bit. We have https://github.com/Illbjorn/fleet/blob/feat/minio-tls-support/server/vulnerabilities/nvd/cve_test.go#L158-L56...",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/confidential/issues/11935"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgd2PTE",
+        "labels": [
+          ":help-it-and-enablement"
+        ],
+        "repository": "https://github.com/fleetdm/confidential",
+        "status": "🥚 Ready",
+        "title": "💬 #help-engineering: It looks like https://github.com/fleetdm/fleet/actions/runs/17104155390/job/48508533130#step:14:804this one\u003e's been failing for a bit. We have https://github.com/Illbjorn/fleet/blob/feat/minio-tls-support/server/vulnerabilities/nvd/cve_test.go#L158-L56...",
+        "comments": [
+          {
+            "author": {
+              "login": "xpkoala"
+            },
+            "body": "From https://fleetdm.slack.com/archives/C01EZVBHFHU/p1684932349297049\r\n\r\nReed: One of the Windows software entries\r\n``` \r\n{\r\n        \"id\": 5097,\r\n        \"name\": \"Microsoft Edge\",\r\n        \"version\": \"113.0.1774.50\",\r\n        \"source\": \"programs\",\r\n        \"vendor\": \"Microsoft Corporation\",\r\n        \"generated_cpe\": \"cpe:2.3:a:microsoft:edge:113.0.1774.50:*:*:*:*:windows:*:*\",\r\n        \"vulnerabilities\": null,\r\n        \"installed_paths\": [\r\n          \"C:\\\\Program Files (x86)\\\\Microsoft\\\\Edge\\\\Application\"\r\n        ]\r\n      },\r\n```\r\nThere are a handful of software entries showing on the page with some including `installed_paths` data and others not. I would expect to see the file paths for software that are sending the information but the column does not exist.\r\n\r\n\u003cimg width=\"1581\" alt=\"image\" src=\"https://github.com/fleetdm/fleet/assets/11012743/36d973ee-17ef-44b9-ae6f-821b09153acd\"\u003e\r\n"
+          },
+          {
+            "author": {
+              "login": "xpkoala"
+            },
+            "body": "In another test I removed all software entries from the `software` table that were connected to the Windows host **except** for one (Edge) which was providing an `installed_paths` value.\r\n\r\nUpon refreshing the page I confirmed the single software entry but I was still not seeing the file path present.\r\n\r\n \r\n![image (1)](https://github.com/fleetdm/fleet/assets/11012743/69c5633e-41e4-4055-be1a-88fbff4820ab)\r\n"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "In nature's embrace,\nPaths revealed, time remembered,\nFleet unites us all."
+          }
+        ],
+        "issueNumber": 11935,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdUpoM",
+        "title": "Unfreeze Cloudflare Warp macOS FMA",
+        "issueNumber": 31549,
+        "changeType": "removed"
       }
     ]
   }
