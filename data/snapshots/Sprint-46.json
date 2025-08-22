@@ -166,7 +166,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Linux Vulns: Guide Updates"
       },
       {
@@ -1048,7 +1048,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "Waiting",
         "title": "Host software: display info that Windows and Mac app never been opened",
         "comments": [
           {
@@ -1287,7 +1287,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "\"All Teams\" option is missing on the VPP token actions dropdown if another team was selected prior to it",
         "comments": [
           {
@@ -1371,7 +1371,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Software page: filter by custom severity (CVSS score) ranges",
         "comments": [
           {
@@ -2481,7 +2481,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Include CVE number in empty state on vulnerability details",
         "comments": [
           {
@@ -2788,7 +2788,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "Waiting",
         "title": "last_opened_at not properly returned on host software inventory",
         "comments": [
           {
@@ -3221,7 +3221,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "RHEL kernels don't have expected vulnerabilities in Fleet",
         "comments": [
           {
@@ -3315,7 +3315,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Eng DRI - fleetctl return mdm command result"
       },
       {
@@ -6124,6 +6124,160 @@
         "title": "Software inventory: See last time Linux software was used",
         "issueNumber": 27902,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-22T19:04:34.302901543Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv5qg",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Fleetctl now responds,\nMDM commands clearer,\nLike a cloud's soft dawn."
+          }
+        ],
+        "issueNumber": 32043,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdzKe0",
+        "status": "🐣 In progress",
+        "issueNumber": 30340,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "labels": [
+          "bug",
+          ":release",
+          "~released bug",
+          "P2",
+          "#g-software",
+          "customer-coppelia"
+        ],
+        "issueNumber": 30853,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdUaqU",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica FYI we already have `\"last_opened_at\": null` on the API for installed app versions that haven't been opened, so no API changes required here. Revised the ticket template to reflect this.\n\nGoing to include a separate comment with more specific instructions on all I'm pretty sure we need to do, to see if I can feed this into Zed + Sonnet 4 and have it one-shot this :)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "All we need to do for this is\n\n1. Show `Never` rather than `---` on the column when the API field is null and `source` is `programs` or `apps` (those are the two sources where we have last opened time info), in `HostSoftwareTableConfig.tsx`\n2. Show `Never` rather than skipping the \"Last used\" field in `SoftwareDetailsModal.tsx` and `InventoryVersion.tsx` when the API field is null and `source` is programs or `apps`\n3. Rename \"Last used\" to \"Last opened\" in all three places, and remove the tooltip wrapper in `HostSoftwareTableConfig.tsx`\n4. Update tests in `SoftwareDetailsModal.tests.tsx` to reflect the above changes"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica Mind pulling down the `🤖-31268` branch and seeing if that gets us what we want here?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Tweaks needed:\n\n* When showing multiple versions, show \"Never\" if all versions don't have an opened time and each individual version would've shown \"Never\"\n* Don't use the grey color for \"Never\" (but keep it for `---`)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica \n\n\u003cimg width=\"808\" height=\"342\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/20422141-d1eb-445e-9c12-92edd366c242\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per design review, we're showing \"Not supported\" rather than \"---\" for sources where we don't support last opened time. Updated the screenshot in the issue description."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia Where do these map to in the UI?\n\nfrontend/pages/hosts/details/cards/Software/SoftwareDetailsModal/SoftwareDetailsModal.tsx\nfrontend/pages/hosts/details/components/InventoryVersions/InventoryVersions.tsx\n\nI think I'm missing a case in the test plan to cover both of these."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Fixed the screenshot to show both cases."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Found the other place where last opened time is: My device \u003e Software. Test plan is updated. Ping when the test plan is good to go; code's already written (by me) so this will land directly on the release board once the test plan is good to go."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx test plan is good to go, tried to move it to the release board, wouldn't budge. GitHub is defiant today. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given #31638 is landing soon, updated the spec here (and code in the PR) to include `deb_packages` and `rpm_packages` in supported software types. Support for the additional package types will land in osquery before 4.73 is out, and 4.73 will include detail query updates for support here, so RPM/DEB last-opened-at can be tested as part of QA for #27902."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Moved to waiting as testing is currently blocked. \n\n- It seems osquery is using spotlight to determine last_opened_time\n- This is dependent on bundle id\n- Two different versions installed at two different paths with the same bundle id, only one of them has ever been opened\n- osquery reports both opened at roughly/exactly the same time\n\nThis means that we don't really have a way to differentiate between different paths/versions when showing last opened time\nWe're not quite sure how the issue described in [#31932](https://github.com/fleetdm/fleet/issues/31932) actually happened, but I can't reproduce it now, and the fix for that issue doesn't resolve what I'm seeing now.\n\nOutstanding questions:\nDo I write an osquery bug/feature of some sort?\nDo I change the test plan on [#31268](https://github.com/fleetdm/fleet/issues/31268) ? Right now the test plan fails but it's not a new thing.\n\nMeeting scheduled 8/25 to discuss"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "meeting scheduled for Monday"
+          }
+        ],
+        "issueNumber": 31268,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdqQM4",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "adding `customer-numa` as they recently requested last_opened_at on windows"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Moved to waiting as testing is currently blocked. \n\n- It seems osquery is using spotlight to determine last_opened_time\n- This is dependent on bundle id\n- Two different versions installed at two different paths with the same bundle id, only one of them has ever been opened\n- osquery reports both opened at roughly/exactly the same time\n\nThis means that we don't really have a way to differentiate between different paths/versions when showing last opened time\nWe're not quite sure how the issue described in [#31932](https://github.com/fleetdm/fleet/issues/31932) actually happened, but I can't reproduce it now, and the fix for that issue doesn't resolve what I'm seeing now.\n\nOutstanding questions:\nDo I write an osquery bug/feature of some sort?\nDo I change the test plan on [#31268](https://github.com/fleetdm/fleet/issues/31268) ? Right now the test plan fails but it's not a new thing.\n\nMeeting scheduled 8/25 to discuss"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "meeting scheduled for Monday"
+          }
+        ],
+        "issueNumber": 31932,
+        "changeType": "modified"
+      },
+      {
+        "estimate": 8,
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "issueNumber": 31165,
+        "changeType": "modified"
       }
     ]
   }
