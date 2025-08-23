@@ -2057,7 +2057,7 @@
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/31165"
         },
-        "estimate": 5,
+        "estimate": 8,
         "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
         "labels": [
           "~gitops",
@@ -3315,7 +3315,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "Done",
         "title": "Eng DRI - fleetctl return mdm command result"
       },
       {
@@ -5002,7 +5002,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Unable to remove filter if team dropdown selection is changed when viewing host list for an installed software title",
         "comments": [
           {
@@ -6277,6 +6277,91 @@
         "estimate": 8,
         "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
         "issueNumber": 31165,
+        "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-23T07:05:00.36126603Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpoQ",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica (/cc @mostlikelee) We have three issues that'll need product direction here.\\, based on some initial research.\n\nIn descending order of magnitude:\n\n## Multiple kernels\n\nLinux hosts generally have multiple kernels installed, though only one is active at a time. How do we want to handle this, given that a host can be actively using an older/vulnerable kernel, or that kernel may be available but not loaded, and we won't be able to tell one way or the other based on software inventory (we _can_ based on the `kernel_info` table but we don't currently inventory that)?\n\nFor example, I cross-referenced `kernel_info` version with inventoried packages on Dogfood to see how Linux hosts there lined up:\n\n* [fedora 41](https://dogfood.fleetdm.com/hosts/1348) - `kernel-core` RPM package (`kernel` would work too but doesn't on the other host; was running the later of multiple versions)\n* [ubuntu 24.04.2](https://dogfood.fleetdm.com/hosts/1319) - `linux-image-*-generic` (`linux-image-generic-hwe-*` returned one of the two kernels, and not the one the host was actually running)\n* [another fedora 41](https://dogfood.fleetdm.com/hosts/1318) - `kernel-core` RPM package (was running the older kernel)\n* [another ubuntu 24.04.2](https://dogfood.fleetdm.com/hosts/1267) - `linux-image-*-genreric` (was running the older kernel IIRC)\n\nAll of the above hosts have more than one kernel version installed, and it's a toss-up on whether a given host is using the latest installed kernel or some other one (using `kernel_info` as the source of truth). The two Ubuntu hosts have quite different kernel versions installed as well between each other.\n\n## No kernel\n\nHow do we want to handle Linuxes that don't have a kernel? Linux running in a container shares the host kernel, so won't have kernel vulnerabilities of its own. I'm assuming we need to show these hosts in the OS list UI, but we'll need to communicate that no, those hosts didn't have a kernel of their own, so there won't be kernel-level vulns inside the container, though the host might have some. For example, `SELECT * FROM kernel_info` on an Ubuntu container running in Docker for Mac gets me a kernel version of `6.10.14-linuxkit`, which won't match anything in OVALs for the OS inside the container.\n\n## Where to display kernel version\n\nThinking we want to just show the kernel version, and only the version number part of it (so, software `version` field), as part of the Version column in the OS list, leaving the OS name as-is. This will mean that there will be multiple rows for the same OS name, but that's probably still cleaner than having two versions in the name line."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Temporarily assigning this to @marko-lisica we I'm blocked on decisions about no-kernel/multi-kernel. I'll self-assign to continue spec'ing once unblocked."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "FYI @marko-lisica I'm baking in the assumption that individual CVE UIs do _not_ change as part of this story, so we won't be showing Linux OSes in the Operating Systems section of individual vulns. The vulnerability affected hosts will be fully covered in the software section anyway (for each kernel) so we aren't hiding information here."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "For reference: per discussions yesterday, we're keeping the OS list to one item per OS version, rolling up all kernel vulns into that single entry, and splitting out kernels when viewing a single OS version's details. This ensures that hosts aren't double-counted in list views when they have multiple kernels installed, and aren't skipped when they have no kernel of their own."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica Two pieces of feedback from @jmwatts as we were walking through UI/test plans today (corresponding to Figma comments):\n\n1. Add a dev note or example UI row indicating \"view all hosts\" when kernel rows are rolled over\n2. Add help text above the kernels list (inside the kernels card) explaining why host counts are expected to not sum up from kernels to the overall number. Something like:\n\n\u003e Each Linux host may have multiple kernels instealled. Containerized and paravirtualized hosts do not have a kernel of their own.\n\n@jmwatts Let me know if we need to explicitly say \"host counts won't sum up\" or whether the above is enough."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @iansltx @jmwatts, thanks for the feedback.\n\nI added few more dev notes in Figma:\n\u003cimg width=\"921\" height=\"887\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/524bb7a9-33fc-47f3-88be-8e41ad922db6\" /\u003e\n\n "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes** (In Progress)\n\n\n1. Enroll a Linux host in a VM with two installed kernels, at least one of which has vulnerabilities, and a Linux host in a container (with zero installed kernels) for a bunch of our supported Linux distros, including Ubuntu, Debian, RHEL, Fedora, SUSE, and Arch.\n2. Enroll a Windows host and a macOS host. Hosts must have software inventoried, but don't need to be online at the same time. \n3. Enroll a Linux host in a container with a different OS version unique to that container.\n4. Run vulnerabilities + cleanups/aggregations jobs.\n- [x] Navigate to the Software \u003e OS tab. The \"Name\" column should only show OS name (plus major version for Windows). All hosts erolled in step 1 should be represented, host counts should match, and navigating to host counts to filter the host list by OS.\n- [x] Confirm that the API response populates the vulnerabilities key for Linux OS versions.\n- [ ] Navigate to a Linux OS version. You should see a Kernels card instead of a Vulnerabilities card. Host counts should match the number of hosts with that kernel installed on that OS version.\n- [ ] Container hosts should not be shown in this list. Hosts with multiple kernels should be counted once per kernel in the kernel card, but host count for the overall OS version should only count the host once.\n- [x] Clicking the host count on the kernel card should navigate to the host list filtered by OS\n- [x] Clicking \"view all hosts\" in this card should navigate to a host list filtered by kernel. \n- [ ] Confirm that the API response for the individual OS version includes vulnerabilities and kernels entries, with kernels format matching what you'd see in software_title.versions[] when viewing an individual software title.\n- [ ] Navigate to a kernel in the kernel card. You should arrive at a normal software version details page, including vulnerability information. Host counts might not match the previous page, as the kernel may be used across multiple OS versions.\n\nNOTES: \nRemoved: On the Software \u003e OS tab, all Linux OSes should have one or more CVEs listed, matching expected kernel vulns for the constituent hosts, except for the containerized-only OS version, which should show ---. #31495"
+          }
+        ],
+        "issueNumber": 30738,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdvjTs",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31283,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpok",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "[planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1753366962273099)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@jakestenger this is a subtask.  you'll want to add customer labels to the parent story"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Larger customer environments are 50-125k linux hosts. Will spin up load test environment to evaluate vulnerability processing times and page loads. "
+          }
+        ],
+        "issueNumber": 31214,
         "changeType": "modified"
       }
     ]
