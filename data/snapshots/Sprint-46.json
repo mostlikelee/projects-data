@@ -1542,7 +1542,7 @@
           "iansltx"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to specify setup experience, custom targets (labels), self-service, \u0026 categories for all my software in the team YAML\n| so that I can define scoping at the team level and not at the software level.\n\n## Key result\n\nNone. Prioritized because it's mission critical for `customer-numa` to replace their current self-service software solution.\n\n## Original requests\n\n- #30067\n- #29567\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @iansltx  \n\n## Changes\n\n### Product\n- [x] UI changes: No changes.\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: #30837 (includes VPP/FMA)\n- [x] REST API changes: No changes\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [x] GitOps mode UI changes: No changes\n- [x] GitOps generation changes: `fleetctl generate-gitops` includes the `setup_experience` flag in the inline software package/VPP app YAML when a software package or VPP app is included in Setup Experience, omits it otherwise (same as how self-service behaves).\n- [x] Changes to paid features or tiers: Fleet Premium only\n- [x] My device and fleetdm.com/better changes: No changes\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Script or command to migrate removed keys from package YAML files to the team level\n- [x] Contributor API changes: No changes; use the existing `install_during_setup` parameter in software batch endpoints (already wired up in `fleetctl`)\n- [ ] Feature guide changes: No changes\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No\n- Risk level: Low\n\n### Test plan\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### Setup experience w/GitOps\n\nFor the purposes of this test plan, this format is what is meant by in-line on the team YAML:\n\n\u003cimg width=\"532\" height=\"167\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/859273cd-a1bf-4eb4-a3af-5d170772ec9f\" /\u003e\n\nAnd this is what is meant by referenced by path:\n\n\u003cimg width=\"238\" height=\"58\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/476be359-104f-431a-9e97-43b887ed754f\" /\u003e\n\nWhere the referenced file is of this format:\n\n\u003cimg width=\"478\" height=\"108\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4b7c570e-0eef-401b-8acb-22cc3ac5ee95\" /\u003e\n\n- [ ] Add App Store app in-line on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add App Store app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add App Store app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n\n- [ ] Add Fleet-maintained app in-line on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add Fleet-maintained app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add Fleet-maintained app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n\n- [ ] Add a custom package in-line, on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package in-line, on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package in-line, on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Don't specify the new `setup_experience` key.  Verify that the software isn't added to macOS Setup Experience when GitOps is run. \n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key on the team YAML, setting the value to `true`.  Verify that the software is added to macOS Setup Experience when GitOps is run. \n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key on the team YAML, setting the value to `false`.  Verify that the software is not added to macOS Setup Experience when GitOps is run. \n- [ ] ERROR PATH: Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key within the package YAML, setting the value to `true`. Run GitOps and confirm there is an easy to understand error message.\n\n#### Custom target (labels)\n\n- [ ] In the team YAML, set `labels_include_any` for a custom package that is defined in-line. Verify that the label inclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_include_any` for a custom package that is referenced by path. Verify that the label inclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_exclude_any` for a custom package that is defined in-line. Verify that the label exclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_exclude_any` for a custom package that is referenced by path. Verify that the label exclusions are applied when GitOps is run. \n- [ ] In the package YAML, set `labels_include_any` to include a label that exists in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n- [ ] In the package YAML, set `labels_exclude_any` to exclude a label that exists in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n\n#### Categories\n\n- [ ] In the team YAML, set `categories` to include one or more categories that exist in Fleet for a custom package that is defined in-line. Verify that the categories are applied when GitOps is run.\n- [ ] In the package YAML, set `categories` to include one or more categories that exist in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n\n#### No team\n\n- [ ] Verify that setup experience, custom targets (labels), and categories work as defined above for \"No team\" (`no-team.yml`)\n\n\n#### Backwards compatibility\n\n- [ ] In the team YAML, specify the old `macos_setup.software` key, add software in-line, and do not specify the new `setup_experience` for any software. Confirm the software is added to setup experience. \n- [ ] In the team YAML, specify the old `macos_setup.software` key, leave it empty, and specify the new `setup_experience` for any software. Verify that you see [this error messaged](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).\n- [ ] Repeat the step above with some software in the `macos_setup.software` key. You should see the same error message.\n\n#### GitOps speed\n\n- [ ] Run GitOps with 99 packages and 500 teams before and after this change. Verify that the speed of GitOps isn't negatively impacted.\n\n#### Migration script\n\n- [ ] Run the script to migrate the the old package YAML format to the new format and verify that the script works. [#31165](https://github.com/fleetdm/fleet/issues/31165)\n\n#### Generate-GitOps\n- [ ] fleetctl generate-gitops includes the setup experience flag on software for which it is set.\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to specify setup experience, custom targets (labels), self-service, \u0026 categories for all my software in the team YAML\n| so that I can define scoping at the team level and not at the software level.\n\n## Key result\n\nNone. Prioritized because it's mission critical for `customer-numa` to replace their current self-service software solution.\n\n## Original requests\n\n- #30067\n- #29567\n\n## Context\n- Product Designer: @noahtalerman\n- Engineer: @iansltx  \n\n## Changes\n\n### Product\n- [x] UI changes: No changes.\n- [x] CLI (fleetctl) usage changes: No changes\n- [x] YAML changes: #30837 (includes VPP/FMA)\n- [x] REST API changes: No changes\n- [x] Fleet's agent (fleetd) changes: No changes\n- [x] Activity changes: No changes\n- [x] Permissions changes: No changes\n- [x] GitOps mode UI changes: No changes\n- [x] GitOps generation changes: `fleetctl generate-gitops` includes the `setup_experience` flag in the inline software package/VPP app YAML when a software package or VPP app is included in Setup Experience, omits it otherwise (same as how self-service behaves).\n- [x] Changes to paid features or tiers: Fleet Premium only\n- [x] My device and fleetdm.com/better changes: No changes\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Script or command to migrate removed keys from package YAML files to the team level\n- [x] Contributor API changes: No changes; use the existing `install_during_setup` parameter in software batch endpoints (already wired up in `fleetctl`)\n- [ ] Feature guide changes: No changes\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No\n- Risk level: Low\n\n### Test plan\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### Setup experience w/GitOps\n\nFor the purposes of this test plan, this format is what is meant by in-line on the team YAML:\n\n\u003cimg width=\"532\" height=\"167\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/859273cd-a1bf-4eb4-a3af-5d170772ec9f\" /\u003e\n\nAnd this is what is meant by referenced by path:\n\n\u003cimg width=\"238\" height=\"58\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/476be359-104f-431a-9e97-43b887ed754f\" /\u003e\n\nWhere the referenced file is of this format:\n\n\u003cimg width=\"478\" height=\"108\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4b7c570e-0eef-401b-8acb-22cc3ac5ee95\" /\u003e\n\n- [ ] Add App Store app in-line on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add App Store app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add App Store app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n\n- [ ] Add Fleet-maintained app in-line on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add Fleet-maintained app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add Fleet-maintained app in-line on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n\n- [ ] Add a custom package in-line, on the team YAML file and don't specify the new `setup_experience` key. Verify that the software isn't added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package in-line, on the team YAML file and specify the new `setup_experience` key, setting the value to `true`. Verify that the software is added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package in-line, on the team YAML file and specify the new `setup_experience` key, setting the value to `false`. Verify that the software is not added to macOS Setup Experience when GitOps is run.\n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Don't specify the new `setup_experience` key.  Verify that the software isn't added to macOS Setup Experience when GitOps is run. \n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key on the team YAML, setting the value to `true`.  Verify that the software is added to macOS Setup Experience when GitOps is run. \n- [ ] Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key on the team YAML, setting the value to `false`.  Verify that the software is not added to macOS Setup Experience when GitOps is run. \n- [ ] ERROR PATH: Add a custom package YAML file and reference the package YAML on the team YAML. Specify the new `setup_experience` key within the package YAML, setting the value to `true`. Run GitOps and confirm there is an easy to understand error message.\n\n#### Custom target (labels)\n\n- [ ] In the team YAML, set `labels_include_any` for a custom package that is defined in-line. Verify that the label inclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_include_any` for a custom package that is referenced by path. Verify that the label inclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_exclude_any` for a custom package that is defined in-line. Verify that the label exclusions are applied when GitOps is run. \n- [ ] In the team YAML, set `labels_exclude_any` for a custom package that is referenced by path. Verify that the label exclusions are applied when GitOps is run. \n- [ ] In the package YAML, set `labels_include_any` to include a label that exists in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n- [ ] In the package YAML, set `labels_exclude_any` to exclude a label that exists in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n\n#### Categories\n\n- [ ] In the team YAML, set `categories` to include one or more categories that exist in Fleet for a custom package that is defined in-line. Verify that the categories are applied when GitOps is run.\n- [ ] In the package YAML, set `categories` to include one or more categories that exist in Fleet. Verify that the key no longer works and you see an easy to understand error message when GitOps is run.\n\n#### No team\n\n- [ ] Verify that setup experience, custom targets (labels), and categories work as defined above for \"No team\" (`no-team.yml`)\n\n\n#### Backwards compatibility\n\n- [ ] In the team YAML, specify the old `macos_setup.software` key, add software in-line, and do not specify the new `setup_experience` for any software. Confirm the software is added to setup experience. \n- [ ] ~~In the team YAML, specify the old `macos_setup.software` key, leave it empty, and specify the new `setup_experience` for any software. Verify that you see [this error messaged](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).~~\n  - [ ] UPDATE: @noahtalerman: [Tricky to build](https://github.com/fleetdm/fleet/issues/30095#issuecomment-3218706681). Here's what we decided instead: setting `setup_experience` on individual packages with an empty `macos_setup.software` software key will result in a successful GitOps run with `setup_experience` flags applied to the relevant software.\n- [ ] Repeat the step above with some software in the `macos_setup.software` key. You should see [this error message](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).\n\n#### GitOps speed\n\n- [ ] Run GitOps with 99 packages and 500 teams before and after this change. Verify that the speed of GitOps isn't negatively impacted.\n\n#### Migration script\n\n- [ ] Run the script to migrate the the old package YAML format to the new format and verify that the script works. [#31165](https://github.com/fleetdm/fleet/issues/31165)\n\n#### Generate-GitOps\n- [ ] fleetctl generate-gitops includes the setup experience flag on software for which it is set.\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 30095,
           "repository": "fleetdm/fleet",
           "title": "GitOps: Setup experience, custom targets (labels), self-service, \u0026 categories for all software in team YAML",
@@ -4152,7 +4152,7 @@
           "body": "**Fleet version**: 4.68.1\n\n**Web browser and operating system**: latest Chrome\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\nfrom customer-faltona:\n\n\u003e greetings! I think i found a bug in the API:\n\u003e \n\u003e ```\n\u003e  ~/ curl -X GET \\\n\u003e   \"https://fleetdm.blah.net/api/v1/fleet/software/titles?packages_only=true\" \\\n\u003e   -H \"Authorization: Bearer $TOKEN\" \\\n\u003e   -H \"Content-Type: application/json\" | wc -l\n\u003e   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n\u003e                                  Dload  Upload   Total   Spent    Left  Speed\n\u003e 100  497k    0  497k    0     0  1237k      0 --:--:-- --:--:-- --:--:-- 1236k\n\u003e    22855\n\u003e \n\u003e  ~/ curl -X GET \\\n\u003e   \"https://fleetdm.blah.net/api/v1/fleet/software/titles?packages_only=false\" \\\n\u003e   -H \"Authorization: Bearer $TOKEN\" \\\n\u003e   -H \"Content-Type: application/json\" | wc -l\n\u003e   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n\u003e                                  Dload  Upload   Total   Spent    Left  Speed\n\u003e 100  497k    0  497k    0     0  1207k      0 --:--:-- --:--:-- --:--:-- 1206k\n\u003e    22855\n\u003e \n\u003e  ~/ curl -X GET \\\n\u003e   \"https://fleetdm.blah.net/api/v1/fleet/software/titles\" \\\n\u003e   -H \"Authorization: Bearer $TOKEN\" \\\n\u003e   -H \"Content-Type: application/json\" | wc -l\n\u003e   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current\n\u003e                                  Dload  Upload   Total   Spent    Left  Speed\n\u003e 100  497k    0  497k    0     0  1226k      0 --:--:-- --:--:-- --:--:-- 1224k\n\u003e    22855\n\u003e  ```\n\u003e The `?packages_only=true` parameter doesn't seem to do anything.\n\u003e \n\u003e Looking at the results of `/api/v1/fleet/software/titles`, i do infact have software_package entries:\n\u003e```\n\u003e     {\n\u003e       \"id\": 3204,\n\u003e       \"name\": \"Duo Desktop.app\",\n\u003e       \"source\": \"apps\",\n\u003e       \"hosts_count\": 8,\n\u003e       \"versions_count\": 1,\n\u003e       \"versions\": [\n\u003e         {\n\u003e           \"id\": 61745,\n\u003e           \"version\": \"7.9.0.0\",\n\u003e           \"vulnerabilities\": null\n\u003e         }\n\u003e       ],\n\u003e       \"software_package\": {\n\u003e         \"name\": \"DuoDesktop-7.8.0.0.pkg\",\n\u003e         \"automatic_install_policies\": null,\n\u003e         \"version\": \"7.8.0.0\",\n\u003e         \"platform\": \"darwin\",\n\u003e         \"self_service\": true,\n\u003e         \"icon_url\": null,\n\u003e         \"last_install\": null,\n\u003e         \"last_uninstall\": null,\n\u003e         \"package_url\": \"http://blah.local:8000/DuoDesktop-7.8.0.0.pkg\"\n\u003e       },\n\u003e       \"app_store_app\": null,\n\u003e       \"bundle_identifier\": \"com.duosecurity.duo-device-health\",\n\u003e       \"hash_sha256\": \"blahd04d\"\n\u003e     },\n\u003e```\n\u003e But my goal is to automate ingestion of package\n\u003e we are on 4.68.1. Let me know if I'm misunderstanding!\n\u003e \n\u003e also feel free to redirect me if there is a better way to get this data.\n\u003e \n\u003e `\"package_url\": \"blah.pkg\"` is automated, but slows down CI a lot since packages are downloaded each run (fleet doesn't know the SHA till it downloads it)\n\u003e \n\u003e specifying a hash is nice, but i've not found a workaround to automate pushing the package into fleet\n\u003e So my goal is:\n\u003e \n\u003e - grab software package SHA256s that fleet knows about\n\u003e - grab `sha256` from github release artifacts where our packages reside\n\u003e - determine which packages in github need to be shoved into fleet\n\u003e - push only the packages that are missing from fleet\n\u003e - then our IT team can upload things to github release artifacts and specify a hash in CI cause packages automatically replicate over\n\u003e \n\u003e I'd want to do the same thing for bootstrap packages, seems very straightforward on that front:\n\u003e ```\n\u003e {\n\u003e   \"name\": \"bootstrap-package.pkg\",\n\u003e   \"team_id\": 0,\n\u003e   \"sha256\": \"6bebb443blah\",\n\u003e   \"token\": \"AA598E2A-blah\",\n\u003e   \"created_at\": \"2023-04-20T13:02:05Z\"\n\u003e }\n\u003e ```\n\u003e docs could be clearer/should explain what the default of 0 does.\n\nfrom @iansltx: \n\n\u003e We might wind up revising docs rather than updating behavior but need to have something to attach that effort to.\n\n### 🛠️ To fix\n\nProduct designer: @marko-lisica \n\nMake sure that  if `packages_only=true` that `GET /software/titles` endpoint returns titles that have software package (excluding titles with VPP app). \n\n### 🧑‍💻  Steps to reproduce\n\n1. run the API commands above to validate `/titles` endpoint with `?packages_only=true\"` \u0026 `?packages_only=false\"` parameters\n\n\n### 🕯️ More info _(optional)_\n\nN/A",
           "number": 31581,
           "repository": "fleetdm/fleet",
-          "title": "Output from packages_only=true \u0026 pacakges_only=false on /titles endpoint is the same",
+          "title": "Output from packages_only=true \u0026 packages_only=false on /titles endpoint is the same",
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/31581"
         },
@@ -4177,7 +4177,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Output from packages_only=true \u0026 pacakges_only=false on /titles endpoint is the same"
       },
       {
@@ -6832,6 +6832,339 @@
           }
         ],
         "issueNumber": 30095,
+        "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-26T07:05:25.042205644Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd_ysM",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed tooltip now shows and has correct copy"
+          }
+        ],
+        "issueNumber": 32255,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoeo",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Reviewing the #25499 recording from yesterday, the topic came up of what is/isn't editable for FMAs in the Edit UI.\n\nThinking that now that we have install scripts for FMAs on GitHub, and those scripts can be pushed as part of an FMA update as of this ticket, we remove editability for install and uninstall scripts in particular. If we got something wrong, we can link users to the FMA slug to suggest a change. This has the side effect of notifying us when we have something wrong, versus an IT admin performing a one-off fix that we don't know anything about.\n\nPost-install script and pre-install query would stay editable since we don't have defaults for either.\n\nIf we need an escape hatch, we can offer admins the ability to unlink the package from being Fleet-maintained, at which point it behaves as a custom package (and we'd switch any Fleet-maintained policies to \"you're on your own for this\" mode at the same time). If an admin wants to opt back into us maintaining the package, they can delete/re-add, which is relatively low-effort since we're handling the heavy parts of config."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per design review today, we'll keep all scripts editable, and overwrite them when we import a new FMA version."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Self-assigning this to give @jahzielv more room this sprint."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman @eugkuo this was requested by `customer-numa` yesterday.  I think we should prioritize this in the next design sprint.\n\nCC: @zayhanlon @ddribeiro "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@eugkuo during feature fest, we decided to come back to this in a future design sprint. Prioritizing other work."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "One tricky bit on FMA updates is for (un)install scripts where the script needs to be modified by the IT admin to e.g. add a license key as an argument to a vendor-supplied install script. Idea is that these actions can't be performed in a post-install script (which we don't manage with FMAs), so an IT admin would need to munge the install script, and on an update of the app we'd need to either give them a heads-up or incorporate their changes.\n\n@mostlikelee you mentioned that this is already an issue with Cloudflare WARP for a license key or similar. Do you have docs on that? I saw #24216 and [Cloudflare's manual deployment docs](https://developers.cloudflare.com/cloudflare-one/connections/connect-devices/warp/deployment/manual-deployment/), but the former doesn't appear to be configurable via the CLI, and the latter references a CLI that could be included in a post-install script (similar to what we see with SentinelOne configuration).\n\nSo either I'm missing something or there's probably a better example out there of install/uninstall (not post-install) scripts that would need to be tweaked by an IT admin after an FMA is imported, and we can use that example to determine how we can reasonably persist config across FMA updates (e.g. via extra env vars)."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman the customer ask here is to manage this via gitops to support the following workflow:\n1. customer updates app to latest version on canary team\n2. customer deploys app to hosts on canary team\n3. customer tests app on canary team\n4. customer deploys app to production team\n\nMy proposal:\n\n1. Add a `version` field to FMAs:\n```\nfleet_maintained_apps:\n    - slug: zoom/darwin\n      self_service: true\n      version: 1.0.1\n      categories:\n        - Productivity\n```\n\n2.  Add an option to bump versions in gitops config:\n\nbump all apps in file:\n```\nfleetctl gitops --bump-fma -f canary.yml\n```\nbump one app in file:\n```\nfleetctl gitops --bump-fma --app zoom/darwin -f canary.yaml\n```"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@allenhouchins what do you think ^"
+          },
+          {
+            "author": {
+              "login": "allenhouchins"
+            },
+            "body": "@noahtalerman I added a note for us to start with this at tomorrow's unpacking meeting. "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@mostlikelee just chatted with @allenhouchins and we think the IT admin expectation is that Fleet, on each GitOps run, will just update any out-of-date Fleet-maintained apps.\n\nMeaning, we think we don't want to add any new keys as part of this story. When we ship this improvement, Fleet's Fleet-maintained apps should update without updating the [`it-and-security/` YAML](https://github.com/fleetdm/fleet/blob/main/it-and-security/teams/workstations.yml).\n\nThe best practice for the staged rollout will be to update the canary team's automatic install policy first and then the production team's policy after things look good.\n\nCheck out the \"Unpacking the why\" recording from 2025-06-24 for more context."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Flagging the suggested behavior as a BC break from the previously decided implementation. Existing impl doesn't change FMAs once they've been uploaded, and we intentionally opted into that when we spec'd FMAs-in-GitOps the first time.\n\nAdding `version: latest` as an opt-in for the logic you're describing resolves the BC break."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e the suggested behavior as a BC break from the previously decided implementation\n\n@iansltx that's ok. I think we want to be brave here and update the default behavior now that we understand what the IT admin expects.\n\nThat's why we marked these features as experimental!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Given this change in expected development for this story, does it still make sense to lump script edits in here? At this point those changes are orthogonal to what we'd need to do to switch from \"never update if the FMA is already in the library\" to \"always update.\"\n\nIf script override ability was discussed and determined to be required as part of this behavior change in Unpacking the why, fair enough, though without that scope this story is nearly spec-complete."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "\u003e The best practice for the staged rollout will be to update the canary team's automatic install policy first and then the production team's policy after things look good.\n\nHere is a scenario that may occur if we don't support version pinning:\n1. Prod team is currently getting patched to MyApp v1.0 via policy (rule: install if version less than 1.0)  \n2. MyApp v2.0 is added to canary team\n3. MyApp 2.0 is deployed to canary team via policy (rule: install if version less than 2.0) and tests successfully\n4. MyApp updated to 3.0 in FMA catalog\n5. Cannot add 2.0 to prod because it's no longer available in FMA catalog.  MyApp 3.0 cannot be deployed to prod because it's not tested.\n6. Gitops updates MyApp to 3.0 in canary\n7.  Wait for 3.0 to finish deploying again to canary team\n8.  GitOps run updates app to 4.0\n9.  etc... customer can never deploy to prod because canary is updating too frequently\n\nOne workaround here is to not run GitOps unless you plan on bumping FMA versions, but this will block other GitOps runs that have other intentions.\n\nAnother option could be to support a flag that does not bump FMAs (ie.  `fleetctl gitops --no-fma-updates`)\n\n@noahtalerman @allenhouchins \n "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e does it still make sense to lump script edits in here? At this point those changes are orthogonal to what we'd need to do to switch from \"never update if the FMA is already in the library\" to \"always update.\"\n\n@iansltx I think we want to keep the script edits as part of this story for now. At least during drafting. Why? To think a bit broader. I don't think we've fully thought through the world in which Fleet-maintained apps are updated but some apps have scripts that are overridden. \n\nDoes Fleet update the package for those apps but leave the scripts alone? I'm thinking probably but worth discussing and putting ourselves in `numa`'s shoes before deciding.\n\nThen, once the designs are settled then we can decide to split it up.\n"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e Here is a scenario that may occur if we don't support version pinning\n\nI understand what you're saying @mostlikelee. \n\nI still think we want to update the default behavior to match IT admin expectations: that Fleet, on each GitOps run, will update any out-of-date Fleet-maintained apps.\n\nYou're thinking about the version pinning (version ceiling) problem. I think we want to solve that too."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Re: updating packages but leaving scripts alone, unless scripts are being explicitly provided we _wouldn't_ want to take that route, because:\n\n1. If we find a bug in our (un)install scripts, we want to be able to broadcast the fix to that bug aloneside other maintained app updates, vs. requiring admins to take manual action. The ability to push bugfixes on scripts was a big reason for the rearchitecture of Fleet-maintained apps that landed in v4.66.\n2. As versions of software get bumped, sometimes what counts as the correct (un)install script changes, so if we bump the software package but not the associated scripts we'll wind up delivering a broken (un)install. Currently, \"sometimes\" is \"all the time\" for MSI uninstall scripts, since we use ProductCode for uninstalls there; without bumping scripts alongside installer packages, as soon as a maintained app's version is bumped the associated uninstall script will silently stop working.\n\nOf the above, reason 2 will come up more often."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e Re: updating packages but leaving scripts alone, unless scripts are being explicitly provided we wouldn't want to take that route\n\n@iansltx I think we're saying the same thing!\n\nTo rephrase [my comment above](https://github.com/fleetdm/fleet/issues/25636#issuecomment-3002016399), I think Fleet always updates/fixes scripts if they're not explicitly provided.\n\nFleet only leaves scripts along, but updates packages, if scripts are explicitly provided."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@iansltx given the change in scope above, do you think the tshirt size is still an `M`?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@mostlikelee With revised scope, inclusive of adding script overrides (plus post-install script and pre-install query) this feels like at/just above XS. Hard to call this an S tee-shirt size because S is ~3x the size of XS and swapping default plus adding the requisite gitops params isn't going to take a whole dev-sprint."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Decided to push this story (T-shirt size: S) out of the current design sprint because we don't think we'll have space to ship it in 4.72. Here's what we're shipping instead:\n\n- Fleet-maintained apps bugs\n- https://github.com/fleetdm/fleet/issues/30240\n- https://github.com/fleetdm/fleet/issues/27983"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Customer feedback:\n\nCan the update mechanism run server side instead? Updating FMAs only during gitops runs will impact processes and how we think about gitops.  ie.  if you want to ensure FMAs update 1x/hr you have to schedule gitops runs (with no yaml changes) at that frequency.\n\ncc: @kennyb-222 "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "updated the title as this ability already exists for custom packages"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica based on the late, significant scope reduction on https://github.com/fleetdm/fleet/issues/27983, there's now enough backend capacity in the 4.72 sprint to bring this in if it's ready in time (and, with the reduction in scope of this story due to FMAs already being bumped on each GitOps run, T-shirt size is more like an XS, so it's rather easy to fit in). Happy to help get this ready, as the correct scope of work here (we're also missing post-install script and pre-install query) is covered in #30250."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica I believe the above may be ready for User Story Review, depending on your thoughts on the product part of the story description, plus answers to the below questions:\n\n1. Do we want to allow specifying FMA details in a separate file, similar to software packages? I'm assuming not in the YAML PR. If we _do_ want that option, do we want to deprecate the current inline option like we did for software packages, or do we want to keep it since the common case would involve specifying slug, self-service, and nothing else?\n2. Do we want to include pre-install query/post-install script as part of this work? I assumed that we do.\n\nOne caveat: 4.71 docs are out of date with `main` and have conflicts, and my bet is that 4.73 docs are even further behind. Let me know when the 4.73 docs branch is caught up with main/4.71/4.72 and I'll re-roll the YAML PR as needed. It's ready for review as-is (/cc @rachaelshaw) but I expect I'll need to re-roll it, as if I recall correctly the software YAML docs have changed a fair amount recently. The anticipated re-roll won't change the semantics of specified behavior though, so the embedded product decisions can be reviewed now, and exact verbiage can be dialed in post-reroll."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@iansltx This looks good to me! Let's review it once more with Noah today during design review, and I think we can move it to the user story review after that."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Async User Story Review signoffs:\n\n- [x] @mostlikelee \n- [x] @jmwatts "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Just one thing from the test plan:\n\u003e Create a YAML file with all four new fields added\n\nthere are only 3 based on the yaml PR, which is correct?\n\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@mostlikelee\n\n1. install script\n2. Uninstall script\n3. Pre-install query\n4. Post-install script"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "The YAML PR mentions pre-install query in the description but not the example, matching what we're doing elsewhere."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Create a YAML file with all four new fields added. Apply the YAML. Confirm that the FMA in the UI reflects all fields.\n2. Remove all but the install script, revise the install script, and re-apply. \n- [x] Confirm that the FMA in the UI blanks out pre-install query/post-install script, revises the install script, and reverts to the manifest version of the uninstall script.\n3. Remove the install script field in YAML and re-apply. \n- [x] Confirm that the FMA in the UI reverts to the manifest version of the install script."
+          }
+        ],
+        "issueNumber": 25636,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "getvictor"
+            },
+            "body": "@mostlikelee I believe this is a P1 since this feature is broken right now. However, I've marked it a P2 since customer was OK waiting until 4.73 for the fix.\n\n@harrisonravazzolo Please add the customer label since I couldn't find it."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1752521340977199"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "lowered estimate, we already had validation logic"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed install/uninstall scripts referencing fleet secrets can now be used when adding software installers (custom installers and custom FMA scripts)"
+          }
+        ],
+        "issueNumber": 30853,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCw2A",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "cc: @iansltx \n\nSecond backend bug that will be highly noticeable with hackathon work\n"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Pulling back to drafting as, while this means we can't show the automatic policies icon in software library/inventory in the host details view yet, we're no worse off than we are right now. @RachelElysia it still makes sense for the FE to consume the data when it's available, but unlike #30188 this isn't going to be an immediate source of user confusion, so there are items currently in the sprint we don't want to evict in favor of this, and potentially stuff we want to bring in instead of this."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@RachelElysia I've added the following to this ticket which I think resolves the issue in question?\n\n- [Figma design](https://www.figma.com/design/neuhhOaQ0Qvh74xdqwmu6C/-30197-Host-Software-API--Surface-automatic-install-policies?node-id=5301-26\u0026t=RHjnRKdNhkv48TVg-11). When there is no self-service the icon changes to the recycle icon.\n\nI'll move this to ready to estimate and add planning poker. If there's other things to do please pull it back so that any remaining items can be addressed. Thanks!\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "Planning poker: https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1750684407360969\n\nHoping this is FE only."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Coolio. I added a design to this and moved it to ready to estimate, but it can sit there I guess until such time as we want to pull it forward."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo This is actually _backend_-only. FE work for this is already done. This is another ListHostSoftware related case, and we'll want to take care to _not_ have an N+1 here I think."
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "Are there plans to create separate web API endpoints for the library and inventory? That could help simplify `ListHostSoftware`."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jahzielv In this case, that wouldn't help, as current designs call for showing the \"this has auto-install policies\" icon on both library and inventory pages within host software details. If we stopped showing installer-related icons on inventory that would clean things up a bit (though this would still need to implement this for the library side) but that'd require a change to the desired fix here.\n\nRe: splitting endpoints, that would be out of scope for this bug, and would need a new issue filed."
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "\u003e Re: splitting endpoints, that would be out of scope for this bug, and would need a new issue filed.\n\nOh yeah for sure! I don't think it should be done here, but seeing this ticket made me think about it :D"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed install icons are now showig in Host \u003e\u003e Software \u003e\u003e Library\n\n- [x] No Self service, No policy -\u003e No icon indicator\n- [x] Self service, No policy -\u003e Self service icon indicator\n- [x] Self service, Policy, -\u003e Recycle + person icon indicator\n- [x] No Self service, Policy -\u003e Recycle icon indicator\n- [x] `automatic_install_policies` contains associated policies on `software_package`\n- [x] `\"self_service\": true` shows on `software_package`"
+          }
+        ],
+        "issueNumber": 30197,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxHA",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "[Repro'd](https://dogfood.fleetdm.com/software/versions/568346)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed versions released after 138.0.7204.92 are not showing vulnerable"
+          }
+        ],
+        "issueNumber": 30682,
         "changeType": "modified"
       }
     ]
