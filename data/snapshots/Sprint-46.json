@@ -2563,7 +2563,7 @@
           "title": "osquery-5.19.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Add Windsurf and Cursor extensions to `vscode_extensions` table",
         "comments": [
           {
@@ -3187,7 +3187,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Onboarding buddy Anthony Maxwell"
       },
       {
@@ -3504,7 +3504,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to add a custom icon for my software\n| so that my end users can easily find the software they need on the **My device \u003e Self-service** page.\n\n## Roadmap item\n\nNone\n\n## Key result\n\nCustomer request\n\n## Original requests\n\n- #24802 \n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @iansltx \n  \nMake sure to solve this: #29886\n\n## Changes\n\n### Product\n- [x] UI changes: [Figma link](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Edit-software-icon?node-id=0-1\u0026t=DrMQziG5Cl0BDJbU-1)\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: #31324\n- [x] REST API changes: #31324\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps changes: Specified in Figma above.\n- [x] GitOps generation changes:\n  - Specified in Figma above.\n  - `gitops-generate` command should download icons.\n- [x] Activity changes: #31382\n- [x] Permissions changes: Global/team admins and maintainers can apply update icon. Covered by \"Add, edit, and delete software\" in permissions guide.\n- [x] Changes to paid features or tiers: Available in Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: The icon added by user will display on self-service and software inventory tabs on My device page.\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes.\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: #31324\n- [ ] Feature guide changes: Update [self-service](https://fleetdm.com/guides/software-self-service), [custom package](https://fleetdm.com/guides/deploy-software-packages), [VPP](https://fleetdm.com/guides/install-vpp-apps-on-macos-using-fleet) articles to reference icons/how to change them\n- [ ] Database schema migrations: Add software_title_icons table with title ID, team ID, icon filename, and icon storage ID (will dump icons onto the software installers bucket)\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### UI\n\n- [ ] Make sure that the edit action is available next to the software title name, only if the software title has a package or VPP app added.\n- [ ] Verify that the user can upload a PNG icon by clicking on the edit icon next to the software title name in the **Edit software** modal.\n- [ ] Verify that the user can only select PNG files.\n- [ ] Verify that Fleet returns an error if the icon doesn't fit into specs defined in Figma.\n- [ ] Make sure that the user can preview the icon in the **Edit software** modal, once it's selected and before it's uploaded.\n- [ ] Verify that the icon in the preview is displayed according to the priority order described in Figma..\n- [ ] Make sure that the preview under the **Fleet** tab shows the real software title name, icon, type and versions count. The table underneath the transparent overlay should be static.\n- [ ] Make sure that the preview under the **Self-service** tab shows the real software title name and icon. Other data should be static.\n- [ ] Make sure that if the user deletes the selected or uploaded icon, the preview shows the fallback icon.\n- [ ] Verify that when the VPP icon is available, the upload form is still available in the **Edit software** modal, so the user can override that icon with a custom PNG.\n- [ ] Make sure that the uploaded icon shows on software title details, version details, titles list, versions list, and on a team where the icon is added.\n- [ ] Make sure that we do client-side validation if the icon size doesn't fit specs, before the user hit \"Save\" (upload) icon. Show error flash message specified in Figma. \n- [ ] Make sure that the uploaded icon shows on the host's software library and inventory pages, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows on the My device software and self-service tabs, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows in /controls/setup-experience/install-software when selecting software to be installed\n- [ ] Verify that when GitOps mode is enabled, on the software title details page, the edit button (next to the software title name) is disabled, and that the GitOps tooltip is displayed on hover.\n- [ ] Verify that `icon` field is added in GitOps generation modal.\n- [ ] Verify that icon download link is added in GitOps generation modal. \n\n#### API\n\n- [ ] Verify that the icon can be updated with the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be deleted with the new `DELETE /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be downloaded with the new `GET /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that Fleet errors if icons are not PNG, not square, or not between 120x120px and 1024x1024px, when user tries to upload with PUT endpoint.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles/:id`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/device/{token}/software`.\n- [ ] Verify that if no uploaded icon and no VPP added, `icon_url` is `null` (for every endpoint above).\n\n#### GitOps\n\n- [ ] Verify that the icon can be added to a software package (`software.packages` \u003e `lib/software-name.package.yml` \u003e `icon`).\n- [ ] Verify that the icon can be added to the App Store app (`software.app​_store​_apps.icon`).\n- [ ] Verify that the icon can be removed from the software package or App Store app\n- [ ] Verify that adding the same icon file to software packages across multiple teams adds the icon for each software package on each team and doesn't result in significantly slower gitops runs or adverse file-system effects (excessive files in /tmp directory when running)\n- [ ] Verify that previously uploaded icons are downloaded and referenced when running `fleetctl generate-gitops`\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to add a custom icon for my software\n| so that my end users can easily find the software they need on the **My device \u003e Self-service** page.\n\n## Roadmap item\n\nNone\n\n## Key result\n\nCustomer request\n\n## Original requests\n\n- #24802 \n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @iansltx \n  \nMake sure to solve this: #29886\n\n## Changes\n\n### Product\n- [x] UI changes: [Figma link](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Edit-software-icon?node-id=0-1\u0026t=DrMQziG5Cl0BDJbU-1)\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: #31324\n- [x] REST API changes: #31324\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps changes: Specified in Figma above.\n- [x] GitOps generation changes:\n  - Specified in Figma above.\n  - `gitops-generate` command should download icons.\n- [x] Activity changes: #31382\n- [x] Permissions changes: Global/team admins and maintainers can apply update icon. Covered by \"Add, edit, and delete software\" in permissions guide.\n- [x] Changes to paid features or tiers: Available in Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: The icon added by user will display on self-service and software inventory tabs on My device page.\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes.\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: #31324\n- [ ] Feature guide changes: Update [self-service](https://fleetdm.com/guides/software-self-service), [custom package](https://fleetdm.com/guides/deploy-software-packages), [VPP](https://fleetdm.com/guides/install-vpp-apps-on-macos-using-fleet) articles to reference icons/how to change them\n- [ ] Database schema migrations: Add software_title_icons table with title ID, team ID, icon filename, and icon storage ID (will dump icons onto the software installers bucket)\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### UI\n\n- [ ] Make sure that the edit action is available next to the software title name, only if the software title has a package or VPP app added.\n- [ ] Verify that the user can upload a PNG icon by clicking on the edit icon next to the software title name in the **Edit software** modal.\n- [ ] Verify that the user can only select PNG files.\n- [ ] Verify that Fleet returns an error if the icon doesn't fit into specs defined in Figma.\n- [ ] Make sure that the user can preview the icon in the **Edit software** modal, once it's selected and before it's uploaded.\n- [ ] Verify that the icon in the preview is displayed according to the priority order described in Figma..\n- [ ] Make sure that the preview under the **Fleet** tab shows the real software title name, icon, type and versions count. The table underneath the transparent overlay should be static.\n- [ ] Make sure that the preview under the **Self-service** tab shows the real software title name and icon. Other data should be static.\n- [ ] Make sure that if the user deletes the selected or uploaded icon, the preview shows the fallback icon.\n- [ ] Verify that when the VPP icon is available, the upload form is still available in the **Edit software** modal, so the user can override that icon with a custom PNG.\n- [ ] Make sure that the uploaded icon shows on software title details, ~version details,~ titles list, ~versions list,~ on a team where the icon is added.\n- [ ] Make sure that we do client-side validation if the icon size doesn't fit specs, before the user hit \"Save\" (upload) icon. Show error flash message specified in Figma. \n- [ ] Make sure that the uploaded icon shows on the host's software library and inventory pages, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows on the My device software and self-service tabs, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows in /controls/setup-experience/install-software when selecting software to be installed\n- [ ] Verify that when GitOps mode is enabled, on the software title details page, the edit button (next to the software title name) is disabled, and that the GitOps tooltip is displayed on hover.\n- [ ] Verify that `icon` field is added in GitOps generation modal.\n- [ ] Verify that icon download link is added in GitOps generation modal. \n\n#### API\n\n- [ ] Verify that the icon can be updated with the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be deleted with the new `DELETE /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be downloaded with the new `GET /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that Fleet errors if icons are not PNG, not square, or not between 120x120px and 1024x1024px, when user tries to upload with PUT endpoint.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles/:id`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/device/{token}/software`.\n- [ ] Verify that if no uploaded icon and no VPP added, `icon_url` is `null` (for every endpoint above).\n\n#### GitOps\n\n- [ ] Verify that the icon can be added to a software package (`software.packages` \u003e `lib/software-name.package.yml` \u003e `icon`).\n- [ ] Verify that the icon can be added to the App Store app (`software.app​_store​_apps.icon`).\n- [ ] Verify that the icon can be removed from the software package or App Store app\n- [ ] Verify that adding the same icon file to software packages across multiple teams adds the icon for each software package on each team and doesn't result in significantly slower gitops runs or adverse file-system effects (excessive files in /tmp directory when running)\n- [ ] Verify that previously uploaded icons are downloaded and referenced when running `fleetctl generate-gitops`\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 29478,
           "repository": "fleetdm/fleet",
           "title": "Edit software icon",
@@ -3831,14 +3831,14 @@
           "ksykulev"
         ],
         "content": {
-          "body": "## Related user story\n\n#29478. Blocked by #31895.\n\n## Task\n\nUpdate existing endpoints that need to reference software icons to support new functionality, per #31324:\n\n### Icon URLs\n\nIn all cases, move icon URL from `app_store_app` level to the top level of the software title. Priority order:\n\n1. If viewing within the context of a team and that team has an icon specified in the DB, relative URL to the icon GET endpoint\n2. Else if viewing within the context of a team and that team has a VPP app associated to the software title, (absolute) URL of the VPP icon\n3. Else null\n\nFor these endpoints:\n\n- [ ] Main host software (references REST API GET for overridden icons)\n- [ ] Device-auth host software (references device-auth icon GET for overridden icons)\n- [ ] Software titles list\n- [ ] Software titles entity\n- [ ] Software package add/edit response\n- [ ] App store app add/edit response\n- [ ] Setup experience software list\n\n### Software title IDs\n\nThe following endpoints need to be updated to include software title ID in responses:\n\n- [ ] Software versions list\n- [ ] Software version entity\n\n## Condition of satisfaction\n\nExisting endpoints have been updated to reflect icon override changes. Once this task (and its prerequisite) are complete, all frontend work for this story should be unblocked.",
+          "body": "## Related user story\n\n#29478. Blocked by #31895.\n\n## Task\n\nUpdate existing endpoints that need to reference software icons to support new functionality, per #31324:\n\n### Icon URLs\n\nIn all cases, move icon URL from `app_store_app` level to the top level of the software title. Priority order:\n\n1. If viewing within the context of a team and that team has an icon specified in the DB, relative URL to the icon GET endpoint\n2. Else if viewing within the context of a team and that team has a VPP app associated to the software title, (absolute) URL of the VPP icon\n3. Else null\n\nFor these endpoints:\n\n- [ ] Main host software (references REST API GET for overridden icons)\n- [ ] Device-auth host software (references device-auth icon GET for overridden icons)\n- [ ] Software titles list\n- [ ] Software titles entity\n- [ ] Software package add/edit response\n- [ ] App store app add/edit response\n- [ ] Setup experience software list\n\n### Software title IDs\n\nThe following endpoints need to be updated to include software title ID in responses:\n\n~- [ ] Software versions list~\n~- [ ] Software version entity~\n^Taking these two out of scope for the iteration^\n\n## Condition of satisfaction\n\nExisting endpoints have been updated to reflect icon override changes. Once this task (and its prerequisite) are complete, all frontend work for this story should be unblocked.",
           "number": 31896,
           "repository": "fleetdm/fleet",
           "title": "Custom Icons: Existing endpoint changes",
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/31896"
         },
-        "estimate": 8,
+        "estimate": 5,
         "id": "PVTI_lADOBDAnic4A4BEUzgdwP8c",
         "labels": [
           "~backend",
@@ -4208,7 +4208,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "Host count discrepancy on software packages",
         "comments": [
           {
@@ -7476,7 +7476,7 @@
           "~qa-on-branch"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "✔️Awaiting QA",
+        "status": "Done",
         "title": "False negative for CVE-2025-9074",
         "comments": [
           {
@@ -7657,7 +7657,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "Software versions always show \"Updated never\" for their last updated time",
         "comments": [
           {
@@ -7696,7 +7696,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Learn more button on the Automatic install software banner is purple instead of black",
         "comments": [
           {
@@ -7907,6 +7907,327 @@
         "id": "PVTI_lADOBDAnic4A4BEUzgdwP8c",
         "issueNumber": 31896,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-08-30T07:04:53.523537011Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd_4SQ",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed results now filter to kernel and operating system\n\n\u003cimg width=\"304\" height=\"43\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/449a0480-cb14-4726-a362-5423c23f9848\" /\u003e\n\nAPI call is now including both os and kernel `\u0026software_version_id=575834\u0026os_name=Ubuntu\u0026os_version=24.04.2%20LTS`"
+          }
+        ],
+        "issueNumber": 32259,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP74",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Heads-up: \"name\" editing would change which `software_title` the package is associated with based on how we're linking titles and packages right now, for OSes other than macOS, and that has implications for e.g. software updates where inventoried software need to name-match the corresponding installer. We also have validation that prevents package edits from  changing the associated software title. So we'll need to sort those implications out if we include name in scope here (this issue doesn't apply to icon and version)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx \u0026 @noahtalerman  I've added a link to a [figma design file](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Ability-to-edit-icon--name--and-version-for-custom-packages-uploaded-to-Fleet?node-id=7301-3341\u0026t=rFG0J3peq1Z7YnKG-11) to get the ball rolling. I've also created this [prototype](https://www.figma.com/proto/JMZUamWhuArCPIjAXXrIzB/-29478-Ability-to-edit-icon--name--and-version-for-custom-packages-uploaded-to-Fleet?page-id=2%3A130\u0026node-id=7301-6642\u0026t=rFG0J3peq1Z7YnKG-0\u0026scaling=min-zoom\u0026content-scaling=fixed\u0026starting-point-node-id=7301%3A6642)\n\nSo here are a few comments/questions based on the way in which this ticket is written:\n1. I have the display name set as metadata under the installer package name.\n    1. Should the display name replace the package name?\n    2. Should the package display name replace the software title display name?\n        1. If yes, in the future when we have multiple installer packages what should the software title display name be? The latest installer package?\n2. Similar to the above, if an icon is updated on an installer package should that icon also update the icon at the top of the software title page?\n        1. If yes, in the future when we have multiple installer packages what icon should be displayed? The latest installer package?\n4. I find updating the version number part of this ticket odd. If the package has a version number why would someone want to change it to something that could be wrong. Why would Fleet want to allow such a potential mismatch?\n5. Lastly, should the icon and the display name actually be edited at the software title page level instead of the package level? It seems like that's what people would care more about?\n    1. Note: At one point there was a request to name custom packages mainly for admin identity purposes. In this world we could have title editing at both levels, with the custom package titles be reference titles for admins.\n\nThoughts?"
+          },
+          {
+            "author": {
+              "login": "ddribeiro"
+            },
+            "body": "@eugkuo As part of this story, would a Fleet admin be able to specify the custom app name in their yaml files in GitOps?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "![Image](https://github.com/user-attachments/assets/ffd778b7-8620-4dd4-9229-edcac7210679)\n\nFYI @eugkuo "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "\u003e @eugkuo As part of this story, would a Fleet admin be able to specify the custom app name in their yaml files in GitOps?\n\n@mostlikelee do you want to include GitOps in this ticket or should GitOps and UI tickets be separated for reasons of scoping, etc.\n\ncc @ddribeiro "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Given that GitOps is a core differentiator for Fleet and given that the requesting customer wants GitOps for their workflows, GitOps needs to be part of the spec here (though it'll get its own subtask), as does `generate-gitops` support."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee I neglected to mention you on these so re-adding to ping you:\n\nI've added a link to a [figma design file](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Ability-to-edit-icon--name--and-version-for-custom-packages-uploaded-to-Fleet?node-id=7301-3341\u0026t=rFG0J3peq1Z7YnKG-11) to get the ball rolling. I've also created this [prototype](https://www.figma.com/proto/JMZUamWhuArCPIjAXXrIzB/-29478-Ability-to-edit-icon--name--and-version-for-custom-packages-uploaded-to-Fleet?page-id=2%3A130\u0026node-id=7301-6642\u0026t=rFG0J3peq1Z7YnKG-0\u0026scaling=min-zoom\u0026content-scaling=fixed\u0026starting-point-node-id=7301%3A6642)\n\nSo here are a few comments/questions based on the way in which this ticket is written:\n\n1. I have the display name set as metadata under the installer package name.\n    1. Should the display name replace the package name?\n    2. Should the package display name replace the software title display name?\n        1. If yes, in the future when we have multiple installer packages what should the software title display name be? The latest installer package?\n2. Similar to the above, if an icon is updated on an installer package should that icon also update the icon at the top of the software title page?\n    1. If yes, in the future when we have multiple installer packages what icon should be displayed? The latest installer package?\n3. I find updating the version number part of this ticket odd. If the package has a version number why would someone want to change it to something that could be wrong. Why would Fleet want to allow such a potential mismatch?\n4. Lastly, should the icon and the display name actually be edited at the software title page level instead of the package level? It seems like that's what people would care more about?\n    1. Note: At one point there was a request to name custom packages mainly for admin identity purposes. In this world we could have title editing at both levels, with the custom package titles be reference titles for admins.\n\nThoughts?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, where we display the updated name/icon/version is going to determine at which level we need to implement, which will in turn have interplay with both inventory and access controls. Probably also useful to walk through how we get name/version/icon now and where they're stored.\n\nKey questions:\n\n1. Are any fields globally editable? If so, that means only global roles can edit them, right?\n2. For names, what happens when an associated app arrives in inventory with a different name?\n\n## Name\n\nFor everything without a bundle ID, gets set once on first inventory or package upload, and is the unique key for associating both installers and inventory for that source _globally_. The name is at the `software_title` level, and is visible in a bunch of places (self-service, software title details, etc.).\n\nFor apps with bundle IDs, this is added on initial upload or inventory, but may be edited later during software ingestion if we have a more \"canonical\" name come in from inventory. There's also the contributor API endpoint for editing names manually, but inventory may overwrite them. Unique key in these cases is bundle ID. The name is still at the `software_title` level, and is still visible in the same places.\n\n## Icon\n\nFor software that has been added as a VPP app on a team, each app has a URL for the 512x512 version of the Apple icon, as a PNG, loaded on-the-fly from Apple by the client. Icons are revised when they're revised upstream.\n\nFor software titles without an associated VPP app on the same team, icons are shown based on matching to SVGs embedded in the code, based on name + source matching. This means that Fleet server updates determine which icon is shown.\n\nThe above means that icons are currently team-specific with a global fallback.\n\nInventory doesn't affect icons. For example, iOS apps inventoried via MDM will have the generic Apple icon unless we have an SVG override (or the same app was added as a VPP app for that team).\n\nIcons *could* be extracted from some types of custom packages on upload.\n\n## Version\n\nThe below information is orthogonal to inventoried (installed) version.\n\nSoftware version is attached to the package or VPP app, so it's team-specific rather than global.\n\nFor VPP apps, version is set on add and updated hourly from Apple, since the latest version is pushed when a VPP app is installed.\n\nFor FMAs, the version in the FMA manifest is copied over when the FMA is imported into the software library.\n\nFor custom packages, the version is extracted as metadata on upload.\n\n---\n\nSince it's come up before on other features, the tradeoff with allowing edits of these values is that we'll get fewer bug reports when we're parsing metadata incorrectly on upload/inventory, as IT admins will just fix the names/icons/versions they care about if there aren't too many of them. My suggestion here would be to add analytics for cases where name/icon/version needed to be edited, and check in with customers who use that feature a lot to make sure we're not overlooking bugged behavior. How that data point is implemented will vary depending on how software field overrides work."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Given that scope has dropped on this, seems like we want to treat this as another piece of self-service, attached to the `software_installer`.\n\nOn the most recent review call I mentioned \"square PNG with dimension min/max\" and GitOps. Need to dig into this further."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx and @mostlikelee I've updated the designs and  [prototype](https://www.figma.com/proto/JMZUamWhuArCPIjAXXrIzB/-29478-Ability-to-edit-icon--name--and-version-for-custom-packages-uploaded-to-Fleet?page-id=2%3A130\u0026node-id=7301-6642\u0026t=ALS0rcz3jje1fQwT-0\u0026scaling=min-zoom\u0026content-scaling=fixed\u0026starting-point-node-id=7301%3A6642) to reflect that the only additional update is for the app icon.\n\nLMK what you think."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Does #29177 block this ticket? Also, there's no reason we don't allow jpgs and gifs as well as pngs once 29177 is done is there?\n\ncc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo 29177 doesn't block this, though there's some implementation overlap such that if we hit both of these in the same sprint we'll need to be more careful about subtask traffic jams (still two swimlanes worth of backend across the two tickets though).\n\nRe: JPG/GIF, those formats aren't the right match for icons, unlike SVG vs. PNG don't bring anything special to the table for the icon use case that PNG doesn't, and it's trivial to convert JPEG -\u003e PNG or GIF -\u003e PNG (since all are raster formats) where the raster -\u003e vector PNG -\u003e SVG conversion is less straightforward."
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Figma looks good, thanks @eugkuo !\n\n- Copy suggestion: \"Icons must be square PNG files with dimensions between 120×120 px and 1024×1024 px.\"\n- Only other thing to spec is how we want to show the error if it's not a square between specific dimensions."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "\u003e Copy suggestion: \"Icons must be square PNG files with dimensions between 120×120 px and 1024×1024 px.\"\n\n@RachelElysia Love the suggestion. Updated!"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@jmwatts I've added a test plan to this ticket. LMK what you think.\n\n@iansltx I know we discussed this yesterday but I can't quite remember the answer. When this icon is updated is it updated throughout our system? Like will it show up in the library and inventory with the new icon as well?\n\ncc @mostlikelee @RachelElysia "
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@RachelElysia I've added an [Error message design](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Custom-packages--edit-icon?node-id=7341-1459\u0026t=OJ1KwfgvtY5eZfwZ-11) to this ticket."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Sorry for the delay on this. Originally my thought was \"just follow what we do for VPP apps\", which I thought was:\n\n1. Icon is associated with the VPP app\n2. Icon shows up when viewing the software title on the team that has the VPP app set\n3. Icon shows up in self-service for the associated team\n4. Icon shows up in host details for the associated team if the VPP app is in scope\n\nWith the above assumption, custom package icons would behave as follows:\n\n1. Icon is associated with the software package\n2. Icon shows up when viewing the software title on the team that has the package set\n3. Icon shows up in self-service for the associated team\n4. Icon shows up in host details for the associated team if the installer is in scope\n\nIn reality, if a VPP app gets added on _any_ team, a zero value-looking object gets tacked onto the all-teams view for that title; you can see this for [Keynote in Dogfood](https://dogfood.fleetdm.com/software/titles/1245). This object includes the App Store icon URL. We can do this in part because VPP icons _are_ global for a given Apple app ID (and the icon URL is stored on the global VPP apps table in the DB rather than on the team-specific table)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "I'm still thinking that we handle custom packages according to the above (tied to the package, only shows up where we would populate package info), but that's not actually consistent with VPP if current VPP behavior is intended VPP behavior.\n\nA side effect of handling package icons this way is that an All Teams view of software wouldn't have an icon. The only workarounds for this would be:\n\n1. We pick the first (for some definition of \"first\") icon we find for a custom package\n2. We make software icon overrides global rather than package/team based\n\n...so this is a good design review discussion, both to determine desired VPP behavior and desired behavior here (which may be influenced by the \"why\" behind desired VPP behavior)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Per this morning's discussion, I'm pausing digging in on eng DRI on this in favor of getting #27983 spec'd, as the expectation is that this will _not_ make it into the 4.71 dev sprint. There are also questions around existing behavior that should probably be cleaned up, as that will provide a consistent foundation to build this on. Those questions are documented in #29886."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx and @mostlikelee \n\nI've updated the [Prototype](https://www.figma.com/proto/JMZUamWhuArCPIjAXXrIzB/-29478-Custom-packages--edit-icon?page-id=2%3A130\u0026node-id=7347-2401\u0026t=uf2ocmJrBfpBl076-0\u0026scaling=min-zoom\u0026content-scaling=fixed\u0026starting-point-node-id=7347%3A1958) so that editing app icons happens at the title level and not at the package level. I've also removed icons at the package level to avoid confusion.\n\nThe expectation is that the icon at the sotware title level would be associated with the software everywhere this title is shown (in library and inventory and self-service).\n\n@RachelElysia Thoughts on wanting/needing a loading screen for the modal and a confirmation save vs immediately jumping back to the software title page with a toast confirmation?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "One pivotal question that will determine a bunch of implementation details: are these icons 1:1 with `software_installers` records (in which case currently they're 1:1 with teams) or are they more global than that?\n\nLooking at the 1:1 with `software_installers` option:\n\n## Pros\n\n* Consistent with self-service flag and categories\n* Allows for e.g. marking app icons as \"beta\" (or using a version-specific logo) on a canary team if that team has a different app version\n* Doesn't interfere with VPP app icon semantics if a custom-icon package is available on one team and a VPP app is available on another (once we sort out which wins for All Teams)\n* Access control for icon edit matches access control for all software package edits, vs. requiring a global role\n\n## Cons\n\n* Icon must be set once per team (less of a big deal with GitOps?)\n* Undefined behavior for showing software in \"All Teams\" (worse than VPP's current undefined behavior)\n* Potentially jarring if switching teams changes or loses an icon (this happens with VPP)\n* If implemented as \"an icon URL under software package\", inventoried software versions won't see the icon\n\nQuestion is how many of the pros/cons matter in this particular use case. FWIW I would expect that in either case we would be consistent with the icon shown within a team, for calls to software endpoints (not software version endpoints). Since My device only calls software endpoints (not versions), the icon on the software list would match the icon for self-service install (and update)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "One thing to add to what @iansltx is saying is that there are apps that have/will change icons with various releases (see Adobe products, which look like they update their icon every few years).\n\nSo. It seems like we should go back to associating icons with installer packages. I still feel like the Software title icon should inherit the latest installer package icon. \n\nWRT All teams and defining icons. Why can't we show installer packages on the all teams level and let people edit the icons there when editing. If a software title is selected from \"All teams\" we would show all the installer packages that have been added (surfacing the team(s) the packages are tied to). Ideally we'd be able to collapse all the installer packages so that we would only need to show one installer package that had been uploaded associated with multiple teams.\n\nI'm sure this is blowing up scope and throwing wrenches all over the place, but what do we think about the idea?\n\n@iansltx @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo What would you define as \"latest\" here? Most-recently uploaded/updated? Would that work cross-team? How would that interact with VPPs, which have their versions automatically bumped within ~1 hour of a new version coming out on Apple's side?\n\nRe: showing all installers when viewing All Teams, while that's useful, that would require decent-sized API and frontend changes, so deserves its own ticket."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx I'd define latest as the latest version number (newest version).\n\nI totally hear you on showing all installers on All teams being its own ticket. I'll write that as a feature request when I get a chance."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo Hm. So the idea would be that, for All Teams, we'd check all VPP apps and all packages with icons customized, rank by version number descending, and use the icon of whatever was at the top? Which would usually be the VPP app due to auto-updates, but might fall back to an FMA or the like.\n\nIf that's the idea, we might have to do some finagling to make sure the version calculation is fast...and we'll need to decide on what happens if the same package is uploaded to two different teams with two different icons...but that _would_ mean that at least the \"all teams\" part of #29886 is now expected/intended behavior, which is good (still need to decide what to do with version view there though)."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Would you be doing the finagling on a chron job that would run in the background every now and again?\n\nThe part where someone adds the same package to two different teams is def an issue. Which makes me wonder why we allow it? If we see someone uploading a package that already exists in our system wouldn't it be cooler to say \"do you mean x\" and use what we already have along with the associated icon? Similarly to how back in the day when the Apple Music store came out they looked at all of your music and automagically upgraded songs to the Apple Music Library version and filled in all the metadata for you.\n\n@mostlikelee could you gut check us on what we're talking about here? I know you were trying to keep this from getting out of hand and I don't want to explode things unknowingly. Clearly some of this is looking into the future, but could you make sure to ground us to what we 'need' or 'should' be doing at this time?\n\nThanks!"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "oh my, we may have officially took a detour to the dark side of icon town.  lets get a chat on the books for next week."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "\u003e [@iansltx](https://github.com/iansltx) Would you be doing the finagling on a chron job that would run in the background every now and again?\n\nOriginal thought was handle it on retrieval but we could handle the recalculation when the criteria for which icon wins changed. That would be in the VPP version bump cron, when a custom icon was added/deleted, when a package was edited/deleted, or eventually when a FMA was added. For the last bit, FMA icons would actually get _lower_ priority than custom icons because they're currently implemented as just software title matching based defaults, but I'd expect that to change to the same \"priority\" as custom package icons once #29177 is implemented.\n\nWe'd need to add a column to `software_titles` for this, to point to the `software_installer` we want to use the custom icon of (if any), but that's doable if we need icon display at the All Teams level to work a specific way.\n\n\u003e \n\u003e The part where someone adds the same package to two different teams is def an issue. Which makes me wonder why we allow it? If we see someone uploading a package that already exists in our system wouldn't it be cooler to say \"do you mean x\" and use what we already have along with the associated icon? Similarly to how back in the day when the Apple Music store came out they looked at all of your music and automagically upgraded songs to the Apple Music Library version and filled in all the metadata for you.\n\nRight now, structurally, a software package lives on exactly one team, though we deduplicate identical installer bytes on disk via hash. One reason for this is access controls: users can have team-limited roles, and while users can affect multiple teams (or operate globally) we don't currently have the infrastructure (FE or BE) to handle operations on an entity that spans multiple teams by a user that isn't global. For example, \"did you mean X package\" doesn't make sense when the existing package is on a team that the admin doesn't have access to, and if the admin has write on one team and read on another, do they get to edit the package they just added if it's cross-team?"
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@mostlikelee I have it at the top of the design review column in the drafting board so was intending to make this the first thing we talk about at DR on Tuesday. If you think this warrants its own time I'm open to it."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "\u003eRight now, structurally, a software package lives on exactly one team, though we deduplicate identical installer bytes on disk via hash. One reason for this is access controls: users can have team-limited roles, and while users can affect multiple teams (or operate globally) we don't currently have the infrastructure (FE or BE) to handle operations on an entity that spans multiple teams by a user that isn't global. For example, \"did you mean X package\" doesn't make sense when the existing package is on a team that the admin doesn't have access to, and if the admin has write on one team and read on another, do they get to edit the package they just added if it's cross-team?\n\n@iansltx . But wouldn't it be cooooool if fleet recognizes a unique software package that's uploaded to our servers and pushes that out to everyone? Like why hold duplicates of the same thing? The icon thing we could do by organization so that doesn't get too wonky. If an organization wants to change their icon it will affect the entire organization but it won't affect others. So if Zorro corp wants to bastardize all their app icons with a flaming 'z' they can go for it but it won't touch Acorn Inc."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@eugkuo There are some tradeoffs there that expand well beyond (the scope of) icon management and potentially conflict with tradeoffs needed for multiple installers per team. Definitely easier to discuss this synchronously.\n\nAlso not sure what you mean by \"organization\" (global? team?). One thing I'm thinking of is MSP customers who are running each company as its own team, and how this functionality should work in that deep of a silo."
+          },
+          {
+            "author": {
+              "login": "eugkuo"
+            },
+            "body": "@iansltx Oh interesting use case where teams are acting like companies. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica Given the above conversation, should custom package icons be scoped to the team/package they're on, or should they be global (at the software title level)? This has implications for how #29177 gets implemented, so is a higher-priority decison."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "```mermaid\nflowchart TD\n    A[\"Has custom icon (uploaded by user)\"] -- Yes --\u003e B[\"Show custom icon on software title (not on version) on team where icon (package) is uploaded\"]\n    A -- No --\u003e C[\"Is VPP app?\"]\n    C -- Yes --\u003e D[\"Show icon from App Store on software title (not on version) on team where VPP is added)\"]\n    C -- No --\u003e E[\"Strict name matching\"]\n    E -- Yes --\u003e F[\"Show SVG icon on a software title/version based on strict name/source rules defined by Fleet (contributors) in frontend code. Everywhere in UI (title, version, lists) across all teams.\"]\n    E -- No --\u003e G[\"Loose name matching\"]\n    G -- Yes --\u003e H[\"Show SVG icon on a software/version title based on what software name starts with. Defined by Fleet in the frontend code. Everywhere in UI (title, version, lists) across all teams.\"]\n    G -- No --\u003e I[\"Source-based matching\"]\n    I -- Yes --\u003e J[\"Show SVG icon on a software/version title based on the software source. Defined by Fleet in the frontend code. Everywhere in UI (title, version, lists) across all teams.\"]\n    I -- No --\u003e K[\"Default fallback\"]\n    K --\u003e L[\"Show SVG package icon on a software/version. Defined by Fleet in the frontend code. Everywhere in UI (title, version, lists) across all teams.\"]\n```"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@noahtalerman @iansltx, if you get the chance, could you please review the flowchart above?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica For the above, my biggest questions are how much of the decision tree applies to the following matrix:\n\n| | My device | Host details |\n| - | --- | --- |\n| Installed | My device \u003e Software | Host details \u003e Software \u003e Inventory |\n| Available | My device \u003e Self-service | Host dtails \u003e Software \u003e Library |\n\nAnd, for the inventory views, if we're showing anything other than SVG icons, where do those icons exist in the API response?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@iansltx I think let's keep this simple. If there's an icon override, we keep it on software title level under `software_package` or `app_store_app` as `custom_icon_url`.\n\nSVGs are displayed everywhere, and I think we should add more of them in the future. As we plan to introduce webview setup experience in the future, SVGs will be displayed there as well.\n\n- `GET /api/latest/fleet/software/titles` already includes both `software_package` or `app_store_app`.\n- `GET /api/latest/fleet/software/titles/:id` already includes both `software_package` or `app_store_app`.\n- `GET /api/latest/fleet/hosts/:id/software` already includes both `software_package` or `app_store_app` already includes both `software_package` or `app_store_app`.\n- `GET /api/latest/fleet/device/:token/software` already includes both `software_package` or `app_store_app` already includes both `software_package` or `app_store_app`.\n\nSo, icon overrides will be only available for software titles that are available. It won't show up on the versions of that title, and it won't show up in other teams."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@marko-lisica Is this being added to fleetctl generate-gitops?\n\nShould this work for team and global admins, and team and global maintainers, but not other users?"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "FE Tests:\n- SoftwareIcon.tsx has no tests\n- GitOps yaml add to the test\n- GitOps mode disable editing"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Rough spec'ing notes:\n\n## GitOps changes\n\nIcon\nLocal hashing\nDeduplicate uploads\nReturn icon hash + filename on batch software status endpoint\nReturn icon hash + filename on batch VPP app status endpoint\nDon't repeat no-op uploads (use hash + filename)\nHash on icon PUT request\nRun in parallel\n\n## Generate-gitops\n\n## My device\n\nSoftware list endpoint; different URL\nIcon GET by device ID\n\n## Main API\n\nListHostSoftware (different URL)\nUpdate icon - incl. validation of format/size server side\nGet icon\nDelete icon\nSoftware titles list endpoint\nSoftware title endpoint\nSoftware versions endpoint (title ID)\nSoftware version endpoint (title ID)\nPackage + app store add/edit responses (make sure icon in response)\n\nSetup experience - update endpoint\n\nDocs\n\n## FE\n\nTitles view\nEdit modal\nPreview\n\nTitle list\nVersions list (don't download icon multiple times for the same title)\nAuthenticate when relative URL\nVersion view\nSoftware inventory\nSoftware library\n\nRename edit\n\nSelf-service tab\nSoftware tab of my device\n\nSetup experience UI"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts @marko-lisica @mostlikelee Just pushed https://github.com/fleetdm/fleet/pull/31324/commits/c577ded229f6a114d6fd940db2282ed8f69cad55?w=1 to API/YAML because we were missing some API endpoints based on the spec work I just did."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@RachelElysia @ksykulev #32459 covers software version icon display (taken out of scope of this ticket) and vulnerabilities icon display (missed in this ticket; would have been a late add of new surface on a ticket that's already at risk). Subtasks have been updated."
+          }
+        ],
+        "issueNumber": 29478,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "## Related user story\n\n#29478. Blocked by #31895.\n\n## Task\n\nUpdate existing endpoints that need to reference software icons to support new functionality, per #31324:\n\n### Icon URLs\n\nIn all cases, move icon URL from `app_store_app` level to the top level of the software title. Priority order:\n\n1. If viewing within the context of a team and that team has an icon specified in the DB, relative URL to the icon GET endpoint\n2. Else if viewing within the context of a team and that team has a VPP app associated to the software title, (absolute) URL of the VPP icon\n3. Else null\n\nFor these endpoints:\n\n- [ ] Main host software (references REST API GET for overridden icons)\n- [ ] Device-auth host software (references device-auth icon GET for overridden icons)\n- [ ] Software titles list\n- [ ] Software titles entity\n- [ ] Software package add/edit response\n- [ ] App store app add/edit response\n- [ ] Setup experience software list\n\n~### Software title IDs~\n\n~The following endpoints need to be updated to include software title ID in responses:~\n\n~- [ ] Software versions list~\n~- [ ] Software version entity~\n^Taking these two out of scope for the iteration^\n\n## Condition of satisfaction\n\nExisting endpoints have been updated to reflect icon override changes. Once this task (and its prerequisite) are complete, all frontend work for this story should be unblocked."
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8c",
+        "issueNumber": 31896,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "## Related user story\n\n#29478. Blocked by #31900.\n\n## Task\n\nEnsure icon overrides are displayed in all relevant pages in the web UI, specifically:\n\n- [ ] Software titles list when filtered to a specific team\n~- [ ] Software versions list when filtered to a specific team (should only have one HTTP request per software title since all will have the same icon URL; will need to generate icon URL based on team ID/title ID as spec'd in #31900)~\n~- [ ] Software version entity when filtered to a specific team (will need to generate icon URL based on team ID/title ID)~\n- [ ] Setup experience software selection modal\n- [ ] Host details in Software \u003e Inventory tab\n- [ ] Host details in Software \u003e Library tab\n- [ ] My device in Software tab\n- [ ] My device in Self-service tab\n\n## Condition of satisfaction\n\nSoftware icons are overridden across Fleet when viewing software within the context of a team, whether implicitly at the host level or explicitly when viewing a software title or version."
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP9A",
+        "issueNumber": 31903,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: 4.73.0\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n\n\u003cimg width=\"442\" height=\"271\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/810d0852-f704-450f-b589-80caf547242e\" /\u003e\n\u003cimg width=\"1027\" height=\"810\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/116cab82-a35d-4139-8683-8ad09c267c60\" /\u003e\n\n### 🛠️ To fix\n\u003c!-- Add the expected fix here. If you're not sure, leave this blank for product to specify.  --\u003e\nTBD\n\nProduct designer: _________________________\u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Using Self service, install software on a host\n2. Click on Install Status link once software is installed\n3. View modal\n\n### 🕯️ More info _(optional)_\nPer [figma here](https://www.figma.com/design/hWzvl1RvMOuqlcjYpWjkbu/-29728-Hackathon--Update-host-details-software-card?node-id=2-130\u0026p=f\u0026t=XSKsR5sqEvCJhbBY-0), it looks like there should be more space between the success message and the divider\n\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "number": 32474,
+          "repository": "fleetdm/fleet",
+          "title": "Success circle is too close to divider on Self service \u003e\u003e Install status details",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/32474"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgeLy9U",
+        "labels": [
+          "bug",
+          ":release",
+          "~unreleased bug",
+          ":incoming",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-08-29T00:00:00Z",
+          "title": "4.73.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Success circle is too close to divider on Self service \u003e\u003e Install status details",
+        "issueNumber": 32474,
+        "changeType": "added"
       }
     ]
   }
