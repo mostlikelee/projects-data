@@ -3831,7 +3831,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "## Related user story\n\n#29478. Blocked by #31895.\n\n## Task\n\nUpdate existing endpoints that need to reference software icons to support new functionality, per #31324:\n\n### Icon URLs\n\nIn all cases, move icon URL from `app_store_app` level to the top level of the software title. Priority order:\n\n1. If viewing within the context of a team and that team has an icon specified in the DB, relative URL to the icon GET endpoint\n2. Else if viewing within the context of a team and that team has a VPP app associated to the software title, (absolute) URL of the VPP icon\n3. Else null\n\nFor these endpoints:\n\n- [ ] Main host software (references REST API GET for overridden icons)\n- [ ] Device-auth host software (references device-auth icon GET for overridden icons)\n- [ ] Software titles list\n- [ ] Software titles entity\n- [ ] Software package add/edit response\n- [ ] App store app add/edit response\n- [ ] Setup experience software list\n\n### Software title IDs\n\nThe following endpoints need to be updated to include software title ID in responses:\n\n~- [ ] Software versions list~\n~- [ ] Software version entity~\n^Taking these two out of scope for the iteration^\n\n## Condition of satisfaction\n\nExisting endpoints have been updated to reflect icon override changes. Once this task (and its prerequisite) are complete, all frontend work for this story should be unblocked.",
+          "body": "## Related user story\n\n#29478. Blocked by #31895.\n\n## Task\n\nUpdate existing endpoints that need to reference software icons to support new functionality, per #31324:\n\n### Icon URLs\n\nIn all cases, move icon URL from `app_store_app` level to the top level of the software title. Priority order:\n\n1. If viewing within the context of a team and that team has an icon specified in the DB, relative URL to the icon GET endpoint\n2. Else if viewing within the context of a team and that team has a VPP app associated to the software title, (absolute) URL of the VPP icon\n3. Else null\n\nFor these endpoints:\n\n- [ ] Main host software (references REST API GET for overridden icons)\n- [ ] Device-auth host software (references device-auth icon GET for overridden icons)\n- [ ] Software titles list\n- [ ] Software titles entity\n- [ ] Software package add/edit response\n- [ ] App store app add/edit response\n- [ ] Setup experience software list\n\n~### Software title IDs~\n\n~The following endpoints need to be updated to include software title ID in responses:~\n\n~- [ ] Software versions list~\n~- [ ] Software version entity~\n^Taking these two out of scope for the iteration^\n\n## Condition of satisfaction\n\nExisting endpoints have been updated to reflect icon override changes. Once this task (and its prerequisite) are complete, all frontend work for this story should be unblocked.",
           "number": 31896,
           "repository": "fleetdm/fleet",
           "title": "Custom Icons: Existing endpoint changes",
@@ -4076,7 +4076,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "## Related user story\n\n#29478. Blocked by #31900.\n\n## Task\n\nEnsure icon overrides are displayed in all relevant pages in the web UI, specifically:\n\n- [ ] Software titles list when filtered to a specific team\n- [ ] Software versions list when filtered to a specific team (should only have one HTTP request per software title since all will have the same icon URL; will need to generate icon URL based on team ID/title ID as spec'd in #31900)\n- [ ] Software version entity when filtered to a specific team (will need to generate icon URL based on team ID/title ID)\n- [ ] Setup experience software selection modal\n- [ ] Host details in Software \u003e Inventory tab\n- [ ] Host details in Software \u003e Library tab\n- [ ] My device in Software tab\n- [ ] My device in Self-service tab\n\n## Condition of satisfaction\n\nSoftware icons are overridden across Fleet when viewing software within the context of a team, whether implicitly at the host level or explicitly when viewing a software title or version.",
+          "body": "## Related user story\n\n#29478. Blocked by #31900.\n\n## Task\n\nEnsure icon overrides are displayed in all relevant pages in the web UI, specifically:\n\n- [ ] Software titles list when filtered to a specific team\n~- [ ] Software versions list when filtered to a specific team (should only have one HTTP request per software title since all will have the same icon URL; will need to generate icon URL based on team ID/title ID as spec'd in #31900)~\n~- [ ] Software version entity when filtered to a specific team (will need to generate icon URL based on team ID/title ID)~\n- [ ] Setup experience software selection modal\n- [ ] Host details in Software \u003e Inventory tab\n- [ ] Host details in Software \u003e Library tab\n- [ ] My device in Software tab\n- [ ] My device in Self-service tab\n\n## Condition of satisfaction\n\nSoftware icons are overridden across Fleet when viewing software within the context of a team, whether implicitly at the host level or explicitly when viewing a software title or version.",
           "number": 31903,
           "repository": "fleetdm/fleet",
           "title": "Custom Icons: Display updates outside software title entity UI",
@@ -6660,7 +6660,7 @@
           "title": "4.73.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Clicking \"view all hosts\" for a kernel listed under a Linux operating system only returns results filtered to the kernel (not operating system)",
         "issueNumber": 32259,
         "changeType": "added"
@@ -8227,6 +8227,195 @@
         "status": "🥚 Ready",
         "title": "Success circle is too close to divider on Self service \u003e\u003e Install status details",
         "issueNumber": 32474,
+        "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-02T07:05:21.713757712Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk8Q",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ksykulev Per comments on the original request from @noahtalerman and @mostlikelee, we want to:\n\n1. Add a `setup_experience` bool on the same level as `self_service` on custom packages, VPP apps, and FMAs, default `false`. Use that to determine whether software is included in setup experience.\n2. Stub the `macos_setup.software` key in GitOps; if it exists in a config, hard-fail with a link to docs for the new way of specifying setup experience.\n\nPlan will be that we _don't_ have a deprecation period on this to keep the code clean and avoid drawing out instances where we have to support both cases. Throwing a prompt at an LLM or two to see if we can make a bot do the work of moving YAML around (we might want a step 3 above of providing a tool to move YAML around)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Actually, scratch the LLM option for now, as the migration path is more nuanced. One nuance here is that if Team A and Team B both import a set of software, but Team A has a piece of software marked for setup experience and Team B does not, we now need two software files (one with the setup experience flag set, one without) where we previously had one.\n\n@allenhouchins Does this tweak (and its downstream requirements) make sense? In our case the Workstations team has setup experience software defined, but the corresponding canary team doesn't, so for our own setup we'd need to split package YAMLs.\n\nFor reference, here's the prompt I threw into JetBrains Junie, as well as Zed + Claude Sonnet 4:\n\n```\nIn `it-and-security`, for each app store app under `macos_setup.software`, remove it from there and add `setup_experience: true` under the corresponding entry in `app_store_apps` in the same team file. For each software package under `macos_setup.software`, remove it from there and add `setup_experience: true` inside the corresponding YAML file. Finally, remove the `macos_setup.software` key in the YAML file.\n```\n\nNote that the above does _not_ cover the package YAML splitting nuance, and my attempts at making this work with an open-weights model small enough to run in 64GB unified memory failed."
+          },
+          {
+            "author": {
+              "login": "allenhouchins"
+            },
+            "body": "I much prefer the current set up of adding it to the `software` block to basically say \"make this software available to this team\" then creating a secondary reference in `macos_setup.software` to say \"make this software available through this method\". For any software we expect all employees to use (\"critical\"), I want it to be installed via `macos_setup`, `auto-install` if its removed, and available in `self-service` for patching and easy re-installation/troubleshooting. I don't want to have to create multiple `software_title.yml` to achieve this. \n\nI'm already running into challenges with some of the recent changes we've made to software where I will have to [create multiple software entries if I want software scoped differently in teams](https://github.com/fleetdm/fleet/issues/29567) so anything we can do to handle additional logic behind the scenes and avoid having to create multiple software entries of the same software just to use it differently, will always get my vote.\n\n\u003e run in 64GB unified memory failed.\n\n64GB?! Yikes! "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e I much prefer the current set up of adding it to the software block to basically say \"make this software available to this team\" then creating a secondary reference in macos_setup.software to say \"make this software available through this method\".\n\n@allenhouchins interesting! I added you to Tuesday's #g-software design review to take a look at the current designs and discuss."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Decided to push this story (T-shirt size: S) out of the current design sprint because we won't have space to ship it in 4.72. Here's what we're shipping instead:\n\n- Fleet-maintained apps bugs\n- https://github.com/fleetdm/fleet/issues/30240\n- https://github.com/fleetdm/fleet/issues/27983"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@marko-lisica based on the late, significant scope reduction on #27983, there's now enough backend capacity in the 4.72 sprint to bring this in if it's ready in time, though based on the source of this original request the software GitOps update activity should be split into its own story, as the customer isn't asking for that, \"core to Fleet\" notwithstanding, as the activity work is likely the majority of the effort on this ticket if it's brought in. Splitting stories allows for easier parallelization, and allows for derisking both stories."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman Based on linked issues, looks like we missed calling out some scope here. I'm assuming that allowing specifying macOS setup experience in `fleet_maintained_apps`, as well as in `app_store_apps`, is in scope here. Revising YAML docs so that's clearer now (as well as contributor API docs).\n\nEDIT: Never mind. YAML docs don't include this explicitly, but it's dev note'd in a comment on the PR. And it's in the test plan."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Turns out, the contributor API for this already has the correct (per-package) format, so these changes won't have a server-side component (all `fleetctl`)."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman I thought we had missed frontend scope here because there might have been changes to the modals/exports we added in #28110. But it looks like we don't show custom targets, self-service, and categories in the sample YAML there already so moving them around wouldn't make a difference to what we would display?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e it looks like we don't show custom targets, self-service, and categories in the sample YAML there already so moving them around wouldn't make a difference to what we would display?\n\n@iansltx that's right!"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [x] REST API changes: No changes\n\n@iansltx also, for future stories can you please leave in the explicit \"No changes\" items in the \"Product\" section? (example above). I added them back this time.\n\nThis helps us remember during [confirm and celebrate](https://fleetdm.com/handbook/product-design#confirm-and-celebrate) and 3 months from now whether or not we intended.\n\nWe've learned that removing the checkboxes introduces questions later like \"did we mean to make UI changes for this story?\""
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "\u003e \u003e * [x]  REST API changes: No changes\n\u003e \n\u003e [@iansltx](https://github.com/iansltx) also, for future stories can you please leave in the explicit \"No changes\" items in the \"Product\" section? (example above). I added them back this time.\n\u003e \n\u003e This helps us remember during [confirm and celebrate](https://fleetdm.com/handbook/product-design#confirm-and-celebrate) and 3 months from now whether or not we intended.\n\u003e \n\u003e We've learned that removing the checkboxes introduces questions later like \"did we mean to make UI changes for this story?\"\n\n@noahtalerman All of the \"no changes\" items are still in the issue description, under the \"No-ops\" heading (\"Product no-ops\" probably makes more sense here, and I've used that heading title on other tickets where I've done this). Sounds like you missed them because they were \"below the fold\" but they're there, and splitting them out should actually make the \"we intentionally didn't do these things\" rundown easier. Thoughts on maintaining that \"split out into a subheading\" pattern, but moving that subheading up above the Engineering section?\n\nMy reason for doing this tweak (was going to mention this in chat channels but ran out of time, but discussed this with @mostlikelee ahead of time) is that stories are generally 80-95% \"No changes\", and when spec'ing/dev'ing it's easy to miss actual work in a sea of \"No changes\" items, and missing a spec item while in spec or development has more serious consequences than having to scroll down in the Confirm and celebrate ritual.\n\nAdditionally, the act of explicitly moving items to a \"these are the things that won't change\" heading during spec provides another \"are we _sure_ this isn't changing\" checkpoint prior to estimation. That actually wound up helpful on #30849, as some GitOps Mode UI changes had been miscategorized as generic UI changes. Moving the Figma link to the more appropriate checkbox decreased likelihood of confusion during both development (imminently) and Confirm and celebrate (later), while maintaining an explicit list of parts of the product that are out of scope for the story.\n\nI hadn't PR'd a handbook/story template change for this because I wanted to dial in how it looked with real-world examples first, hence why you're seeing this for the first time here."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e stories are generally 80-95% \"No changes\", and when spec'ing/dev'ing it's easy to miss actual work in a sea of \"No changes\" items, and missing a spec item while in spec or development\n\n@iansltx ah, I hear you but the current way has been working for the other product groups. We just have to look at all the checkboxes to see which have \"No changes\".\n\nTo keep things consistent across product groups and reduce change for now let's please keep the story issue template the same. I removed \n\nThanks for testing it out!\n\n\u003eThat actually wound up helpful on https://github.com/fleetdm/fleet/issues/30849, as some GitOps Mode UI changes had been miscategorized as generic UI changes.\n\nIt sounds like we (it was me) messed up in this case. That's a whoops from me. I forgot about the new GitOps mode checkbox."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Pulled this back to Ready for spec as there are outstanding test plan questions that we're working through."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman heads up that this story is getting pushed to sprint 46"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts @marko-lisica @noahtalerman For the following test plan item:\n\n\u003e In the team YAML, specify the old macos_setup.software key, leave it empty, and specify the new setup_experience for any software. Verify that you see [this error messaged](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).\n\nThere's no straightforward way to get GitOps to behave this way; when deserializing, values in YAML always appear to be set/valud, even if the `software` key isn't provided. We _might_ be able to reach into YAML and parse things manually to tell the difference between \"key not set\" and \"key set and empty\" but I'm thinking that the existence of an empty software key doesn't hurt anything in this particular case, so probably not worth it.\n\nOf course, we _can_ easily capture cases where the sotware list is not empty (and fail if we see setup experience set on both a package/app store definition and the setup experience software key), which matters most from a conflict resolution perspective I believe.\n\nThe above means that setting setup experience flags on individual packages with an empty-but-extant setup experience software key will result in a successful GitOps run with the package/app store app level flags winning out. Is that revision to the test plan aceptable?\n\nOn the bright side, I _was_ able to differentiate between \"setup experience flag isn't supplied\" and \"setup experience flag exists and is set to false\", so we can fail fast when the setup experience software key has items in it but the setup experience flag is set on any software on the team (vs. only failing when setup experience is set to `true` somewhere)."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e The above means that setting setup experience flags on individual packages with an empty-but-extant setup experience software key will result in a successful GitOps run with the package/app store app level flags winning out. Is that revision to the test plan aceptable?\n\n@iansltx I think this is ok. I updated the test plan (below and in issue description). \n\nFYI @jmwatts\n\n\u003e - [ ] ~~In the team YAML, specify the old `macos_setup.software` key, leave it empty, and specify the new `setup_experience` for any software. Verify that you see [this error messaged](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).~~\n\u003e   - [ ] UPDATE: @noahtalerman: [Tricky to build](https://github.com/fleetdm/fleet/issues/30095#issuecomment-3218706681). Here's what we decided instead: setting `setup_experience` on individual packages with an empty `macos_setup.software` software key will result in a successful GitOps run with `setup_experience` flags applied to the relevant software.\n\u003e - [ ] Repeat the step above with some software in the `macos_setup.software` key. You should see [this error message](https://github.com/fleetdm/fleet/pull/30254/files#r2164318796).\n\nI also updated the dev note with this decision: https://github.com/fleetdm/fleet/pull/30254/files#r2164318796"
+          },
+          {
+            "author": {
+              "login": "lucasmrod"
+            },
+            "body": "@iansltx We are implementing https://github.com/fleetdm/fleet/issues/30877 for v4.74.0.\nLet me know when this is merged to `main` so we can add support for setting `setup_experience: true` on Linux packages."
+          }
+        ],
+        "issueNumber": 30095,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "jahzielv"
+        ],
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to get MDM command result in a vertical format\n| so that I can read and copy long command payload and output more easily.\n\n## Roadmap item\n\nNone\n\n## Original requests\n\n#31473\n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @jahzielv \n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Product\n- [x] UI changes: No changes.\n- [x] CLI (fleetctl) usage changes:\n  - `fleetctl get mdm-command-results`: Instead of returning a table as output, return command outputs vertically. As in [this comment](https://github.com/fleetdm/fleet/issues/31500#issuecomment-3206932975).\n- [x] YAML changes: No changes.\n- [x] REST API changes: No changes.\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps mode UI changes: No changes.\n- [x] GitOps generation changes: No changes.\n- [x] Activity changes: No changes.\n- [x] Permissions changes: No changes.\n- [x] Changes to paid features or tiers: Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: No changes.\n- [x] Other reference documentation changes: No changes.\n- [x] First draft of test plan added\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [x] Contributor API changes: No changes \u003c!-- Specify changes in the the Contributor API doc page as a PR to reference docs release branch following the guidelines in the handbook here: https://fleetdm.com/handbook/product-design#drafting Put \"No changes\" if there are no changes necessary. --\u003e\n- [x] Feature guide changes: No changes \u003c!-- Specify if a new feature guide is required at fleetdm.com/guides, or if a previous guide should be updated to reflect feature changes. --\u003e\n- [x] Database schema migrations: No changes \u003c!-- Specify what changes to the database schema are required. (This will be used to change migration scripts accordingly.) Remove this checkbox if there are no changes necessary. --\u003e\n- [x] Load testing: No changes  \u003c!-- List any required scalability testing to be conducted.  Remove this checkbox if there is no scalability testing required. --\u003e\n- [x] Load testing/osquery-perf improvements: No changes \u003c-- List, or link a subtask for, any osquery-perf or load test environment changes required to comprehensively load test this story if load testing is needed. --\u003e\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: TODO \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low / High TODO \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: TODO \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n1. Run `fleetctl get mdm-commands` to get the ID of one of the recent MDM commands\n2. Run `fleetctl get mdm-command-results --id \u003ccommand_id\u003e`\n3. Verify that the command is printed vertically\n4. Send a new MDM command to multiple hosts using `fleetctl mdm run-command`\n5. Get the results using the above command line and verify that the results for all hosts are returned and that the output follows the format specified [here](https://github.com/fleetdm/fleet/issues/31500#issuecomment-3206932975).\n6. Turn Wi-Fi off on an MDM-enrolled host. Send an MDM command to this host.\n7. Validate that the output of `fleetctl get mdm-command-results --id \u003ccommand_id\u003e` is correct (should be `No results received. Please check again later.`).\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "number": 31500,
+          "repository": "fleetdm/fleet",
+          "title": "fleetctl: return MDM command result in a vertical format",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31500"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgeQApA",
+        "labels": [
+          "story",
+          ":product",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "✔️Awaiting QA",
+        "title": "fleetctl: return MDM command result in a vertical format",
+        "comments": [
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Hey @jahzielv, could you please help me and play the product designer role for this story? It will help to make a decision faster. When you get the chance, please add it to the design review agenda so we can review what's been done so far."
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "cc @mostlikelee ^^"
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "@marko-lisica @noahtalerman \n\nthis is what I have based on our convo at design review:\n\n```shell\n$ fleetctl get mdm-command-results --id=15a8551f-9535-41de-8971-a750d54187f8\nID:\n15a8551f-9535-41de-8971-a750d54187f8\n\nTIME:\n2025-08-20T14:09:50Z\n\nTYPE:\nDeviceInformation\n\nSTATUS:\nAcknowledged\n\nHOSTNAME:\ntestmacs-mac-mini.local\n\nPAYLOAD:\n\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003c!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"\u003e\n\u003cplist version=\"1.0\"\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCommand\u003c/key\u003e\n    \u003cdict\u003e\n      \u003ckey\u003eQueries\u003c/key\u003e\n      \u003carray\u003e\n        \u003cstring\u003eOSVersion\u003c/string\u003e\n        \u003cstring\u003eDeviceName\u003c/string\u003e\n        \u003cstring\u003eSerialNumber\u003c/string\u003e\n        \u003cstring\u003eIsSupervised\u003c/string\u003e\n      \u003c/array\u003e\n      \u003ckey\u003eRequestType\u003c/key\u003e\n      \u003cstring\u003eDeviceInformation\u003c/string\u003e\n    \u003c/dict\u003e\n    \u003ckey\u003eCommandUUID\u003c/key\u003e\n    \u003cstring\u003e15a8551f-9535-41de-8971-a750d54187f8\u003c/string\u003e\n  \u003c/dict\u003e\n\u003c/plist\u003e\n\n\nRESULTS:\n\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003c!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"\u003e\n\u003cplist version=\"1.0\"\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCommandUUID\u003c/key\u003e\n    \u003cstring\u003e15a8551f-9535-41de-8971-a750d54187f8\u003c/string\u003e\n    $DATA_REDACTED\n\u003c/plist\u003e\n\n---\n\nID:\n15a8551f-9535-41de-8971-a750d54187f8\n\nTIME:\n2025-08-20T14:09:50Z\n\nTYPE:\nDeviceInformation\n\nSTATUS:\nAcknowledged\n\nHOSTNAME:\ntests-MacBook-Air.local\n\nPAYLOAD:\n\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003c!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"\u003e\n\u003cplist version=\"1.0\"\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCommand\u003c/key\u003e\n    \u003cdict\u003e\n      \u003ckey\u003eQueries\u003c/key\u003e\n      \u003carray\u003e\n        \u003cstring\u003eOSVersion\u003c/string\u003e\n        \u003cstring\u003eDeviceName\u003c/string\u003e\n        \u003cstring\u003eSerialNumber\u003c/string\u003e\n        \u003cstring\u003eIsSupervised\u003c/string\u003e\n      \u003c/array\u003e\n      \u003ckey\u003eRequestType\u003c/key\u003e\n      \u003cstring\u003eDeviceInformation\u003c/string\u003e\n    \u003c/dict\u003e\n    \u003ckey\u003eCommandUUID\u003c/key\u003e\n    \u003cstring\u003e15a8551f-9535-41de-8971-a750d54187f8\u003c/string\u003e\n  \u003c/dict\u003e\n\u003c/plist\u003e\n\n\nRESULTS:\n\u003c?xml version=\"1.0\" encoding=\"UTF-8\"?\u003e\n\u003c!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\"\u003e\n\u003cplist version=\"1.0\"\u003e\n  \u003cdict\u003e\n    \u003ckey\u003eCommandUUID\u003c/key\u003e\n    \u003cstring\u003e15a8551f-9535-41de-8971-a750d54187f8\u003c/string\u003e\n    $DATA_REDACTED\n  \u003c/dict\u003e\n\u003c/plist\u003e\n```\n\nI added the `---` between the results, and I made this the default output (note there's no flag passed to the command).\n\nwdyt?"
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "@jahzielv @noahtalerman I updated the \"Product\" section, and specified that the command will, by default, have vertical output instead of the table (which is broken mostly).\n\nI think this is ready for user story review."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Sweet!"
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "Btw, I added a couple steps to the test plan to make sure we test the flow with multiple results."
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "@jmwatts @marko-lisica per our convo in slack, I updated the test plan to test for the \"No results\" case. Thanks!"
+          }
+        ],
+        "issueNumber": 31500,
         "changeType": "added"
       }
     ]
