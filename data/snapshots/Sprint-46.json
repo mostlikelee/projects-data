@@ -934,7 +934,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Linux Vulns: API changes",
         "comments": [
           {
@@ -977,7 +977,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Software \u003e OS: Surface Linux kernel vulnerabilities",
         "comments": [
           {
@@ -1048,7 +1048,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Host software: display info that Windows and Mac app never been opened",
         "comments": [
           {
@@ -1497,7 +1497,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Linux Vulns: Frontend",
         "comments": [
           {
@@ -1696,7 +1696,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "GitOps software/setup experience restructure: `fleetctl gitops` changes",
         "comments": [
           {
@@ -2788,7 +2788,7 @@
           "startDate": "2025-07-28",
           "title": "Sprint 45"
         },
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "last_opened_at not properly returned on host software inventory",
         "comments": [
           {
@@ -6691,7 +6691,7 @@
           "title": "4.73.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "OS Kernel list view doesn't filter out 0 host scenarios",
         "issueNumber": 32257,
         "changeType": "added"
@@ -8224,7 +8224,7 @@
           "title": "4.73.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "✔️Awaiting QA",
+        "status": "✅ Ready for release",
         "title": "Success circle is too close to divider on Self service \u003e\u003e Install status details",
         "issueNumber": 32474,
         "changeType": "added"
@@ -9200,6 +9200,416 @@
         "status": "✔️Awaiting QA",
         "issueNumber": 31163,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-04T07:05:31.420154912Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk8Q",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 30095,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoAQ",
+        "status": "🦤 ‎In review",
+        "comments": [
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "DONE @noahtalerman: What do we do about policy automations? Right now policies in GitOps assume one package per package YAML file.\n  - @iansltx: Today, `fleetctl generate-gitops` works around this by using a `hash_256` to specify the hash. Maybe we can use the same to solve this.\n \n@noahtalerman: Decided like this: either use hash or path to a file. If the file has more than one package, Fleet will error. Specified in [this dev note](https://github.com/fleetdm/fleet/pull/31086/files#r2222732518)."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e - [ ] In your team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages. \n\u003e   - @noahtalerman: I think testing this requires the changes in this separate user story: https://github.com/fleetdm/fleet/issues/30095\n\nDONE: @noahtalerman: Pull this into #30095\n\n- @noahtalerman: Added the below to the test plan for #30095.\n\n#### Multiple custom packages in one package YAML\n\n- [ ] Create a package YAML file with two custom packages specified by url. Reference the package YAML in a team YAML file and run GitOps. Verify that the two packages are added to the correct team in Fleet. \n- Next, In a team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "FYI @iansltx @jmwatts ^"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "TODOs (will write these up better later):\n\n* Deprecating non-list behavior (vs. not deprecating vs. removing/erroring + adding an automatic migration)\n* Documenting \"error if multiple packages in setup experience YAML file\"\n* Documenting that \"list length of 1\" is valid for places where a single YAML path is expected now?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e Deprecating non-list behavior (vs. not deprecating vs. removing/erroring + adding an automatic migration)\n\nWe decided to deprecate support for the non-list behavior but maintain backwards compatibility. See this dev note: https://github.com/fleetdm/fleet/pull/31086/files#r2219494344\n\n\u003e Documenting \"error if multiple packages in setup experience YAML file\"\n\nIn this [separate GitOps story](https://github.com/fleetdm/fleet/issues/30095), we decided to support applying `setup_experience`. From that separate stories QA plan:\n\n#### Multiple custom packages in one package YAML\n\n- [ ] Create a package YAML file with two custom packages specified by url. Reference the package YAML in a team YAML file and run GitOps. Verify that the two packages are added to the correct team in Fleet. \n- Next, In a team YAML, for your two custom packages, specify `self_service`, `setup_experience`, and labels. Run GitOps, and verify that the options are applied to both packages. \n\n\u003e Documenting that \"list length of 1\" is valid for places where a single YAML path is expected now?\n\nI think this is covered by the [YAML reference doc updates](https://github.com/fleetdm/fleet/pull/31086). We're showing that a list length of 1 is the best practice."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman FYI we'll need to make some slight tweaks to the modal implemented in #28110 if we're removing the top-level style of software package YAML from documentation, otherwise we'll be recommending that people use an undocumented/deprecated format.\n\nAlso, thoughts on removing the old functionality and adding a script to fix existing software YAML files (linked from the \"this was removed\" error) instead of moving the schema to undocumented but still incurring the maintenance burden of supporting it? If we think this is the proper way to format software packages, \"indent the existing file by two spaces and prepend a `- ` to the first line might be simple enough to perform with a single sed/awk command."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "- UPDATE: @noahtalerman: Added [Figma wireframes](https://www.figma.com/design/VEN5nFcJKd4JOloCgcOOr2/-30849-GitOps--Support-multiple-software-packages-in-one-YAML-file?node-id=0-1\u0026t=84pueN40iALwPkhk-1) to the issue description (including test plan).\n\n\u003e FYI we'll need to make some slight tweaks to the modal implemented in https://github.com/fleetdm/fleet/issues/28110 if we're removing the top-level style of software package YAML from documentation, otherwise we'll be recommending that people use an undocumented/deprecated format.\n\nYep! We want to tweak the UI here with an indent and a hyphen.\n\nDONE: @noahtalerman \n\nAlso, update the package name to include `.package`:\n\n\u003cimg width=\"597\" height=\"83\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6b09f13a-630f-48bf-81b7-4555fc4c81a5\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts Sorry for the delay on this one. Subtasks are created. Ask away with questions you have."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@noahtalerman heads up that this story is getting pushed to sprint 46"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@mostlikelee @jmwatts @noahtalerman just worked through part of the test plan and...\n\nFor the \"specify the same package multiple ways and expect an error\" QA step in \"multiple YAML formats\", we don't actually stop an end user from specifying the same URL multiple times in the same GitOps config for the same team, and the result is \"last in wins.\" This is existing behavior (released bug), and also affects the first two error paths in the \"new functionality\" section of the test plan.\n\nGiven that we don't already solve for this, fixing this behavior would be a drastic scope expansion, as while we could catch more obvious cases client-side (same URL on multiple packages on the same team, same hash on multiple packages on the same team), catching different versions of the same package would only be doable server-side, and then only by tracking metadata as each package is downloaded and checking for duplicates at that stage. I think we may do this with hash right now, but given that we don't even dedupe the same URL we're definitely not deduping bulk actions that would overwrite packages with the next URL read.\n\nWill chat through this in standup tomorrow (Sep 4) and get an issue (IMO a released bug) filed thereafter."
+          }
+        ],
+        "issueNumber": 30849,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP80",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31901,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP88",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31902,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8w",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31900,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP9A",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31903,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCn44",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31207,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCnxU",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31206,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to add a custom icon for my software\n| so that my end users can easily find the software they need on the **My device \u003e Self-service** page.\n\n## Roadmap item\n\nNone\n\n## Key result\n\nCustomer request\n\n## Original requests\n\n- #24802 \n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @iansltx \n  \nMake sure to solve this: #29886\n\n## Changes\n\n### Product\n- [x] UI changes: [Figma link](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Edit-software-icon?node-id=0-1\u0026t=DrMQziG5Cl0BDJbU-1)\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: #31324\n- [x] REST API changes: #31324\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps changes: Specified in Figma above.\n- [x] GitOps generation changes:\n  - Specified in Figma above.\n  - `gitops-generate` command should download icons.\n- [x] Activity changes: #31382\n- [x] Permissions changes: Global/team admins and maintainers can apply update icon. Covered by \"Add, edit, and delete software\" in permissions guide.\n- [x] Changes to paid features or tiers: Available in Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: The icon added by user will display on self-service and software inventory tabs on My device page.\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes.\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: #31324\n- [ ] Feature guide changes: Update [self-service](https://fleetdm.com/guides/software-self-service), [custom package](https://fleetdm.com/guides/deploy-software-packages), [VPP](https://fleetdm.com/guides/install-vpp-apps-on-macos-using-fleet) articles to reference icons/how to change them\n- [ ] Database schema migrations: Add software_title_icons table with title ID, team ID, icon filename, and icon storage ID (will dump icons onto the software installers bucket)\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### UI\n\n- [ ] Make sure that the edit action is available next to the software title name, only if the software title has a package or VPP app added.\n- [ ] Verify that the user can upload a PNG icon by clicking on the edit icon next to the software title name in the **Edit software** modal.\n- [ ] Verify that the user can only select PNG files.\n- [ ] Verify that Fleet returns an error if the icon doesn't fit into specs defined in Figma.\n- [ ] Make sure that the user can preview the icon in the **Edit software** modal, once it's selected and before it's uploaded.\n- [ ] Verify that the icon in the preview is displayed according to the priority order described in Figma..\n- [ ] Make sure that the preview under the **Fleet** tab shows the real software title name, icon, type and versions count. The table underneath the transparent overlay should be static.\n- [ ] Make sure that the preview under the **Self-service** tab shows the real software title name and icon. Other data should be static.\n- [ ] Make sure that if the user deletes the selected or uploaded icon, the preview shows the fallback icon.\n- [ ] Verify that when the VPP icon is available, the upload form is still available in the **Edit software** modal, so the user can override that icon with a custom PNG.\n- [ ] Make sure that the uploaded icon shows on software title details, ~version details,~ titles list, ~versions list,~ on a team where the icon is added.\n- [ ] Make sure that we do client-side validation if the icon size doesn't fit specs, before the user hit \"Save\" (upload) icon. Show error flash message specified in Figma. \n- [ ] Make sure that the uploaded icon shows on the host's software library and inventory pages, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows on the My device software and self-service tabs, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows in /controls/setup-experience/install-software when selecting software to be installed\n- [ ] Verify that when GitOps mode is enabled, on the software title details page, the edit button (next to the software title name) is disabled, and that the GitOps tooltip is displayed on hover.\n- [ ] Verify that `icon` field is added in GitOps generation modal.\n- [ ] Verify that icon download link is added in GitOps generation modal. \n\n#### API\n\n- [ ] Verify that the icon can be updated with the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that an icon can be added to \"no team\" via the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be deleted with the new `DELETE /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be downloaded with the new `GET /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that Fleet errors if icons are not PNG, not square, or not between 120x120px and 1024x1024px, when user tries to upload with PUT endpoint.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles/:id`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/device/{token}/software`.\n- [ ] Verify that if no uploaded icon and no VPP added, `icon_url` is `null` (for every endpoint above).\n\n#### GitOps\n\n- [ ] Verify that the icon can be added to a software package (`software.packages` \u003e `lib/software-name.package.yml` \u003e `icon`).\n- [ ] Verify that the icon can be added to the App Store app (`software.app​_store​_apps.icon`).\n- [ ] Verify that the icon can be removed from the software package or App Store app\n- [ ] Verify that adding the same icon file to software packages across multiple teams adds the icon for each software package on each team and doesn't result in significantly slower gitops runs or adverse file-system effects (excessive files in /tmp directory when running)\n- [ ] Verify that previously uploaded icons are downloaded and referenced when running `fleetctl generate-gitops`\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP74",
+        "issueNumber": 29478,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpok",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "[planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1753366962273099)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@jakestenger this is a subtask.  you'll want to add customer labels to the parent story"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Larger customer environments are 50-125k linux hosts. Will spin up load test environment to evaluate vulnerability processing times and page loads. "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nSetup local environment on 4.72 with 50,022 hosts total, mostly Ubuntu 22.04 osquery-perf hosts.\nTotal of 106 teams, most are empty.\nI filtered down to the hosts that had kernels in software (6649) (only some hosts have software inventory and some don't due to osquery-perf randomization).\nThen transferred hosts, 20 Teams with 50 hosts each -\u003e 1000 hosts are on teams, 5649 are on \"No Team\"\nRan `cleanups_then_aggregation` cron\nRan `vulnerabilities` cron - Time to complete 29 min 18 seconds\nRan `vulnerabilities` cron again - Time to complete 1 hour, 29 minutes, and 49 seconds\nSubsequent runs took an hour and a half\n\nUpgraded to 4.73\nRan `cleanups_then_aggregation` cron\nRan `vulnerabilities` cron - Time to complete was approximately 30 min\nRan `vulnerabilities` cron again - Time to complete was approximately 1 hour, 30 minutes\n\n- [x] 4.73.0 Vulnerabilities cron run times were comparable to 4.72.0 cron run times\n\nNoticed loading /software/os page has been slower. On 4.72.0 the page took less than one second to load. On 4.73.0 it is consistently taking 6-7 seconds to load. Network speed when noticing this change is 87.5Mbps download/23Mbps upload.\n\nhttps://github.com/user-attachments/assets/4270f9c3-2e3f-4d2f-a6a8-d1c2c9855a9c\n\n"
+          }
+        ],
+        "issueNumber": 31214,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCo1s",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@iansltx Thanks for following the new [engineering-initiated process](https://fleetdm.com/handbook/engineering#create-an-engineering-initiated-story). This sounds like a good value add effort, so I'm prioritizing for drafting and assigning you as the product designer to complete the [draft an engineering-initiated story](https://fleetdm.com/handbook/engineering#draft-an-engineering-initiated-story) process."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "This actually looks product-complete, so pulling into User Story Review."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Note that per the eng-init section of the handbook, irrelevant product checkboxes were deleted from the issue description."
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@iansltx One thing I'm not clear on from this ticket is what is the current state? How long does it currently take for the false positive to clear?"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Current state is two hours. See\n\nhttps://github.com/fleetdm/fleet/blob/33a703920378a7084319da99a5af5c52a1cff6a2/articles/vulnerability-processing.md?plain=1#L28\n\n(I have a PR to fix the typo there)\n\nwhich maps to this code:\n\nhttps://github.com/fleetdm/fleet/blob/33a703920378a7084319da99a5af5c52a1cff6a2/server/vulnerabilities/nvd/cve.go#L326-L336"
+          },
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "@iansltx Got it. And currently the Fleet cron runs hourly, so this change will take it from up to two hour to up to one hour? "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath (sorry, misunderstood your comment, one moment)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@lukeheath With this revision, the vulns run after a false positive is fixed would correct the issue. Via cron, that would happen every hour, but you could make it happen more quickly by triggering the job manually."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hey team! Please [add your planning poker estimate](https://app.zenhub.com/workspaces/Drafting-6192dd66ea2562000faea25c/issues/gh/fleetdm/fleet/26404?planning-poker) with Zenhub @jahzielv @ksykulev"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@lukeheath chatted with @mostlikelee and decided to deprioritize this one. We want to get to customer requests first and we need to make some room."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "```go\nnumberOfTimesExistingStaleVulnHandlingIncreasedFrictionOnVulnManagementWork++\n```\n\nFor #28983.\n"
+          },
+          {
+            "author": {
+              "login": "jahzielv"
+            },
+            "body": "yeah I forgot about that this morning: https://fleetdm.slack.com/archives/C086V2QK76X/p1747311488652479"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Ready for async User story review. Whoever signs off on this last, please move this directly to \"Ready for estimate\" and start Planning Poker, as this one's already spec-complete.\n\n- [x] @mostlikelee \n- [x] @jmwatts (you checked the \"test plan finalized\" box back on April 8, and the test plan hasn't been modified since, so...should be good here?)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@iansltx yes this one should be good"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "[planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1753214019845799)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Tested this by inserting an extra `software_cve` entry pointed at a combination of existing CVE and existing software (but a CVE that didn't actually apply to that software), with NVD as the source ID, then ran the cron. Existing vulns stuck around, but my manually inserted false positive didn't. Still traverses the relevant code paths, but took less time to verify."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\nRestored a previous backup that exhibited a false positive vulnerability.\nRan vulnerability scanning.\nConfirmed that the false positive still showed up in the previous version.\nUpgraded to the fix version.\nRan vulnerability scanning again.\nConfirmed that the false positive no longer shows up."
+          }
+        ],
+        "issueNumber": 26404,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCos4",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Reproduced. Had many installers uploaded to my fleet instance. Ran `fleetctl trigger --name uninstall_software_migration` and observed the following output:\n\n\n```\nlevel=debug ts=2025-07-07T15:20:22.899346Z component=http user=admin@fake.com method=POST uri=\"/api/latest/fleet/trigger?name=uninstall_software_migration\" took=8.484917ms\nlevel=debug ts=2025-07-07T15:20:22.90024Z cron=uninstall_software_migration component=uninstall_software_migration schedule=uninstall_software_migration instanceID=\"zzLKQdD0TOOTJLjckKrXV61MNHMn52+qHzuEhS5Wp0UuZvFUuRptmwjW0Eae1vfP5moE7h5kdiQqAlsdbTpXLQ==\" msg=\"done, trigger received\"\nlevel=info ts=2025-07-07T15:20:22.915365Z cron=uninstall_software_migration component=uninstall_software_migration schedule=uninstall_software_migration instanceID=\"zzLKQdD0TOOTJLjckKrXV61MNHMn52+qHzuEhS5Wp0UuZvFUuRptmwjW0Eae1vfP5moE7h5kdiQqAlsdbTpXLQ==\" status=pending\nlevel=debug ts=2025-07-07T15:20:22.915439Z cron=uninstall_software_migration component=uninstall_software_migration schedule=uninstall_software_migration instanceID=\"zzLKQdD0TOOTJLjckKrXV61MNHMn52+qHzuEhS5Wp0UuZvFUuRptmwjW0Eae1vfP5moE7h5kdiQqAlsdbTpXLQ==\" msg=starting jobID=uninstall_software_migration\nSDK 2025/07/07 10:20:22 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:23 WARN Response has no supported checksum. Not validating response payload.\nlevel=warn ts=2025-07-07T15:20:24.777168Z cron=uninstall_software_migration component=uninstall_software_migration msg=\"extracting metadata from installer\" software_installer_id=543 storage_id=no_check err=\"unsupported file type\"\nSDK 2025/07/07 10:20:24 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:24 WARN Response has no supported checksum. Not validating response payload.\nSDK 2025/07/07 10:20:24 WARN Response has no supported checksum. Not validating response payload.\nlevel=warn ts=2025-07-07T15:20:25.682907Z cron=uninstall_software_migration component=uninstall_software_migration msg=\"extracting metadata from installer\" software_installer_id=544 storage_id=no_check err=\"unsupported file type\"\nlevel=warn ts=2025-07-07T15:20:28.107299Z cron=uninstall_software_migration component=uninstall_software_migration msg=\"extracting metadata from installer\" software_installer_id=545 storage_id=3ccb062c081bd7ac5b8a9183ebb6a52cfd6046411e6d51a89f12e132b6672f63 err=\"unsupported file type\"\nlevel=warn ts=2025-07-07T15:20:28.308374Z cron=uninstall_software_migration component=uninstall_software_migration msg=\"extracting metadata from installer\" software_installer_id=547 storage_id=67dfa6f184794373a490d5d7ae1ae00b5db80d710c946f8be1ee210d12e54a05 err=\"unsupported file type\"\nlevel=info ts=2025-07-07T15:20:28.314756Z cron=uninstall_software_migration component=uninstall_software_migration schedule=uninstall_software_migration instanceID=\"zzLKQdD0TOOTJLjckKrXV61MNHMn52+qHzuEhS5Wp0UuZvFUuRptmwjW0Eae1vfP5moE7h5kdiQqAlsdbTpXLQ==\" status=completed\nlevel=debug ts=2025-07-07T15:20:28.317486Z cron=uninstall_software_migration component=uninstall_software_migration schedule=uninstall_software_migration instanceID=\"zzLKQdD0TOOTJLjckKrXV61MNHMn52+qHzuEhS5Wp0UuZvFUuRptmwjW0Eae1vfP5moE7h5kdiQqAlsdbTpXLQ==\" msg=\"23h55m27.682518s remaining until next tick\"\n```\n\n\nThose ids correspond to:\n```\nmysql\u003e select id, filename, extension from software_installers where id in (543, 544, 545, 547);\n+-----+----------------------------------------+-----------+\n| id  | filename                               | extension |\n+-----+----------------------------------------+-----------+\n| 543 | googlechrome.dmg                       | dmg       |\n| 544 | googlechromestandaloneenterprise64.msi | msi       |\n| 545 | AcroRdrDC_2500120529_MUI.dmg           | dmg       |\n| 547 | nice-dcv-viewer-2024.0.8004.arm64.dmg  | dmg       |\n+-----+----------------------------------------+-----------+\n4 rows in set (0.01 sec)\n```\n\nI noticed earlier occurrences of this in my logs as well, those packages corresponded to:\n```\n+-----+--------------------------------+-----------+\n| id  | filename                       | extension |\n+-----+--------------------------------+-----------+\n| 341 | A+ Suite for Mac_sign.pkg      | pkg       |\n| 342 | AcrobatUpd10116.pkg            | pkg       |\n| 343 | AddWindowsExplorerShortcut.exe | exe       |\n| 345 | Airtame.pkg                    | pkg       |\n| 346 | AutodeskFusion-005.pkg         | pkg       |\n| 347 | AutoPkg-2.7.3.pkg              | pkg       |\n| 348 | AWS VPN Client.pkg             | pkg       |\n| 349 | AWS_VPN_Client.msi             | msi       |\n| 351 | BoxDrive.pkg                   | pkg       |\n| 353 | cli-arm64.exe                  | exe       |\n| 354 | cli.exe                        | exe       |\n| 355 | CloudflareWARP.pkg             | pkg       |\n| 358 | Egnyte Connect-3.14.18.pkg     | pkg       |\n| 360 | Elmedia Player-8.22.pkg        | pkg       |\n+-----+--------------------------------+-----------+\n```\n\nSo, not certain this is related to a specific package type. "
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@jmwatts FWIW `no_check` in the DB was a different issue (fixed in 4.71 or 4.72; we shouldn't have anything with a storage ID of `no_check`). Other errors were likely because the DB had software in it that wasn't in object storage. Fix I just PR'd fixed the original issue; the other ones look to be environmental to your local and/or resolved elsewhere already."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "merged before kickoff, so i'm assigning this to sprint 44.  will do the same next sprint so it's consistent."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "changing my mind here. this wont actually affect the burndown chart.  moving back to 45"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nUploaded a variety of package types (packages previously shown to cause this warning)\nRan fleetctl trigger --name uninstall_software_migration and watched the logs for warnings\nNo warnings resulted. "
+          }
+        ],
+        "issueNumber": 30565,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdF67w",
+        "milestone": {
+          "title": "Fleetd-1.47.0"
+        },
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "blocking waiting on replication steps for QA steps from contributor"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "contributor is OOO, and fleetd cut happened this morning.  I'll figure out next steps here"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "the PR is reverted from the 1.46 release branch so we don't block the fleetd release"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@fuhry Can you point us to a package that previously failed that gets fixed by this change?"
+          },
+          {
+            "author": {
+              "login": "fuhry"
+            },
+            "body": "@iansltx I experienced a different issue (configuration file conflict) when installing Zscaler, but I knew to change this setting from some previous Debian/Ubuntu sysadmin experience. This wasn't demanded by any specific package used on our own Fleet-managed systems.\n\nI believe `sendmail`, `postfix` and `mariadb-server` are historically some of the worst offenders for high-priority prompts during installation. Although those are unlikely to be the kind of thing people are installing with Fleet, they should make good artificial test cases. Note that I haven't personally verified that these packages still do this, so please take this with a grain of salt."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Moving the milestone back because per #32521 this work is definitely in fleetd 1.47 /cc @jmwatts @mostlikelee @getvictor "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@fuhry I tried to reproduce the original issue with:\n\n[sendmail-base_8.17.2-1_all.deb](https://old-releases.ubuntu.com/ubuntu/pool/universe/s/sendmail/sendmail-base_8.17.2-1_all.deb) - installed, did not prompt\n[postfix_3.10.4-1_amd64.deb](http://http.us.debian.org/debian/pool/main/p/postfix/postfix_3.10.4-1_amd64.deb) - required several dependencies and could not be installed, did not prompt\n[mariadb-server_11.8.3+maria~ubu2404_amd64.deb](https://dlm.mariadb.com/4425632/MariaDB/mariadb-11.8.3/repo/ubuntu/pool/main/m/mariadb/mariadb-server_11.8.3+maria~ubu2404_amd64.deb) - required several dependencies and could not be installed, did not prompt\n\nAny hints on where to find the correct .deb files to reproduce would be very helpful! I need to see the initial defective behavior first and can then verify the fix. "
+          }
+        ],
+        "issueNumber": 31396,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "marko-lisica"
+        ],
+        "content": {
+          "body": "### Requestor\n\n- Application name: Omnissa Horizon Client\n- Application platform: macOS\n\n---\n\n### Validation\n\n- [x] The following outputs are generated\n        - `/outputs/\u003capp-name\u003e/darwin.json` created\n        - `/outputs/apps.json` updated\n- [x] Manifest name matches osquery `app.name` (macOS) or `programs.name` (Windows)\n- [x] Manifest version scheme matches osquery `app.short_bundle_version` (macOS) or `programs.version` (Windows) version scheme\n- [x] Manifest `unique_identifier` matches osquery `app.bundle_identifier` (macOS only)\n\n### QA\n\n- [x] App adds successfully to team's library\n- [x] App installs successfully on host\n- [x] App opens successfully on host\n- [x] App uninstalls successfully on host\n\n### Icon\n\n- [ ] Icon added to Figma\n- [ ] Icon added to Fleet\n- [ ] Correct icon appears in the app catalog",
+          "number": 32558,
+          "repository": "fleetdm/fleet",
+          "title": "New FMA: Omnissa Horizon Client",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/32558"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgeV3hE",
+        "labels": [
+          ":release",
+          "#g-software",
+          "fma"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "New FMA: Omnissa Horizon Client",
+        "issueNumber": 32558,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "xpkoala",
+          "AndreyKizimenko",
+          "PezHub",
+          "jmwatts"
+        ],
+        "content": {
+          "body": "# `fleetd` agent: 1.47.0\n\nIncludes updates to: \n- Fleet Desktop tray icon application.\n- Changes in `orbit` executable.\n\n- Desktop `v1.46.0` \u003e `v1.47.0`\n\nFleet 1.47.0 has been released to the `edge` channel.\n\nSmoke tests should be performed in `edge` before promoting it to `stable`.\n\n## New `fleetd` pushed to edge\n\n### Goal: Ensure `fleetd` version pushed to edge is working with the current released version of fleet.\n\n0. You can generate packages that use `edge` by running: `fleetctl package [] --orbit-channel edge --desktop-channel edge`.\n1. Fleet server is running the latest released version available on [Fleet Releases](https://github.com/fleetdm/fleet/releases) page.\n2. Set Agent options to use edge in the Fleet server configuration. For example:\u003cbr\u003e\n `update_channels:` \u003cbr\u003e\n  `osqueryd: stable` \u003cbr\u003e\n  `orbit: edge` \u003cbr\u003e\n  `desktop: edge` \u003cbr\u003e\n\u003ctable\u003e\n\u003ctr\u003e\u003cth\u003eTest name\u003c/th\u003e\u003cth\u003eStep instructions\u003c/th\u003e\u003cth\u003eExpected result\u003c/th\u003e\u003cth\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\u003ctr\u003e\u003ctd\u003e$Name\u003c/td\u003e\u003ctd\u003e{what a tester should do}\u003c/td\u003e\u003ctd\u003e{what a tester should see when they do that}\u003c/td\u003e\u003ctd\u003epass/fail\u003c/td\u003e\u003c/tr\u003e\n\n \u003ctr\u003e\u003ctd\u003eQuery flow\u003c/td\u003e\u003ctd\u003eRun queries. \u003c/td\u003e\u003ctd\u003e\n1. Queries can be run manually \n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eHost Flow\u003c/td\u003e\u003ctd\u003eVerify a new host can be added using your own device.\u003c/td\u003e\u003ctd\u003e\n1. Hosts can enroll and report correct version of `fleetd` (orbit, osquery, desktop).\u003cbr\u003e\n2. Refetching host vitals completes and returns updated information.\n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eMy device page\u003c/td\u003e\u003ctd\u003eVerify the end user's my device page loads successfully.\u003c/td\u003e\u003ctd\u003e\n1. Clicking the Fleet desktop item, then \"My device\" successfully loads the my device page.\u003cbr\u003e\n2. The \"My device\" page is populated correctly and as expected. \u003cbr\u003e\n3. Styling and padding appears correct. \n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eScripts\u003c/td\u003e\u003ctd\u003eVerify script execution\u003c/td\u003e\u003ctd\u003e\n1. Verify able to run a script on all host types from CLI.\u003cbr\u003e\n2. From Host details (macOS, Windows, \u0026 Linux) run a script that should PASS, verify.\u003cbr\u003e\n3. From Host details (macOS, Windows, \u0026 Linux) run a script that should FAIL, verify.\u003cbr\u003e\n4. Verify script results display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eSoftware\u003c/td\u003e\u003ctd\u003eVerify software install / download\u003c/td\u003e\u003ctd\u003e\n1. From Host details (macOS, Windows, \u0026 Linux) run an install that should PASS, verify.\u003cbr\u003e\n2. From My Device (macOS, Windows, \u0026 Linux) software tab should have self-service items available, verify.\u003cbr\u003e\n3. Verify software installs display correctly in Activity feed.\n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003eOS settings\u003c/td\u003e\u003ctd\u003eVerify OS settings functionality\u003c/td\u003e\u003ctd\u003e\n1. Verify able to configure Disk encryption (macOS, Windows, \u0026 Linux).\u003cbr\u003e\n2. Verify host enrolled with Disk encryption enforced successfully encrypts.\n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003ctr\u003e\u003ctd\u003ePacks flow\u003c/td\u003e\u003ctd\u003eVerify management, operation, and logging of [\"2017 packs\"](https://fleetdm.com/handbook/company/why-this-way#why-does-fleet-support-query-packs).\u003c/td\u003e\u003ctd\u003e\n1. Packs successfully run on host machines after migrations \u003cbr\u003e\n2. New Packs can be created. \u003cbr\u003e\n3. Packs can be edited and deleted \u003cbr\u003e\n4. Packs results information is logged\n\u003c/td\u003e\u003ctd\u003e\n4.72.0:\n4.73.0:\n\u003c/td\u003e\u003c/tr\u003e\n\n\u003c/table\u003e\n  \n# Notes\n\nIssues found new to this version:\n\nIssues found that reproduce in last stable version: \n\nWhat has not been tested:\n\nInclude any notes on whether issues should block release or not as needed:",
+          "number": 32561,
+          "repository": "fleetdm/fleet",
+          "title": "Release QA: fleetd v1.47.0",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/32561"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgeWFPI",
+        "labels": [
+          ":release",
+          "#g-mdm",
+          "#g-orchestration",
+          "#g-software"
+        ],
+        "milestone": {
+          "title": "Fleetd-1.47.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Release QA: fleetd v1.47.0",
+        "issueNumber": 32561,
+        "changeType": "added"
       }
     ]
   }
