@@ -132,7 +132,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Onboarding buddy Jonathan Katz"
       },
       {
@@ -2373,7 +2373,7 @@
           "jmwatts"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [x] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [ ] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [ ] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [ ] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [ ] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n- [ ] Complete MDM Smoke test\n- [ ] Complete Orchestration Smoke test\n- [ ] Complete Software Smoke test\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [x] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [x] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [x] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n\n### Smoke tests\nFor this ticket, we'll only be running smoke tests that apply to macOS/iOS/iPadOS Tahoe. \n[This template contains a detailed breakdown of the tests](https://github.com/fleetdm/fleet/blob/HEAD/.github/ISSUE_TEMPLATE/release-qa.md)\n\n**MDM**\n - [ ] MDM enrollment flow\n   - MacOS\n   - iPadOS\n   - iOS\n - [ ] MDM migration flow\n   - MacOS\n   - iPadOS\n   - iOS\n - [ ] OS settings\n   - MacOS\n   - iPadOS\n   - iOS\n - [ ] Setup experience\n   - MacOS\n - [ ] iOS/iPadOS\n   - iPadOS\n   - iOS\n - [ ] Lock \u0026 Wipe\n   - MacOS\n   - iPadOS - Wipe only\n   - iOS - Wipe only\n\n**Orchestration**\n- [ ] Packs flow\n   - MacOS\n- [ ] OS settings\n   - MacOS\n- [ ] Log destination flow\n   - MacOS\n   - iPadOS\n   - iOS\n\n**Software**\n- [ ] Query flow\n  - MacOS\n- [ ] My device page\n  - MacOS\n- [ ] Scripts\n  - MacOS\n- [ ] Software\n  - MacOS\n  - iPadOS\n  - iOS\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 30696,
           "repository": "fleetdm/fleet",
           "title": "Validate macOS Tahoe on Fleet so that we can provide same day support when it goes to general release",
@@ -3265,7 +3265,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Eng DRI - 31719/31354"
       },
       {
@@ -3280,7 +3280,7 @@
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/32042"
         },
-        "estimate": 5,
+        "estimate": 8,
         "id": "PVTI_lADOBDAnic4A4BEUzgdv5RY",
         "labels": [
           "#g-software"
@@ -3292,7 +3292,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Eng DRI / custom iOS Apps"
       },
       {
@@ -3341,7 +3341,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Eng DRI - windows FMA"
       },
       {
@@ -3504,7 +3504,7 @@
           "ksykulev"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to add a custom icon for my software\n| so that my end users can easily find the software they need on the **My device \u003e Self-service** page.\n\n## Roadmap item\n\nNone\n\n## Key result\n\nCustomer request\n\n## Original requests\n\n- #24802 \n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @iansltx \n  \nMake sure to solve this: #29886\n\n## Changes\n\n### Product\n- [x] UI changes: [Figma link](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Edit-software-icon?node-id=0-1\u0026t=DrMQziG5Cl0BDJbU-1)\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: #31324\n- [x] REST API changes: #31324\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps changes: Specified in Figma above.\n- [x] GitOps generation changes:\n  - Specified in Figma above.\n  - `gitops-generate` command should download icons.\n- [x] Activity changes: #31382\n- [x] Permissions changes: Global/team admins and maintainers can apply update icon. Covered by \"Add, edit, and delete software\" in permissions guide.\n- [x] Changes to paid features or tiers: Available in Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: The icon added by user will display on self-service and software inventory tabs on My device page.\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes.\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: #31324\n- [ ] Feature guide changes: Update [self-service](https://fleetdm.com/guides/software-self-service), [custom package](https://fleetdm.com/guides/deploy-software-packages), [VPP](https://fleetdm.com/guides/install-vpp-apps-on-macos-using-fleet) articles to reference icons/how to change them\n- [ ] Database schema migrations: Add software_title_icons table with title ID, team ID, icon filename, and icon storage ID (will dump icons onto the software installers bucket)\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### UI\n\n- [ ] Make sure that the edit action is available next to the software title name, only if the software title has a package or VPP app added.\n- [ ] Verify that the user can upload a PNG icon by clicking on the edit icon next to the software title name in the **Edit software** modal.\n- [ ] Verify that the user can only select PNG files.\n- [ ] Verify that Fleet returns an error if the icon doesn't fit into specs defined in Figma.\n- [ ] Make sure that the user can preview the icon in the **Edit software** modal, once it's selected and before it's uploaded.\n- [ ] Verify that the icon in the preview is displayed according to the priority order described in Figma..\n- [ ] Make sure that the preview under the **Fleet** tab shows the real software title name, icon, type and versions count. The table underneath the transparent overlay should be static.\n- [ ] Make sure that the preview under the **Self-service** tab shows the real software title name and icon. Other data should be static.\n- [ ] Make sure that if the user deletes the selected or uploaded icon, the preview shows the fallback icon.\n- [ ] Verify that when the VPP icon is available, the upload form is still available in the **Edit software** modal, so the user can override that icon with a custom PNG.\n- [ ] Make sure that the uploaded icon shows on software title details, ~version details,~ titles list, ~versions list,~ on a team where the icon is added.\n- [ ] Make sure that we do client-side validation if the icon size doesn't fit specs, before the user hit \"Save\" (upload) icon. Show error flash message specified in Figma. \n- [ ] Make sure that the uploaded icon shows on the host's software library and inventory pages, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows on the My device software and self-service tabs, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows in /controls/setup-experience/install-software when selecting software to be installed\n- [ ] Verify that when GitOps mode is enabled, on the software title details page, the edit button (next to the software title name) is disabled, and that the GitOps tooltip is displayed on hover.\n- [ ] Verify that `icon` field is added in GitOps generation modal.\n- [ ] Verify that icon download link is added in GitOps generation modal. \n\n#### API\n\n- [ ] Verify that the icon can be updated with the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that an icon can be added to \"no team\" via the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be deleted with the new `DELETE /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be downloaded with the new `GET /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that Fleet errors if icons are not PNG, not square, or not between 120x120px and 1024x1024px, when user tries to upload with PUT endpoint.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles/:id`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/device/{token}/software`.\n- [ ] Verify that if no uploaded icon and no VPP added, `icon_url` is `null` (for every endpoint above).\n- [ ] Create a software package, add icon to software installer, edit the package (change something that is not icon related), delete the software package. This should generate a number of activities. \n```\n1 for creation (icon url blank)\n1 for adding icon (icon url in activity)\n1 for editing package (icon url in activity)\n1 for deleting package (icon url in activity)\n```\n- [ ] Create a vpp app, add icon to vpp app, edit the vpp app (change something not icon related), delete vpp app. This should generate a number of activities.\n```\n1 for creation (icon url blank)\n1 for adding icon (icon url in activity)\n1 for editing vpp app (icon url in activity)\n1 for deleting vpp app (icon url in activity)\n```\n- [ ] Create a vpp app, edit vpp app, delete vpp app. This should generate a number of activities.\n```\n1 for creation (icon url blank)\n1 for editing vpp app (icon url in activity, note that this is the vpp_app.icon_url, not the custom icon)\n1 for deleting vpp app (icon url in activity, note that this is the vpp_app.icon_url, not the custom icon)\n```\n\n#### GitOps\n\n- [ ] Verify that the icon can be added to a software package (`software.packages` \u003e `lib/software-name.package.yml` \u003e `icon`).\n- [ ] Verify that the icon can be added to the App Store app (`software.app​_store​_apps.icon`).\n- [ ] Verify that the icon can be removed from the software package or App Store app\n- [ ] Verify that adding the same icon file to software packages across multiple teams adds the icon for each software package on each team and doesn't result in significantly slower gitops runs or adverse file-system effects (excessive files in /tmp directory when running)\n- [ ] Verify that previously uploaded icons are downloaded and referenced when running `fleetctl generate-gitops`\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As an IT admin,\n| I want to add a custom icon for my software\n| so that my end users can easily find the software they need on the **My device \u003e Self-service** page.\n\n## Roadmap item\n\nNone\n\n## Key result\n\nCustomer request\n\n## Original requests\n\n- #24802 \n\n## Context\n- Product Designer: @marko-lisica \n- Engineer: @iansltx \n  \nMake sure to solve this: #29886\n\n## Changes\n\n### Product\n- [x] UI changes: [Figma link](https://www.figma.com/design/JMZUamWhuArCPIjAXXrIzB/-29478-Edit-software-icon?node-id=0-1\u0026t=DrMQziG5Cl0BDJbU-1)\n- [x] CLI (fleetctl) usage changes: No changes.\n- [x] YAML changes: #31324\n- [x] REST API changes: #31324\n- [x] Fleet's agent (fleetd) changes: No changes.\n- [x] GitOps changes: Specified in Figma above.\n- [x] GitOps generation changes:\n  - Specified in Figma above.\n  - `gitops-generate` command should download icons.\n- [x] Activity changes: #31382\n- [x] Permissions changes: Global/team admins and maintainers can apply update icon. Covered by \"Add, edit, and delete software\" in permissions guide.\n- [x] Changes to paid features or tiers: Available in Fleet Free and Premium.\n- [x] My device and fleetdm.com/better changes: The icon added by user will display on self-service and software inventory tabs on My device page.\n- [x] First draft of test plan added\n- [x] Other reference documentation changes: No changes.\n- [ ] Once shipped, requester has been notified\n- [ ] Once shipped, dogfooding issue has been filed\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Contributor API changes: #31324\n- [ ] Feature guide changes: Update [self-service](https://fleetdm.com/guides/software-self-service), [custom package](https://fleetdm.com/guides/deploy-software-packages), [VPP](https://fleetdm.com/guides/install-vpp-apps-on-macos-using-fleet) articles to reference icons/how to change them\n- [ ] Database schema migrations: Add software_title_icons table with title ID, team ID, icon filename, and icon storage ID (will dump icons onto the software installers bucket)\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Risk level: Low\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n\n#### UI\n\n- [x] Make sure that the edit action is available next to the software title name, only if the software title has a package or VPP app added.\n- [x] Verify that the user can upload a PNG icon by clicking on the edit icon next to the software title name in the **Edit software** modal.\n- [x] Verify that the user can only select PNG files.\n- [x] Verify that Fleet returns an error if the icon doesn't fit into specs defined in Figma.\n- [x] Make sure that the user can preview the icon in the **Edit software** modal, once it's selected and before it's uploaded.\n- [x] Verify that the icon in the preview is displayed according to the priority order described in Figma..\n- [x] Make sure that the preview under the **Fleet** tab shows the real software title name, icon, type and versions count. The table underneath the transparent overlay should be static.\n- [x] Make sure that the preview under the **Self-service** tab shows the real software title name and icon. Other data should be static.\n- [ ] Make sure that if the user deletes the selected or uploaded icon, the preview shows the fallback icon.\n- [x] Verify that when the VPP icon is available, the upload form is still available in the **Edit software** modal, so the user can override that icon with a custom PNG.\n- [x] Make sure that the uploaded icon shows on software title details, ~version details,~ titles list, ~versions list,~ on a team where the icon is added.\n- [x] Make sure that we do client-side validation if the icon size doesn't fit specs, before the user hit \"Save\" (upload) icon. Show error flash message specified in Figma. \n- [x] Make sure that the uploaded icon shows on the host's software library and inventory pages, on a host that is a member of the team where the icon is uploaded.\n- [x] Make sure that the uploaded icon shows on the My device software and self-service tabs, on a host that is a member of the team where the icon is uploaded.\n- [ ] Make sure that the uploaded icon shows in /controls/setup-experience/install-software when selecting software to be installed\n- [x] Verify that when GitOps mode is enabled, on the software title details page, the edit button (next to the software title name) is disabled, and that the GitOps tooltip is displayed on hover.\n- [x] Verify that `icon` field is added in GitOps generation modal.\n- [x] Verify that icon download link is added in GitOps generation modal. \n\n#### API\n\n- [ ] Verify that the icon can be updated with the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that an icon can be added to \"no team\" via the new `PUT /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be deleted with the new `DELETE /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that the updated icon can be downloaded with the new `GET /api/v1/fleet/software/titles/:id/icon` endpoint.\n- [ ] Verify that Fleet errors if icons are not PNG, not square, or not between 120x120px and 1024x1024px, when user tries to upload with PUT endpoint.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/software/titles/:id`.\n- [ ] Make sure that `icon_url` is available on the top level for each software item in `GET /api/v1/fleet/device/{token}/software`.\n- [ ] Verify that if no uploaded icon and no VPP added, `icon_url` is `null` (for every endpoint above).\n- [ ] Create a software package, add icon to software installer, edit the package (change something that is not icon related), delete the software package. This should generate a number of activities. \n```\n1 for creation (icon url blank)\n1 for adding icon (icon url in activity)\n1 for editing package (icon url in activity)\n1 for deleting package (icon url in activity)\n```\n- [ ] Create a vpp app, add icon to vpp app, edit the vpp app (change something not icon related), delete vpp app. This should generate a number of activities.\n```\n1 for creation (icon url blank)\n1 for adding icon (icon url in activity)\n1 for editing vpp app (icon url in activity)\n1 for deleting vpp app (icon url in activity)\n```\n- [ ] Create a vpp app, edit vpp app, delete vpp app. This should generate a number of activities.\n```\n1 for creation (icon url blank)\n1 for editing vpp app (icon url in activity, note that this is the vpp_app.icon_url, not the custom icon)\n1 for deleting vpp app (icon url in activity, note that this is the vpp_app.icon_url, not the custom icon)\n```\n\n#### GitOps\n\n- [ ] Verify that the icon can be added to a software package (`software.packages` \u003e `lib/software-name.package.yml` \u003e `icon`).\n- [ ] Verify that the icon can be added to the App Store app (`software.app​_store​_apps.icon`).\n- [ ] Verify that the icon can be removed from the software package or App Store app\n- [ ] Verify that adding the same icon file to software packages across multiple teams adds the icon for each software package on each team and doesn't result in significantly slower gitops runs or adverse file-system effects (excessive files in /tmp directory when running)\n- [ ] Verify that previously uploaded icons are downloaded and referenced when running `fleetctl generate-gitops`\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 29478,
           "repository": "fleetdm/fleet",
           "title": "Edit software icon",
@@ -8575,7 +8575,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "Vulnerability test `TestIntegrationsParseReleaseHTML` failing on `main`",
         "comments": [
           {
@@ -9621,7 +9621,7 @@
           "RachelElysia"
         ],
         "content": {
-          "body": "**Fleet version**: 4.73.0\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n2nd pill doesn't show up immediately, takes a few seconds, then shows up\nhttps://github.com/user-attachments/assets/09b08603-bb18-46b6-bab3-e2c5b78aa9c5\n\n### 🛠️ To fix\n\u003c!-- Add the expected fix here. If you're not sure, leave this blank for product to specify.  --\u003e\nTBD\n\nProduct designer: _________________________\u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. In Software \u003e\u003e OS click on an Ubuntu OS item that has kernels\n2. For one of the kernels listed, click \"View all hosts\"\n3. Watch the pills that show the filters at the top of the page\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "body": "**Fleet version**: 4.73.0\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n2nd pill doesn't show up immediately, takes a few seconds, then shows up\nhttps://github.com/user-attachments/assets/09b08603-bb18-46b6-bab3-e2c5b78aa9c5\n\n### 🛠️ To fix\n\u003c!-- Add the expected fix here. If you're not sure, leave this blank for product to specify.  --\u003e\n- Page loading state includes call to os version API\n- Pills, like table, do not show until page loading is complete\n\nProduct designer: _________________________\u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. In Software \u003e\u003e OS click on an Ubuntu OS item that has kernels\n2. For one of the kernels listed, click \"View all hosts\"\n3. Watch the pills that show the filters at the top of the page\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
           "number": 32584,
           "repository": "fleetdm/fleet",
           "title": "Second pill doesn't show immediately when viewing hosts for linux kernel/OS combination",
@@ -9641,7 +9641,7 @@
           "title": "4.74.0"
         },
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Second pill doesn't show immediately when viewing hosts for linux kernel/OS combination",
         "issueNumber": 32584,
         "changeType": "added"
@@ -10626,6 +10626,101 @@
         "status": "✔️Awaiting QA",
         "issueNumber": 32496,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-06T07:04:34.33235264Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "status": "🦤 ‎In review",
+        "issueNumber": 31165,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8c",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31896,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP74",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 29478,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8U",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31895,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCnxU",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31206,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCn44",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31207,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP9A",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31903,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8w",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31900,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP88",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31902,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP80",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31901,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoAQ",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 30849,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdhCgY",
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "issueNumber": 31495,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdI9dE",
+        "milestone": {
+          "dueOn": "2025-09-12T00:00:00Z",
+          "title": "4.73.1"
+        },
+        "issueNumber": 30696,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeYcSE",
+        "title": "Compound sorting for vulnerabilities table",
+        "issueNumber": 30524,
+        "changeType": "removed"
       }
     ]
   }
