@@ -2076,7 +2076,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "🦤 ‎In review",
         "title": "GitOps software/setup experience restructure: YAML migration tool",
         "comments": [
           {
@@ -2131,7 +2131,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "GitOps software multi-package files: Contributor review + tweaks",
         "comments": [
           {
@@ -2174,7 +2174,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "GitOps software multi-package files: View YAML changes in software UI",
         "comments": [
           {
@@ -2215,7 +2215,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "GitOps: Support multiple software packages in one YAML file",
         "comments": [
           {
@@ -3533,7 +3533,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Edit software icon",
         "comments": [
           {
@@ -3815,7 +3815,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: CRUD endpoints",
         "comments": [
           {
@@ -3857,7 +3857,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: Existing endpoint changes",
         "comments": [
           {
@@ -3984,7 +3984,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: Icon retrieval + SW title entity page + modals other than icon edit"
       },
       {
@@ -4018,7 +4018,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: Icon editing UI",
         "comments": [
           {
@@ -4060,7 +4060,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: Icon edit preview",
         "comments": [
           {
@@ -4102,7 +4102,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Custom Icons: Display updates outside software title entity UI"
       },
       {
@@ -10721,6 +10721,20 @@
         "title": "Compound sorting for vulnerabilities table",
         "issueNumber": 30524,
         "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-07T07:04:40.940867825Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgbpzkM",
+        "milestone": {
+          "dueOn": "2025-09-12T00:00:00Z",
+          "title": "4.73.1"
+        },
+        "issueNumber": 30136,
+        "changeType": "modified"
       }
     ]
   }
