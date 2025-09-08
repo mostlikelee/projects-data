@@ -3873,7 +3873,7 @@
           "iansltx"
         ],
         "content": {
-          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [ ] Include icon hash and filename from the database on batch software and app store app result responses\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [ ] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [ ] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [ ] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [ ] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [ ] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [ ] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops.",
+          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [x] Include icon hash and filename from the database on batch software responses\n- [x] Include icon hash and filename from the database on batch VPP app response\n- [x] On VPP app set response, clear all icons for any software titles on that team that aren't associated with packages or VPP apps (doing this on the VPP call because it happens second)\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [ ] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [ ] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [ ] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [ ] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [ ] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [ ] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops.",
           "number": 31897,
           "repository": "fleetdm/fleet",
           "title": "Custom Icons: GitOps",
@@ -3900,7 +3900,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🥚 Ready",
+        "status": "🐣 In progress",
         "title": "Custom Icons: GitOps",
         "comments": [
           {
@@ -10763,6 +10763,322 @@
         ],
         "issueNumber": 31897,
         "changeType": "modified"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-08T19:04:52.876627811Z",
+    "items": [
+      {
+        "assignees": [
+          "ksykulev"
+        ],
+        "content": {
+          "number": 32713,
+          "repository": "fleetdm/fleet",
+          "title": "Research/Spec: Unlisted app store apps",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/32713"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgef1hU",
+        "labels": [
+          "~sub-task",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🐣 In progress",
+        "title": "Research/Spec: Unlisted app store apps",
+        "issueNumber": 32713,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "jkatz01"
+        ],
+        "content": {
+          "body": "**Fleet version**: v4.71.1\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n`customer-cervantes` reported a false positive vulnerability detected in Fleet. The customer noted that the reported vulnerability was known to be fixed via a patch provided by the vendor and not correctly recognized by Fleet vulnerability processing.\n\nCustomer Provided Screenshot\n\u003cimg width=\"2740\" height=\"382\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d3d6f617-d90c-4972-8b0f-93782eecb32d\" /\u003e\n\n```# yum info microcode_ctl:\nUpdating and loading repositories:\nRepositories loaded.\nInstalled packages\nName            : microcode_ctl\nEpoch           : 2\nVersion         : 2.1\nRelease         : 70.fc42\nArchitecture    : x86_64\nInstalled size  : 14.4 MiB\nSource          : microcode_ctl-2.1-70.fc42.src.rpm\nFrom repository : updates\nSummary         : Tool to transform and deploy CPU microcode update for x86\nURL             : https://pagure.io/microcode_ctl\nLicense         : GPL-2.0-or-later AND LicenseRef-Fedora-Firmware\nDescription     : The microcode_ctl utility is a companion to the microcode driver written\n                : by Tigran Aivazian \u003ctigran@aivazian.fsnet.co.uk\u003e.\n                : \n                : The microcode update is volatile and needs to be uploaded on each system\n                : boot i.e. it doesn't reflash your cpu permanently, reboot and it reverts\n                : back to the old microcode.\nVendor          : Fedora Project\n\nyum info shim-x64\nUpdating and loading repositories:\nRepositories loaded.\nInstalled packages\nName            : shim-x64\nEpoch           : 0\nVersion         : 15.8\nRelease         : 3\nArchitecture    : x86_64\nInstalled size  : 3.6 MiB\nSource          : shim-15.8-3.src.rpm\nFrom repository : updates\nSummary         : First-stage UEFI bootloader\nURL             : https://github.com/rhboot/shim/\nLicense         : BSD-3-Clause\nDescription     : Initial UEFI bootloader that handles chaining to a trusted full\n                : bootloader under secure boot environments. This package contains the\n                : version signed by the UEFI signing service.\nVendor          : Fedora Project\n```\n\n### 🧑‍💻  Steps to reproduce\n\n- @jkatz01: Reproduced. \n1. Install microcode_ctl-2.1-70.fc42 and shim-x64-15.8-3 on Fedora 42\n2. Observe all the CVEs marked as resolved show up in Fleet\n(setuptools 74.1.3 also shows false positive)\n\nMost of the CVEs for microcode_ctl don't have a cpe listed on nvd.\n\n### 🕯️ More info _(optional)_\nCustomer provided evidence of vulnerability fixes documented in release notes\nhttps://packages.fedoraproject.org/pkgs/shim/shim-x64/fedora-42.html\nhttps://packages.fedoraproject.org/pkgs/microcode_ctl/microcode_ctl/fedora-42-updates.html\n\nAdditionally the user reported that there may be other vulnerabilities on their system that they can't investigate due to the \"my device\" page truncating results. Providing this info only for context and we may investigate this as a feature request if necessary.\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "number": 31968,
+          "repository": "fleetdm/fleet",
+          "title": "False Positive Vulnerability: microcode_ctl",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31968"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgegD-0",
+        "labels": [
+          "bug",
+          ":product",
+          "#g-software",
+          "customer-cervantes"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "False Positive Vulnerability: microcode_ctl",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Question about vulnerabilities on Linux hosts #7886](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/a6f70f4a-b301-42ca-a117-895e96bbad1d)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "Hmm, looking at the thread, this might be on an older version of Fleet after all? Checking."
+          },
+          {
+            "author": {
+              "login": "jkatz01"
+            },
+            "body": "Reproduced. \n1. Install microcode_ctl-2.1-70.fc42 and shim-x64-15.8-3 on Fedora 42\n2. Observe all the CVEs marked as resolved show up in Fleet\n(setuptools 74.1.3 also shows false positive)\n\nMost of the CVEs for microcode_ctl don't have a cpe listed on nvd."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Thanks @jkatz01!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "[Planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1756878480272839)"
+          }
+        ],
+        "issueNumber": 31968,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeYD_s",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31297,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8g",
+        "labels": [
+          "~gitops",
+          "~backend",
+          ":release",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "[Planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1755144992950349)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, VPP apps are specified once in GitOps YAML but map to usually three titles in Fleet. This means that icons can vary across titles and there's no way to represent the varying icon overrides in GitOps.\n\nWith the current endpoints, to detect this (for generate-gitops) for titles that have multiple icons specified we'll need to download the icons and hash them, and if there aren't matches we'll just need to pick one and document the mismatch. We can detect VPP defaults easily enough (because we don't mask them behind relative URLs), so can tell whether we have a mix of icon vs. no icon based on platform and can add notes as a result.\n\nGiven these nuances, going to come back to `generate-gitops` after I get the rest of the GitOps build done.\n\n/cc @noahtalerman @marko-lisica "
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "Decided to take this out of the scope for 4.74.  Gitops support for this feature is now estimated to land in 4.75.  @jmwatts I believe the test criteria in the parent story is still good."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "@mostlikelee does that mean that the GitOps section of the test plan will not be able to be completed in 4.74.0? If that is the case, that portion of the test plan needs to be removed from that ticket and added either here, or to whichever ticket will be associated with the changes in 4.75.0."
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@jmwatts good call, i'll convert this to a story and update the test plans"
+          }
+        ],
+        "issueNumber": 31897,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "status": "✔️Awaiting QA",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "[Planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1753243609663689)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Please include instructions on how to use said tool, esp for environments with many teams and packages please!"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ksykulev If on-call remains quiet, take this one iydm"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "For the sake of scrolling relocated this [here](https://gist.github.com/Illbjorn/c6e8473bf5b20049f58bdbe2259dad9f). (@Illbjorn)"
+          }
+        ],
+        "issueNumber": 31165,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "title": "Research: Windows FMA"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv6VE",
+        "title": "Research: Windows FMA",
+        "issueNumber": 32046,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv5Cs",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Unseen task ahead,\nGlass city in clouds awaits,\nFulfillment brings peace."
+          }
+        ],
+        "issueNumber": 32041,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeZCx0",
+        "labels": [
+          "bug",
+          "~vulnerability-management",
+          ":product",
+          "customer-stazzema",
+          "#g-software",
+          "~qa-on-branch"
+        ],
+        "status": "✔️Awaiting QA",
+        "issueNumber": 31501,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "iansltx"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8k",
+        "issueNumber": 31898,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "**Fleet version**: v4.71.1\n\n\u003chr/\u003e\n\n### 💥  Actual behavior\n`customer-mozartia` states they are getting reports from internal users that have both firefox.app and firefox ESR.app installed on their hosts are receiving false positive vulnerability reports for Firefox ESR.\n\n**Screenshots provided by customer**\n\n\u003cimg width=\"409\" height=\"199\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e686dd82-7c1d-4f21-a160-24570b674961\" /\u003e\n\n\u003cimg width=\"565\" height=\"257\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/2eb033ad-bad6-43b8-96b4-b8b96b9624f6\" /\u003e\n\nIt is understood that both apps utilize the same bundle ID.\n\n### 🛠️ To fix\n\n CPEs differentiate between ESR and non-ESR:\n\n\u003cimg width=\"778\" height=\"157\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6423cf97-8028-4f5b-94e8-31c41e34fb70\" /\u003e\n\nBuild the correct CPE when we see ESR versions of Firefox. Could probably do name matching here, but right now our CPE translations JSON feed doesn't include the ability to override `sw_edition` in the CPE (which is distinct from `target_sw`), so this will require server changes in addition to feed changes.\n\nProduct designer: @marko-lisica \n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\nConfirmed user is on Server Version 4.71.1 and Firefox ESR is latest available version\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nN/A\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n",
+          "number": 31989,
+          "repository": "fleetdm/fleet",
+          "title": "Incorrectly flagging vulnerabilities for Firefox ESR v128",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31989"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgef6qA",
+        "labels": [
+          "bug",
+          ":release",
+          "customer-mozartia",
+          "#g-software"
+        ],
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Incorrectly flagging vulnerabilities for Firefox ESR v128",
+        "comments": [
+          {
+            "author": {
+              "login": "Sampfluger88"
+            },
+            "body": "Linked to Unthread ticket:\n\u003e [Fleet incorrectly flags Firefox ESR v128 as outdated #7891](https://fleetdm.unthread.io/dashboard/inbox/all/conversations/62eb5dce-3c14-4ddb-803e-f11ee46621e6)"
+          },
+          {
+            "author": {
+              "login": "mkaply"
+            },
+            "body": "Let me know if y'all need some thoughts on how to detect ESR versus non ESR on mac (unfortunately the package names are the same and we can't change that)"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "Installed Firefox ESR.app version 128.14.0 and confirmed there are some false positives being reported. One example is CVE-2025-8034 which explicitly states that it affects Firefox ESR \u003c 128.13\n\n\u003cimg width=\"1885\" height=\"549\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4782935c-b025-4b05-86f1-ffd5db35ca3f\" /\u003e\n\nAn example of the Firefox vs Firefox ESR false positive is CVE-2025-8044 \n\u003cimg width=\"1885\" height=\"544\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/63f78126-4148-4080-9330-3c851d3fa240\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "CPEs differentiate between ESR and non-ESR:\n\n\u003cimg width=\"778\" height=\"157\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6423cf97-8028-4f5b-94e8-31c41e34fb70\" /\u003e\n\nWe'll need to build the correct CPE when we see ESR versions of Firefox. Could probably do name matching here, but right now our CPE translations JSON feed doesn't include the ability to override `sw_edition` in the CPE (which is distinct from `target_sw`), so this will require server changes in addition to feed changes."
+          }
+        ],
+        "issueNumber": 31989,
+        "changeType": "added"
+      },
+      {
+        "assignees": [
+          "RachelElysia"
+        ],
+        "content": {
+          "body": "Tracking carry over work \n\n\n- Refactor work [request](https://github.com/fleetdm/fleet/pull/31018#discussion_r2225913183): Pull out Update card and Self Service card into components  on their own files \n- Unreleased bug: Multiple requests now timing out because 60 second FE timeout is not being reset",
+          "number": 31309,
+          "repository": "fleetdm/fleet",
+          "title": "Self-service actions carryover",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/31309"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgegLNI",
+        "labels": [
+          "~frontend",
+          ":release",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🥚 Ready",
+        "title": "Self-service actions carryover",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Confirmed during 8/4 standup:: This was previously approved in #31384, but since much of the code has been in flux, I am holding off until 4.72 is completely QAed and this PR will solely be a code organization PR and no changes to ensure another deep dive QA will be unnecessary"
+          },
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Upped this from a 3 to a 5 because I realized that there are 0 tests on the VPP install modal, software package install modal, and software uninstall modal. \n\nNeeded tests on each of those modals: \n- various status message based on what page they're on and whether it's successfulxpendingxfailed\n- whether they show versions or not\n- whether they show more details\n- what the action button is (since it's different for self-service vs admin)"
+          },
+          {
+            "author": {
+              "login": "mostlikelee"
+            },
+            "body": "@RachelElysia are we just adding test coverage here or does QA need to retest any self service flows?"
+          }
+        ],
+        "issueNumber": 31309,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdhCgY",
+        "title": "RHEL kernels don't have expected vulnerabilities in Fleet",
+        "issueNumber": 31495,
+        "changeType": "removed"
       }
     ]
   }
