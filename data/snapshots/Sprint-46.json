@@ -10737,5 +10737,33 @@
         "changeType": "modified"
       }
     ]
+  },
+  {
+    "timestamp": "2025-09-08T07:06:07.866979829Z",
+    "items": [
+      {
+        "content": {
+          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [x] Include icon hash and filename from the database on batch software responses\n- [x] Include icon hash and filename from the database on batch VPP app response\n- [x] On VPP app set response, clear all icons for any software titles on that team that aren't associated with packages or VPP apps (doing this on the VPP call because it happens second)\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [ ] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [ ] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [ ] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [ ] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [ ] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [ ] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops."
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8g",
+        "status": "🐣 In progress",
+        "comments": [
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "[Planning poker](https://fleetdm.slack.com/archives/C08RXDH5LHZ/p1755144992950349)"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "So, VPP apps are specified once in GitOps YAML but map to usually three titles in Fleet. This means that icons can vary across titles and there's no way to represent the varying icon overrides in GitOps.\n\nWith the current endpoints, to detect this (for generate-gitops) for titles that have multiple icons specified we'll need to download the icons and hash them, and if there aren't matches we'll just need to pick one and document the mismatch. We can detect VPP defaults easily enough (because we don't mask them behind relative URLs), so can tell whether we have a mix of icon vs. no icon based on platform and can add notes as a result.\n\nGiven these nuances, going to come back to `generate-gitops` after I get the rest of the GitOps build done.\n\n/cc @noahtalerman @marko-lisica "
+          }
+        ],
+        "issueNumber": 31897,
+        "changeType": "modified"
+      }
+    ]
   }
 ]
