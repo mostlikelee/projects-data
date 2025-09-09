@@ -2076,7 +2076,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "GitOps software/setup experience restructure: YAML migration tool",
         "comments": [
           {
@@ -3265,7 +3265,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "Done",
         "title": "Eng DRI - 31719/31354"
       },
       {
@@ -3325,7 +3325,7 @@
         "content": {
           "number": 32046,
           "repository": "fleetdm/fleet",
-          "title": "Eng DRI - windows FMA",
+          "title": "Research: Windows FMA",
           "type": "Issue",
           "url": "https://github.com/fleetdm/fleet/issues/32046"
         },
@@ -9716,7 +9716,7 @@
           "startDate": "2025-08-18",
           "title": "Sprint 46"
         },
-        "status": "🐣 In progress",
+        "status": "✔️Awaiting QA",
         "title": "Host details \u003e Software tab: Inaccurate tooltip copy",
         "comments": [
           {
@@ -10507,7 +10507,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🥚 Ready",
+        "status": "✔️Awaiting QA",
         "title": "iTerm2ImportStatus.app nested in iTerm2.app flagged with incorrect CVEs",
         "comments": [
           {
@@ -11078,6 +11078,343 @@
         "id": "PVTI_lADOBDAnic4A4BEUzgdhCgY",
         "title": "RHEL kernels don't have expected vulnerabilities in Fleet",
         "issueNumber": 31495,
+        "changeType": "removed"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-09T07:06:01.723369068Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgef1hU",
+        "comments": [
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Current vpp app request:\n`GET https://vpp.itunes.apple.com/mdm/v2/assets`\n```\n  headers: {\n    'Authorization': `Bearer ${token}`\n  }\n```\nWhere `token` is the `vpp_token_teams.token` from the database.\n\n\n\nMaking request for custom app meta data\n```\nconst response = await fetch('https://api.ent.apple.com/v1/stoken-authenticated-apps', {\n  headers: {\n    'Authorization': `Bearer ${jwtToken}`,\n    'Cookie': `itvt=${vppAppToken}`,\n    'Content-Type': 'application/json'\n  }\n});\n```\nThe `vppAppToken` is collected from the client who has uploaded the custom app via App Store Connect. \n\nThe `jwtToken` is generated from a KeyID, TeamID and signed with a private key (a p8 file). This information is gathered in an apple developer account with MDM vendor access (https://developer.apple.com/help/account/certificates/mdm-vendor-csr-signing-certificate). To generate this information in an apple developer account follow these steps: https://developer.apple.com/help/account/service-configurations/apps-and-books-for-organizations.\n\nIn order to create a jwt here is some simple golang pseudo code using github.com/golang-jwt/jwt/v5\n```\npackage main\n\nimport (\n  \"github.com/golang-jwt/jwt/v5\"\n)\n\nfunc loadPrivateKey(keyPath string) (*ecdsa.PrivateKey, error) {\n\tkeyData, err := ioutil.ReadFile(keyPath)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to read key file: %w\", err)\n\t}\n\n\tblock, _ := pem.Decode(keyData)\n\tif block == nil {\n\t\treturn nil, fmt.Errorf(\"failed to parse PEM block\")\n\t}\n\n\tprivateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to parse private key: %w\", err)\n\t}\n\n\tecdsaKey, ok := privateKey.(*ecdsa.PrivateKey)\n\tif !ok {\n\t\treturn nil, fmt.Errorf(\"key is not an ECDSA private key\")\n\t}\n\n\treturn ecdsaKey, nil\n}\n\n\nfunc main() {\n\tprivateKey, err := loadPrivateKey(\u003cpath to private key\u003e) //path to filesystem p8 file\n\tif err != nil {\n\t\treturn \"\", fmt.Errorf(\"failed to load private key: %w\", err)\n\t}\n\tnow := time.Now()\n\tmaxDuration := time.Duration(15777000) * time.Second // 6 months\n\tclaims := jwt.RegisteredClaims{\n\t\tIssuer:      \u003cinsert team id from developer console here\u003e,                          // 10-character Team ID\n\t\tIssuedAt:  jwt.NewNumericDate(now),                \n\t\tExpiresAt: jwt.NewNumericDate(now.Add(maxDuration)), \n\t}\n\n\t// Create token with ES256 algorithm and required headers\n\ttoken := jwt.NewWithClaims(jwt.SigningMethodES256, claims)\n\ttoken.Header[\"kid\"] = \u003cinert key id from developer console here\u003e // 10-character key ID\n\ttoken.Header[\"typ\"] = \"JWT\"\n\n\t// Sign the token\n\ttokenString, err := token.SignedString(privateKey)\n\tif err != nil {\n\t\treturn \"\", fmt.Errorf(\"failed to sign JWT: %w\", err)\n\t}\n\n\tfmt.Printf(\"Generated JWT: %s\\n\", tokenString)\n}\n```"
+          }
+        ],
+        "issueNumber": 32713,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [x] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [x] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [x] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n\n### Smoke tests\nFor this ticket, we'll only be running smoke tests that apply to macOS/iOS/iPadOS Tahoe. \n[This template contains a detailed breakdown of the tests](https://github.com/fleetdm/fleet/blob/HEAD/.github/ISSUE_TEMPLATE/release-qa.md)\n\n**MDM**\n - [x] MDM enrollment flow\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] MDM migration flow\n   - MacOS\n - [x] OS settings\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] Setup experience\n   - MacOS\n - [x] iOS/iPadOS\n   - iPadOS\n   - iOS\n - [x] Lock \u0026 Wipe\n   - MacOS\n   - iPadOS - Wipe only\n   - iOS - Wipe only\n\n**Orchestration**\n- [ ] Packs flow\n   - MacOS\n- [ ] OS settings\n   - MacOS\n- [ ] Log destination flow\n   - MacOS\n   - iPadOS\n   - iOS\n\n**Software**\n- [x] Query flow\n  - MacOS\n- [x] My device page\n  - MacOS\n- [x] Scripts\n  - MacOS\n- [x] Software\n  - MacOS\n  - iPadOS\n  - iOS\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n"
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdI9dE",
+        "issueNumber": 30696,
+        "changeType": "modified"
+      },
+      {
+        "content": {
+          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [x] Include icon hash and filename from the database on batch software responses\n- [x] Include icon hash and filename from the database on batch VPP app response\n- [x] On VPP app set response, clear all icons for any software titles on that team that aren't associated with packages or VPP apps (doing this on the VPP call because it happens second)\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [x] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [x] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [ ] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [ ] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [ ] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [x] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops."
+        },
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwP8g",
+        "issueNumber": 31897,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeYTSk",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nVerified tooltip only appears for linux hosts on host inventory page or My device \u003e software item modal and shows correct tooltip copy."
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Tooltip time reveals,\nLike leaves tracing the sun's path,\nFleet's past steps made clear."
+          }
+        ],
+        "issueNumber": 32583,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeLy9U",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Hi @juan-fdz-hawa, just a quick note — for local styling issues, let's try to avoid making global changes. I’m revert ingyour update in [this PR](https://github.com/fleetdm/fleet/pull/32217/files#r2316435884) and apply the fix locally to the specific component affected because it caused all these styling issues with every other modal on the device user page"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed spacing has been corrected\n\n\u003cimg width=\"1776\" height=\"648\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6ef375e1-05cb-4a18-98d3-18c17dafc0fa\" /\u003e\n\n\u003cimg width=\"1774\" height=\"512\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/4b5c4db3-8cc6-4d3c-9280-69b8adc8fe05\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Success circle close,\nSpace brings clarity and peace,\nEase for eyes and minds."
+          }
+        ],
+        "issueNumber": 32474,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd_4SQ",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed results now filter to kernel and operating system\n\n\u003cimg width=\"304\" height=\"43\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/449a0480-cb14-4726-a362-5423c23f9848\" /\u003e\n\nAPI call is now including both os and kernel `\u0026software_version_id=575834\u0026os_name=Ubuntu\u0026os_version=24.04.2%20LTS`"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Kernel links to hosts diverse,\nLinux OS filtering could serve.\nClarity in view, users observe."
+          }
+        ],
+        "issueNumber": 32259,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd_2ms",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed OS Kernel list view now filters out 0 host scenarios"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Kernel list cleansed,\nNo more empty hosts remain,\nFleet's path is clearer."
+          }
+        ],
+        "issueNumber": 32257,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd_ysM",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed tooltip now shows and has correct copy"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Tooltip revealed, clear,\nInfo flows like a bright stream,\nSecure, no more fear."
+          }
+        ],
+        "issueNumber": 32255,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv040",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed on kernels pages we show the updated copy and the link works as expected\n\n\u003cimg width=\"1295\" height=\"519\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/11463d20-f927-4cf9-bf99-8d9d377d102b\" /\u003e"
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "New UI reveals,\n\"Unsupported\" shown clearly,\nNo kernel fears here."
+          }
+        ],
+        "issueNumber": 32027,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdsS6Q",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "```\nFLEET_VERSION_A=v4.72.0 FLEET_VERSION_B=rc-minor-fleet-v4.73.0 go test -v\n--- PASS: TestUpgradeAToB (68.56s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t68.581s\n```\n\n```\nFLEET_VERSION_A=v4.72.1 FLEET_VERSION_B=rc-minor-fleet-v4.73.0 go test -v\n--- PASS: TestUpgradeAToB (59.10s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t59.115s\n```\n\n```\nFLEET_VERSION_A=v4.71.1 FLEET_VERSION_B=rc-minor-fleet-v4.73.0 go test -v\n--- PASS: TestUpgradeAToB (52.30s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t52.321s\n```\n\n```\nFLEET_VERSION_A=v4.71.0 FLEET_VERSION_B=rc-minor-fleet-v4.73.0 go test -v\n--- PASS: TestUpgradeAToB (61.32s)\nPASS\nok  \tgithub.com/fleetdm/fleet/v4/test/upgrade\t61.343s\n```"
+          },
+          {
+            "author": {
+              "login": "PezHub"
+            },
+            "body": "mdm gives a 👍 "
+          },
+          {
+            "author": {
+              "login": "xpkoala"
+            },
+            "body": "orch gives a 👍 "
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "software gives 👍 "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Test steps clear as day,\nEase in use, like a bird's flight,\nFleet's path shines with light."
+          }
+        ],
+        "issueNumber": 31999,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "jkatz01"
+        ],
+        "content": {
+          "body": "## Problem\n\nOn macos osquery last opened time is fetched from the spotlight index. https://github.com/osquery/osquery/blob/master/osquery/tables/system/darwin/apps.mm#L191-L203\nThis makes the value version dependent. So a new version will `nil` out the last open time.\nWindows \u0026 linux get this value differently. So when the software version is updated it should not return `nil` for last open time.\nWe are currently logging all the times when `LastOpenedAt == nil`\n\n## Potential solutions\n\nModify the logging to only catch the errors that are of concern. We know that on macos a version change can cause this value to be `nil`, which is expected, so we can ignore that log. However, we still want to log the unexpected, on windows/linux. If the `LastOpenedAt` is `nil` on windows/linux capture that event and log a message.\n\nRelated to https://github.com/fleetdm/fleet/issues/29061 and https://github.com/fleetdm/fleet/issues/32064\n",
+          "number": 32067,
+          "repository": "fleetdm/fleet",
+          "title": "Change logging criteria for LastOpenedAt `nil`",
+          "type": "Issue",
+          "url": "https://github.com/fleetdm/fleet/issues/32067"
+        },
+        "estimate": 1,
+        "id": "PVTI_lADOBDAnic4A4BEUzgegZj4",
+        "labels": [
+          ":product",
+          "customer-faltona",
+          "#g-software"
+        ],
+        "repository": "https://github.com/fleetdm/fleet",
+        "status": "🐣 In progress",
+        "title": "Change logging criteria for LastOpenedAt `nil`",
+        "issueNumber": 32067,
+        "changeType": "added"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxHA",
+        "title": "Bug: False-positive for CVE-2025-6554 on Linux/macOS hosts",
+        "issueNumber": 30682,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdUaqU",
+        "title": "Host software: display info that Windows and Mac app never been opened",
+        "issueNumber": 31268,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdDOeo",
+        "title": "\"All Teams\" option is missing on the VPP token actions dropdown if another team was selected prior to it",
+        "issueNumber": 30357,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxFk",
+        "title": "Linux icon showing in software inventory for macOS native app",
+        "issueNumber": 30803,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdMZs8",
+        "title": "Include CVE number in empty state on vulnerability details",
+        "issueNumber": 31377,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdL8SA",
+        "title": "UI - Background page scrolls while editing Policy automations.",
+        "issueNumber": 30004,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCoeo",
+        "title": "GitOps: Override Fleet-maintained app install/uninstall scripts",
+        "issueNumber": 25636,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgcYi4Y",
+        "title": "Software page: filter by custom severity (CVSS score) ranges",
+        "issueNumber": 30248,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdB-kE",
+        "title": "Linux Vulns: Frontend",
+        "issueNumber": 31212,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCxH8",
+        "title": "Unable to apply software installers with Fleet secrets via GitOps",
+        "issueNumber": 30853,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpoc",
+        "title": "Linux Vulns: API changes",
+        "issueNumber": 31213,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdqQM4",
+        "title": "last_opened_at not properly returned on host software inventory",
+        "issueNumber": 31932,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCos4",
+        "title": "Warning from uninstall_software_migration cron: unsupported file type",
+        "issueNumber": 30565,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgd5V9o",
+        "title": "Last opened time for Linux software",
+        "issueNumber": 32171,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCw2A",
+        "title": "Host Software API: Surface automatic install policies",
+        "issueNumber": 30197,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpok",
+        "title": "Linux Vulns: Optimization",
+        "issueNumber": 31214,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpos",
+        "title": "Linux Vulns: Guide Updates",
+        "issueNumber": 31215,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCo1s",
+        "title": "Clean up timing for clearing stale false-positive vulnerabilities",
+        "issueNumber": 26404,
+        "changeType": "removed"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCpoQ",
+        "title": "Software \u003e OS: Surface Linux kernel vulnerabilities",
+        "issueNumber": 30738,
         "changeType": "removed"
       }
     ]
