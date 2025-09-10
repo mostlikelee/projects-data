@@ -2373,7 +2373,7 @@
           "jmwatts"
         ],
         "content": {
-          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [x] Test plan is finalized\n- [ ] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [x] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [x] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [x] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n\n### Smoke tests\nFor this ticket, we'll only be running smoke tests that apply to macOS/iOS/iPadOS Tahoe. \n[This template contains a detailed breakdown of the tests](https://github.com/fleetdm/fleet/blob/HEAD/.github/ISSUE_TEMPLATE/release-qa.md)\n\n**MDM**\n - [x] MDM enrollment flow\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] MDM migration flow\n   - MacOS\n - [x] OS settings\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] Setup experience\n   - MacOS\n - [x] iOS/iPadOS\n   - iPadOS\n   - iOS\n - [x] Lock \u0026 Wipe\n   - MacOS\n   - iPadOS - Wipe only\n   - iOS - Wipe only\n\n**Orchestration**\n- [x] Packs flow\n   - MacOS\n- [x] OS settings\n   - MacOS\n- [ ] Log destination flow\n   - MacOS\n   - iPadOS\n   - iOS\n\n**Software**\n- [x] Query flow\n  - MacOS\n- [x] My device page\n  - MacOS\n- [x] Scripts\n  - MacOS\n- [x] Software\n  - MacOS\n  - iPadOS\n  - iOS\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
+          "body": "\u003c!-- **This issue's remaining effort can be completed in ≤1 sprint.  It will be valuable even if nothing else ships.**\nIt is [planned and ready](https://fleetdm.com/handbook/company/development-groups#making-changes) to implement.  It is on the proper kanban board. --\u003e\n\n\n## Goal\n\n| User story  |\n|:---------------------------------------------------------------------------|\n| As a Fleet user with Apple devices enrolled,\n| I want to know that Fleet supports MacOS Tahoe on the same day as general release\n| so that I can upgrade my devices without delay.\n\n## Key result\n\n\u003c!-- What quarterly key result (KR) does this story contribute to, if any? If it doesn't contribute to a KR, explain why it's being prioritized. --\u003e\n\n## Original requests\n\n\u003c!-- Insert the link to the feature request(s) that this story contributes to. Put \"None\" if it doesn't contribute to a request. For customer requests, add the `customer-xyz` label(s). --\u003e\n\n## Context\n- Product Designer: @AndreyKizimenko  \u003c!-- Who is the Product Designer to contact if folks have questions about the UI, CLI, or API changes? --\u003e\n- Engineering DRI: @AndreyKizimenko  \u003c!-- Who is the Engineer to contact if folks have technical questions? --\u003e\n  \n\u003c!--\nWhat else should contributors [keep in mind](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) when working on this change?  (Optional.)\n1. \n2. \n--\u003e\n\n## Changes\n\n### Engineering\n- [x] Test plan is finalized\n- [x] Write a guide announcing same day support for MacOS Tahoe as soon as we reach it.\n\n\u003e ℹ️  Please read this issue carefully and understand it.  Pay [special attention](https://fleetdm.com/handbook/company/development-groups#developing-from-wireframes) to UI wireframes, especially \"dev notes\".\n\n## QA\n\n### Risk assessment\n\n- Requires load testing: No \u003c!-- User story has performance implications that require load testing. Otherwise, remove this item. --\u003e\n- Risk level: Low  \u003c!-- Choose one. Consider: Does this change come with performance risks?  Any risk of accidental log spew? Any particular regressions to watch out for?  Any potential compatibility issues, even if it's not technically a breaking change? --\u003e\n- Risk description: Many of us have been running ad-hoc sessions ever since macOS 26 beta started, and we haven't run into any major issues specifically related to the update. It still requires e2e testing, but there aren't any factors that would point towards it being High risk \u003c!-- If the risk level is high, explain why. If low, remove. --\u003e\n\n### Test plan\n\u003c!-- Add detailed manual testing steps for all affected user roles. --\u003e\n\n\u003e Make sure to go through [the list](https://github.com/fleetdm/fleet/blob/main/docs/Contributing/guides/ui/design-qa-considerations.md) and consider all events that might be related to this story, so we catch edge cases earlier.\n- [x] Pull out comments from https://github.com/fleetdm/fleet/issues/30136 for individual issues if they are still present \n- [x] Confirm that fleet remains installed on the host after upgrading to:\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that the update for the host is reflected on the fleet side (Device page, hosts list, host info via API):\n    - macOS 26\n    - iOS 26\n    - iPadOS 26\n- [x] Confirm that previously applied settings remain active and are properly displayed on the host: \n    - Disk encryption\n    - Policies (have some failing, passing and some that should start passing after the upgrade)\n    - Software status \n    - IdP information\n    - Still applicable labels\n- [x] If the host is no longer applicable for the label, it should be removed from the host and from label filter results\n\n### Smoke tests\nFor this ticket, we'll only be running smoke tests that apply to macOS/iOS/iPadOS Tahoe. \n[This template contains a detailed breakdown of the tests](https://github.com/fleetdm/fleet/blob/HEAD/.github/ISSUE_TEMPLATE/release-qa.md)\n\n**MDM**\n - [x] MDM enrollment flow\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] MDM migration flow\n   - MacOS\n - [x] OS settings\n   - MacOS\n   - iPadOS\n   - iOS\n - [x] Setup experience\n   - MacOS\n - [x] iOS/iPadOS\n   - iPadOS\n   - iOS\n - [x] Lock \u0026 Wipe\n   - MacOS\n   - iPadOS - Wipe only\n   - iOS - Wipe only\n\n**Orchestration**\n- [x] Packs flow\n   - MacOS\n- [x] OS settings\n   - MacOS\n- [ ] Log destination flow\n   - MacOS\n   - iPadOS\n   - iOS\n\n**Software**\n- [x] Query flow\n  - MacOS\n- [x] My device page\n  - MacOS\n- [x] Scripts\n  - MacOS\n- [x] Software\n  - MacOS\n  - iPadOS\n  - iOS\n\n\u003c!-- Consider: Do the steps above apply to all global access roles, including admin, maintainer, observer, observer+, and GitOps?  Do the steps above apply to all team-level access roles?  If not, write the steps used to test each variation.\n--\u003e\n\n### Testing notes\n\u003c!-- Any additional testing notes relevant to this story or tools required for testing. --\u003e\n\n### Confirmation\n\u003c!-- The engineer responsible for implementing this user story completes the test plan before moving to the \"Ready for QA\" column. --\u003e\n\n1. [ ] Engineer: Added comment to user story confirming successful completion of test plan.\n2. [ ] QA: Added comment to user story confirming successful completion of test plan.\n",
           "number": 30696,
           "repository": "fleetdm/fleet",
           "title": "Validate macOS Tahoe on Fleet so that we can provide same day support when it goes to general release",
@@ -3873,7 +3873,7 @@
           "iansltx"
         ],
         "content": {
-          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [x] Include icon hash and filename from the database on batch software responses\n- [x] Include icon hash and filename from the database on batch VPP app response\n- [x] On VPP app set response, clear all icons for any software titles on that team that aren't associated with packages or VPP apps (doing this on the VPP call because it happens second)\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [x] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [x] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [ ] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [ ] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [ ] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [x] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops.",
+          "body": "## Related user story\n\n#29478. Blocked by #31895. Generate-gitops work is blocked by #31896.\n\n## Task\n\nSupport icon editing via GitOps in a performant way.\n\n### Server-side\n\n- [x] Include icon hash and filename from the database on batch software responses\n- [x] Include icon hash and filename from the database on batch VPP app response\n- [x] On VPP app set response, clear all icons for any software titles on that team that aren't associated with packages or VPP apps (doing this on the VPP call because it happens second)\n\n### Generate-gitops\n\n- [ ] Populate icon paths in YAML when software titles mention a relative URL for an icon (don't pull VPP app icons)\n- [ ] Same as above, but for VPP apps\n- [ ] Download icons to the referenced icon paths with up to 16 concurrent connections\n\n### GitOps apply\n\n- [x] For supplied icons, validate square PNGs with 120-1024px dimensions client-side\n- [x] Use software and VPP app response payloads, compared with local icon filenames and hashes, to build a list of:\n\n1. Icons that do not need to be modified (filename and hash match for the specified title)\n2. Icons that don't currently exist server-side, so need to be uploaded to one title first\n3. Icons that will exist server-side after step 2, so they can be associated to remaining titles by just referencing hash and filename\n4. Icons that should be removed from a given title that otherwise still exists (server-side will automatically clean up icons for software titles that no longer have a package or app store app associated)\n\n- [x] Upload icons that need to be pushed server-side at concurrency 4 (configurable by CLI flag or env var)\n- [x] Update icons where bytes already exist server-side at concurrency 10 (configurable by a different CLI flag or env var)\n- [x] Delete icons from software titles where icon isn't specified at concurrency 10 (configurable by the same env var/cli flag as above)\n- [x] Add final-state icon hash list to a map shared across all teams, so a given icon is uploaded at most once per GitOps run even cross-team. Use this struct when processing subsequent teams.\n\n## Condition of satisfaction\n\nCustom icons can be round-tripped from being set in the Fleet UI to GitOps (via generate-gitops) and back (via gitops application), with reasonable performance cross-team by avoiding repeated work; two sequential applies of the same YAML with no icon modifications out-of-band should generate zero HTTP requests dedicated to icon management since we'll be able to tell from response payloads that we have no-ops.",
           "number": 31897,
           "repository": "fleetdm/fleet",
           "title": "Custom Icons: GitOps",
@@ -11298,7 +11298,7 @@
           "#g-software"
         ],
         "repository": "https://github.com/fleetdm/fleet",
-        "status": "🦤 ‎In review",
+        "status": "✔️Awaiting QA",
         "title": "Change logging criteria for LastOpenedAt `nil`",
         "issueNumber": 32067,
         "changeType": "added"
@@ -11832,6 +11832,290 @@
         ],
         "issueNumber": 32796,
         "changeType": "added"
+      }
+    ]
+  },
+  {
+    "timestamp": "2025-09-10T19:05:04.592236157Z",
+    "items": [
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgej2Qw",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 32790,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgej2pY",
+        "status": "✔️Awaiting QA",
+        "issueNumber": 32792,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgef1hU",
+        "status": "🦤 ‎In review",
+        "comments": [
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Current vpp app request:\n`GET https://vpp.itunes.apple.com/mdm/v2/assets`\n```\n  headers: {\n    'Authorization': `Bearer ${token}`\n  }\n```\nWhere `token` is the `vpp_token_teams.token` from the database.\n\n\n\nMaking request for custom app meta data\n```\nconst response = await fetch('https://api.ent.apple.com/v1/catalog/us/stoken-authenticated-apps', {\n  headers: {\n    'Authorization': `Bearer ${jwtToken}`,\n    'Cookie': `itvt=${vppAppToken}`,\n    'Content-Type': 'application/json'\n  }\n});\n```\nThe `vppAppToken` is collected from the client who has uploaded the custom app via App Store Connect. \n\nThe `jwtToken` is generated from a KeyID, TeamID and signed with a private key (a p8 file). This information is gathered in an apple developer account with MDM vendor access (https://developer.apple.com/help/account/certificates/mdm-vendor-csr-signing-certificate). To generate this information in an apple developer account follow these steps: https://developer.apple.com/help/account/service-configurations/apps-and-books-for-organizations.\n\nIn order to create a jwt here is some simple golang pseudo code using github.com/golang-jwt/jwt/v5\n```\npackage main\n\nimport (\n  \"github.com/golang-jwt/jwt/v5\"\n)\n\nfunc loadPrivateKey(keyPath string) (*ecdsa.PrivateKey, error) {\n\tkeyData, err := ioutil.ReadFile(keyPath)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to read key file: %w\", err)\n\t}\n\n\tblock, _ := pem.Decode(keyData)\n\tif block == nil {\n\t\treturn nil, fmt.Errorf(\"failed to parse PEM block\")\n\t}\n\n\tprivateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to parse private key: %w\", err)\n\t}\n\n\tecdsaKey, ok := privateKey.(*ecdsa.PrivateKey)\n\tif !ok {\n\t\treturn nil, fmt.Errorf(\"key is not an ECDSA private key\")\n\t}\n\n\treturn ecdsaKey, nil\n}\n\n\nfunc main() {\n\tprivateKey, err := loadPrivateKey(\u003cpath to private key\u003e) //path to filesystem p8 file\n\tif err != nil {\n\t\treturn \"\", fmt.Errorf(\"failed to load private key: %w\", err)\n\t}\n\tnow := time.Now()\n\tmaxDuration := time.Duration(15777000) * time.Second // 6 months\n\tclaims := jwt.RegisteredClaims{\n\t\tIssuer:      \u003cinsert team id from developer console here\u003e,                          // 10-character Team ID\n\t\tIssuedAt:  jwt.NewNumericDate(now),                \n\t\tExpiresAt: jwt.NewNumericDate(now.Add(maxDuration)), \n\t}\n\n\t// Create token with ES256 algorithm and required headers\n\ttoken := jwt.NewWithClaims(jwt.SigningMethodES256, claims)\n\ttoken.Header[\"kid\"] = \u003cinert key id from developer console here\u003e // 10-character key ID\n\ttoken.Header[\"typ\"] = \"JWT\"\n\n\t// Sign the token\n\ttokenString, err := token.SignedString(privateKey)\n\tif err != nil {\n\t\treturn \"\", fmt.Errorf(\"failed to sign JWT: %w\", err)\n\t}\n\n\tfmt.Printf(\"Generated JWT: %s\\n\", tokenString)\n}\n```"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "I was able to get some metadata information for public apps using the generated jwt token.\nThis request is very similar to https://github.com/fleetdm/fleet/blob/main/server/mdm/apple/itunes/api.go#L36 \n`func GetAssetMetadata(adamIDs []string, filter *AssetMetadataFilter) (map[string]AssetMetadata, error) {`\n\nThe first thing I needed to do was get a storefront id to use for the requests:\nhttps://developer.apple.com/documentation/devicemanagement/fetching-storefront-objects\n```\ncurl -X GET \\\n    -H \"Authorization: Bearer \u003cjwt\u003e\"\n    -H \"Content-Type: application/json\" \\\n    \"https://api.ent.apple.com/v1/storefronts?platform=iphone#all\"\n```\nLong response of all storefronts, but more likely than not we want the `United States` region\n```\n...\n{\n      \"id\": \"us\",\n      \"type\": \"storefronts\",\n      \"href\": \"/v1/storefronts/us\",\n      \"attributes\": {\n        \"defaultLanguageTag\": \"en-US\",\n        \"name\": \"United States\",\n        \"supportedLanguageTags\": [\n          \"en-US\",\n          \"es-MX\",\n          \"ar\",\n          \"ru\",\n          \"zh-Hans-CN\",\n          \"fr-FR\",\n          \"ko\",\n          \"pt-BR\",\n          \"vi\",\n          \"zh-Hant-TW\"\n        ]\n      }\n    },\n...\n```\nAs you can see the united states storefront id is just `us`.\n\nGiven an application adam id, we can now query it for metadata:\nhttps://developer.apple.com/documentation/devicemanagement/get-v1-catalog-_storefront_-apps-_id_\n```\ncurl -X GET \\\n    -H \"Authorization: Bearer \u003credacted\u003e\" \\\n    -H \"Content-Type: application/json\" \\\n    \"https://api.ent.apple.com/v1/catalog/us/apps/897446215?platform=iphone\u0026extend=latestVersionInfo\"\n```\n\n```\n    {\n  \"data\": [\n    {\n      \"id\": \"897446215\",\n      \"type\": \"apps\",\n      \"href\": \"/v1/catalog/us/apps/897446215\",\n      \"attributes\": {\n        \"artistName\": \"Canva\",\n        \"contentRatingsBySystem\": {\n          \"appsApple\": {\n            \"name\": \"4+\",\n            \"rank\": 1,\n            \"value\": 100\n          }\n        },\n        \"deviceFamilies\": [\n          \"mac\",\n          \"iphone\",\n          \"ipad\",\n          \"ipod\"\n        ],\n        \"genreDisplayName\": \"Photo \u0026 Video\",\n        \"hasEula\": false,\n        \"isB2BCustomApp\": false,\n        \"isFirstPartyHideableApp\": false,\n        \"isIOSBinaryMacOSCompatible\": false,\n        \"isVppDeviceBasedLicensingEnabled\": true,\n        \"name\": \"Canva: AI Photo \u0026 Video Editor\",\n        \"offers\": [\n          {\n            \"assets\": [\n              {\n                \"flavor\": \"iosSoftware\",\n                \"size\": 102455296\n              }\n            ],\n            \"buyParams\": \"productType=C\u0026price=0\u0026salableAdamId=897446215\u0026pricingParameters=STDQ\u0026pg=default\u0026marketType=ENT\u0026appExtVrsId=877791337\",\n            \"currencyCode\": \"USD\",\n            \"price\": 0.00,\n            \"priceFormatted\": \"$0.00\",\n            \"type\": \"get\"\n          }\n        ],\n        \"platformAttributes\": {\n          \"ios\": {\n            \"artwork\": {\n              \"bgColor\": \"00c4cc\",\n              \"height\": 1024,\n              \"textColor1\": \"080416\",\n              \"textColor2\": \"0a0414\",\n              \"textColor3\": \"062a3a\",\n              \"textColor4\": \"082b39\",\n              \"url\": \"https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e8/85/55/e8855548-dc4b-0307-b98b-6a29971c0875/AppIcon-0-0-1x_U007epad-0-11-0-85-220.png/{w}x{h}bb.{f}\",\n              \"width\": 1024\n            },\n            \"bundleId\": \"com.canva.canvaeditor\",\n            \"externalVersionId\": 877791337,\n            \"isVisionOSCompatible\": true,\n            \"latestVersionInfo\": {\n              \"releaseDate\": \"2025-09-05\",\n              \"releaseNotes\": \"We’re working on bigger and better features. Meanwhile, we freshened up the app with new content and minor bug fixes. \\n\\nGot a question in mind? Let us know at canva.me/help \\n\\nHappy designing!\",\n              \"releaseTimestamp\": \"2025-09-05T01:13:17Z\",\n              \"versionDisplay\": \"4.175.0\"\n            },\n            \"minimumOSVersion\": \"14.0\",\n            \"minimumVisionOSVersion\": \"1.0\",\n            \"requiredCapabilities\": \"arm64 \",\n            \"requiredCapabilitiesForRealityDevice\": \"arm64 \",\n            \"seller\": \"Canva Pty Ltd\",\n            \"subtitle\": \"Design, Collages \u0026 Logo Maker\"\n          }\n        },\n        \"supportsDeviceSharing\": false,\n        \"url\": \"https://apps.apple.com/us/app/canva-ai-photo-video-editor/id897446215\",\n        \"userRating\": {\n          \"ratingCount\": 2907179,\n          \"value\": 4.9\n        },\n        \"usesClassKit\": false\n      },\n      \"relationships\": {\n        \"genres\": {\n          \"href\": \"/v1/catalog/us/apps/897446215/genres\",\n          \"data\": [\n            {\n              \"id\": \"6008\",\n              \"type\": \"genres\",\n              \"href\": \"/v1/catalog/us/genres/6008\",\n              \"attributes\": {\n                \"name\": \"Photo \u0026 Video\",\n                \"parentId\": \"36\",\n                \"parentName\": \"App Store\",\n                \"url\": \"https://itunes.apple.com/us/genre/id6008\"\n              }\n            },\n            {\n              \"id\": \"6007\",\n              \"type\": \"genres\",\n              \"href\": \"/v1/catalog/us/genres/6007\",\n              \"attributes\": {\n                \"name\": \"Productivity\",\n                \"parentId\": \"36\",\n                \"parentName\": \"App Store\",\n                \"url\": \"https://itunes.apple.com/us/genre/id6007\"\n              }\n            }\n          ]\n        }\n      }\n    }\n  ]\n}\n```\n\nTo match our existing `GetAssetsMetadata` method that accepts a slice of adam ids we can use\nhttps://developer.apple.com/documentation/devicemanagement/get-v1-catalog-_storefront_-apps\n`GET https://api.ent.apple.com/v1/catalog/{storefront}/apps#ids?ids=\u003cid1\u003e,\u003cid2\u003e\u0026platform=iphone`\n\nNotable items:\n`platform` param. We can request info for different platforms `Possible Values: appletv, ipad, iphone, mac, realityDevice, web`. \n`extend` param. Added `latestVersionInfo` to get version info:\n```\n            \"latestVersionInfo\": {\n              \"releaseDate\": \"2025-09-05\",\n              \"releaseNotes\": \"We’re working on bigger and better features. Meanwhile, we freshened up the app with new content and minor bug fixes. \\n\\nGot a question in mind? Let us know at canva.me/help \\n\\nHappy designing!\",\n              \"releaseTimestamp\": \"2025-09-05T01:13:17Z\",\n              \"versionDisplay\": \"4.175.0\"\n            },\n```\n\nThere is an additional endpoint that requires an sToken (vpp token)\n```\ncurl -X GET \\\n    -H \"Authorization: Bearer \u003credacted\u003e\" \\\n    -H \"Content-Type: application/json\" \\\n    --cookie \"itvt={vpptoken}\" \\\n    \"https://api.ent.apple.com/v1/catalog/us/stoken-authenticated-apps?ids=\u003cid1\u003e,\u003cid2\u003e\u0026platform=iphone\"\n```\nUntested if this returns non-custom apps, or just custom apps.\n\nQuestions:\n\nUnsure if `v1/catalog/us/apps` returns custom vpp apps or if `v1/catalog/us/stoken-authenticated-apps` returns regular non-custom vpp apps. We may have to make two requests, one for custom vpp apps and one for regular catalog vpp apps. \nAnswer:\n`v1/catalog/us/apps` -\u003e This returns public catalog apps (untested if this returns custom apps, but the guess is no)\n`v1/catalog/us/stoken-authenticated-apps` -\u003e only returns apps that are associated to your vpp token. It returns public apps that are associated to your vpp. But it does not return just any public app (aka apps that are NOT associated to your vpp token).\nSo it appears that we can use the `v1/catalog/us/stoken-authenticated-apps` with all the adam ids returned from the `https://vpp.itunes.apple.com/mdm/v2/assets` call.\n\nUnsure if `https://vpp.itunes.apple.com/mdm/v2/assets` will return the custom vpp app or not?\nThe answer appears to be yes, but we should double check. Can we distinguish it is a custom vpp app?"
+          },
+          {
+            "author": {
+              "login": "ksykulev"
+            },
+            "body": "Making authenticated requests + proxy.\n\nIn order to make authenticated requests we need to use a jwt. We can either request that our clients create a jwt from an apple developer account that has mdm access (probably unlikely) or we can use the fleet apple developer account and a jwt we generate. The problem is we do not want to share this jwt with clients into their fleet server. So we have to proxy requests from the client fleet instances. We have this pattern already available, enterprise android and microsoft compliance partner.\n\nThese requests are proxied through fleetdm.com. More specifically through the sailsjs application that power fleetdm.com\nAndroid enterprise endpoints: https://github.com/fleetdm/fleet/blob/main/website/config/routes.js#L991-L999\nMicrosoft compliance partner endpoints: https://github.com/fleetdm/fleet/blob/main/website/config/routes.js#L1041-L1049\n\nHow would this work for custom VPP apps.\n1. create an endpoint on fleetdm\n`POST /api/v1/vpp`\nThis would take a vpp app token. It would insert a record into a new table in the fleetdm database. This table would hold\n```\n      fleetServerUrl\n      fleetLicenseKey\n      vppToken\n      fleetServerSecret\n```\nVerfying the fleet license key and it would return the `fleetServerSecret`.  This request would be made from a clients' fleet server instance.\n2. We would store this secret in `mdm_config_assets` table in the clients' fleet server instance.\n3. Make proxied requests\nExample `GET /api/v1/vpp/metadata`\nThis would take the `fleetServerSecret` stored in the `mdm_config_assets` and proxy the request to apple using the fleet jwt.\n\nWhy do we need to generate and exchange and store a `fleetServerSecret`?\nWe need to make sure that people cannot just guess random vpp tokens. We want to make sure any endpoints that makes requests to apple apis are properly attributed and secured to a particular client and said client is authorized to make these requests.\n\nHow many requests can we make using a single jwt?\nhttps://developer.apple.com/documentation/devicemanagement/generating-developer-tokens#Limit-request-rate\n`The Apps and Books for Organizations API limits the number of requests your app can make using a developer token within a specific period of time. If you exceed this limit, you’ll temporarily receive 429 Too Many Requests error responses for requests that use the token. This error resolves itself shortly after the request rate has reduced.`\nMeaning can all vpp metadata requests be proxied through a single jwt? Do we need to generate more than one?"
+          }
+        ],
+        "issueNumber": 32713,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgegD-0",
+        "issueNumber": 31968,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "jkatz01"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgef6qA",
+        "issueNumber": 31989,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdv6VE",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "lukeheath"
+            },
+            "body": "Closing this out since it's not properly spec'd. "
+          },
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "Windows FMA shines,\nLike glass towers in the clouds,\nSafety in research."
+          }
+        ],
+        "issueNumber": 32046,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeYD_s",
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "issueNumber": 31297,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "mostlikelee",
+          "jmwatts"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk88",
+        "issueNumber": 31165,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "iansltx",
+          "jmwatts"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdCk8Q",
+        "issueNumber": 30095,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "RachelElysia",
+          "jmwatts"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdwOKI",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "Bold estimate: 1\n\nHoping it's not too complicated why it's not showing, if not probably no more than 2."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA notes**\n\nConfirmed software title header is now shown for tarballs"
+          }
+        ],
+        "issueNumber": 31546,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "RachelElysia",
+          "jmwatts"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgeYVtA",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "RachelElysia"
+            },
+            "body": "@jmwatts @mostlikelee changing this to a released bug since this actually happens to all osVersion filter pills, prior to this feature\n\nScreen recording of slow behavior:\n\nhttps://github.com/user-attachments/assets/69b8d565-487f-41bf-8111-480d120cb534\n\nOnly noticeable now since there's a second pill next to it. Fix incoming"
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\nConfirmed page loading state continues until osVersions load and then both pills show."
+          }
+        ],
+        "issueNumber": 32584,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeWFPI",
+        "status": "Done",
+        "comments": [
+          {
+            "author": {
+              "login": "fleet-release"
+            },
+            "body": "New Fleet release soars,\nEdge to stable, bugs explored,\nIn cloud city, assurance restored."
+          }
+        ],
+        "issueNumber": 32561,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgdrGeE",
+        "issueNumber": 11828,
+        "changeType": "modified"
+      },
+      {
+        "assignees": [
+          "iansltx",
+          "jmwatts"
+        ],
+        "id": "PVTI_lADOBDAnic4A4BEUzgdtOjc",
+        "status": "✅ Ready for release",
+        "comments": [
+          {
+            "author": {
+              "login": "pintomi1989"
+            },
+            "body": "Updated to include Gong snippet provided by customer-cisneros @ddribeiro @sharon-fdm "
+          },
+          {
+            "author": {
+              "login": "juan-fdz-hawa"
+            },
+            "body": "I don't think this is a bug. \n\nThe contents of the `deb_packages` table reflects the behavior of the `dpkg` tools. If they want to exclude packages that leave behind config files they can take a look at the status column:\n\n```\nosquery\u003e select name,status FROM deb_packages WHERE name='screen';\n+--------+----------------------+\n| name   | status               |\n+--------+----------------------+\n| screen | install ok installed |\n+--------+----------------------+\nosquery\u003e select name,status FROM deb_packages WHERE name='screen';\n+--------+---------------------------+\n| name   | status                    |\n+--------+---------------------------+\n| screen | deinstall ok config-files |\n+--------+---------------------------+\n\n```"
+          },
+          {
+            "author": {
+              "login": "AndreyKizimenko"
+            },
+            "body": "Was able to reproduce the initially described issue, also confirmed that a proposed policy will properly fail if we are checking for the status column. \n\nPolicy that I used: \n`SELECT 1 WHERE EXISTS (\n  SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed'\n);`\n\nRemoving the reproduce label and adding the product to decide whether this is an expected behavior or not "
+          },
+          {
+            "author": {
+              "login": "sharon-fdm"
+            },
+            "body": "@noahtalerman , we think this is not a bug.\nCare to close?"
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "@ddribeiro while it's not ideal, we learned that this is the current, expected behavior of osquery. Today, to detect if a package is installed, we have to write special policies against [`deb_packages`](https://fleetdm.com/tables/deb_packages) using the `status` column. For example:\n\n```sql\nSELECT 1 WHERE EXISTS ( SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed' );\n```\n\nI flipped this bug to a feature request."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "Moved the original bug report here:\n\n### 💥  Actual behavior\n\u003c!-- What did you see?  Paste a screenshot, include a 30s video, or write 1-2 sentences describing the issue you observed. --\u003e\nSome .deb files leave residual files on disk when they are removed using `sudo apt remove \u003cpackage_name\u003e`. In these cases, the `deb_packages` osquery table detects them as still present on the system, even though they have been removed.\n\nSome examples of packages that behave like this are `duo-desktop` and `screen`.\n\nThis is especially problematic for Fleet admins who use the `deb_packages` table to write polices that trigger automations to detect and install specific software on their hosts.\n\n### 🧑‍💻  Steps to reproduce\n\u003c!-- Provide step-by-step actions of how to recreate this bug in a clean install of Fleet. (This helps others understand and fix it more quickly.) --\u003e\n1. Install a .deb package that is known to leave residual files after being removed on a Linux host. I used `screen` (`sudo apt install screen`).\n2. Write a policy that uses the deb_packages table to detect if screen is installed. This policy should pass when `screen` is installed and fail when it's not installed. Example:\n```\nSELECT 1 WHERE EXISTS (\n    SELECT 1 WHERE (SELECT COUNT(*) FROM deb_packages) = 0\n) OR EXISTS (\n    SELECT 1 FROM deb_packages WHERE name = 'screen'\n);\n````\n3. Remove the screen package by using `sudo apt remove screen`. Refetch vitals on your test host, **observe that the policy is still passing**, despite `screen` being removed from the system.\n4. Run `sudo purge -y screen` to purge the package from the system. Refetch vitals on your test host, observe that running this command fully removes the package and gets the policy to fail.\n\n### 🕯️ More info _(optional)_\n\u003c!-- Add any additional details you think could be relevant to solving or reproducing the bug (e.g., \"this does not reproduce when...\") --\u003e\nSlack thread for more context: https://fleetdm.slack.com/archives/C072L58U878/p1748879907377119\n\nIt seems most Linux users would use `sudo apt remove` instead of `sudo apt purge -y`, which is what makes this problematic.\n\n\u003c!-- If this is a performance issue, follow these steps to generate and attach a debug archive: https://fleetdm.com/docs/using-fleet/monitoring-fleet#debugging-performance-issues --\u003e\n\n\u003c!-- ### 🛠️ To fix --\u003e\n\u003c!-- If this bug requires additional product design work, uncomment the heading above and add instructions to fix, Figma link, etc. here once design changes are settled. --\u003e\n\u003c!-- Product designer: _________________________ --\u003e \u003c!-- Who is the product designer to contact if folks have questions about this fix? --\u003e"
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@noahtalerman FYI this is 100% something on the osquery side, as this affects the built-in osquery `deb_packages` table. Our [software host vital](https://fleetdm.com/vitals/software-linux#linux) already takes `deb_packages` behavior into account.\n\nWith that said, our current default auto-install policies for `deb_packages` _don't_ take this into account, so we're reporting software that was installed and removed as still installed, so the automation won't fire.\n\nThis feels like a bug with automatic install policies, and the fix would be to revise the default automatic install policy to account for this nuance. This is a 1-2pt fix  that I could likely turn around on Monday if you and @mostlikelee are up for it, and I'm betting this would go a long way toward solving the underlying problem without expecting osquery to change."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "To the above point, our [guide with sample policies](https://fleetdm.com/guides/automatic-software-install-in-fleet#debian-based-deb) doesn't account for status in the query, and in this case it should because if you're trying to enforce \"installed and latest\" you don't want \"installed and latest, but was removed\" to pass."
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e This feels like a bug with automatic install policies, and the fix would be to revise the default automatic install policy to account for this nuance. \n\n@iansltx aha! Thanks for calling this out. It sounds like `cisneros` reported this because they're using automatic install policies. \n\nI though they wrote a custom policy. I was wrong.\n\nIf our automatic install policies don't take this into account, I agree this is a bug. Can you please help us update this issue into bug format?\n\nAlso, good call on the guide. I think we address the guide change as part of this bug.\n\nAnd, I think if you want to jump on the bug, go for it. cc @mostlikelee "
+          },
+          {
+            "author": {
+              "login": "noahtalerman"
+            },
+            "body": "\u003e @iansltx aha! Thanks for calling this out. It sounds like `cisneros` reported this because they're using automatic install policies. \n\u003e \n\u003e I though they wrote a custom policy. I was wrong.\n\u003e \n\u003e If our automatic install policies don't take this into account, I agree this is a bug.\n\nFYI @ddribeiro "
+          },
+          {
+            "author": {
+              "login": "marko-lisica"
+            },
+            "body": "Original issue description:\n\n---\n\n- `customer-cisneros` Gong snippet: https://us-65885.app.gong.io/call?id=4834666570271096977\u0026highlights=%5B%7B%22type%22%3A%22SHARE%22%2C%22from%22%3A4%2C%22to%22%3A223%7D%5D\n* @noahtalerman: *User requested this because* The `deb_packages` table detects residual files from `.deb` packages, such as `screen`, even after they are removed using `sudo apt remove \u003cpackage_name\u003e`, leading to incorrect policy results.\n\n  - @noahtalerman *In the interim* IT admins can detect if a package is installed by writing a special policy against [`deb_packages`](https://fleetdm.com/tables/deb_packages) using the `status` column. For example:\n\n```sql\nSELECT 1 WHERE EXISTS ( SELECT 1 FROM deb_packages WHERE name = 'screen' AND status = 'install ok installed' );\n```\n\n  * @noahtalerman: *Eventually* Fleet could ensure that the `deb_packages` table correctly reflects the absence of packages even after `sudo apt remove` is used, potentially by addressing residual files or providing a more reliable method for package removal detection."
+          },
+          {
+            "author": {
+              "login": "iansltx"
+            },
+            "body": "@ddribeiro @marko-lisica Updated the issue title because the thing we'll be fixing here is the auto-install query; we _won't_ be making changes to the underlying osquery table as part of this fix. Our understanding is that fixes the customer issue, but would want a different issue if it doesn't."
+          },
+          {
+            "author": {
+              "login": "jmwatts"
+            },
+            "body": "**QA Notes**\n\n1. Upload .deb pakage to Fleet\n2. Enable automatic install\n3. Once the sofware is installed, delete it using sudo apt remove command\n\n- [x] Verify that the policy now fails, triggering the software to be installed again"
+          }
+        ],
+        "issueNumber": 29894,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgeQApA",
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "issueNumber": 31500,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgegZj4",
+        "milestone": {
+          "dueOn": "2025-10-10T00:00:00Z",
+          "title": "4.75.0"
+        },
+        "issueNumber": 32067,
+        "changeType": "modified"
+      },
+      {
+        "id": "PVTI_lADOBDAnic4A4BEUzgekQ5s",
+        "title": "Fleet Desktop crash loops with Fleet Free",
+        "issueNumber": 32796,
+        "changeType": "removed"
       }
     ]
   }
